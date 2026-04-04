@@ -6,220 +6,795 @@ import Nav from '../components/Nav.astro';
 <BaseLayout title="Mycelium — Free Permaculture Education">
   <Nav />
 
-  <!-- HERO -->
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
-    <div class="container hero-inner">
-      <h1 class="hero-heading">
-        What if it's time<br>we look <em>down</em><br>to move forward?
+    <div class="hero-inner">
+      <h1 class="hero-h1">
+        What if it's time we look down<br>to move forward?
       </h1>
+      <a href="/resources" class="hero-btn">Start Your Journey</a>
     </div>
   </section>
 
-  <!-- PHOTO GRID -->
-  <section class="photo-grid">
-    <div class="container">
-      <div class="grid-3">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Permaculture garden" loading="lazy">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-8092437.jpeg" alt="Mycelium network" loading="lazy">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-4505166.jpeg" alt="Composting" loading="lazy">
-      </div>
+  <!-- ═══ PHOTO STRIP ═══ -->
+  <section class="photo-strip">
+    <div class="strip-grid">
+      <div class="strip-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Permaculture garden" loading="lazy"></div>
+      <div class="strip-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-8092437.jpeg" alt="Mycelium close-up" loading="lazy"></div>
+      <div class="strip-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-4505166.jpeg" alt="Composting" loading="lazy"></div>
     </div>
   </section>
 
-  <!-- MISSION STATEMENT -->
+  <!-- ═══ MISSION ═══ -->
   <section class="mission">
     <div class="container">
-      <p class="mission-text">Building food security<br>starts with education.</p>
+      <h2 class="mission-h2">Building food security starts with education</h2>
+      <p class="mission-body">
+        Our goals start with confronting the fear of finding clear and uncomplicated permaculture
+        education. The chaos of scattered resources, conflicting advice, and no clear starting point often
+        turn eager learners away. Mycelium exists to bridge this gap — think the mycelial system which
+        connects a mountain underground, the platform links scattered knowledge together to lower the
+        barrier of learning. Mycelium strengthens permaculture education at its root, encouraging
+        outward action to support that never-ending goal of achieving food sovereignty.
+      </p>
     </div>
   </section>
 
-  <!-- STATS -->
+  <!-- ═══ STATS ═══ -->
   <section class="stats">
     <div class="container">
-      <h2 class="stats-heading">Mycelium Resources and Content to Date</h2>
-      <div class="stats-grid">
-        <div class="stat">
-          <span class="stat-number">240</span>
-          <span class="stat-label">Curated Resources</span>
+      <p class="stats-label">Mycelium Resources and Content to Date</p>
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-num">240</span>
+          <span class="stat-desc">RESOURCES CURATED</span>
         </div>
-        <div class="stat">
-          <span class="stat-number">600+</span>
-          <span class="stat-label">People Reached</span>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">600+</span>
+          <span class="stat-desc">HOURS OF ORGANIZED CONTENT</span>
         </div>
-        <div class="stat">
-          <span class="stat-number">1</span>
-          <span class="stat-label">Platform for All</span>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">1</span>
+          <span class="stat-desc">COMMUNITY IN ACTIVE IMPLEMENTATION</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOUNDER -->
+  <!-- ═══ FOUNDER ═══ -->
   <section class="founder">
-    <div class="container founder-inner">
-      <div class="founder-image">
-        <div class="founder-photo-wrapper">
+    <div class="container founder-grid">
+      <div class="founder-left">
+        <div class="founder-photo-wrap">
           <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/founder-photo.jpg" alt="Tax Riego" loading="lazy">
-          <span class="founder-annotation">That's me! →</span>
+          <span class="founder-tag">That's me!</span>
         </div>
       </div>
-      <div class="founder-text">
-        <h2>Why did I build Mycelium at 16?</h2>
-        <p>After my Permaculture Design Certificate course in Nueva Ecija, I realized that so much indigenous knowledge about sustainable farming exists only in the minds of elders and practitioners. If we don't document it, it disappears.</p>
-        <p>I thought — I'm 16, I know tech, I can build a bridge between the knowledge holders and the people who need it. That's Mycelium.</p>
-        <a href="/about" class="cta-link">READ MY STORY</a>
+      <div class="founder-right">
+        <h2 class="founder-h2">Why did I build Mycelium at 16?</h2>
+        <p>I built Mycelium at 16 because I wanted uncomplicated permaculture guidance. I got exhausted finding conflicting advice and resources that didn't apply to me. So I spent the next year building a platform I couldn't find. With the guidance I got from the Philippine Permaculture Association and hours of curating content, Mycelium is now what I wish existed when I was searching alone at 2 am with too many tabs to count.</p>
+        <a href="/about" class="gold-cta">READ MY FULL JOURNEY</a>
       </div>
     </div>
   </section>
 
-  <!-- HOW WE OPERATE -->
+  <!-- ═══ HOW WE OPERATE ═══ -->
   <section class="operate">
     <div class="container">
-      <h2 class="section-title">How We Operate</h2>
+      <h2 class="section-heading">How We Operate</h2>
       <div class="operate-grid">
-        <div class="operate-card">
-          <div class="operate-icon">🔓</div>
+        <div class="op-card">
+          <div class="op-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4A832" stroke-width="2"/><path d="M18 20v-4a6 6 0 0112 0v4M16 20h16a2 2 0 012 2v12a2 2 0 01-2 2H16a2 2 0 01-2-2V22a2 2 0 012-2z" stroke="#D4A832" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="28" r="2" fill="#D4A832"/></svg>
+          </div>
           <h3>Zero Gatekeeping</h3>
-          <p>Every resource is free and accessible. No paywalls, no barriers, no subscriptions. Permaculture knowledge belongs to everyone.</p>
+          <p>100% Free, forever. No paywalls, no ads interrupting your learning. We believe that permaculture knowledge should be accessible to everyone, regardless of income or location.</p>
+          <a href="/about" class="gold-cta small">OUR MISSION</a>
         </div>
-        <div class="operate-card">
-          <div class="operate-icon">🔍</div>
-          <h3>We Verify Every Resource</h3>
-          <p>Content is reviewed by practitioners and our editorial board to ensure accuracy and respect for indigenous knowledge.</p>
+        <div class="op-card">
+          <div class="op-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4A832" stroke-width="2"/><circle cx="24" cy="24" r="10" stroke="#D4A832" stroke-width="2"/><path d="M24 18v6l4 4" stroke="#D4A832" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>We verify every resource</h3>
+          <p>We personally review every video, course, and article before adding it to Mycelium. Each resource is checked thoroughly, prioritizing beginner-friendliness.</p>
+          <a href="/about" class="gold-cta small">OUR CRITERIA</a>
         </div>
-        <div class="operate-card">
-          <div class="operate-icon">🤝</div>
-          <h3>Expert Partners</h3>
-          <p>We work with the Philippine Permaculture Association, Baganihan Collective, and indigenous knowledge holders across the Philippines.</p>
+        <div class="op-card">
+          <div class="op-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4A832" stroke-width="2"/><path d="M17 30c0-4 3-5 7-5s7 1 7 5M24 22a5 5 0 100-10 5 5 0 000 10z" stroke="#D4A832" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>We work with expert partners</h3>
+          <p>Our resources are credible and field-tested — built in partnership with the Baganihan Collective and shaped by contributions from the Philippine Permaculture Association (PPA).</p>
+          <a href="/about#partners" class="gold-cta small">LEARN MORE</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="final-cta">
+  <!-- ═══ CURATED VIDEOS ═══ -->
+  <section class="videos-section">
     <div class="container">
-      <h2>Traditional permaculture knowledge — documented, verified, and free.</h2>
-      <p>Explore the full collection at Mycelium.</p>
-      <a href="/resources" class="cta-button">Start Your Journey</a>
+      <h2 class="section-heading dark">Curated Permaculture Videos</h2>
+      <p class="section-sub">Visual learning paths from beginner introductions to advanced techniques</p>
+      <div class="video-grid">
+        <a href="/videos" class="video-card">
+          <div class="video-thumb">
+            <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Water Management" loading="lazy">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="#fff"><path d="M6 4l12 6-12 6z"/></svg></div>
+            <span class="vid-duration">9 min</span>
+          </div>
+          <h3>Water Management Basics</h3>
+          <p>Understanding water flow and simple catchment systems</p>
+        </a>
+        <a href="/videos" class="video-card">
+          <div class="video-thumb">
+            <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-8092437.jpeg" alt="Garden Bed" loading="lazy">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="#fff"><path d="M6 4l12 6-12 6z"/></svg></div>
+            <span class="vid-duration">12 min</span>
+          </div>
+          <h3>Starting Your First Garden Bed</h3>
+          <p>Practical steps to create your first no-dig garden bed</p>
+        </a>
+        <a href="/videos" class="video-card">
+          <div class="video-thumb">
+            <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-4505166.jpeg" alt="Water Management" loading="lazy">
+            <div class="play-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="#fff"><path d="M6 4l12 6-12 6z"/></svg></div>
+            <span class="vid-duration">9 min</span>
+          </div>
+          <h3>Water Management Basics</h3>
+          <p>Understanding water flow and simple catchment systems</p>
+        </a>
+      </div>
+      <div class="section-cta-wrap">
+        <a href="/videos" class="outline-btn">View All Videos</a>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <span class="logo-text">MYCELIUM</span>
-        <p>Free permaculture education for the Philippines.</p>
+  <!-- ═══ BLOG RESOURCES ═══ -->
+  <section class="resources-section">
+    <div class="container">
+      <h2 class="section-heading">Organized Blog Resources</h2>
+      <p class="section-sub light">Quality permaculture content organized by topic</p>
+      <div class="resource-grid">
+        <a href="/resources" class="resource-card">
+          <div class="resource-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Resource" loading="lazy"></div>
+          <div class="resource-info">
+            <span class="resource-cat">GETTING STARTED</span>
+            <h3>Starting Your First Garden Bed</h3>
+            <p>A comprehensive guide to designing and building your first raised garden bed</p>
+          </div>
+        </a>
+        <a href="/resources" class="resource-card">
+          <div class="resource-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-8092437.jpeg" alt="Resource" loading="lazy"></div>
+          <div class="resource-info">
+            <span class="resource-cat">GETTING STARTED</span>
+            <h3>Starting Your First Garden Bed</h3>
+            <p>A comprehensive guide to designing and building your first raised garden bed</p>
+          </div>
+        </a>
+        <a href="/resources" class="resource-card">
+          <div class="resource-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-4505166.jpeg" alt="Resource" loading="lazy"></div>
+          <div class="resource-info">
+            <span class="resource-cat">GETTING STARTED</span>
+            <h3>Starting Your First Garden Bed</h3>
+            <p>A comprehensive guide to designing and building your first raised garden bed</p>
+          </div>
+        </a>
+        <a href="/resources" class="resource-card">
+          <div class="resource-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Resource" loading="lazy"></div>
+          <div class="resource-info">
+            <span class="resource-cat">GETTING STARTED</span>
+            <h3>Starting Your First Garden Bed</h3>
+            <p>A comprehensive guide to designing and building your first raised garden bed</p>
+          </div>
+        </a>
       </div>
-      <div class="footer-links">
-        <a href="/about">About</a>
+      <div class="section-cta-wrap">
+        <a href="/resources" class="outline-btn light">View All Resources</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ COURSES ═══ -->
+  <section class="courses-section">
+    <div class="container">
+      <h2 class="section-heading dark">Learning Pathways &amp; Courses</h2>
+      <p class="section-sub">From free introductions to full PDC certifications</p>
+      <div class="course-grid">
+        <a href="/courses" class="course-card">
+          <div class="course-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Course" loading="lazy"></div>
+          <div class="course-info">
+            <div class="course-meta"><span class="course-lessons">8 Lessons</span><span class="course-price">$ FREE</span></div>
+            <h3>Grow Permaculture</h3>
+            <p>Grow Permaculture offers a no-nonsense Permaculture Design Course (PDC) with practical worksheets and real knowledge.</p>
+          </div>
+        </a>
+        <a href="/courses" class="course-card">
+          <div class="course-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-8092437.jpeg" alt="Course" loading="lazy"></div>
+          <div class="course-info">
+            <div class="course-meta"><span class="course-lessons">12 Lessons</span><span class="course-price">$ FREE</span></div>
+            <h3>Oregon State University</h3>
+            <p>Oregon State University's free Permaculture Design Course, 16 hours of professional education.</p>
+          </div>
+        </a>
+        <a href="/courses" class="course-card">
+          <div class="course-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-4505166.jpeg" alt="Course" loading="lazy"></div>
+          <div class="course-info">
+            <div class="course-meta"><span class="course-lessons">10 Lessons</span><span class="course-price">$ FREE</span></div>
+            <h3>ACE Permaculture</h3>
+            <p>ACE Gardener's Australia offers a Permaculture Design Course.</p>
+          </div>
+        </a>
+        <a href="/courses" class="course-card">
+          <div class="course-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Course" loading="lazy"></div>
+          <div class="course-info">
+            <div class="course-meta"><span class="course-lessons">6 Lessons</span><span class="course-price">$ FREE</span></div>
+            <h3>Permaculture Online</h3>
+            <p>Permaculture Course Online founded by Morag Gamble, offers a Permaculture Design Course.</p>
+          </div>
+        </a>
+      </div>
+      <div class="section-cta-wrap">
+        <a href="/courses" class="outline-btn">View All Courses</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="5" cy="5" r="3" fill="#6b7a2a"/><circle cx="14" cy="5" r="3" fill="#8a9a3a"/><circle cx="23" cy="5" r="3" fill="#6b7a2a"/>
+            <circle cx="5" cy="14" r="3" fill="#8a9a3a"/><circle cx="14" cy="14" r="3" fill="#D4A832"/><circle cx="23" cy="14" r="3" fill="#8a9a3a"/>
+            <circle cx="5" cy="23" r="3" fill="#6b7a2a"/><circle cx="14" cy="23" r="3" fill="#8a9a3a"/><circle cx="23" cy="23" r="3" fill="#6b7a2a"/>
+          </svg>
+          <span>MYCELIUM</span>
+        </div>
+        <p class="footer-tagline">Connecting scattered permaculture knowledge into clear learning pathways. Free, verified, and built for beginners ready to grow.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
         <a href="/videos">Videos</a>
+        <a href="/courses">Courses</a>
         <a href="/resources">Resources</a>
         <a href="/events">Events</a>
       </div>
-      <div class="footer-social">
-        <a href="https://instagram.com/mycelium.learn" target="_blank">Instagram</a>
+      <div class="footer-col">
+        <h4>Mycelium</h4>
+        <a href="/about">About</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/resources">Newsletter</a>
       </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <a href="mailto:myceliumlearning@gmail.com">Email:<br>myceliumlearning@gmail.com</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 All Rights Reserved.</p>
+      <p>Built with 🌱 for the permaculture community.</p>
     </div>
   </footer>
 </BaseLayout>
 
 <style>
+  /* ═══ HERO ═══ */
   .hero {
     background: var(--olive);
-    padding: 120px 0 80px;
+    padding: 80px 24px 48px;
     text-align: center;
   }
-  .hero-heading {
+  .hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero-h1 {
     font-family: var(--font-serif);
-    font-size: 3.8rem;
+    font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 400;
     font-style: italic;
     color: var(--cream);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
   }
-  .hero-heading em {
-    text-decoration: underline;
-    text-decoration-color: var(--gold);
-    text-underline-offset: 6px;
+  .hero-btn {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--cream);
+    border: 1px solid rgba(245,237,212,0.4);
+    padding: 11px 28px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.02em;
   }
-  .photo-grid { background: var(--olive); padding: 0 0 80px; }
-  .grid-3 {
+  .hero-btn:hover {
+    background: rgba(245,237,212,0.1);
+    border-color: var(--cream);
+  }
+
+  /* ═══ PHOTO STRIP ═══ */
+  .photo-strip {
+    background: var(--olive);
+    padding: 0 24px 64px;
+  }
+  .strip-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    border-radius: 12px;
+    gap: 12px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .strip-img {
+    border-radius: 8px;
     overflow: hidden;
   }
-  .grid-3 img { width: 100%; height: 280px; object-fit: cover; }
+  .strip-img img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .strip-img:hover img { transform: scale(1.04); }
+
+  /* ═══ MISSION ═══ */
   .mission {
     background: var(--olive);
-    padding: 60px 0 80px;
+    padding: 48px 0 72px;
     text-align: center;
   }
-  .mission-text {
+  .mission-h2 {
     font-family: var(--font-serif);
-    font-size: 2.4rem;
-    color: var(--cream);
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
     font-weight: 400;
-    line-height: 1.3;
+    color: var(--cream);
+    margin-bottom: 24px;
   }
+  .mission-body {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: rgba(245,237,212,0.7);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* ═══ STATS ═══ */
   .stats {
     background: var(--charcoal);
-    padding: 80px 0;
-    text-align: center;
+    padding: 56px 0;
   }
-  .stats-heading {
+  .stats-label {
+    text-align: center;
     font-family: var(--font-serif);
-    font-size: 1.6rem;
+    font-size: 1rem;
     color: var(--teal);
+    margin-bottom: 36px;
+    font-style: italic;
+  }
+  .stats-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-desc {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+  .stat-divider {
+    width: 1px;
+    height: 48px;
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* ═══ FOUNDER ═══ */
+  .founder {
+    background: var(--olive);
+    padding: 80px 0;
+  }
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .founder-photo-wrap {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .founder-photo-wrap img {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .founder-tag {
+    position: absolute;
+    top: 8px;
+    right: -32px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .founder-h2 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 18px;
+  }
+  .founder-right p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: rgba(245,237,212,0.75);
+    margin-bottom: 20px;
+  }
+
+  /* ═══ GOLD CTA ═══ */
+  .gold-cta {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+    transition: opacity 0.2s;
+  }
+  .gold-cta:hover { opacity: 0.75; }
+  .gold-cta.small { font-size: 0.72rem; }
+
+  /* ═══ HOW WE OPERATE ═══ */
+  .operate {
+    background: var(--olive);
+    padding: 0 0 80px;
+  }
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 400;
+    color: var(--cream);
+    text-align: center;
     margin-bottom: 48px;
+  }
+  .section-heading.dark { color: var(--text-dark); }
+  .operate-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .op-card { text-align: center; }
+  .op-icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .op-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 12px;
     font-weight: 400;
   }
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .stat-number { font-size: 4rem; font-weight: 700; color: var(--white); display: block; }
-  .stat-label { font-size: 0.95rem; color: rgba(255,255,255,0.6); margin-top: 8px; display: block; }
-  .founder { background: var(--olive); padding: 100px 0; }
-  .founder-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .founder-photo-wrapper { position: relative; }
-  .founder-photo-wrapper img { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; margin: 0 auto; display: block; }
-  .founder-annotation { position: absolute; top: 20px; right: -20px; font-family: var(--font-serif); font-style: italic; color: var(--gold); font-size: 1rem; }
-  .founder-text h2 { font-family: var(--font-serif); font-size: 2.2rem; color: var(--cream); margin-bottom: 20px; font-weight: 400; }
-  .founder-text p { color: rgba(245,237,212,0.8); font-size: 1.05rem; margin-bottom: 16px; line-height: 1.7; }
-  .cta-link { display: inline-block; margin-top: 12px; color: var(--gold); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.08em; text-decoration: underline; text-underline-offset: 4px; }
-  .operate { background: var(--cream); padding: 100px 0; }
-  .section-title { font-family: var(--font-serif); font-size: 2.4rem; text-align: center; margin-bottom: 60px; color: var(--text-dark); font-weight: 400; }
-  .operate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .operate-card { text-align: center; padding: 32px 24px; }
-  .operate-icon { font-size: 2.4rem; margin-bottom: 20px; }
-  .operate-card h3 { font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 12px; color: var(--text-dark); }
-  .operate-card p { font-size: 0.95rem; color: #555; line-height: 1.65; }
-  .final-cta { background: var(--olive-dark); padding: 100px 0; text-align: center; }
-  .final-cta h2 { font-family: var(--font-serif); font-size: 2.2rem; color: var(--cream); font-weight: 400; margin-bottom: 16px; font-style: italic; }
-  .final-cta p { color: rgba(245,237,212,0.7); font-size: 1rem; margin-bottom: 32px; }
-  .cta-button { display: inline-block; background: var(--charcoal); color: var(--white); padding: 14px 36px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; transition: background 0.2s; }
-  .cta-button:hover { background: #1a1f2d; }
-  .footer { background: var(--charcoal); padding: 60px 0; }
-  .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; }
-  .footer-brand .logo-text { font-weight: 700; letter-spacing: 0.12em; color: var(--white); font-size: 1rem; }
-  .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 8px; }
-  .footer-links, .footer-social { display: flex; gap: 24px; }
-  .footer-links a, .footer-social a { color: rgba(255,255,255,0.6); font-size: 0.85rem; transition: color 0.2s; }
-  .footer-links a:hover, .footer-social a:hover { color: var(--white); }
+  .op-card p {
+    font-size: 0.85rem;
+    color: rgba(245,237,212,0.65);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  /* ═══ VIDEOS SECTION ═══ */
+  .videos-section {
+    background: #faf8f3;
+    padding: 72px 0;
+  }
+  .section-sub {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: -32px;
+    margin-bottom: 40px;
+  }
+  .section-sub.light { color: rgba(245,237,212,0.5); }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .video-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+  .video-thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .video-thumb img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .video-card:hover .video-thumb img { transform: scale(1.05); }
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(0,0,0,0.55);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .vid-duration {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(74,68,0,0.85);
+    color: var(--cream);
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .video-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin: 14px 0 6px;
+  }
+  .video-card p {
+    font-size: 0.82rem;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* ═══ OUTLINE BTN ═══ */
+  .section-cta-wrap { text-align: center; margin-top: 36px; }
+  .outline-btn {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 10px 28px;
+    border: 1.5px solid var(--text-dark);
+    border-radius: 50px;
+    color: var(--text-dark);
+    transition: all 0.25s ease;
+  }
+  .outline-btn:hover {
+    background: var(--text-dark);
+    color: var(--white);
+  }
+  .outline-btn.light {
+    border-color: rgba(245,237,212,0.4);
+    color: var(--cream);
+  }
+  .outline-btn.light:hover {
+    background: rgba(245,237,212,0.1);
+    border-color: var(--cream);
+  }
+
+  /* ═══ RESOURCES ═══ */
+  .resources-section {
+    background: var(--olive);
+    padding: 72px 0;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .resource-card {
+    display: flex;
+    gap: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+  .resource-card:hover { background: rgba(255,255,255,0.08); }
+  .resource-img {
+    flex-shrink: 0;
+    width: 120px;
+  }
+  .resource-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .resource-info {
+    padding: 16px 16px 16px 0;
+  }
+  .resource-cat {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .resource-info h3 {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    color: var(--cream);
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+  .resource-info p {
+    font-size: 0.78rem;
+    color: rgba(245,237,212,0.55);
+    line-height: 1.55;
+  }
+
+  /* ═══ COURSES ═══ */
+  .courses-section {
+    background: #faf8f3;
+    padding: 72px 0;
+  }
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .course-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .course-img img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+  .course-info { padding: 16px; }
+  .course-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .course-lessons {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #888;
+  }
+  .course-price {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--olive);
+  }
+  .course-info h3 {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .course-info p {
+    font-size: 0.78rem;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* ═══ FOOTER ═══ */
+  .site-footer {
+    background: var(--charcoal);
+    padding: 56px 0 0;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .footer-logo span {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: var(--white);
+  }
+  .footer-tagline {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+  }
+  .footer-col h4 {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+  .footer-bottom p {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 1024px) {
+    .course-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
   @media (max-width: 768px) {
-    .hero-heading { font-size: 2.4rem; }
-    .grid-3 { grid-template-columns: 1fr; }
-    .grid-3 img { height: 200px; }
-    .stats-grid { grid-template-columns: 1fr; gap: 32px; }
-    .stat-number { font-size: 3rem; }
-    .founder-inner { grid-template-columns: 1fr; text-align: center; }
-    .founder-photo-wrapper img { width: 200px; height: 200px; }
-    .founder-annotation { display: none; }
-    .operate-grid { grid-template-columns: 1fr; }
-    .mission-text { font-size: 1.8rem; }
-    .final-cta h2 { font-size: 1.6rem; }
-    .footer-inner { flex-direction: column; }
+    .hero { padding: 56px 20px 36px; }
+    .hero-h1 { font-size: 1.8rem; }
+    .strip-grid { grid-template-columns: 1fr; gap: 8px; }
+    .strip-img img { height: 180px; }
+    .stats-row { flex-direction: column; gap: 24px; }
+    .stat-divider { width: 48px; height: 1px; }
+    .stat-num { font-size: 2.4rem; }
+    .founder-grid { grid-template-columns: 1fr; text-align: center; }
+    .founder-photo-wrap img { width: 180px; height: 180px; }
+    .founder-tag { display: none; }
+    .operate-grid { grid-template-columns: 1fr; gap: 40px; }
+    .video-grid { grid-template-columns: 1fr; }
+    .resource-grid { grid-template-columns: 1fr; }
+    .course-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 4px; }
   }
 </style>
