@@ -1,0 +1,58 @@
+---
+const { title = "Mycelium — Free Permaculture Education" } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mycelium is a free platform for permaculture education, documenting indigenous knowledge from the Philippines.">
+  <meta name="theme-color" content="#4a4400">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>{title}</title>
+</head>
+<body>
+  <slot />
+  <style is:global>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --olive: #4a4400;
+      --olive-dark: #3a3500;
+      --charcoal: #2a2f3d;
+      --gold: #D4A832;
+      --cream: #F5EDD4;
+      --white: #FFFFFF;
+      --teal: #4db8d4;
+      --text-dark: #1a1a1a;
+      --text-light: #F5EDD4;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'DM Sans', -apple-system, sans-serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-dark);
+      background: var(--olive);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    @media (max-width: 768px) {
+      html { font-size: 14px; }
+    }
+  </style>
+</body>
+</html>

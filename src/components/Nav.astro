@@ -1,0 +1,93 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/videos", label: "Videos" },
+  { href: "/resources", label: "Resources" },
+  { href: "/events", label: "Events" },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">
+      <span class="logo-dots">⠿</span>
+      <span class="logo-text">MYCELIUM</span>
+    </a>
+    <div class="nav-links">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class:list={["nav-link", { active: currentPath === link.href }]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+    <a href="/resources" class="nav-cta">Start Your Journey</a>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 32px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-dots {
+    font-size: 1.4rem;
+    color: var(--olive);
+  }
+  .logo-text {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dark);
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+  }
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    transition: color 0.2s;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--olive);
+    font-weight: 600;
+  }
+  .nav-cta {
+    background: var(--charcoal);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover {
+    background: var(--olive-dark);
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+  }
+</style>
