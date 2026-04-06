@@ -1,0 +1,582 @@
+{
+  "navLinks": [
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "About",
+      "href": "/about/"
+    },
+    {
+      "text": "Videos",
+      "href": "/videos/"
+    },
+    {
+      "text": "Resources",
+      "href": "/resources/"
+    },
+    {
+      "text": "Events",
+      "href": "/events/"
+    },
+    {
+      "text": "Courses",
+      "href": "/courses/"
+    },
+    {
+      "text": "Feedback",
+      "href": "/feedback/"
+    },
+    {
+      "text": "Home",
+      "href": "/"
+    },
+    {
+      "text": "About",
+      "href": "/about/"
+    },
+    {
+      "text": "Videos",
+      "href": "/videos/"
+    },
+    {
+      "text": "Resources",
+      "href": "/resources/"
+    },
+    {
+      "text": "Events",
+      "href": "/events/"
+    },
+    {
+      "text": "Courses",
+      "href": "/courses/"
+    },
+    {
+      "text": "Feedback",
+      "href": "/feedback/"
+    }
+  ],
+  "images": [
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2025/11/logo-differtniated.png",
+      "alt": "",
+      "w": 400,
+      "h": 88
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-01.webp",
+      "alt": "",
+      "w": 545,
+      "h": 544
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-02.webp",
+      "alt": "",
+      "w": 545,
+      "h": 544
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-03-2.png",
+      "alt": "",
+      "w": 545,
+      "h": 544
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2026/03/homepage-img-09.webp",
+      "alt": "",
+      "w": 823,
+      "h": 714
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-05.png",
+      "alt": "",
+      "w": 300,
+      "h": 300
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-06.png",
+      "alt": "",
+      "w": 300,
+      "h": 300
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2026/03/homepage-img-10.webp",
+      "alt": "",
+      "w": 550,
+      "h": 234
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1fab4.svg",
+      "alt": "🪴",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f331.svg",
+      "alt": "🌱",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f6e0.svg",
+      "alt": "🛠️",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f6e0.svg",
+      "alt": "🛠️",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f9e0.svg",
+      "alt": "🧠",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f4da.svg",
+      "alt": "📚",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f372.svg",
+      "alt": "🍲",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f332.svg",
+      "alt": "🌲",
+      "w": 150,
+      "h": 150
+    },
+    {
+      "src": "https://mycelium-learn.com/wp-content/uploads/2025/11/logo-differtniated.png",
+      "alt": "",
+      "w": 400,
+      "h": 88
+    },
+    {
+      "src": "https://s.w.org/images/core/emoji/17.0.2/svg/1f331.svg",
+      "alt": "🌱",
+      "w": 150,
+      "h": 150
+    }
+  ],
+  "textEls": [
+    {
+      "tag": "H1",
+      "text": "What if it’s time we look down\nto move forward?",
+      "font": "Cormorant Garamond",
+      "size": "72px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "Building food security starts with education",
+      "font": "Cormorant Garamond",
+      "size": "56px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "Mycelium Resources and Content to Date",
+      "font": "Cormorant Garamond",
+      "size": "39px",
+      "weight": "700",
+      "color": "rgb(95, 161, 214)"
+    },
+    {
+      "tag": "H1",
+      "text": "240",
+      "font": "Lora",
+      "size": "60px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "P",
+      "text": "RESOURCES CURATED",
+      "font": "Outfit",
+      "size": "18px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "600+",
+      "font": "Lora",
+      "size": "60px",
+      "weight": "500",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "P",
+      "text": "HOURS OF ORGANIZED CONTENT",
+      "font": "Outfit",
+      "size": "18px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "P",
+      "text": "COMMUNITY IN ACTIVE IMPLEMENTATION",
+      "font": "Outfit",
+      "size": "18px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "Why did I build Mycelium at 16?",
+      "font": "Cormorant Garamond",
+      "size": "39px",
+      "weight": "500",
+      "color": "rgb(250, 247, 240)"
+    },
+    {
+      "tag": "P",
+      "text": "I built Mycelium at 16 because I wanted uncomplicated permaculture guidance. I got exhausted finding conflicting advice and resources that didn’t apply to me. So I spent the next year building a platf",
+      "font": "Cormorant Garamond",
+      "size": "24px",
+      "weight": "700",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "How We Operate",
+      "font": "Cormorant Garamond",
+      "size": "60px",
+      "weight": "500",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "P",
+      "text": "We prioritize transparency with all our users, we want you to know how we create resources and build this platform.",
+      "font": "Cormorant Garamond",
+      "size": "24px",
+      "weight": "500",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "Zero Gatekeeping",
+      "font": "Lora",
+      "size": "24px",
+      "weight": "600",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "P",
+      "text": "100% Free, forever. No paywalls, no ads interrupting your learning. We believe that permaculture knowledge should should be accessible to everyone, regardless of income or location",
+      "font": "Outfit",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "We verify every resource",
+      "font": "Lora",
+      "size": "24px",
+      "weight": "600",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "P",
+      "text": "We personally review every video, course, and article before adding it to Mycelium. Each resource is checked thoroughly, prioritizing beginner-friendliness.",
+      "font": "Outfit",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H1",
+      "text": "We work with expert partners",
+      "font": "Lora",
+      "size": "24px",
+      "weight": "600",
+      "color": "rgb(255, 255, 255)"
+    },
+    {
+      "tag": "P",
+      "text": "Our resources are credible and field-tested – built in partnership with the Baganihan Collective and shaped by contributions from the Philippine Permaculture Association (PPA)",
+      "font": "Outfit",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(210, 206, 200)"
+    },
+    {
+      "tag": "H2",
+      "text": "Curated Permaculture Videos",
+      "font": "Outfit",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "P",
+      "text": "Visual learning paths from beginner introductions to advanced techniques",
+      "font": "Outfit",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(102, 102, 102)"
+    },
+    {
+      "tag": "H4",
+      "text": "How to Grow Food Security | Discover Permaculture: The Podcast",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "H4",
+      "text": "Water — The Lifeblood of the Landscape | Discover Permaculture: The Podcast",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "H4",
+      "text": "Kapitbahay: Kwentong Permakultura (Permaculture Tails) – Episode 2 | Lupa",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "H2",
+      "text": "Learning Pathways & Courses",
+      "font": "Outfit",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "P",
+      "text": "From free introductions to full PDC certifications",
+      "font": "Outfit",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(102, 102, 102)"
+    },
+    {
+      "tag": "H4",
+      "text": "Permaculture Vision Design Course",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "P",
+      "text": "All Countries",
+      "font": "Inter",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(136, 136, 136)"
+    },
+    {
+      "tag": "P",
+      "text": "All Types",
+      "font": "Inter",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(136, 136, 136)"
+    },
+    {
+      "tag": "H4",
+      "text": "Pan Gaia Permaculture Online Permaculture Design Course",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "P",
+      "text": "All Countries",
+      "font": "Inter",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(136, 136, 136)"
+    },
+    {
+      "tag": "P",
+      "text": "All Types",
+      "font": "Inter",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(136, 136, 136)"
+    },
+    {
+      "tag": "H4",
+      "text": "Crystal Waters Permaculture Design Course",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "P",
+      "text": "All Countries",
+      "font": "Inter",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(136, 136, 136)"
+    },
+    {
+      "tag": "P",
+      "text": "All Types",
+      "font": "Inter",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(136, 136, 136)"
+    },
+    {
+      "tag": "H2",
+      "text": "Organized Blog Resources",
+      "font": "Outfit",
+      "size": "48px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "P",
+      "text": "Quality permaculture content organized by topic",
+      "font": "Outfit",
+      "size": "24px",
+      "weight": "400",
+      "color": "rgb(102, 102, 102)"
+    },
+    {
+      "tag": "H4",
+      "text": "What is Permaculture? - Article",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "H4",
+      "text": "First Steps  - Article",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "H4",
+      "text": "Design Principles  - Article",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "H4",
+      "text": "Designing a Food Forest",
+      "font": "Inter",
+      "size": "18px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "H3",
+      "text": "Get Monthly Permaculture Resources",
+      "font": "Outfit",
+      "size": "30px",
+      "weight": "700",
+      "color": "rgb(36, 36, 36)"
+    },
+    {
+      "tag": "P",
+      "text": "Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.",
+      "font": "Inter",
+      "size": "16px",
+      "weight": "400",
+      "color": "rgb(102, 102, 102)"
+    },
+    {
+      "tag": "P",
+      "text": "We respect your privacy. Unsubscribe anytime.",
+      "font": "Inter",
+      "size": "14px",
+      "weight": "400",
+      "color": "rgb(102, 102, 102)"
+    },
+    {
+      "tag": "P",
+      "text": "Connecting scattered permaculture knowledge into clear learning pathways. Free, verified, and built for beginners ready to grow.",
+      "font": "Poppins",
+      "size": "16px",
+      "weight": "300",
+      "color": "rgba(245, 240, 232, 0.85)"
+    },
+    {
+      "tag": "P",
+      "text": "© 2026 All Rights Reserved.",
+      "font": "Outfit",
+      "size": "16px",
+      "weight": "400",
+      "color": "rgba(245, 240, 232, 0.85)"
+    },
+    {
+      "tag": "P",
+      "text": "Built with  for the permaculture community",
+      "font": "Outfit",
+      "size": "16px",
+      "weight": "400",
+      "color": "rgba(245, 240, 232, 0.85)"
+    },
+    {
+      "tag": "P",
+      "text": "0 / 400",
+      "font": "-apple-system",
+      "size": "13px",
+      "weight": "400",
+      "color": "rgb(196, 196, 196)"
+    }
+  ],
+  "sectionBgs": [
+    {
+      "bg": "rgb(61, 43, 0)",
+      "text": ""
+    },
+    {
+      "bg": "rgb(67, 51, 11)",
+      "text": "What if it’s time we"
+    },
+    {
+      "bg": "rgb(43, 47, 49)",
+      "text": "Mycelium Resources and"
+    },
+    {
+      "bg": "rgb(47, 42, 31)",
+      "text": ""
+    },
+    {
+      "bg": "rgb(67, 51, 11)",
+      "text": "How We Operate"
+    },
+    {
+      "bg": "rgb(247, 247, 245)",
+      "text": "Organized Blog Resou"
+    },
+    {
+      "bg": "rgb(247, 247, 245)",
+      "text": "Get Monthly Permaculture R"
+    },
+    {
+      "bg": "rgb(30, 21, 0)",
+      "text": "Connecting scatte"
+    }
+  ]
+}
