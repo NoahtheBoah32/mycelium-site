@@ -1,0 +1,74 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/videos", label: "Videos" },
+  { href: "/resources", label: "Resources" },
+  { href: "/events", label: "Events" },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="site-nav">
+  <a href="/" class="sn-logo">
+    <img src="/images/page-top.png" alt="" class="sn-logo-img">
+    <span>MYCELIUM</span>
+  </a>
+  <div class="sn-links">
+    {links.map(link => (
+      <a href={link.href} class:list={["sn-link", { active: currentPath === link.href || (link.href !== "/" && currentPath.startsWith(link.href)) }]}>
+        {link.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 52px;
+    background: #1a1200;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+  }
+  .sn-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sn-logo-img { display: none; }
+  .sn-logo span {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    color: #D4B896;
+  }
+  .sn-links {
+    display: flex;
+    gap: 32px;
+  }
+  .sn-link {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #D2CEC8;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .sn-link:hover, .sn-link.active {
+    opacity: 1;
+  }
+  .sn-link.active {
+    color: #7dae85;
+  }
+  @media (max-width: 600px) {
+    .site-nav { padding: 0 16px; }
+    .sn-links { gap: 16px; }
+    .sn-link { font-size: 0.75rem; }
+  }
+</style>

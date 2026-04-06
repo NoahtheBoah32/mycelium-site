@@ -1,18 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Nav from '../components/Nav.astro';
+import SiteNav from '../components/SiteNav.astro';
 ---
 
 <BaseLayout title="Mycelium — Free Permaculture Education">
+  <SiteNav />
   <div class="page-wrap">
     <div class="page-section">
       <img src="/images/page-top.png" alt="Mycelium Homepage" class="page-img" loading="eager">
-      <!-- Nav hotspots -->
-      <a href="/" class="hotspot" style="top:0;left:0;width:20%;height:0.8%" aria-label="Home - Logo"></a>
-      <a href="/" class="hotspot" style="top:0;left:55%;width:8%;height:0.8%" aria-label="Home"></a>
-      <a href="/about" class="hotspot" style="top:0;left:64%;width:8%;height:0.8%" aria-label="About"></a>
-      <a href="/videos" class="hotspot" style="top:0;left:73%;width:8%;height:0.8%" aria-label="Videos"></a>
-      <a href="/resources" class="hotspot" style="top:0;left:82%;width:10%;height:0.8%" aria-label="Resources"></a>
     </div>
   </div>
 </BaseLayout>
