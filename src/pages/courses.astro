@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import content from '../../public/data/content.json';
+const courses = content.courses;
+---
+
+<BaseLayout title="Courses — Mycelium">
+  <SiteNav />
+  <section class="page-hero">
+    <div class="container">
+      <h1>🎓 Courses</h1>
+      <h2>Your Guide to Permaculture Training</h2>
+      <p>Find the perfect course to begin your permaculture journey</p>
+    </div>
+  </section>
+  <section class="page-content">
+    <div class="container">
+      <div class="card-grid">
+        {courses.map(c => (
+          <a href={c.link || '/courses'} class="ccard" target={c.link ? '_blank' : '_self'}>
+            <div class="ccard-thumb" style={c.image ? `background-image:url(${c.image})` : 'background:#2a2a2a'}></div>
+            <div class="ccard-body">
+              <h4>{c.title}</h4>
+              {c.description && c.description !== 'By' && <p>{c.description}</p>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero{background:#43330B;padding:48px 0;text-align:center}
+  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:48px;color:#D2CEC8;margin-bottom:8px}
+  .page-hero h2{font-family:'Outfit',sans-serif;font-size:24px;font-weight:600;color:#D2CEC8;margin-bottom:8px}
+  .page-hero p{font-family:'Outfit',sans-serif;font-size:18px;color:rgba(210,206,200,.6)}
+  .page-content{background:#F0F5FA;padding:48px 0 64px}
+  .card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .ccard{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
+  .ccard:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+  .ccard-thumb{height:160px;background-size:cover;background-position:center;background-color:#e8e0d0}
+  .ccard-body{padding:16px}
+  .ccard-body h4{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#242424;margin-bottom:6px;line-height:1.4}
+  .ccard-body p{font-size:14px;color:#666;line-height:1.5}
+  .container{max-width:1200px;margin:0 auto;padding:0 40px}
+  @media(max-width:1024px){.card-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:768px){.card-grid{grid-template-columns:1fr}}
+</style>

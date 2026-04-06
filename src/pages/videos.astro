@@ -1,15 +1,52 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import content from '../../public/data/content.json';
+const videos = content.videos;
 ---
+
 <BaseLayout title="Videos — Mycelium">
-  <div class="page-wrap">
-    <div class="page-section">
-      <img src="/images/page-videos.png" alt="Mycelium Videos" class="page-img" loading="eager">
+  <SiteNav />
+  <section class="page-hero">
+    <div class="container">
+      <h1>🎥 Videos</h1>
+      <h2>Learn Through Permaculture Videos</h2>
+      <p>Explore practical tips, techniques, and inspiration for your permaculture journey</p>
     </div>
-  </div>
+  </section>
+  <section class="page-content">
+    <div class="container">
+      <div class="card-grid">
+        {videos.map(v => (
+          <a href={v.link || '/videos'} class="vcard" target={v.link ? '_blank' : '_self'}>
+            <div class="vcard-thumb" style={v.image ? `background-image:url(${v.image})` : 'background:#2a2a2a'}>
+              <div class="play-icon">▶</div>
+            </div>
+            <div class="vcard-body">
+              <h4>{v.title}</h4>
+              {v.description && v.description !== 'By' && <p>{v.description}</p>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
 <style>
-  .page-wrap { background: #1e1e1e; }
-  .page-section { position: relative; width: 100%; }
-  .page-img { width: 100%; height: auto; display: block; }
+  .page-hero{background:#43330B;padding:48px 0;text-align:center}
+  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:48px;color:#D2CEC8;margin-bottom:8px}
+  .page-hero h2{font-family:'Outfit',sans-serif;font-size:24px;font-weight:600;color:#D2CEC8;margin-bottom:8px}
+  .page-hero p{font-family:'Outfit',sans-serif;font-size:18px;color:rgba(210,206,200,.6)}
+  .page-content{background:#F0F5FA;padding:48px 0 64px}
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .vcard{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
+  .vcard:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+  .vcard-thumb{height:200px;background-size:cover;background-position:center;position:relative;display:flex;align-items:center;justify-content:center}
+  .play-icon{width:48px;height:48px;background:rgba(36,36,36,.85);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px}
+  .vcard-body{padding:16px}
+  .vcard-body h4{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#242424;margin-bottom:6px;line-height:1.4}
+  .vcard-body p{font-size:14px;color:#666;line-height:1.5}
+  .container{max-width:1200px;margin:0 auto;padding:0 40px}
+  @media(max-width:768px){.card-grid{grid-template-columns:1fr}}
 </style>

@@ -1,15 +1,49 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import content from '../../public/data/content.json';
+const resources = content.resources;
 ---
+
 <BaseLayout title="Resources — Mycelium">
-  <div class="page-wrap">
-    <div class="page-section">
-      <img src="/images/page-resources.png" alt="Mycelium Resources" class="page-img" loading="eager">
+  <SiteNav />
+  <section class="page-hero">
+    <div class="container">
+      <h1>⛏️ Resources</h1>
+      <h2>Permaculture Resource Library</h2>
+      <p>Explore essential tools, templates, and references for sustainable living</p>
     </div>
-  </div>
+  </section>
+  <section class="page-content">
+    <div class="container">
+      <div class="card-grid">
+        {resources.map(r => (
+          <a href={r.link || '/resources'} class="rcard" target={r.link ? '_blank' : '_self'}>
+            <div class="rcard-thumb" style={r.image ? `background-image:url(${r.image})` : 'background:#2a2a2a'}></div>
+            <div class="rcard-body">
+              <h4>{r.title}</h4>
+              {r.description && r.description !== 'By' && <p>{r.description}</p>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
 <style>
-  .page-wrap { background: #1e1e1e; }
-  .page-section { position: relative; width: 100%; }
-  .page-img { width: 100%; height: auto; display: block; }
+  .page-hero{background:#43330B;padding:48px 0;text-align:center}
+  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:48px;color:#D2CEC8;margin-bottom:8px}
+  .page-hero h2{font-family:'Outfit',sans-serif;font-size:24px;font-weight:600;color:#D2CEC8;margin-bottom:8px}
+  .page-hero p{font-family:'Outfit',sans-serif;font-size:18px;color:rgba(210,206,200,.6)}
+  .page-content{background:#F0F5FA;padding:48px 0 64px}
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .rcard{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
+  .rcard:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+  .rcard-thumb{height:200px;background-size:cover;background-position:center;background-color:#e8e0d0}
+  .rcard-body{padding:16px}
+  .rcard-body h4{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#242424;margin-bottom:6px;line-height:1.4}
+  .rcard-body p{font-size:14px;color:#666;line-height:1.5}
+  .container{max-width:1200px;margin:0 auto;padding:0 40px}
+  @media(max-width:768px){.card-grid{grid-template-columns:1fr}}
 </style>
