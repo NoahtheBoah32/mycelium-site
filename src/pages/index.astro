@@ -10,7 +10,7 @@ import Nav from '../components/Nav.astro';
   <section class="hero">
     <div class="hero-inner">
       <h1 class="hero-h1">
-        What if it's time we look down<br>to move forward?
+        What if it's time we look down to move forward?
       </h1>
       <a href="/resources" class="hero-btn">Start Your Journey</a>
     </div>
@@ -87,6 +87,7 @@ import Nav from '../components/Nav.astro';
   <section class="operate">
     <div class="container">
       <h2 class="section-heading">How We Operate</h2>
+      <p class="operate-sub">We prioritize transparency, quality, and accessibility in everything we do.</p>
       <div class="operate-grid">
         <div class="op-card">
           <div class="op-icon">
@@ -302,9 +303,12 @@ import Nav from '../components/Nav.astro';
     font-weight: 400;
     font-style: normal;
     color: #D2CEC8;
-    line-height: 0.68;
+    line-height: 1.15;
     letter-spacing: -0.01em;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .hero-btn {
     display: inline-block;
@@ -358,7 +362,7 @@ import Nav from '../components/Nav.astro';
     font-size: clamp(1.8rem, 4.5vw, 3.2rem);
     font-weight: 400;
     color: #D2CEC8;
-    line-height: 0.68;
+    line-height: 1.15;
     letter-spacing: -0.01em;
     margin-bottom: 28px;
   }
@@ -439,23 +443,23 @@ import Nav from '../components/Nav.astro';
   }
   .founder-arrow {
     position: absolute;
-    top: -10px;
-    right: -60px;
+    top: -40px;
+    left: 20px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 4px;
-  }
-  .arrow-img {
-    width: 40px;
-    height: auto;
+    gap: 8px;
   }
   .founder-tag {
     font-family: 'Lora', serif;
     font-weight: 400;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: #FFFFFF;
     white-space: nowrap;
+  }
+  .arrow-img {
+    width: 36px;
+    height: auto;
+    transform: rotate(120deg);
   }
   .founder-h2 {
     font-family: 'Lora', serif;
@@ -503,19 +507,29 @@ import Nav from '../components/Nav.astro';
   /* ═══ HOW WE OPERATE ═══ */
   .operate {
     background: #43330B;
-    padding: 0 0 80px;
+    padding: 80px 0;
   }
   .section-heading {
     font-family: 'Lora', serif;
     font-size: clamp(2rem, 5.5vw, 3.8rem);
     font-weight: 400;
     color: #D2CEC8;
-    line-height: 0.57;
+    line-height: 1.1;
     letter-spacing: -0.01em;
     text-align: center;
     margin-bottom: 48px;
   }
   .section-heading.dark { color: #1a1a14; }
+  .operate-sub {
+    font-family: 'Lora', serif;
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    color: #D2CEC8;
+    text-align: center;
+    margin-top: -32px;
+    margin-bottom: 48px;
+    letter-spacing: -0.01em;
+    line-height: 1.75;
+  }
   .operate-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
