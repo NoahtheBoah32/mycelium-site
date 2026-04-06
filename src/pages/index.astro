@@ -19,9 +19,9 @@ import Nav from '../components/Nav.astro';
   <!-- ═══ PHOTO STRIP ═══ -->
   <section class="photo-strip">
     <div class="strip-grid">
-      <div class="strip-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-2132250.jpeg" alt="Permaculture garden" loading="lazy"></div>
-      <div class="strip-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-8092437.jpeg" alt="Mycelium close-up" loading="lazy"></div>
-      <div class="strip-img"><img src="https://mycelium-learn.com/wp-content/uploads/2024/11/pexels-photo-4505166.jpeg" alt="Composting" loading="lazy"></div>
+      <div class="strip-img"><img src="/images/hero-left.png" alt="Permaculture garden" loading="lazy"></div>
+      <div class="strip-img"><img src="/images/hero-middle.png" alt="Mycelium close-up" loading="lazy"></div>
+      <div class="strip-img"><img src="/images/hero-right.png" alt="Composting" loading="lazy"></div>
     </div>
   </section>
 
@@ -87,7 +87,7 @@ import Nav from '../components/Nav.astro';
       <div class="operate-grid">
         <div class="op-card">
           <div class="op-icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4A832" stroke-width="2"/><path d="M18 20v-4a6 6 0 0112 0v4M16 20h16a2 2 0 012 2v12a2 2 0 01-2 2H16a2 2 0 01-2-2V22a2 2 0 012-2z" stroke="#D4A832" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="28" r="2" fill="#D4A832"/></svg>
+            <img src="/images/zero-gatekeeping.png" alt="Zero Gatekeeping" width="120">
           </div>
           <h3>Zero Gatekeeping</h3>
           <p>100% Free, forever. No paywalls, no ads interrupting your learning. We believe that permaculture knowledge should be accessible to everyone, regardless of income or location.</p>
@@ -95,7 +95,7 @@ import Nav from '../components/Nav.astro';
         </div>
         <div class="op-card">
           <div class="op-icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4A832" stroke-width="2"/><circle cx="24" cy="24" r="10" stroke="#D4A832" stroke-width="2"/><path d="M24 18v6l4 4" stroke="#D4A832" stroke-width="2" stroke-linecap="round"/></svg>
+            <img src="/images/we-verify.png" alt="We verify every resource" width="120">
           </div>
           <h3>We verify every resource</h3>
           <p>We personally review every video, course, and article before adding it to Mycelium. Each resource is checked thoroughly, prioritizing beginner-friendliness.</p>
@@ -103,7 +103,7 @@ import Nav from '../components/Nav.astro';
         </div>
         <div class="op-card">
           <div class="op-icon">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#D4A832" stroke-width="2"/><path d="M17 30c0-4 3-5 7-5s7 1 7 5M24 22a5 5 0 100-10 5 5 0 000 10z" stroke="#D4A832" stroke-width="2" stroke-linecap="round"/></svg>
+            <img src="/images/expert-partners.png" alt="We work with expert partners" width="120">
           </div>
           <h3>We work with expert partners</h3>
           <p>Our resources are credible and field-tested — built in partnership with the Baganihan Collective and shaped by contributions from the Philippine Permaculture Association (PPA).</p>
@@ -285,7 +285,7 @@ import Nav from '../components/Nav.astro';
 <style>
   /* ═══ HERO ═══ */
   .hero {
-    background: var(--olive);
+    background: #43330B;
     padding: 80px 24px 48px;
     text-align: center;
   }
@@ -294,35 +294,35 @@ import Nav from '../components/Nav.astro';
     margin: 0 auto;
   }
   .hero-h1 {
-    font-family: 'Lora', var(--font-serif);
-    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-family: 'Lora', serif;
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
     font-weight: 400;
     font-style: normal;
     color: #D2CEC8;
-    line-height: 1.2;
+    line-height: 0.68;
     letter-spacing: -0.01em;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
   }
   .hero-btn {
     display: inline-block;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
     font-weight: 500;
-    color: var(--cream);
-    border: 1px solid rgba(245,237,212,0.4);
-    padding: 11px 28px;
-    border-radius: 50px;
+    color: #D2CEC8;
+    background: #5A3A1C;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 68px;
     transition: all 0.3s ease;
-    letter-spacing: 0.02em;
+    line-height: 1.36;
   }
   .hero-btn:hover {
-    background: rgba(245,237,212,0.1);
-    border-color: var(--cream);
+    background: #6d4a28;
   }
 
   /* ═══ PHOTO STRIP ═══ */
   .photo-strip {
-    background: var(--olive);
+    background: #43330B;
     padding: 0 24px 64px;
   }
   .strip-grid {
@@ -333,12 +333,12 @@ import Nav from '../components/Nav.astro';
     margin: 0 auto;
   }
   .strip-img {
-    border-radius: 8px;
+    border-radius: 15px;
     overflow: hidden;
   }
   .strip-img img {
     width: 100%;
-    height: 240px;
+    aspect-ratio: 544.79 / 543.47;
     object-fit: cover;
     transition: transform 0.6s ease;
   }
@@ -346,35 +346,39 @@ import Nav from '../components/Nav.astro';
 
   /* ═══ MISSION ═══ */
   .mission {
-    background: var(--olive);
+    background: #43330B;
     padding: 48px 0 72px;
     text-align: center;
   }
   .mission-h2 {
-    font-family: 'Lora', var(--font-serif);
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-family: 'Lora', serif;
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
     font-weight: 400;
     color: #D2CEC8;
-    margin-bottom: 24px;
+    line-height: 0.68;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
   }
   .mission-body {
-    font-size: 0.92rem;
-    line-height: 1.75;
-    color: rgba(245,237,212,0.7);
+    font-family: 'Lora', serif;
+    font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+    line-height: 2.3;
+    letter-spacing: -0.01em;
+    color: #D2CEC8;
     max-width: 700px;
     margin: 0 auto;
   }
 
   /* ═══ STATS ═══ */
   .stats {
-    background: var(--charcoal);
+    background: #2B2F31;
     padding: 56px 0;
   }
   .stats-label {
     text-align: center;
-    font-family: var(--font-serif);
+    font-family: 'Lora', serif;
     font-size: 1rem;
-    color: var(--teal);
+    color: #5FA1D6;
     margin-bottom: 36px;
     font-style: italic;
   }
@@ -387,20 +391,22 @@ import Nav from '../components/Nav.astro';
   .stat-item { text-align: center; }
   .stat-num {
     display: block;
-    font-family: var(--font-sans);
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1;
+    font-family: 'Lora', serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+    font-weight: 400;
+    color: #FAF7F0;
+    line-height: 0.57;
+    letter-spacing: -0.02em;
   }
   .stat-desc {
     display: block;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.4);
-    margin-top: 10px;
-    text-transform: uppercase;
+    font-family: 'Lora', serif;
+    font-size: clamp(0.7rem, 1.1vw, 0.88rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: #D2CEC8;
+    margin-top: 14px;
+    line-height: 2.7;
   }
   .stat-divider {
     width: 1px;
@@ -410,7 +416,7 @@ import Nav from '../components/Nav.astro';
 
   /* ═══ FOUNDER ═══ */
   .founder {
-    background: var(--olive);
+    background: #2F2A10;
     padding: 80px 0;
   }
   .founder-grid {
@@ -425,61 +431,76 @@ import Nav from '../components/Nav.astro';
     margin: 0 auto;
   }
   .founder-photo-wrap img {
-    width: 240px;
-    height: 240px;
-    border-radius: 50%;
+    width: min(100%, 420px);
+    aspect-ratio: 822.5 / 589.96;
+    border-radius: 250px;
     object-fit: cover;
   }
   .founder-tag {
     position: absolute;
     top: 8px;
     right: -32px;
-    font-family: var(--font-serif);
+    font-family: 'Lora', serif;
     font-style: italic;
     font-size: 0.85rem;
     color: var(--gold);
     white-space: nowrap;
   }
   .founder-h2 {
-    font-family: 'Lora', var(--font-serif);
-    font-size: 1.8rem;
+    font-family: 'Lora', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
     font-weight: 400;
-    color: #D2CEC8;
-    margin-bottom: 18px;
+    color: #FAF7F0;
+    line-height: 1.03;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
   }
   .founder-right p {
-    font-size: 0.9rem;
+    font-family: 'Lora', serif;
+    font-size: clamp(0.85rem, 1.6vw, 1.15rem);
     line-height: 1.75;
-    color: rgba(245,237,212,0.75);
+    letter-spacing: -0.01em;
+    color: #D2CEC8;
     margin-bottom: 20px;
   }
 
   /* ═══ GOLD CTA ═══ */
   .gold-cta {
     display: inline-block;
-    font-family: var(--font-sans);
-    font-size: 0.78rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(0.8rem, 1.4vw, 1.05rem);
     font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1.5px;
+    letter-spacing: -0.012em;
+    color: #D2CEC8;
+    line-height: 2.4;
     transition: opacity 0.2s;
+    position: relative;
+    padding-bottom: 6px;
+  }
+  .gold-cta::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: min(100%, 200px);
+    height: 3px;
+    background: #FFD53B;
   }
   .gold-cta:hover { opacity: 0.75; }
-  .gold-cta.small { font-size: 0.72rem; }
+  .gold-cta.small { font-size: clamp(0.75rem, 1.2vw, 0.95rem); }
 
   /* ═══ HOW WE OPERATE ═══ */
   .operate {
-    background: var(--olive);
+    background: #43330B;
     padding: 0 0 80px;
   }
   .section-heading {
-    font-family: 'Lora', var(--font-serif);
-    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-family: 'Lora', serif;
+    font-size: clamp(2rem, 5.5vw, 3.8rem);
     font-weight: 400;
     color: #D2CEC8;
+    line-height: 0.57;
+    letter-spacing: -0.01em;
     text-align: center;
     margin-bottom: 48px;
   }
@@ -496,16 +517,20 @@ import Nav from '../components/Nav.astro';
     justify-content: center;
   }
   .op-card h3 {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
+    color: #D2CEC8;
     margin-bottom: 12px;
-    font-weight: 400;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    line-height: 1.7;
   }
   .op-card p {
-    font-size: 0.85rem;
-    color: rgba(245,237,212,0.65);
-    line-height: 1.65;
+    font-family: 'Lora', serif;
+    font-size: clamp(0.8rem, 1.4vw, 1.05rem);
+    color: #D2CEC8;
+    line-height: 1.75;
+    letter-spacing: -0.01em;
     margin-bottom: 16px;
   }
 
