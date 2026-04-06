@@ -68,8 +68,11 @@ import Nav from '../components/Nav.astro';
     <div class="container founder-grid">
       <div class="founder-left">
         <div class="founder-photo-wrap">
-          <img src="https://mycelium-learn.com/wp-content/uploads/2024/11/founder-photo.jpg" alt="Tax Riego" loading="lazy">
-          <span class="founder-tag">That's me!</span>
+          <img src="/images/founder-photo.png" alt="Tax Riego and the team" loading="lazy">
+          <div class="founder-arrow">
+            <img src="/images/arrow.png" alt="" class="arrow-img">
+            <span class="founder-tag">That's me!</span>
+          </div>
         </div>
       </div>
       <div class="founder-right">
@@ -430,20 +433,28 @@ import Nav from '../components/Nav.astro';
     width: fit-content;
     margin: 0 auto;
   }
-  .founder-photo-wrap img {
+  .founder-photo-wrap img:first-child {
     width: min(100%, 420px);
-    aspect-ratio: 822.5 / 589.96;
-    border-radius: 250px;
-    object-fit: cover;
+    object-fit: contain;
+  }
+  .founder-arrow {
+    position: absolute;
+    top: -10px;
+    right: -60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .arrow-img {
+    width: 40px;
+    height: auto;
   }
   .founder-tag {
-    position: absolute;
-    top: 8px;
-    right: -32px;
     font-family: 'Lora', serif;
-    font-style: italic;
+    font-weight: 400;
     font-size: 0.85rem;
-    color: var(--gold);
+    color: #FFFFFF;
     white-space: nowrap;
   }
   .founder-h2 {
