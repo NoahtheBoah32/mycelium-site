@@ -214,7 +214,8 @@ import Nav from '../components/Nav.astro';
   .op-title { font-family:'Lora',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:400; color:var(--cream); text-align:center; letter-spacing:-0.01em; margin-bottom:56px; }
   .op-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:36px; }
   .op-card { text-align:center; }
-  .op-icon { width:100px; height:auto; margin:0 auto 20px; display:block; }
+  .op-icon { width:100px; height:100px; object-fit:contain; margin:0 auto 20px; display:block; }
+  .op-card:last-child .op-icon { width:180px; height:auto; }
   .op-card h3 { font-family:'Outfit',sans-serif; font-size:clamp(0.95rem,1.8vw,1.35rem); font-weight:700; color:var(--cream); letter-spacing:-0.012em; margin-bottom:10px; }
   .op-card p { font-family:'Lora',serif; font-size:clamp(0.78rem,1.2vw,0.95rem); color:var(--cream); line-height:1.75; letter-spacing:-0.01em; margin-bottom:14px; }
 
