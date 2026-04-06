@@ -10,12 +10,12 @@ import Nav from '../components/Nav.astro';
   <section class="hero">
     <div class="container">
       <h1>What if it's time we look down<br>to move forward?</h1>
-      <a href="/resources" class="btn-journey">Start Your Journey</a>
       <div class="hero-photos">
         <div class="hp"><img src="/images/hero-left.png" alt="Permaculture" loading="lazy"></div>
         <div class="hp"><img src="/images/hero-middle.png" alt="Mycelium" loading="lazy"></div>
         <div class="hp hp-wide"><img src="/images/hero-right.png" alt="Composting" loading="lazy"></div>
       </div>
+      <a href="/resources" class="btn-journey">Start Your Journey</a>
     </div>
   </section>
 
@@ -176,7 +176,7 @@ import Nav from '../components/Nav.astro';
   /* ══ HERO ══ */
   .hero { background:var(--bg-main); padding:60px 0 0; text-align:center; }
   .hero h1 { font-family:'Lora',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:400; color:var(--cream); line-height:1.15; letter-spacing:-0.01em; margin-bottom:24px; }
-  .btn-journey { display:inline-block; font-family:'Inter',sans-serif; font-size:clamp(0.8rem,1.2vw,1rem); font-weight:500; color:var(--cream); background:var(--btn-bg); padding:10px 28px; border-radius:68px; margin-bottom:36px; transition:background .2s; }
+  .btn-journey { display:inline-block; font-family:'Inter',sans-serif; font-size:clamp(0.8rem,1.2vw,1rem); font-weight:500; color:var(--cream); background:var(--btn-bg); padding:10px 28px; border-radius:68px; margin-top:32px; margin-bottom:0; transition:background .2s; }
   .btn-journey:hover { background:#6d4a28; }
   .hero-photos { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
   .hp { border-radius:15px; overflow:hidden; }
