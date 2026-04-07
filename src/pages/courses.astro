@@ -1,50 +1,872 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
-import content from '../../public/data/content.json';
-const courses = content.courses;
 ---
 
 <BaseLayout title="Courses — Mycelium">
   <SiteNav />
-  <section class="page-hero">
-    <div class="container">
-      <h1>🎓 Courses</h1>
-      <h2>Your Guide to Permaculture Training</h2>
-      <p>Find the perfect course to begin your permaculture journey</p>
-    </div>
-  </section>
-  <section class="page-content">
-    <div class="container">
-      <div class="card-grid">
-        {courses.map(c => (
-          <a href={c.link || '/courses'} class="ccard" target={c.link ? '_blank' : '_self'}>
-            <div class="ccard-thumb" style={c.image ? `background-image:url(${c.image})` : 'background:#2a2a2a'}></div>
-            <div class="ccard-body">
-              <h4>{c.title}</h4>
-              {c.description && c.description !== 'By' && <p>{c.description}</p>}
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <div class="wp-content">
+    		<div class="elementor elementor-133">
+				<div class="elementor-element elementor-element-c137535 e-flex e-con-boxed e-con e-parent">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-19efddf e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-edd6ea0 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-ba04fc3 elementor-widget elementor-widget-text-editor">
+									<p>🎓 Courses</p>								</div>
+				</div>
+		<div class="elementor-element elementor-element-45a9f7f e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe50f34 elementor-widget elementor-widget-heading">
+					<h1 class="elementor-heading-title elementor-size-default">Your Guide to <br>Permaculture Training</h1>				</div>
+				<div class="elementor-element elementor-element-15e7995 elementor-widget elementor-widget-text-editor">
+									<p>Find the perfect course to begin your permaculture journey</p>								</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<!-- dce invisible element 2fdc483 --><style>
+.course-filters-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: nowrap;
+}
+
+.filter-dropdown {
+    border: 0.73px solid #E0E0E0;
+    border-radius: 8px;
+    background-color: #FFF;
+    cursor: pointer;
+    width: 200px;
+    height: 44px;
+    color: #666666;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    padding: 10px 40px 10px 15px; /* Right padding for chevron space */
+    appearance: none; /* Remove default arrow */
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center; /* 15px from right edge */
+}
+
+.filter-dropdown:focus {
+    outline: none;
+    border-color: var(--e-global-color-b482fb8);
+    color: #242424;
+}
+
+/*Filter Padding*/
+.elementor-element.elementor-element-a0b1b75.e-con-full.e-flex.e-con.e-child {
+    padding: 0;
+}
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+    .course-filters-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-dropdown {
+        width: 100%;
+    }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+    .course-filters-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-dropdown {
+        width: 100%;
+    }
+}
+
+/*No Result*/
+#noresults-message{
+display: none;
+text-align: center;
+padding: 40px 20px;
+margin: 20px 0;
+}
+.noresult-title{
+    margin-top: 40px;
+    margin-bottom: 0px;
+        text-align: center;
+font-family: var(--e-global-typography-88cb726-font-family), Sans-serif;
+    font-size: var(--e-global-typography-88cb726-font-size);
+    font-weight: 600;
+    line-height: var(--e-global-typography-88cb726-line-height);
+    letter-spacing: var(--e-global-typography-88cb726-letter-spacing);
+    color: var(--e-global-color-text);
+}
+
+.noresult-des {
+    margin-top: -28px;
+    text-align: center;
+    font-family: Inter;
+    font-weight: var(--e-global-typography-text-font-weight);
+    color: var(--e-global-color-31cf722);
+
+}
+</style><div class="elementor-element elementor-element-dbaa97d e-flex e-con-boxed e-con e-parent">
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-fb79678 elementor-grid-3 elementor-grid-tablet-2 elementor-grid-mobile-1 elementor-widget elementor-widget-loop-grid">
+				<div class="elementor-widget-container">
+							<div class="elementor-loop-container elementor-grid" role="list">
+		<style id="loop-dynamic-1704">.e-loop-item-1860 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1860 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Permaculture-Vision-Design-Course.jpg");}</style><style id="loop-1704">.elementor-1704 .elementor-element.elementor-element-c1d2ed2{--display:flex;--flex-direction:column;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--justify-content:flex-start;--align-items:flex-start;--gap:4px 4px;--row-gap:4px;--column-gap:4px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-1704 .elementor-element.elementor-element-6bb67ac{--display:flex;--min-height:400px;--border-radius:12px 12px 12px 12px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-1704 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .elementor-1704 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-position:center center;background-repeat:no-repeat;background-size:cover;}.elementor-1704 .elementor-element.elementor-element-556eef5{--display:flex;--gap:4px 4px;--row-gap:4px;--column-gap:4px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:12px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-1704 .elementor-element.elementor-element-f000909{--display:flex;--gap:4px 4px;--row-gap:4px;--column-gap:4px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-widget-heading .elementor-heading-title{font-family:var( --e-global-typography-primary-font-family ), Sans-serif;font-size:var( --e-global-typography-primary-font-size );font-weight:var( --e-global-typography-primary-font-weight );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );color:var( --e-global-color-primary );}.elementor-1704 .elementor-element.elementor-element-4d417fd .elementor-heading-title{font-family:var( --e-global-typography-495f078-font-family ), Sans-serif;font-size:var( --e-global-typography-495f078-font-size );font-weight:var( --e-global-typography-495f078-font-weight );line-height:var( --e-global-typography-495f078-line-height );letter-spacing:var( --e-global-typography-495f078-letter-spacing );word-spacing:var( --e-global-typography-495f078-word-spacing );color:var( --e-global-color-text );}.elementor-1704 .elementor-element.elementor-element-4ab87fe{--display:flex;--flex-direction:row;--container-widget-width:initial;--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--justify-content:space-between;--gap:12px 12px;--row-gap:12px;--column-gap:12px;--margin-top:-8px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-1704 .elementor-element.elementor-element-63fb64c{--display:flex;--flex-direction:row;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--align-items:center;--gap:8px 8px;--row-gap:8px;--column-gap:8px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-widget-icon-box.elementor-view-stacked .elementor-icon{background-color:var( --e-global-color-primary );}.elementor-widget-icon-box.elementor-view-framed .elementor-icon, .elementor-widget-icon-box.elementor-view-default .elementor-icon{fill:var( --e-global-color-primary );color:var( --e-global-color-primary );border-color:var( --e-global-color-primary );}.elementor-widget-icon-box .elementor-icon-box-title, .elementor-widget-icon-box .elementor-icon-box-title a{font-family:var( --e-global-typography-primary-font-family ), Sans-serif;font-size:var( --e-global-typography-primary-font-size );font-weight:var( --e-global-typography-primary-font-weight );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );}.elementor-widget-icon-box .elementor-icon-box-title{color:var( --e-global-color-primary );}.elementor-widget-icon-box:has(:hover) .elementor-icon-box-title,
+					 .elementor-widget-icon-box:has(:focus) .elementor-icon-box-title{color:var( --e-global-color-primary );}.elementor-widget-icon-box .elementor-icon-box-description{font-family:var( --e-global-typography-text-font-family ), Sans-serif;font-weight:var( --e-global-typography-text-font-weight );color:var( --e-global-color-text );}.elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-wrapper{align-items:center;text-align:start;gap:4px;}.elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-title{margin-block-end:0px;color:var( --e-global-color-cd16b8f );}.elementor-1704 .elementor-element.elementor-element-fe0c6da.elementor-view-stacked .elementor-icon{background-color:var( --e-global-color-31cf722 );}.elementor-1704 .elementor-element.elementor-element-fe0c6da.elementor-view-framed .elementor-icon, .elementor-1704 .elementor-element.elementor-element-fe0c6da.elementor-view-default .elementor-icon{fill:var( --e-global-color-31cf722 );color:var( --e-global-color-31cf722 );border-color:var( --e-global-color-31cf722 );}.elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon{font-size:14px;}.elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-title, .elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-title a{font-family:var( --e-global-typography-d04038d-font-family ), Sans-serif;font-size:var( --e-global-typography-d04038d-font-size );font-weight:var( --e-global-typography-d04038d-font-weight );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}.elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-wrapper{align-items:center;text-align:start;gap:4px;}.elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-title{margin-block-end:0px;color:var( --e-global-color-cd16b8f );}.elementor-1704 .elementor-element.elementor-element-55d0a79.elementor-view-stacked .elementor-icon{background-color:var( --e-global-color-31cf722 );}.elementor-1704 .elementor-element.elementor-element-55d0a79.elementor-view-framed .elementor-icon, .elementor-1704 .elementor-element.elementor-element-55d0a79.elementor-view-default .elementor-icon{fill:var( --e-global-color-31cf722 );color:var( --e-global-color-31cf722 );border-color:var( --e-global-color-31cf722 );}.elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon{font-size:14px;}.elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-title, .elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-title a{font-family:var( --e-global-typography-d04038d-font-family ), Sans-serif;font-size:var( --e-global-typography-d04038d-font-size );font-weight:var( --e-global-typography-d04038d-font-weight );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}.elementor-1704 .elementor-element.elementor-element-8c06384{--display:flex;--flex-direction:row;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--justify-content:flex-end;--align-items:center;--gap:4px 4px;--row-gap:4px;--column-gap:4px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-widget-icon.elementor-view-stacked .elementor-icon{background-color:var( --e-global-color-primary );}.elementor-widget-icon.elementor-view-framed .elementor-icon, .elementor-widget-icon.elementor-view-default .elementor-icon{color:var( --e-global-color-primary );border-color:var( --e-global-color-primary );}.elementor-widget-icon.elementor-view-framed .elementor-icon, .elementor-widget-icon.elementor-view-default .elementor-icon svg{fill:var( --e-global-color-primary );}.elementor-1704 .elementor-element.elementor-element-fae8f64 .elementor-icon-wrapper{text-align:end;}.elementor-1704 .elementor-element.elementor-element-fae8f64.elementor-view-stacked .elementor-icon{background-color:#2F4F2F00;}.elementor-1704 .elementor-element.elementor-element-fae8f64.elementor-view-framed .elementor-icon, .elementor-1704 .elementor-element.elementor-element-fae8f64.elementor-view-default .elementor-icon{color:#2F4F2F00;border-color:#2F4F2F00;}.elementor-1704 .elementor-element.elementor-element-fae8f64.elementor-view-framed .elementor-icon, .elementor-1704 .elementor-element.elementor-element-fae8f64.elementor-view-default .elementor-icon svg{fill:#2F4F2F00;}.elementor-1704 .elementor-element.elementor-element-fae8f64 .elementor-icon{font-size:14px;}.elementor-1704 .elementor-element.elementor-element-fae8f64 .elementor-icon svg{height:14px;}.elementor-1704 .elementor-element.elementor-element-fae8f64{padding:2px 0px 0px 0px;}.elementor-widget-text-editor{font-family:var( --e-global-typography-text-font-family ), Sans-serif;font-weight:var( --e-global-typography-text-font-weight );color:var( --e-global-color-text );}.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:var( --e-global-color-primary );}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap, .elementor-widget-text-editor.elementor-drop-cap-view-default .elementor-drop-cap{color:var( --e-global-color-primary );border-color:var( --e-global-color-primary );}.elementor-1704 .elementor-element.elementor-element-de66595{font-family:var( --e-global-typography-d04038d-font-family ), Sans-serif;font-size:var( --e-global-typography-d04038d-font-size );font-weight:var( --e-global-typography-d04038d-font-weight );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );color:var( --e-global-color-text );}.elementor-1704 .elementor-element.elementor-element-577746e{--display:flex;--flex-direction:row;--container-widget-width:initial;--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--gap:8px 8px;--row-gap:8px;--column-gap:8px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:20px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-widget-button .elementor-button{font-family:var( --e-global-typography-accent-font-family ), Sans-serif;font-weight:var( --e-global-typography-accent-font-weight );background-color:var( --e-global-color-accent );}.elementor-1704 .elementor-element.elementor-element-c85aee8 .elementor-button{fill:var( --e-global-color-text );color:var( --e-global-color-text );background-color:#FFFFFF00;border-style:solid;border-width:1px 1px 1px 1px;border-radius:6px 6px 6px 6px;}.elementor-1704 .elementor-element.elementor-element-c85aee8 .elementor-button:hover, .elementor-1704 .elementor-element.elementor-element-c85aee8 .elementor-button:focus{color:#FFFFFF;background-color:var( --e-global-color-9003858 );}.elementor-1704 .elementor-element.elementor-element-c85aee8 .elementor-button:hover svg, .elementor-1704 .elementor-element.elementor-element-c85aee8 .elementor-button:focus svg{fill:#FFFFFF;}.elementor-1704 .elementor-element.elementor-element-c85aee8{width:100%;max-width:100%;}.elementor-1704 .elementor-element.elementor-element-b352845 .elementor-button{background-color:var( --e-global-color-primary );border-radius:6px 6px 6px 6px;}.elementor-1704 .elementor-element.elementor-element-b352845 .elementor-button:hover, .elementor-1704 .elementor-element.elementor-element-b352845 .elementor-button:focus{background-color:#78B177;}.elementor-1704 .elementor-element.elementor-element-b352845{width:100%;max-width:100%;}@media(min-width:768px){.elementor-1704 .elementor-element.elementor-element-8c06384{--width:35%;}}@media(max-width:1024px){.elementor-1704 .elementor-element.elementor-element-6bb67ac{--min-height:280px;}.elementor-widget-heading .elementor-heading-title{font-size:var( --e-global-typography-primary-font-size );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );}.elementor-1704 .elementor-element.elementor-element-4d417fd .elementor-heading-title{font-size:var( --e-global-typography-495f078-font-size );line-height:var( --e-global-typography-495f078-line-height );letter-spacing:var( --e-global-typography-495f078-letter-spacing );word-spacing:var( --e-global-typography-495f078-word-spacing );}.elementor-widget-icon-box .elementor-icon-box-title, .elementor-widget-icon-box .elementor-icon-box-title a{font-size:var( --e-global-typography-primary-font-size );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );}.elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-title, .elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-title a{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}.elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-title, .elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-title a{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}.elementor-1704 .elementor-element.elementor-element-de66595{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}}@media(max-width:767px){.elementor-1704 .elementor-element.elementor-element-6bb67ac{--min-height:200px;}.elementor-widget-heading .elementor-heading-title{font-size:var( --e-global-typography-primary-font-size );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );}.elementor-1704 .elementor-element.elementor-element-4d417fd .elementor-heading-title{font-size:var( --e-global-typography-495f078-font-size );line-height:var( --e-global-typography-495f078-line-height );letter-spacing:var( --e-global-typography-495f078-letter-spacing );word-spacing:var( --e-global-typography-495f078-word-spacing );}.elementor-1704 .elementor-element.elementor-element-63fb64c{--width:60%;--flex-direction:row;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--align-items:center;}.elementor-widget-icon-box .elementor-icon-box-title, .elementor-widget-icon-box .elementor-icon-box-title a{font-size:var( --e-global-typography-primary-font-size );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );}.elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-title, .elementor-1704 .elementor-element.elementor-element-fe0c6da .elementor-icon-box-title a{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}.elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-title, .elementor-1704 .elementor-element.elementor-element-55d0a79 .elementor-icon-box-title a{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}.elementor-1704 .elementor-element.elementor-element-8c06384{--width:10%;}.elementor-1704 .elementor-element.elementor-element-de66595{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1860 post-1860 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/permaculture-vision-design-course/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Permaculture Vision Design Course</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/permaculture-vision-design-course/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://permaculturevisions.com/permaculture-design-course/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1858 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1858 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Pan-Gaia-Permaculture-Online-Permaculture-Design-Course-1.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1858 post-1858 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/pan-gaia-permaculture-online-permaculture-design-course/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Pan Gaia Permaculture Online Permaculture Design Course</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/pan-gaia-permaculture-online-permaculture-design-course/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://pangaiapermaculture.com/course/live-permaculture-design-certificate-pdc/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1857 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1857 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Crystal-Waters-Permaculture-Design-Course.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1857 post-1857 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/crystal-waters-permaculture-design-course/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Crystal Waters Permaculture Design Course</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/crystal-waters-permaculture-design-course/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://crystalwaters.org.au/permaculture-design-course/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1856 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1856 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Permaculture-Matters-Design-Course.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1856 post-1856 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/permaculture-matters-design-course/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Permaculture Matters Design Course</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/permaculture-matters-design-course/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.permaculturematters.com.au/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1855 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1855 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Eduardo-Terzidis-Online-Permaculture-Design-Course.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1855 post-1855 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/eduardo-terzidis-online-permaculture-design-course/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Eduardo Terzidis Online Permaculture Design Course</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/eduardo-terzidis-online-permaculture-design-course/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.eduardoterzidis.com/online-pdc" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1833 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1833 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Permaculture-Risings-Permaculture-Design-Courses.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1833 post-1833 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/permaculture-risings-permaculture-design-courses/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Permaculture Rising&#8217;s Permaculture Design Courses</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/permaculture-risings-permaculture-design-courses/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.permaculturerising.com/permaculture-design-courses" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1831 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1831 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Permaculture-Impact-Getting-Started-PDC-Courses.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1831 post-1831 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/permaculture-impact-getting-started-pdc-courses/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Permaculture Impact (Getting Started) PDC Courses</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/permaculture-impact-getting-started-pdc-courses/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://permacultureimpact.org/courses-overview/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1828 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1828 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Greening-the-Desert-Permaculture.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1828 post-1828 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/greening-the-desert-permaculture/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Greening the Desert Permaculture</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/greening-the-desert-permaculture/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.greeningthedesertproject.org/product/permaculture-design-certificate-course-pdc-9th-20th-of-november-2026/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-1704">.e-loop-item-1827 .elementor-element.elementor-element-6bb67ac:not(.elementor-motion-effects-element-type-background), .e-loop-item-1827 .elementor-element.elementor-element-6bb67ac > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2026/01/Aranya-Permaculture-India.png");}</style>		<div class="elementor elementor-1704 e-loop-item e-loop-item-1827 post-1827 course type-course status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-c1d2ed2 card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-6bb67ac e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/course/aranya-permaculture-india/">
+				</a>
+		<div class="elementor-element elementor-element-556eef5 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-f000909 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-4d417fd card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Aranya Permaculture India</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-4ab87fe e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-63fb64c e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe0c6da elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12.25 5.83333C12.25 9.91666 7 13.4167 7 13.4167C7 13.4167 1.75 9.91666 1.75 5.83333C1.75 4.44094 2.30312 3.10558 3.28769 2.12102C4.27226 1.13645 5.60761 0.583328 7 0.583328C8.39239 0.583328 9.72774 1.13645 10.7123 2.12102C11.6969 3.10558 12.25 4.44094 12.25 5.83333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 7.58333C7.9665 7.58333 8.75 6.79983 8.75 5.83333C8.75 4.86683 7.9665 4.08333 7 4.08333C6.0335 4.08333 5.25 4.86683 5.25 5.83333C5.25 6.79983 6.0335 7.58333 7 7.58333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Countries						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				<div class="elementor-element elementor-element-55d0a79 elementor-position-inline-start elementor-mobile-position-inline-start elementor-view-default elementor-widget elementor-widget-icon-box">
+							<div class="elementor-icon-box-wrapper">
+
+						<div class="elementor-icon-box-icon">
+				<span  class="elementor-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13.4166 4.08333L9.33325 7L13.4166 9.91666V4.08333Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.16659 2.91667H1.74992C1.10559 2.91667 0.583252 3.43901 0.583252 4.08334V9.91667C0.583252 10.561 1.10559 11.0833 1.74992 11.0833H8.16659C8.81092 11.0833 9.33325 10.561 9.33325 9.91667V4.08334C9.33325 3.43901 8.81092 2.91667 8.16659 2.91667Z" stroke="#666666" stroke-linecap="round" stroke-linejoin="round"></path></svg>				</span>
+			</div>
+			
+						<div class="elementor-icon-box-content">
+
+									<p class="elementor-icon-box-title">
+						<span  >
+							All Types						</span>
+					</p>
+
+			</div>
+			
+		</div>
+						</div>
+				</div>
+		<div class="elementor-element elementor-element-8c06384 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fae8f64 elementor-view-default elementor-widget elementor-widget-icon">
+							<div class="elementor-icon-wrapper">
+			<div class="elementor-icon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 0.583328V13.4167" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.91667 2.91667H5.54167C5.00018 2.91667 4.48088 3.13178 4.09799 3.51466C3.7151 3.89755 3.5 4.41685 3.5 4.95834C3.5 5.49982 3.7151 6.01913 4.09799 6.40201C4.48088 6.7849 5.00018 7.00001 5.54167 7.00001H8.45833C8.99982 7.00001 9.51912 7.21511 9.90201 7.598C10.2849 7.98088 10.5 8.50019 10.5 9.04167C10.5 9.58316 10.2849 10.1025 9.90201 10.4853C9.51912 10.8682 8.99982 11.0833 8.45833 11.0833H3.5" stroke="#242424" stroke-linecap="round" stroke-linejoin="round"></path></svg>			</div>
+		</div>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-577746e e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-c85aee8 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/course/aranya-permaculture-india/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-b352845 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://permacultureindia.org/get-involved/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Course</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+				</div>
+					<span class="e-load-more-spinner">
+				<svg aria-hidden="true" class="e-font-icon-svg e-fas-spinner" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>			</span>
+		
+				<div class="e-load-more-anchor"></div>
+				<div class="e-loop__load-more elementor-button-wrapper">
+			<a class="elementor-button elementor-size-sm" role="button">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Load More</span>
+					</span>
+					</a>
+		</div>
+				<div class="e-load-more-message"></div>
+						</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		
+  </div>
 </BaseLayout>
 
 <style>
-  .page-hero{background:#43330B;padding:48px 0;text-align:center}
-  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:48px;color:#D2CEC8;margin-bottom:8px}
-  .page-hero h2{font-family:'Outfit',sans-serif;font-size:24px;font-weight:600;color:#D2CEC8;margin-bottom:8px}
-  .page-hero p{font-family:'Outfit',sans-serif;font-size:18px;color:rgba(210,206,200,.6)}
-  .page-content{background:#F0F5FA;padding:48px 0 64px}
-  .card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-  .ccard{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
-  .ccard:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-  .ccard-thumb{height:160px;background-size:cover;background-position:center;background-color:#e8e0d0}
-  .ccard-body{padding:16px}
-  .ccard-body h4{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#242424;margin-bottom:6px;line-height:1.4}
-  .ccard-body p{font-size:14px;color:#666;line-height:1.5}
-  .container{max-width:1200px;margin:0 auto;padding:0 40px}
-  @media(max-width:1024px){.card-grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:768px){.card-grid{grid-template-columns:1fr}}
+  .wp-content { max-width: 100%; overflow-x: hidden; }
+  .wp-content img { max-width: 100%; height: auto; }
+  .wp-content .elementor-heading-title { margin: 0; }
+  .wp-content .e-con-boxed .e-con-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .wp-content .e-con { width: 100%; }
+  .wp-content .e-flex { display: flex; }
+  .wp-content .e-con-full { width: 100%; }
+  .wp-content a { color: inherit; }
 </style>

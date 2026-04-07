@@ -1,49 +1,225 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
-import content from '../../public/data/content.json';
-const resources = content.resources;
 ---
 
 <BaseLayout title="Resources — Mycelium">
   <SiteNav />
-  <section class="page-hero">
-    <div class="container">
-      <h1>⛏️ Resources</h1>
-      <h2>Permaculture Resource Library</h2>
-      <p>Explore essential tools, templates, and references for sustainable living</p>
-    </div>
-  </section>
-  <section class="page-content">
-    <div class="container">
-      <div class="card-grid">
-        {resources.map(r => (
-          <a href={r.link || '/resources'} class="rcard" target={r.link ? '_blank' : '_self'}>
-            <div class="rcard-thumb" style={r.image ? `background-image:url(${r.image})` : 'background:#2a2a2a'}></div>
-            <div class="rcard-body">
-              <h4>{r.title}</h4>
-              {r.description && r.description !== 'By' && <p>{r.description}</p>}
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <div class="wp-content">
+    		<div class="elementor elementor-933">
+				<div class="elementor-element elementor-element-c137535 e-flex e-con-boxed e-con e-parent">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-19efddf e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-edd6ea0 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-ba04fc3 elementor-widget elementor-widget-text-editor">
+									<p>⛏️ Resources</p>								</div>
+				</div>
+		<div class="elementor-element elementor-element-45a9f7f e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-fe50f34 elementor-widget__width-initial elementor-widget elementor-widget-heading">
+					<h1 class="elementor-heading-title elementor-size-default">Permaculture Resource Library
+</h1>				</div>
+				<div class="elementor-element elementor-element-15e7995 elementor-widget-tablet__width-initial elementor-widget elementor-widget-text-editor">
+									<p>Explore essential tools, templates, and references for sustainable living</p>								</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-dbaa97d e-flex e-con-boxed e-con e-parent">
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-fb79678 elementor-grid-3 elementor-grid-tablet-2 elementor-grid-mobile-1 elementor-widget elementor-widget-loop-grid">
+				<div class="elementor-widget-container">
+							<div class="elementor-loop-container elementor-grid" role="list">
+		<style id="loop-dynamic-937">.e-loop-item-932 .elementor-element.elementor-element-8f4a564:not(.elementor-motion-effects-element-type-background), .e-loop-item-932 .elementor-element.elementor-element-8f4a564 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2025/11/RESIZED-PERMACULTURE-FOR-BEGGINERS.png");}</style><style id="loop-937">.elementor-937 .elementor-element.elementor-element-983739c{--display:flex;--flex-direction:column;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--justify-content:flex-start;--align-items:flex-start;--gap:4px 4px;--row-gap:4px;--column-gap:4px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-937 .elementor-element.elementor-element-8f4a564{--display:flex;--min-height:400px;--border-radius:12px 12px 12px 12px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-937 .elementor-element.elementor-element-8f4a564:not(.elementor-motion-effects-element-type-background), .elementor-937 .elementor-element.elementor-element-8f4a564 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-position:center center;background-repeat:no-repeat;background-size:cover;}.elementor-937 .elementor-element.elementor-element-12609c4{--display:flex;--gap:12px 12px;--row-gap:12px;--column-gap:12px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:12px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-937 .elementor-element.elementor-element-cb2f569{--display:flex;--gap:4px 4px;--row-gap:4px;--column-gap:4px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-widget-heading .elementor-heading-title{font-family:var( --e-global-typography-primary-font-family ), Sans-serif;font-size:var( --e-global-typography-primary-font-size );font-weight:var( --e-global-typography-primary-font-weight );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );color:var( --e-global-color-primary );}.elementor-937 .elementor-element.elementor-element-00f9b13 .elementor-heading-title{font-family:var( --e-global-typography-495f078-font-family ), Sans-serif;font-size:var( --e-global-typography-495f078-font-size );font-weight:var( --e-global-typography-495f078-font-weight );line-height:var( --e-global-typography-495f078-line-height );letter-spacing:var( --e-global-typography-495f078-letter-spacing );word-spacing:var( --e-global-typography-495f078-word-spacing );color:var( --e-global-color-text );}.elementor-937 .elementor-element.elementor-element-a69c1d1{--display:flex;--flex-direction:row;--container-widget-width:initial;--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--justify-content:space-between;--gap:12px 12px;--row-gap:12px;--column-gap:12px;--margin-top:-8px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:0px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-widget-text-editor{font-family:var( --e-global-typography-text-font-family ), Sans-serif;font-weight:var( --e-global-typography-text-font-weight );color:var( --e-global-color-text );}.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:var( --e-global-color-primary );}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap, .elementor-widget-text-editor.elementor-drop-cap-view-default .elementor-drop-cap{color:var( --e-global-color-primary );border-color:var( --e-global-color-primary );}.elementor-937 .elementor-element.elementor-element-cc0a2dd{font-family:var( --e-global-typography-d04038d-font-family ), Sans-serif;font-size:var( --e-global-typography-d04038d-font-size );font-weight:var( --e-global-typography-d04038d-font-weight );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );color:var( --e-global-color-31cf722 );}.elementor-937 .elementor-element.elementor-element-a7306cf{--display:flex;--flex-direction:row;--container-widget-width:initial;--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--gap:8px 8px;--row-gap:8px;--column-gap:8px;--margin-top:0px;--margin-bottom:0px;--margin-left:0px;--margin-right:0px;--padding-top:20px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-widget-button .elementor-button{font-family:var( --e-global-typography-accent-font-family ), Sans-serif;font-weight:var( --e-global-typography-accent-font-weight );background-color:var( --e-global-color-accent );}.elementor-937 .elementor-element.elementor-element-f795a63 .elementor-button{fill:var( --e-global-color-text );color:var( --e-global-color-text );background-color:#FFFFFF00;border-style:solid;border-width:1px 1px 1px 1px;border-radius:6px 6px 6px 6px;}.elementor-937 .elementor-element.elementor-element-f795a63 .elementor-button:hover, .elementor-937 .elementor-element.elementor-element-f795a63 .elementor-button:focus{color:#FFFFFF;background-color:var( --e-global-color-9003858 );}.elementor-937 .elementor-element.elementor-element-f795a63 .elementor-button:hover svg, .elementor-937 .elementor-element.elementor-element-f795a63 .elementor-button:focus svg{fill:#FFFFFF;}.elementor-937 .elementor-element.elementor-element-f795a63{width:100%;max-width:100%;}.elementor-937 .elementor-element.elementor-element-d34b8d0 .elementor-button{background-color:var( --e-global-color-primary );border-radius:6px 6px 6px 6px;}.elementor-937 .elementor-element.elementor-element-d34b8d0 .elementor-button:hover, .elementor-937 .elementor-element.elementor-element-d34b8d0 .elementor-button:focus{background-color:#78B177;}.elementor-937 .elementor-element.elementor-element-d34b8d0{width:100%;max-width:100%;}@media(max-width:1024px){.elementor-937 .elementor-element.elementor-element-8f4a564{--min-height:280px;}.elementor-widget-heading .elementor-heading-title{font-size:var( --e-global-typography-primary-font-size );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );}.elementor-937 .elementor-element.elementor-element-00f9b13 .elementor-heading-title{font-size:var( --e-global-typography-495f078-font-size );line-height:var( --e-global-typography-495f078-line-height );letter-spacing:var( --e-global-typography-495f078-letter-spacing );word-spacing:var( --e-global-typography-495f078-word-spacing );}.elementor-937 .elementor-element.elementor-element-cc0a2dd{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}}@media(max-width:767px){.elementor-937 .elementor-element.elementor-element-8f4a564{--min-height:200px;}.elementor-widget-heading .elementor-heading-title{font-size:var( --e-global-typography-primary-font-size );line-height:var( --e-global-typography-primary-line-height );letter-spacing:var( --e-global-typography-primary-letter-spacing );}.elementor-937 .elementor-element.elementor-element-00f9b13 .elementor-heading-title{font-size:var( --e-global-typography-495f078-font-size );line-height:var( --e-global-typography-495f078-line-height );letter-spacing:var( --e-global-typography-495f078-letter-spacing );word-spacing:var( --e-global-typography-495f078-word-spacing );}.elementor-937 .elementor-element.elementor-element-cc0a2dd{font-size:var( --e-global-typography-d04038d-font-size );line-height:var( --e-global-typography-d04038d-line-height );letter-spacing:var( --e-global-typography-d04038d-letter-spacing );word-spacing:var( --e-global-typography-d04038d-word-spacing );}}</style>		<div class="elementor elementor-937 e-loop-item e-loop-item-932 post-932 resources type-resources status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-983739c card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-8f4a564 e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/resources/growing-resilience/">
+				</a>
+		<div class="elementor-element elementor-element-12609c4 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-cb2f569 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-00f9b13 card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">What is Permaculture? &#8211; Article 🪴</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-a69c1d1 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-cc0a2dd text-description elementor-widget elementor-widget-text-editor">
+									Permaculture gets thrown around a lot, but rarely explained well. Most people assume it&#8217;s just a fancier version of organic gardening 🌱 &#8211; it&#8217;s not. It&#8217;s a design system, one that applies to backyards, communities, and entire ways of living. This is the clearest place to start before anything else makes sense.
+								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-a7306cf e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-f795a63 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/resources/growing-resilience/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-d34b8d0 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://homefortheharvest.com/permaculture-for-beginners/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Resources</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-937">.e-loop-item-931 .elementor-element.elementor-element-8f4a564:not(.elementor-motion-effects-element-type-background), .e-loop-item-931 .elementor-element.elementor-element-8f4a564 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2025/11/HOW-TO-START-A-PERMACULTURE-GARDEN.png");}</style>		<div class="elementor elementor-937 e-loop-item e-loop-item-931 post-931 resources type-resources status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-983739c card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-8f4a564 e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/resources/the-eco-blueprint/">
+				</a>
+		<div class="elementor-element elementor-element-12609c4 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-cb2f569 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-00f9b13 card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">First Steps 🛠️ &#8211; Article</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-a69c1d1 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-cc0a2dd text-description elementor-widget elementor-widget-text-editor">
+									Understanding permaculture and knowing what to do with that knowledge is equally important. This guide gets straight to the practical side 🛠️ &#8211; how to read your space, what to prioritize first, and what you can realistically start in a week with minimal expertise.								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-a7306cf e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-f795a63 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/resources/the-eco-blueprint/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-d34b8d0 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://www.masterclass.com/articles/how-to-start-a-permaculture-garden" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Resources</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-937">.e-loop-item-930 .elementor-element.elementor-element-8f4a564:not(.elementor-motion-effects-element-type-background), .e-loop-item-930 .elementor-element.elementor-element-8f4a564 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2025/11/DESIGN-PRINCIPLES.png");}</style>		<div class="elementor elementor-937 e-loop-item e-loop-item-930 post-930 resources type-resources status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-983739c card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-8f4a564 e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/resources/designing-with-nature/">
+				</a>
+		<div class="elementor-element elementor-element-12609c4 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-cb2f569 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-00f9b13 card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Design Principles 🧠 &#8211; Article</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-a69c1d1 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-cc0a2dd text-description elementor-widget elementor-widget-text-editor">
+									These are the thinking tools behind every permaculture decision 📚								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-a7306cf e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-f795a63 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/resources/designing-with-nature/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-d34b8d0 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://permacultureprinciples.com/permaculture-principles/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Resources</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		<style id="loop-dynamic-937">.e-loop-item-929 .elementor-element.elementor-element-8f4a564:not(.elementor-motion-effects-element-type-background), .e-loop-item-929 .elementor-element.elementor-element-8f4a564 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://mycelium-learn.com/wp-content/uploads/2025/11/HOW-TO-CREATE-A-FOOD-FOREST.png");}</style>		<div class="elementor elementor-937 e-loop-item e-loop-item-929 post-929 resources type-resources status-publish has-post-thumbnail hentry">
+			<div class="elementor-element elementor-element-983739c card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-8f4a564 e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/resources/sustainable-abundance/">
+				</a>
+		<div class="elementor-element elementor-element-12609c4 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-cb2f569 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-00f9b13 card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Designing a Food Forest 🍲🌲 &#8211; Article</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-a69c1d1 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-cc0a2dd text-description elementor-widget elementor-widget-text-editor">
+									A food forest is a working, layered ecosystem that produces food and largely takes care of itself over time. If you want to see what all the concepts actually look like built out in the real world, start here.								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-a7306cf e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-f795a63 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/resources/sustainable-abundance/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-d34b8d0 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://permacultureapprentice.com/creating-a-food-forest-step-by-step-guide/" target="_blank">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Resources</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+				<div class="elementor elementor-937 e-loop-item e-loop-item-925 post-925 resources type-resources status-publish hentry">
+			<div class="elementor-element elementor-element-983739c card e-flex e-con-boxed e-con e-child">
+					<div class="e-con-inner">
+		<a class="elementor-element elementor-element-8f4a564 e-con-full e-flex e-con e-child" href="https://mycelium-learn.com/resources/reources/">
+				</a>
+		<div class="elementor-element elementor-element-12609c4 e-con-full e-flex e-con e-child">
+		<div class="elementor-element elementor-element-cb2f569 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-00f9b13 card-header elementor-widget elementor-widget-heading">
+					<h4 class="elementor-heading-title elementor-size-default">Regenerative Living</h4>				</div>
+				</div>
+		<div class="elementor-element elementor-element-a69c1d1 e-con-full e-flex e-con e-child">
+				<div class="elementor-element elementor-element-cc0a2dd text-description elementor-widget elementor-widget-text-editor">
+									Permaculture focuses on regenerating ecosystems rather than depleting them. By designing landscapes that capture water, restore soil health, and encourage biodiversity, it creates systems that are productive, resilient, and in balance with nature.								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-a7306cf e-con-full card-buttons e-flex e-con e-child">
+				<div class="elementor-element elementor-element-f795a63 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-button-link elementor-size-sm" href="https://mycelium-learn.com/resources/reources/">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">Learn More</span>
+					</span>
+					</a>
+								</div>
+				<div class="elementor-element elementor-element-d34b8d0 elementor-align-justify elementor-widget__width-inherit elementor-widget elementor-widget-button">
+										<a class="elementor-button elementor-size-sm" role="button">
+						<span class="elementor-button-content-wrapper">
+									<span class="elementor-button-text">View Resources</span>
+					</span>
+					</a>
+								</div>
+				</div>
+					</div>
+				</div>
+				</div>
+				</div>
+					<span class="e-load-more-spinner">
+				<svg aria-hidden="true" class="e-font-icon-svg e-fas-spinner" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>			</span>
+		
+						</div>
+				</div>
+					</div>
+				</div>
+				</div>
+		
+  </div>
 </BaseLayout>
 
 <style>
-  .page-hero{background:#43330B;padding:48px 0;text-align:center}
-  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:48px;color:#D2CEC8;margin-bottom:8px}
-  .page-hero h2{font-family:'Outfit',sans-serif;font-size:24px;font-weight:600;color:#D2CEC8;margin-bottom:8px}
-  .page-hero p{font-family:'Outfit',sans-serif;font-size:18px;color:rgba(210,206,200,.6)}
-  .page-content{background:#F0F5FA;padding:48px 0 64px}
-  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .rcard{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .3s,box-shadow .3s}
-  .rcard:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-  .rcard-thumb{height:200px;background-size:cover;background-position:center;background-color:#e8e0d0}
-  .rcard-body{padding:16px}
-  .rcard-body h4{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#242424;margin-bottom:6px;line-height:1.4}
-  .rcard-body p{font-size:14px;color:#666;line-height:1.5}
-  .container{max-width:1200px;margin:0 auto;padding:0 40px}
-  @media(max-width:768px){.card-grid{grid-template-columns:1fr}}
+  .wp-content { max-width: 100%; overflow-x: hidden; }
+  .wp-content img { max-width: 100%; height: auto; }
+  .wp-content .elementor-heading-title { margin: 0; }
+  .wp-content .e-con-boxed .e-con-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .wp-content .e-con { width: 100%; }
+  .wp-content .e-flex { display: flex; }
+  .wp-content .e-con-full { width: 100%; }
+  .wp-content a { color: inherit; }
 </style>
