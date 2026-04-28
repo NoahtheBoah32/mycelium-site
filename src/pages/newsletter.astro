@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<BaseLayout title="Newsletter - Mycelium">
+  <SiteNav />
+  <section class="nl-hero">
+    <div class="nl-inner">
+      <span class="eyebrow">Newsletter</span>
+      <h1 class="nl-title">Get Monthly Permaculture Resources</h1>
+      <p class="nl-sub">Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.</p>
+      <form class="nl-form" action="https://mycelium-learn.com/newsletter/" method="get">
+        <input type="email" placeholder="Your email address" class="nl-input" />
+        <button type="submit" class="nl-btn">Subscribe</button>
+      </form>
+      <p class="nl-privacy">We respect your privacy. Unsubscribe anytime.</p>
+    </div>
+  </section>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+.nl-hero { background: #F7F7F5; min-height: 60vh; display: flex; align-items: center; padding: 80px 40px; }
+.nl-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+.eyebrow { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #2F4F2F; margin-bottom: 12px; display: block; }
+.nl-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 400; color: #242424; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
+.nl-sub { font-family: var(--font-outfit); font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 32px; }
+.nl-form { display: flex; gap: 12px; justify-content: center; margin-bottom: 16px; }
+.nl-input { flex: 1; max-width: 300px; padding: 12px 20px; border: 1px solid #ccc; border-radius: 50px; font-family: var(--font-inter); font-size: 0.875rem; outline: none; }
+.nl-btn { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; background: #5A3A1C; color: #fff; padding: 12px 24px; border-radius: 50px; border: none; cursor: pointer; transition: background 0.2s; }
+.nl-btn:hover { background: #947153; }
+.nl-privacy { font-family: var(--font-inter); font-size: 0.75rem; color: #999; }
+@media (max-width: 600px) { .nl-form { flex-direction: column; } .nl-input { max-width: 100%; } }
+</style>

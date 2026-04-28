@@ -1,0 +1,113 @@
+---
+---
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand">
+      <a href="/">
+        <img
+          src="https://mycelium-learn.com/wp-content/uploads/2025/11/logo-differtniated.png"
+          alt="Mycelium"
+          width="180"
+          height="40"
+          class="sf-logo"
+        />
+      </a>
+      <p class="sf-tagline">Connecting scattered permaculture knowledge into clear learning pathways. Free, verified, and built for beginners ready to grow.</p>
+    </div>
+
+    <div class="sf-col">
+      <h4 class="sf-col-title">Learn</h4>
+      <ul class="sf-links">
+        <li><a href="/videos">Videos</a></li>
+        <li><a href="/courses">Courses</a></li>
+        <li><a href="/resources">Resources</a></li>
+        <li><a href="/events">Events</a></li>
+      </ul>
+    </div>
+
+    <div class="sf-col">
+      <h4 class="sf-col-title">Mycelium</h4>
+      <ul class="sf-links">
+        <li><a href="/about">About</a></li>
+        <li><a href="/feedback">Feedback</a></li>
+        <li><a href="/newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+
+    <div class="sf-col">
+      <h4 class="sf-col-title">Get In Touch</h4>
+      <ul class="sf-links">
+        <li><a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sf-bottom">
+    <p>© 2026 All Rights Reserved. Built with 🌱 for the permaculture community</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #242424;
+    color: #D2CEC8;
+    padding: 64px 40px 0;
+    margin-top: 0;
+  }
+  .sf-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .sf-logo { filter: brightness(0) invert(1); margin-bottom: 16px; }
+  .sf-tagline {
+    font-family: var(--font-inter);
+    font-size: 0.875rem;
+    color: #888888;
+    line-height: 1.6;
+    max-width: 280px;
+  }
+  .sf-col-title {
+    font-family: var(--font-inter);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888888;
+    margin-bottom: 16px;
+  }
+  .sf-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sf-links a {
+    font-family: var(--font-inter);
+    font-size: 0.875rem;
+    color: #D2CEC8;
+    transition: color 0.15s;
+  }
+  .sf-links a:hover { color: #ffffff; }
+  .sf-bottom {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 20px 0;
+    font-family: var(--font-inter);
+    font-size: 0.8rem;
+    color: #666666;
+    text-align: center;
+  }
+  @media (max-width: 900px) {
+    .site-footer { padding: 40px 20px 0; }
+    .sf-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .sf-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 600px) {
+    .sf-inner { grid-template-columns: 1fr; }
+  }
+</style>

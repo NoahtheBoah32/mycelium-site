@@ -4,72 +4,132 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/videos", label: "Videos" },
   { href: "/resources", label: "Resources" },
-  { href: "/courses", label: "Courses" },
   { href: "/events", label: "Events" },
+  { href: "/courses", label: "Courses" },
+  { href: "/newsletter", label: "Newsletter" },
+  { href: "/feedback", label: "Feedback" },
 ];
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="site-nav">
-  <a href="/" class="sn-logo">
-    <img src="/images/page-top.png" alt="" class="sn-logo-img">
-    <span>MYCELIUM</span>
-  </a>
-  <div class="sn-links">
-    {links.map(link => (
-      <a href={link.href} class:list={["sn-link", { active: currentPath === link.href || (link.href !== "/" && currentPath.startsWith(link.href)) }]}>
-        {link.label}
-      </a>
-    ))}
+<nav class="site-nav" id="site-nav">
+  <div class="sn-inner">
+    <a href="/" class="sn-logo">
+      <img
+        src="https://mycelium-learn.com/wp-content/uploads/2025/11/logo-differtniated.png"
+        alt="Mycelium"
+        width="200"
+        height="44"
+      />
+    </a>
+    <button class="sn-burger" id="sn-burger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="sn-links" id="sn-links">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class:list={["sn-link", { active: currentPath === link.href || (link.href !== "/" && currentPath.startsWith(link.href)) }]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
   </div>
 </nav>
 
+<script>
+  const burger = document.getElementById('sn-burger');
+  const links = document.getElementById('sn-links');
+  burger?.addEventListener('click', () => {
+    const open = links?.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+</script>
+
 <style>
   .site-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
-    height: 52px;
-    background: #1a1200;
     position: sticky;
     top: 0;
     z-index: 9999;
+    background: #ffffff;
+    border-bottom: 1px solid #e8e8e8;
   }
-  .sn-logo {
+  .sn-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 40px;
+    height: 72px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+    gap: 32px;
   }
-  .sn-logo-img { display: none; }
-  .sn-logo span {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.18em;
-    color: #D4B896;
+  .sn-logo img {
+    height: 44px;
+    width: auto;
   }
   .sn-links {
     display: flex;
-    gap: 32px;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: flex-end;
   }
   .sn-link {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
+    font-family: var(--font-inter);
+    font-size: 0.875rem;
     font-weight: 500;
-    color: #D2CEC8;
-    opacity: 0.6;
-    transition: opacity 0.2s;
+    color: #334155;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+    white-space: nowrap;
   }
-  .sn-link:hover, .sn-link.active {
-    opacity: 1;
+  .sn-link:hover {
+    color: var(--color-primary);
+    background: rgba(47, 79, 47, 0.06);
   }
   .sn-link.active {
-    color: #7dae85;
+    color: var(--color-primary);
+    font-weight: 600;
   }
-  @media (max-width: 600px) {
-    .site-nav { padding: 0 16px; }
-    .sn-links { gap: 16px; }
-    .sn-link { font-size: 0.75rem; }
+  .sn-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .sn-burger span {
+    display: block;
+    height: 2px;
+    background: #334155;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  @media (max-width: 900px) {
+    .sn-inner { padding: 0 20px; }
+    .sn-burger { display: flex; }
+    .sn-links {
+      display: none;
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding: 8px 20px 16px;
+    }
+    .sn-links.open { display: flex; }
+    .sn-link { width: 100%; padding: 10px 8px; }
   }
 </style>

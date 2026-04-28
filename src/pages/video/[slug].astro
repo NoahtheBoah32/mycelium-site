@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import videos from '../../../public/data/videos.json';
+
+export function getStaticPaths() {
+  return videos.map(v => ({
+    params: { slug: v.slug },
+    props: { video: v },
+  }));
+}
+
+const { video } = Astro.props;
+const ytMatch = video.embedUrl?.match(/[?&]v=([^&]+)/);
+const ytId = video.youtubeId || (ytMatch ? ytMatch[1] : null);
+const embedSrc = video.embedSrc || (ytId ? `https://www.youtube-nocookie.com/embed/${ytId}` : null);
+const thumb = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : video.thumbnail;
+const isYoutube = !!(ytId && video.videoType !== "webinar");
+---
+
+<BaseLayout title={video.title + " - Mycelium"}>
+  <SiteNav />
+
+  <article class="vd-page">
+    <div class="vd-inner">
+      <div class="vd-back">
+        <a href="/videos" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All Videos
+        </a>
+      </div>
+      <div class="vd-layout">
+        <div class="vd-main">
+          {isYoutube && embedSrc ? (
+            <div class="vd-embed">
+              <iframe src={embedSrc} title={video.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          ) : (
+            <div class="vd-embed-fallback">
+              {(thumb || video.thumbnail) && <img src={thumb || video.thumbnail} alt={video.title} />}
+              {video.embedUrl && (
+                <div class="vd-external">
+                  <a href={video.embedUrl} target="_blank" rel="noopener" class="btn-watch-full">Watch Full Video</a>
+                </div>
+              )}
+            </div>
+          )}
+          <div class="vd-meta">
+            <p class="vd-author">{video.author}</p>
+            <h1 class="vd-title">{video.title}</h1>
+            {video.tags && video.tags.length > 0 && (
+              <div class="vd-tags">
+                {video.tags.map((tag: string) => <span class="vd-tag">{tag}</span>)}
+              </div>
+            )}
+            {video.description && <p class="vd-desc">{video.description}</p>}
+          </div>
+        </div>
+        <div class="vd-sidebar">
+          <h3 class="sidebar-title">About this Video</h3>
+          <div class="sidebar-info">
+            {video.author && (<div class="si-row"><span class="si-label">Speaker</span><span class="si-value">{video.author}</span></div>)}
+            {video.videoType && (<div class="si-row"><span class="si-label">Format</span><span class="si-value si-cap">{video.videoType}</span></div>)}
+          </div>
+          <div class="sidebar-links">
+            {video.embedUrl && <a href={video.embedUrl} target="_blank" rel="noopener" class="btn-watch-full">Watch Full Video</a>}
+            <a href="/videos" class="btn-all">Browse All Videos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+.vd-page { background: #fff; min-height: 60vh; padding: 48px 40px 80px; }
+.vd-inner { max-width: 1100px; margin: 0 auto; }
+.vd-back { margin-bottom: 32px; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-inter); font-size: 0.875rem; color: #666; transition: color 0.15s; text-decoration: none; }
+.back-link:hover { color: #2F4F2F; }
+.vd-layout { display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: flex-start; }
+.vd-embed { position: relative; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; }
+.vd-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.vd-embed-fallback { border-radius: 12px; overflow: hidden; background: #f0f0f0; }
+.vd-embed-fallback img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.vd-external { padding: 20px; text-align: center; background: #f9f9f9; }
+.vd-meta { margin-top: 28px; }
+.vd-author { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #2F4F2F; margin-bottom: 8px; }
+.vd-title { font-family: var(--font-lora); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 600; color: #242424; line-height: 1.3; margin-bottom: 16px; }
+.vd-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.vd-tag { font-family: var(--font-inter); font-size: 0.72rem; background: #F7F7F5; color: #555; padding: 4px 12px; border-radius: 50px; }
+.vd-desc { font-family: var(--font-outfit); font-size: 1rem; color: #555; line-height: 1.7; }
+.vd-sidebar { position: sticky; top: 88px; }
+.sidebar-title { font-family: var(--font-lora); font-size: 1.1rem; font-weight: 600; color: #242424; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0; }
+.sidebar-info { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.si-row { display: flex; flex-direction: column; gap: 2px; }
+.si-label { font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #999; }
+.si-value { font-family: var(--font-inter); font-size: 0.9rem; color: #242424; }
+.si-cap { text-transform: capitalize; }
+.sidebar-links { display: flex; flex-direction: column; gap: 10px; }
+.btn-watch-full { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; background: #5A3A1C; color: #fff; padding: 10px 20px; border-radius: 50px; transition: background 0.2s; text-decoration: none; display: block; text-align: center; }
+.btn-watch-full:hover { background: #947153; }
+.btn-all { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; color: #242424; border: 1px solid #ccc; padding: 10px 20px; border-radius: 50px; transition: border-color 0.2s; text-decoration: none; display: block; text-align: center; }
+.btn-all:hover { border-color: #2F4F2F; color: #2F4F2F; }
+@media (max-width: 900px) { .vd-layout { grid-template-columns: 1fr; } .vd-sidebar { position: static; } }
+@media (max-width: 600px) { .vd-page { padding: 32px 20px 60px; } }
+</style>
