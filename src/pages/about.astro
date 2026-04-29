@@ -103,6 +103,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-mission">
     <div class="section-inner">
+      <h3 class="section-eyebrow">OUR MISSION</h3>
       <h2 class="section-h2 center">Permaculture knowledge is scattered.<br>So Mycelium organizes it.</h2>
       <p class="mission-body">Mycelium connects scattered permaculture resources into one clear, organized, platform. Content is featured from partners like The Baganihan Collective, and contributions from The Philippine Permaculture Association (PPA). Mycelium keeps all its resources in real community implementation.</p>
       <div class="mission-pillars">
@@ -120,25 +121,26 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-criteria">
     <div class="section-inner">
+      <h3 class="section-eyebrow">OUR CRITERIA</h3>
       <h2 class="section-h2">Three questions every resource must answer.</h2>
       <p class="criteria-intro">Resources must answer three questions:</p>
       <div class="criteria-grid">
         <div class="criteria-item">
-          <span class="criteria-num">1</span>
+          <span class="criteria-num">01</span>
           <div>
             <h3 class="criteria-q">Can a beginner understand it?</h3>
             <p class="criteria-a">Mycelium organizes permaculture videos into clear categories &ndash; from beginner introductions to podcasts and deeper philosophical discussions on regenerative systems.</p>
           </div>
         </div>
         <div class="criteria-item">
-          <span class="criteria-num">2</span>
+          <span class="criteria-num">02</span>
           <div>
             <h3 class="criteria-q">Is this knowledge proven in practice?</h3>
             <p class="criteria-a">Not just written about, but also practiced in an actual location. A resource passes this check if the knowledge it teaches has been applied somewhere real.</p>
           </div>
         </div>
         <div class="criteria-item">
-          <span class="criteria-num">3</span>
+          <span class="criteria-num">03</span>
           <div>
             <h3 class="criteria-q">Do we trust this source?</h3>
             <p class="criteria-a">Content connected to our partner network holds accountability. When it&rsquo;s outside that network, we cross-check it against what our partners have taught in the field.</p>
@@ -150,6 +152,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-partners">
     <div class="section-inner">
+      <h3 class="section-eyebrow center">OUR PARTNERS</h3>
       <h2 class="section-h2 center">The field organizations that keep us honest</h2>
       <div class="partners-grid">
         <div class="partner-card">
@@ -197,7 +200,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 .about-hero > * { position: relative; z-index: 1; }
 .about-hero-link { display: inline-block; font-family: var(--font-outfit); font-size: 1.5rem; font-weight: 400; letter-spacing: 0.06em; color: #D2CEC8; text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
 .about-hero-link:hover { color: #FFD53B; }
-.about-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 5.5vw, 5rem); font-weight: 400; color: #D2CEC8; line-height: 1.05; letter-spacing: -0.03em; max-width: 900px; margin: 0 auto 0; }
+.about-title { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 4.5rem; letter-spacing: -0.02em; text-align: center; }
 
 /* HOW IT STARTED */
 .about-story { background: #43330B; padding: 112px 40px; }
@@ -249,7 +252,9 @@ import SiteFooter from '../components/SiteFooter.astro';
 .mission-body { font-family: var(--font-lora); font-size: 1.5rem; color: #D2CEC8; line-height: 1.6; max-width: 800px; margin: 0 auto 56px; opacity: 0.8; }
 .mission-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 960px; margin: 0 auto; }
 .pillar { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 36px; text-align: left; }
-.pillar-label { font-family: var(--font-inter); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7A8B55; margin-bottom: 14px; }
+.section-eyebrow { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; color: #7A8B55; margin-bottom: 16px; }
+.section-eyebrow.center { text-align: center; }
+.pillar-label { font-family: var(--font-lora); font-size: 1.75rem; font-weight: 500; color: #D2CEC8; margin-bottom: 14px; }
 .pillar-body { font-family: var(--font-outfit); font-size: 1.2rem; color: #D2CEC8; line-height: 1.6; opacity: 0.8; }
 
 /* CRITERIA */
@@ -257,8 +262,8 @@ import SiteFooter from '../components/SiteFooter.astro';
 .criteria-intro { font-family: var(--font-outfit); font-size: 1.35rem; color: #555; margin-bottom: 40px; }
 .criteria-grid { display: flex; flex-direction: column; gap: 24px; }
 .criteria-item { display: flex; align-items: flex-start; gap: 24px; padding: 32px; background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; }
-.criteria-num { font-family: var(--font-lora); font-size: 2rem; font-weight: 700; color: #5A3A1C; flex-shrink: 0; width: 44px; text-align: center; }
-.criteria-q { font-family: var(--font-lora); font-size: 1.35rem; font-weight: 600; color: #242424; margin-bottom: 8px; }
+.criteria-num { font-family: var(--font-lora); font-size: 5rem; font-weight: 700; color: #5A3A1C; flex-shrink: 0; width: 120px; line-height: 1; text-align: center; }
+.criteria-q { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 500; color: #242424; margin-bottom: 8px; }
 .criteria-a { font-family: var(--font-lora); font-size: 1.5rem; color: #666; line-height: 1.4; }
 
 /* PARTNERS */
@@ -267,7 +272,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 .partner-card > img:first-child { width: 100%; aspect-ratio: 16/7; object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
 .partner-people { display: flex; gap: 12px; margin-bottom: 18px; }
 .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #e8e8e8; }
-.partner-name { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 600; color: #242424; margin-bottom: 12px; }
+.partner-name { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 500; color: #242424; margin-bottom: 12px; }
 .partner-desc { font-family: var(--font-lora); font-size: 1.5rem; color: #555; line-height: 1.4; }
 
 @media (max-width: 1100px) {
