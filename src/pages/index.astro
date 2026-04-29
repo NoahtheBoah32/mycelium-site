@@ -144,6 +144,60 @@ const featuredVideos = videos.slice(0, 3);
     </div>
   </section>
 
+  <section class="home-resources">
+    <div class="section-inner">
+      <span class="eyebrow-label">Blog</span>
+      <h2 class="section-heading dark">Organized Blog Resources</h2>
+      <p class="section-sub dark">Quality permaculture content organized by topic</p>
+      <div class="home-resources-grid">
+        <a href="https://mycelium-learn.com/resources/growing-resilience/" target="_blank" rel="noopener" class="hrc">
+          <div class="hrc-thumb"><img src="https://mycelium-learn.com/wp-content/uploads/2025/11/RESIZED-PERMACULTURE-FOR-BEGGINERS.png" alt="What is Permaculture?" loading="lazy" /></div>
+          <div class="hrc-body">
+            <span class="hrc-cat">Getting Started</span>
+            <h3 class="hrc-title">What is Permaculture? — Article</h3>
+            <p class="hrc-desc">Permaculture is not just organic gardening. It is a design system that applies to backyards, communities, and entire ways of living.</p>
+          </div>
+        </a>
+        <a href="https://mycelium-learn.com/resources/the-eco-blueprint/" target="_blank" rel="noopener" class="hrc">
+          <div class="hrc-thumb"><img src="https://mycelium-learn.com/wp-content/uploads/2025/11/HOW-TO-START-A-PERMACULTURE-GARDEN.png" alt="First Steps" loading="lazy" /></div>
+          <div class="hrc-body">
+            <span class="hrc-cat">Beginner</span>
+            <h3 class="hrc-title">First Steps — Article</h3>
+            <p class="hrc-desc">How to read your space, what to prioritize first, and what you can realistically start in a week.</p>
+          </div>
+        </a>
+        <a href="https://mycelium-learn.com/resources/designing-with-nature/" target="_blank" rel="noopener" class="hrc">
+          <div class="hrc-thumb"><img src="https://mycelium-learn.com/wp-content/uploads/2025/11/DESIGN-PRINCIPLES.png" alt="Design Principles" loading="lazy" /></div>
+          <div class="hrc-body">
+            <span class="hrc-cat">Beginner</span>
+            <h3 class="hrc-title">Design Principles — Article</h3>
+            <p class="hrc-desc">The thinking tools behind every permaculture decision.</p>
+          </div>
+        </a>
+        <a href="https://mycelium-learn.com/resources/sustainable-abundance/" target="_blank" rel="noopener" class="hrc">
+          <div class="hrc-thumb"><img src="https://mycelium-learn.com/wp-content/uploads/2025/11/HOW-TO-CREATE-A-FOOD-FOREST.png" alt="Food Forest" loading="lazy" /></div>
+          <div class="hrc-body">
+            <span class="hrc-cat">Beginner</span>
+            <h3 class="hrc-title">Designing a Food Forest</h3>
+            <p class="hrc-desc">A food forest is a layered ecosystem that produces food and largely takes care of itself.</p>
+          </div>
+        </a>
+      </div>
+      <div class="section-cta"><a href="/resources" class="btn-primary">View All Resources</a></div>
+    </div>
+  </section>
+
+  <section class="newsletter-section">
+    <div class="section-inner newsletter-inner">
+      <h2 class="section-heading dark">Get Monthly Permaculture Resources</h2>
+      <p class="newsletter-sub">Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.</p>
+      <form class="newsletter-form" action="https://mycelium-learn.com/newsletter/" method="get">
+        <input type="email" placeholder="Your email address" class="newsletter-input" />
+        <button type="submit" class="btn-primary small">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
   <SiteFooter />
 </BaseLayout>
 
@@ -214,6 +268,21 @@ const featuredVideos = videos.slice(0, 3);
 .hvc-title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .hvc-actions, .hcc-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 .hcc-meta { font-family: var(--font-inter); font-size: 0.8rem; color: #888; }
+.home-resources { background: #F7F7F5; padding: 80px 40px; }
+.home-resources-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+.hrc { border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; background: #fff; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.15s; }
+.hrc:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.hrc-thumb { aspect-ratio: 4/3; overflow: hidden; background: #f0f0f0; flex-shrink: 0; }
+.hrc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.hrc-body { padding: 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.hrc-cat { font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #2F4F2F; }
+.hrc-title { font-family: var(--font-inter); font-size: 0.88rem; font-weight: 700; color: #242424; line-height: 1.35; }
+.hrc-desc { font-family: var(--font-inter); font-size: 0.78rem; color: #666; line-height: 1.55; }
+.newsletter-section { background: #fff; padding: 80px 40px; border-top: 1px solid #f0f0f0; }
+.newsletter-inner { text-align: center; max-width: 600px; margin: 0 auto; }
+.newsletter-sub { font-family: var(--font-outfit); font-size: 1rem; color: #666; line-height: 1.6; margin-bottom: 32px; }
+.newsletter-form { display: flex; gap: 12px; justify-content: center; }
+.newsletter-input { flex: 1; max-width: 320px; padding: 12px 20px; border: 1px solid #ccc; border-radius: 50px; font-family: var(--font-inter); font-size: 0.875rem; outline: none; }
 @media (max-width: 1024px) {
   .hi { height: 200px; } .founder-img { width: 320px; } .operate-grid { grid-template-columns: repeat(2,1fr); }
   .home-video-grid, .home-courses-grid { grid-template-columns: repeat(2,1fr); }
@@ -223,7 +292,7 @@ const featuredVideos = videos.slice(0, 3);
   .hero-images { flex-direction: column; }
   .hi { height: 220px; width: 100%; flex: none; }
   .section-inner { padding: 0 20px; }
-  .mission, .stats, .founder, .how-operate, .home-videos, .home-courses { padding-left: 20px; padding-right: 20px; }
+  .mission, .stats, .founder, .how-operate, .home-videos, .home-courses, .home-resources, .newsletter-section { padding-left: 20px; padding-right: 20px; }
   .founder-inner { flex-direction: column; } .founder-img { width: 100%; }
   .operate-grid { grid-template-columns: 1fr; gap: 40px; }
   .home-video-grid, .home-courses-grid, .home-resources-grid { grid-template-columns: 1fr; }
