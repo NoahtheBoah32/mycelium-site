@@ -17,6 +17,13 @@ import videos from '../../public/data/videos.json';
 
   <section class="vp-grid-section">
     <div class="vp-inner">
+      <div class="vp-search-wrap">
+        <svg class="vp-search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="7.5" cy="7.5" r="5.5" stroke="#888" stroke-width="1.5"/>
+          <line x1="11.5" y1="11.5" x2="16" y2="16" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input id="vp-search" class="vp-search" type="text" placeholder="Search videos, topics, creators..." autocomplete="off" />
+      </div>
       <div class="vp-filters" id="vp-filters">
         <button class="vp-filter active" data-filter="all">All</button>
         <button class="vp-filter" data-filter="podcast">Podcast</button>
@@ -25,29 +32,37 @@ import videos from '../../public/data/videos.json';
         {videos.map((v, i) => {
           const isPodcast = v.title?.toLowerCase().includes('podcast') || v.tags?.some((t: string) => t.toLowerCase().includes('podcast'));
           const thumb = v.thumbnail || (v.youtubeId ? `https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg` : null);
+          const ytUrl = v.youtubeId ? `https://www.youtube.com/watch?v=${v.youtubeId}` : v.embedUrl;
           return (
-            <a
-              href={`/video/${v.slug}`}
+            <div
               class="vc"
               data-type={isPodcast ? 'podcast' : 'all'}
               data-index={i}
+              data-title={v.title?.toLowerCase()}
+              data-author={(v.author || '').toLowerCase()}
               style={i >= 9 ? 'display:none' : ''}
             >
-              <div class="vc-thumb">
-                {thumb && <img src={thumb} alt={v.title} loading="lazy" />}
-                <div class="vc-play">
-                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                    <circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)" />
-                    <polygon points="14,11 28,18 14,25" fill="white" />
-                  </svg>
+              <a href={`/video/${v.slug}`} class="vc-thumb-link">
+                <div class="vc-thumb">
+                  {thumb && <img src={thumb} alt={v.title} loading="lazy" />}
+                  <div class="vc-play">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                      <circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)" />
+                      <polygon points="14,11 28,18 14,25" fill="white" />
+                    </svg>
+                  </div>
+                  {v.videoType === 'webinar' && <span class="vc-badge">WEBINAR</span>}
                 </div>
-                {v.videoType === 'webinar' && <span class="vc-badge">WEBINAR</span>}
-              </div>
+              </a>
               <div class="vc-body">
                 <h3 class="vc-title">{v.title}</h3>
                 <p class="vc-author">By {v.author || 'Mycelium'}</p>
+                <div class="vc-hover-actions">
+                  <a href={`/video/${v.slug}`} class="vc-btn-outline">Learn More</a>
+                  {ytUrl && <a href={ytUrl} target="_blank" rel="noopener" class="vc-btn-solid">Watch Now</a>}
+                </div>
               </div>
-            </a>
+            </div>
           );
         })}
       </div>
@@ -64,14 +79,26 @@ import videos from '../../public/data/videos.json';
   const BATCH = 9;
   let shown = 9;
   let currentFilter = 'all';
+  let searchQuery = '';
 
   const grid = document.getElementById('vp-grid')!;
   const loadMore = document.getElementById('vp-load-more')!;
   const loadWrap = document.getElementById('vp-load-wrap')!;
   const filterBtns = document.querySelectorAll('.vp-filter');
+  const searchInput = document.getElementById('vp-search') as HTMLInputElement;
 
   function getCards() {
     return Array.from(grid.querySelectorAll<HTMLElement>('.vc'));
+  }
+
+  function cardMatches(c: HTMLElement) {
+    const type = c.dataset.type!;
+    const filterMatch = currentFilter === 'all' || type === currentFilter;
+    if (!filterMatch) return false;
+    if (!searchQuery) return true;
+    const title = c.dataset.title || '';
+    const author = c.dataset.author || '';
+    return title.includes(searchQuery) || author.includes(searchQuery);
   }
 
   function applyFilter() {
@@ -79,12 +106,11 @@ import videos from '../../public/data/videos.json';
     const cards = getCards();
     let visible = 0;
     cards.forEach(c => {
-      const type = c.dataset.type!;
-      const match = currentFilter === 'all' || type === currentFilter;
+      const match = cardMatches(c);
       c.style.display = match && visible < shown ? '' : 'none';
       if (match) visible++;
     });
-    const total = cards.filter(c => currentFilter === 'all' || c.dataset.type === currentFilter).length;
+    const total = cards.filter(c => cardMatches(c)).length;
     loadWrap.style.display = total > shown ? '' : 'none';
   }
 
@@ -97,16 +123,20 @@ import videos from '../../public/data/videos.json';
     });
   });
 
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.trim().toLowerCase();
+    applyFilter();
+  });
+
   loadMore.addEventListener('click', () => {
     const cards = getCards();
-    const matching = cards.filter(c => currentFilter === 'all' || c.dataset.type === currentFilter);
+    const matching = cards.filter(c => cardMatches(c));
     const next = matching.slice(shown, shown + BATCH);
     next.forEach(c => c.style.display = '');
     shown += BATCH;
     if (shown >= matching.length) loadWrap.style.display = 'none';
   });
 
-  // Init
   applyFilter();
 </script>
 
@@ -120,6 +150,13 @@ import videos from '../../public/data/videos.json';
 /* Grid section */
 .vp-grid-section { background: #f9f9f7; padding: 40px 40px 80px; }
 
+/* Search */
+.vp-search-wrap { position: relative; margin-bottom: 20px; }
+.vp-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.vp-search { width: 100%; box-sizing: border-box; font-family: var(--font-outfit); font-size: 0.95rem; color: #333; padding: 11px 16px 11px 42px; border: 1px solid #ddd; border-radius: 8px; background: #fff; outline: none; transition: border-color 0.15s; }
+.vp-search:focus { border-color: #2F4F2F; }
+.vp-search::placeholder { color: #aaa; }
+
 /* Filter tabs */
 .vp-filters { display: flex; gap: 8px; margin-bottom: 32px; }
 .vp-filter { font-family: var(--font-inter); font-size: 0.8rem; font-weight: 600; padding: 6px 18px; border-radius: 50px; border: 1px solid #ddd; background: #fff; color: #555; cursor: pointer; transition: all 0.15s; }
@@ -130,9 +167,10 @@ import videos from '../../public/data/videos.json';
 .vp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
 /* Card */
-.vc { border-radius: 10px; overflow: hidden; background: #fff; border: 1px solid #e8e8e8; transition: box-shadow 0.2s, transform 0.15s; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+.vc { border-radius: 10px; overflow: hidden; background: #fff; border: 1px solid #e8e8e8; transition: box-shadow 0.2s, transform 0.15s; display: flex; flex-direction: column; cursor: pointer; }
 .vc:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
-.vc-thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #1a1a1a; flex-shrink: 0; }
+.vc-thumb-link { display: block; text-decoration: none; flex-shrink: 0; }
+.vc-thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #1a1a1a; }
 .vc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
 .vc:hover .vc-thumb img { transform: scale(1.04); }
 .vc-play { position: absolute; bottom: 8px; left: 8px; opacity: 0; transition: opacity 0.2s; }
@@ -141,6 +179,10 @@ import videos from '../../public/data/videos.json';
 .vc-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 5px; }
 .vc-title { font-family: var(--font-inter); font-size: 0.85rem; font-weight: 600; color: #242424; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .vc-author { font-family: var(--font-inter); font-size: 0.75rem; color: #888; }
+.vc-hover-actions { display: flex; gap: 4px; margin-top: 10px; opacity: 0; transition: opacity 0.18s; }
+.vc:hover .vc-hover-actions { opacity: 1; }
+.vc-btn-outline { flex: 1; font-family: var(--font-inter); font-size: 0.88rem; font-weight: 500; padding: 9px 12px; border: 0.8px solid rgb(36,36,36); border-radius: 6px; background: transparent; color: #242424; text-decoration: none; text-align: center; }
+.vc-btn-solid { flex: 1; font-family: var(--font-inter); font-size: 0.88rem; font-weight: 500; padding: 9px 12px; border-radius: 6px; background: rgb(47,79,47); color: #fff; text-decoration: none; text-align: center; }
 
 /* Load more */
 .vp-load-wrap { text-align: center; margin-top: 40px; }
