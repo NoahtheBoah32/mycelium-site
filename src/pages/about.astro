@@ -194,12 +194,13 @@ import SiteFooter from '../components/SiteFooter.astro';
   background-position: center;
   background-color: #2F2A1F;
   position: relative;
-  padding: 120px 40px 80px;
+  min-height: 450px;
+  padding: 180px 40px 200px;
   text-align: center;
 }
 .about-hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,16,8,0.6); }
 .about-hero > * { position: relative; z-index: 1; }
-.about-hero-link { display: inline-block; font-family: var(--font-outfit); font-size: 1.5rem; font-weight: 400; letter-spacing: 0.06em; color: #D2CEC8; text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
+.about-hero-link { display: inline-block; font-family: var(--font-outfit); font-size: 1.5rem; font-weight: 400; letter-spacing: -0.12px; color: #D2CEC8; text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
 .about-hero-link:hover { color: #FFD53B; }
 .about-title { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 4.5rem; letter-spacing: -0.02em; text-align: center; }
 
