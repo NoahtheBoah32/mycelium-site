@@ -184,13 +184,20 @@ const featuredVideos = videos.slice(0, 3);
   </section>
 
   <section class="newsletter-section">
-    <div class="section-inner newsletter-inner">
-      <h2 class="section-heading dark">Get Monthly Permaculture Resources</h2>
-      <p class="newsletter-sub">Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.</p>
-      <form class="newsletter-form" action="https://mycelium-learn.com/newsletter/" method="get">
-        <input type="email" placeholder="Your email address" class="newsletter-input" />
-        <button type="submit" class="btn-primary small">Subscribe</button>
-      </form>
+    <div class="section-inner">
+      <div class="newsletter-card">
+        <div class="newsletter-left">
+          <h2 class="newsletter-heading">Get Monthly Permaculture Resources</h2>
+          <p class="newsletter-sub">Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.</p>
+        </div>
+        <div class="newsletter-right">
+          <form class="newsletter-form" action="https://mycelium-learn.com/newsletter/" method="get">
+            <input type="email" placeholder="Enter your email" class="newsletter-input" />
+            <button type="submit" class="btn-primary small">Subscribe</button>
+          </form>
+          <p class="newsletter-privacy">We respect your privacy. Unsubscribe anytime.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -238,7 +245,7 @@ const featuredVideos = videos.slice(0, 3);
 .founder-img img { width: 100%; border-radius: 40px; }
 .founder-text { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .founder-body { font-family: var(--font-outfit); font-size: 1rem; font-weight: 400; color: #D2CEC8; line-height: 1.7; }
-.home-videos .section-heading, .home-courses .section-heading, .home-resources .section-heading, .newsletter-section .section-heading { font-family: var(--font-outfit); font-size: 3rem; font-weight: 700; letter-spacing: -0.01em; }
+.home-videos .section-heading, .home-courses .section-heading, .home-resources .section-heading { font-family: var(--font-outfit); font-size: 3rem; font-weight: 700; letter-spacing: -0.01em; }
 .how-operate { background: #43330B; padding: 120px 40px; }
 .operate-header { text-align: center; margin-bottom: 64px; }
 .how-operate .section-heading { font-size: 3.75rem; font-weight: 500; }
@@ -285,10 +292,14 @@ const featuredVideos = videos.slice(0, 3);
 .hrc-title { font-family: var(--font-inter); font-size: 0.88rem; font-weight: 700; color: #242424; line-height: 1.35; }
 .hrc-desc { font-family: var(--font-inter); font-size: 0.78rem; color: #666; line-height: 1.55; }
 .newsletter-section { background: #fff; padding: 80px 40px; border-top: 1px solid #f0f0f0; }
-.newsletter-inner { text-align: center; max-width: 600px; margin: 0 auto; }
-.newsletter-sub { font-family: var(--font-outfit); font-size: 1rem; color: #666; line-height: 1.6; margin-bottom: 32px; }
-.newsletter-form { display: flex; gap: 12px; justify-content: center; }
-.newsletter-input { flex: 1; max-width: 320px; padding: 12px 20px; border: 1px solid #ccc; border-radius: 50px; font-family: var(--font-inter); font-size: 0.875rem; outline: none; }
+.newsletter-card { border: 1px solid #e0e0da; border-radius: 12px; padding: 48px 48px; display: flex; gap: 64px; align-items: center; max-width: 960px; margin: 0 auto; }
+.newsletter-left { flex: 1; }
+.newsletter-heading { font-family: var(--font-outfit); font-size: 1.5rem; font-weight: 700; color: #242424; line-height: 1.25; margin-bottom: 12px; }
+.newsletter-sub { font-family: var(--font-outfit); font-size: 0.9rem; color: #666; line-height: 1.6; }
+.newsletter-right { flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; min-width: 300px; }
+.newsletter-form { display: flex; gap: 10px; }
+.newsletter-input { flex: 1; padding: 12px 20px; border: 1px solid #ccc; border-radius: 50px; font-family: var(--font-inter); font-size: 0.875rem; outline: none; min-width: 0; }
+.newsletter-privacy { font-family: var(--font-outfit); font-size: 0.78rem; color: #999; }
 @media (max-width: 1024px) {
   .hi { height: 200px; } .founder-img { width: 320px; } .operate-grid { grid-template-columns: repeat(2,1fr); }
   .home-video-grid, .home-courses-grid { grid-template-columns: repeat(2,1fr); }
@@ -302,7 +313,9 @@ const featuredVideos = videos.slice(0, 3);
   .founder-inner { flex-direction: column; } .founder-img { width: 100%; }
   .operate-grid { grid-template-columns: 1fr; gap: 40px; }
   .home-video-grid, .home-courses-grid, .home-resources-grid { grid-template-columns: 1fr; }
-  .newsletter-form { flex-direction: column; align-items: center; }
-  .newsletter-input { max-width: 100%; width: 100%; }
+  .newsletter-card { flex-direction: column; gap: 32px; padding: 32px 24px; }
+  .newsletter-right { min-width: 0; width: 100%; }
+  .newsletter-form { flex-direction: column; }
+  .newsletter-input { width: 100%; }
 }
 </style>
