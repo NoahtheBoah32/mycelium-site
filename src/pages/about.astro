@@ -205,7 +205,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 .about-title { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 4.5rem; letter-spacing: -0.02em; text-align: center; }
 
 /* HOW IT STARTED */
-.about-story { background: #43330B; padding: 112px 40px; }
+.about-story { background: #2F2A1F; padding: 112px 40px; }
 .about-story .section-h2 { color: #D2CEC8; }
 .story-intro { font-family: var(--font-lora); font-size: 1.5rem; color: rgba(210,206,200,0.9); line-height: 1.24; text-align: center; max-width: 800px; margin: 0 auto 56px; }
 .story-inner { display: flex; align-items: flex-start; gap: 40px; margin-top: 0; }
@@ -228,10 +228,11 @@ import SiteFooter from '../components/SiteFooter.astro';
 .why-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgba(210,206,200,0.85); line-height: 1.24; }
 
 /* HERE'S THE THING */
-.about-thing { background: #F7F7F5; padding: 112px 40px; }
+.about-thing { background: #43330B; padding: 112px 40px; }
+.about-thing .section-h2 { color: #D2CEC8; }
 .thing-inner { display: flex; align-items: center; gap: 40px; }
 .thing-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
-.thing-text p { font-family: var(--font-lora); font-size: 1.5rem; color: #555; line-height: 1.24; }
+.thing-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgba(210,206,200,0.85); line-height: 1.24; }
 .thing-text .outfit-p { font-family: var(--font-outfit); }
 .thing-imgs { flex: 1; min-width: 0; }
 .thing-imgs img { width: 100%; border-radius: 12px; }
@@ -244,16 +245,16 @@ import SiteFooter from '../components/SiteFooter.astro';
 .as-label { font-family: var(--font-outfit); font-size: 1.25rem; color: #D2CEC8; line-height: 1.5; }
 
 /* MEASURING IMPACT */
-.about-impact { background: #fff; padding: 112px 40px; }
-.about-impact .section-h2 { color: #242424; }
+.about-impact { background: #2F2A1F; padding: 112px 40px; }
+.about-impact .section-h2 { color: #D2CEC8; }
 .impact-inner { display: flex; align-items: flex-start; gap: 40px; }
 .impact-text { flex: 619; display: flex; flex-direction: column; gap: 20px; }
-.impact-text p { font-family: var(--font-lora); font-size: 1.5rem; color: #555; line-height: 1.24; }
+.impact-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgba(210,206,200,0.85); line-height: 1.24; }
 .impact-imgs { flex: 481; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
 .impact-imgs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 24px; }
 
 /* MISSION */
-.about-mission { background: #2F2A1F; padding: 100px 40px; text-align: center; }
+.about-mission { background: #2E2C07; padding: 100px 40px; text-align: center; }
 .about-mission .section-h2 { color: #D2CEC8; }
 .mission-body { font-family: var(--font-lora); font-size: 1.5rem; color: #D2CEC8; line-height: 1.6; max-width: 800px; margin: 0 auto 56px; opacity: 0.8; }
 .mission-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 960px; margin: 0 auto; }
@@ -275,13 +276,15 @@ import SiteFooter from '../components/SiteFooter.astro';
 .criteria-a { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(212,207,168); line-height: 1.4; }
 
 /* PARTNERS */
-.about-partners { background: #fff; padding: 100px 40px; }
+.about-partners { background: #2E2C07; padding: 100px 40px; }
+.about-partners .section-h2 { color: #D2CEC8; }
+.about-partners .section-eyebrow { color: #7A8B55; }
 .partners-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 56px; }
 .partner-card > img:first-child { width: 100%; aspect-ratio: 16/7; object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
 .partner-people { display: flex; gap: 12px; margin-bottom: 18px; }
-.avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid #e8e8e8; }
-.partner-name { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 500; color: #242424; margin-bottom: 12px; }
-.partner-desc { font-family: var(--font-lora); font-size: 1.5rem; color: #555; line-height: 1.4; }
+.avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(210,206,200,0.3); }
+.partner-name { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 500; color: #D2CEC8; margin-bottom: 12px; }
+.partner-desc { font-family: var(--font-lora); font-size: 1.5rem; color: rgba(210,206,200,0.75); line-height: 1.4; }
 
 @media (max-width: 1100px) {
   .about-story .story-img { width: 380px; }
@@ -294,7 +297,7 @@ import SiteFooter from '../components/SiteFooter.astro';
   .about-stats-grid { grid-template-columns: 1fr; gap: 40px; }
   .partners-grid { grid-template-columns: 1fr; }
   .mission-pillars { grid-template-columns: 1fr; }
-  .story-text p, .why-text p, .thing-text p, .impact-text p, .story-intro { font-size: 1.2rem; }
+  .story-text p, .why-text p, .thing-text p, .impact-text p, .story-intro, .mission-body, .partner-desc { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
   .section-inner { padding: 0 20px; }
