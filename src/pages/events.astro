@@ -5,7 +5,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 ---
 
 <BaseLayout title="Events - Mycelium">
-  <SiteNav />
+  <SiteNav overlay={true} />
 
   <!-- Hero -->
   <section class="ev-hero">
@@ -94,7 +94,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-inner { max-width: 1260px; margin: 0 auto; padding: 0 40px; }
 
 /* Hero */
-.ev-hero { background: #2B2B2B; padding: 80px 40px 72px; text-align: center; }
+.ev-hero { background: #2B2B2B; padding: calc(80px + 72px) 40px 72px; margin-top: -72px; text-align: center; }
 .ev-title { font-family: var(--font-inter); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; margin-bottom: 20px; }
 .ev-sub { font-family: var(--font-outfit); font-size: 1rem; color: #aaa; line-height: 1.7; max-width: 680px; margin: 0 auto; }
 

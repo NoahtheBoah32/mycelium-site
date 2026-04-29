@@ -5,7 +5,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 ---
 
 <BaseLayout title="About - Mycelium">
-  <SiteNav />
+  <SiteNav overlay={true} />
 
   <section class="about-hero">
     <div class="section-inner">
@@ -170,6 +170,7 @@ import SiteFooter from '../components/SiteFooter.astro';
   background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-hb.webp');
   background-size: cover;
   background-position: center;
+  margin-top: -72px;
   background-color: #2F2A1F;
   position: relative;
   min-height: 450px;

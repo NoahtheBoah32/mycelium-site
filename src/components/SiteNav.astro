@@ -10,9 +10,10 @@ const links = [
   { href: "/feedback", label: "Feedback" },
 ];
 const currentPath = Astro.url.pathname;
+const { overlay = false } = Astro.props;
 ---
 
-<nav class="site-nav" id="site-nav">
+<nav class:list={["site-nav", { "nav-overlay": overlay }]} id="site-nav">
   <div class="sn-inner">
     <a href="/" class="sn-logo">
       <img
@@ -55,6 +56,15 @@ const currentPath = Astro.url.pathname;
     background: #ffffff;
     border-bottom: 1px solid #e8e8e8;
   }
+  .site-nav.nav-overlay {
+    position: absolute;
+    background: transparent;
+    border-bottom: none;
+    width: 100%;
+  }
+  .site-nav.nav-overlay .sn-link { color: rgba(255,255,255,0.88); }
+  .site-nav.nav-overlay .sn-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  .site-nav.nav-overlay .sn-link.active { color: #61CE70; }
   .sn-inner {
     max-width: var(--max-width);
     margin: 0 auto;
