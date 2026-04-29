@@ -86,7 +86,7 @@ import SiteFooter from '../components/SiteFooter.astro';
   </section>
 
   <section class="about-impact">
-    <div class="section-inner impact-inner">
+    <div class="impact-inner">
       <div class="impact-text">
         <h2 class="section-h2">MEASURING IMPACT WITH RIGHT START DEVELOPMENT COMMUNITY CENTER</h2>
         <p>Right Start Community Development Center supports children and families in Quezon City, Metro Manila, through education, creativity, and daily engagement.</p>
@@ -242,11 +242,11 @@ import SiteFooter from '../components/SiteFooter.astro';
 .as-label { font-family: var(--font-outfit); font-size: 1.25rem; color: #D2CEC8; line-height: 1.5; }
 
 /* MEASURING IMPACT */
-.about-impact { background: #2F2A1F; padding: 120px 40px; }
-.impact-inner { display: flex; align-items: flex-start; gap: 40px; }
-.impact-text { flex: 619; display: flex; flex-direction: column; gap: 20px; }
+.about-impact { background: #2F2A1F; padding: 0; }
+.impact-inner { display: flex; align-items: stretch; }
+.impact-text { flex: 619; padding: 120px 40px; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 .impact-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
-.impact-imgs { flex: 481; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+.impact-imgs { flex: 481; background: rgb(217,217,217); padding: 120px 20px 180px; display: flex; flex-direction: column; gap: 20px; align-items: center; min-width: 0; }
 .impact-imgs img { width: 279px; height: 279px; object-fit: cover; border-radius: 24px; }
 
 /* MISSION */
@@ -288,6 +288,8 @@ import SiteFooter from '../components/SiteFooter.astro';
   .why-inner { flex-direction: column; } .why-left { width: 100%; }
   .thing-inner { flex-direction: column; } .thing-imgs { width: 100%; }
   .impact-inner { flex-direction: column; }
+  .impact-text { padding: 60px 20px; }
+  .impact-imgs { padding: 40px 20px; }
   .about-stats-grid { grid-template-columns: 1fr; gap: 40px; }
   .partners-grid { grid-template-columns: 1fr; }
   .mission-pillars { grid-template-columns: 1fr; }
