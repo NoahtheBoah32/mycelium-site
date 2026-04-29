@@ -156,7 +156,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 </BaseLayout>
 
 <style>
-.section-inner { max-width: 1260px; margin: 0 auto; padding: 0 40px; }
+.section-inner { max-width: 1260px; margin: 0 auto; }
 /* Big statement headings (Mission, Criteria, Partners) */
 .section-h2 { font-family: var(--font-lora); font-size: clamp(2rem, 5.76vw, 3.75rem); font-weight: 500; color: #242424; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 32px; }
 .section-h2.center { text-align: center; }
@@ -263,7 +263,6 @@ import SiteFooter from '../components/SiteFooter.astro';
   .story-text p, .why-text-block p, .why-thing-block p, .impact-text p, .story-intro, .mission-body, .partner-desc { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
-  .section-inner { padding: 0 20px; }
   .about-hero, .about-story, .about-why, .about-impact, .about-mission, .about-criteria, .about-partners { padding-left: 20px; padding-right: 20px; }
   .section-h2 { font-size: 2rem; }
   .about-title { font-size: 2.5rem; }
