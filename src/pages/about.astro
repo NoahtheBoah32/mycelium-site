@@ -86,17 +86,19 @@ import SiteFooter from '../components/SiteFooter.astro';
   </section>
 
   <section class="about-impact">
-    <div class="section-inner story-inner">
-      <div class="story-img">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-06.png" alt="Right Start Community" loading="lazy" />
-      </div>
-      <div class="story-text">
+    <div class="section-inner impact-inner">
+      <div class="impact-text">
         <h2 class="section-h2">MEASURING IMPACT WITH RIGHT START DEVELOPMENT COMMUNITY CENTER</h2>
         <p>Right Start Community Development Center supports children and families in Quezon City, Metro Manila, through education, creativity, and daily engagement.</p>
         <p>Through Right Start, Mycelium observes what happens when permaculture knowledge enters a community as a way of thinking rather than a set of instructions.</p>
         <p>I&rsquo;ve observed that the earliest signs of impact often aren&rsquo;t physical. They appear in questions asked, in habits slowly adjusted, and in how individuals begin to explain these ideas to others. Over time, this knowledge compounds, passing between others and adapting to unique situations.</p>
         <p>Right Start provides a living environment to observe this process. The community is not a test site, but an environment where learning and adaptation happen continuously. Measuring impact here means paying attention to growth that isn&rsquo;t always immediate or visible, but rooted deeply enough to last.</p>
         <p>After 2 months, the community harvested the ampalaya!</p>
+      </div>
+      <div class="impact-imgs">
+        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-06.png" alt="Right Start Community" loading="lazy" />
+        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-07.png" alt="Right Start Community" loading="lazy" />
+        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-08.png" alt="Right Start Community" loading="lazy" />
       </div>
     </div>
   </section>
@@ -244,9 +246,11 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* MEASURING IMPACT */
 .about-impact { background: #fff; padding: 112px 40px; }
 .about-impact .section-h2 { color: #242424; }
-.about-impact .story-text p { font-family: var(--font-lora); font-size: 1.5rem; color: #555; }
-.about-impact .story-img { width: 279px; flex-shrink: 0; }
-.about-impact .story-img img { width: 279px; height: 279px; border-radius: 50%; object-fit: cover; }
+.impact-inner { display: flex; align-items: flex-start; gap: 40px; }
+.impact-text { flex: 619; display: flex; flex-direction: column; gap: 20px; }
+.impact-text p { font-family: var(--font-lora); font-size: 1.5rem; color: #555; line-height: 1.24; }
+.impact-imgs { flex: 481; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+.impact-imgs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 24px; }
 
 /* MISSION */
 .about-mission { background: #2F2A1F; padding: 100px 40px; text-align: center; }
@@ -288,10 +292,11 @@ import SiteFooter from '../components/SiteFooter.astro';
   .story-inner { flex-direction: column; } .story-img { width: 100%; }
   .why-inner { flex-direction: column; } .why-left { width: 100%; }
   .thing-inner { flex-direction: column; } .thing-imgs { width: 100%; }
+  .impact-inner { flex-direction: column; }
   .about-stats-grid { grid-template-columns: 1fr; gap: 40px; }
   .partners-grid { grid-template-columns: 1fr; }
   .mission-pillars { grid-template-columns: 1fr; }
-  .story-text p, .why-text p, .thing-text p, .about-impact .story-text p, .story-intro { font-size: 1.2rem; }
+  .story-text p, .why-text p, .thing-text p, .impact-text p, .story-intro { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
   .section-inner { padding: 0 20px; }
