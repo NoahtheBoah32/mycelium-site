@@ -258,13 +258,15 @@ import SiteFooter from '../components/SiteFooter.astro';
 .pillar-body { font-family: var(--font-outfit); font-size: 1.2rem; color: #D2CEC8; line-height: 1.6; opacity: 0.8; }
 
 /* CRITERIA */
-.about-criteria { background: #F7F7F5; padding: 100px 40px; }
-.criteria-intro { font-family: var(--font-outfit); font-size: 1.35rem; color: #555; margin-bottom: 40px; }
-.criteria-grid { display: flex; flex-direction: column; gap: 24px; }
-.criteria-item { display: flex; align-items: flex-start; gap: 24px; padding: 32px; background: #fff; border-radius: 12px; border: 1px solid #e8e8e8; }
-.criteria-num { font-family: var(--font-lora); font-size: 5rem; font-weight: 700; color: #5A3A1C; flex-shrink: 0; width: 120px; line-height: 1; text-align: center; }
-.criteria-q { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 500; color: #242424; margin-bottom: 8px; }
-.criteria-a { font-family: var(--font-lora); font-size: 1.5rem; color: #666; line-height: 1.4; }
+.about-criteria { background: rgb(38,36,0); padding: 100px 40px; }
+.about-criteria .section-h2 { color: #D2CEC8; }
+.about-criteria .section-eyebrow { color: #7A8B55; }
+.criteria-intro { font-family: var(--font-outfit); font-size: 1.35rem; color: rgba(212,207,168,0.7); margin-bottom: 40px; }
+.criteria-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.criteria-item { display: flex; flex-direction: column; gap: 16px; padding: 32px; background: rgb(47,42,2); border-radius: 0; border: none; border-left: 0.8px solid rgb(202,190,150); }
+.criteria-num { font-family: var(--font-lora); font-size: 5rem; font-weight: 700; color: rgb(77,65,6); line-height: 1; }
+.criteria-q { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 500; color: #fff; margin-bottom: 4px; }
+.criteria-a { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(212,207,168); line-height: 1.4; }
 
 /* PARTNERS */
 .about-partners { background: #fff; padding: 100px 40px; }
