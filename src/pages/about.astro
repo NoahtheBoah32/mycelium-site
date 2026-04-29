@@ -124,7 +124,6 @@ import SiteFooter from '../components/SiteFooter.astro';
     <div class="section-inner">
       <h3 class="section-eyebrow">OUR CRITERIA</h3>
       <h2 class="section-h2">Three questions every resource must answer.</h2>
-      <p class="criteria-intro">Resources must answer three questions:</p>
       <div class="criteria-grid">
         <div class="criteria-item">
           <span class="criteria-num">01</span>
@@ -251,21 +250,20 @@ import SiteFooter from '../components/SiteFooter.astro';
 
 /* MISSION */
 .about-mission { background: #2E2C07; padding: 120px 40px; text-align: center; }
-.about-mission .section-h2 { color: #fff; }
+.about-mission .section-h2 { color: #fff; font-style: italic; }
 .mission-body { font-family: var(--font-lora); font-size: 1.5rem; color: #D2CEC8; line-height: 1.6; max-width: 800px; margin: 0 auto 56px; }
 .mission-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1000px; margin: 0 auto; }
-.pillar { background: rgb(84, 76, 19); border-radius: 0; padding: 30px; text-align: left; }
+.pillar { background: rgb(84, 76, 19); border-radius: 0; padding: 30px; text-align: left; border-top: 9.6px solid rgb(200,160,26); }
 .section-eyebrow { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; color: #C8A01A; letter-spacing: -0.3px; margin-bottom: 16px; }
 .section-eyebrow.center { text-align: center; }
-.pillar-label { font-family: var(--font-lora); font-size: 1.75rem; font-weight: 500; color: #BA9518; margin-bottom: 14px; }
+.pillar-label { font-family: var(--font-lora); font-size: 1.75rem; font-weight: 500; color: #BA9518; margin-bottom: 14px; letter-spacing: -0.28px; }
 .pillar-body { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(212,207,168); line-height: 1.6; }
 
 /* CRITERIA */
 .about-criteria { background: rgb(38,36,0); padding: 120px 40px; }
-.about-criteria .section-h2 { color: #D2CEC8; }
-.criteria-intro { font-family: var(--font-outfit); font-size: 1.35rem; color: rgba(212,207,168,0.7); margin-bottom: 40px; }
+.about-criteria .section-h2 { color: #fff; }
 .criteria-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.criteria-item { display: flex; flex-direction: column; gap: 16px; padding: 32px; background: rgb(47,42,2); border-radius: 0; border: none; border-left: 0.8px solid rgb(202,190,150); }
+.criteria-item { display: flex; flex-direction: column; gap: 16px; padding: 30px; background: rgb(47,42,2); border-radius: 0; border: 0.8px solid rgb(202,190,150); }
 .criteria-num { font-family: var(--font-lora); font-size: 5rem; font-weight: 700; color: rgb(77,65,6); line-height: 1; }
 .criteria-q { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 500; color: #fff; margin-bottom: 4px; }
 .criteria-a { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(212,207,168); line-height: 1.4; }
