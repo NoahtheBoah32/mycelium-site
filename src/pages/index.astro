@@ -85,7 +85,6 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-videos">
     <div class="section-inner">
-      <span class="eyebrow-label">Videos</span>
       <h2 class="section-heading dark">Curated Permaculture Videos</h2>
       <p class="section-sub dark">Visual learning paths from beginner introductions to advanced techniques</p>
       <div class="home-video-grid">
@@ -114,7 +113,6 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-courses">
     <div class="section-inner">
-      <span class="eyebrow-label">Courses</span>
       <h2 class="section-heading dark">Learning Pathways &amp; Courses</h2>
       <p class="section-sub dark">From free introductions to full PDC certifications</p>
       <div class="home-courses-grid">
@@ -146,7 +144,6 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-resources">
     <div class="section-inner">
-      <span class="eyebrow-label">Blog</span>
       <h2 class="section-heading dark">Organized Blog Resources</h2>
       <p class="section-sub dark">Quality permaculture content organized by topic</p>
       <div class="home-resources-grid">
@@ -241,11 +238,12 @@ const featuredVideos = videos.slice(0, 3);
 .founder-img img { width: 100%; border-radius: 12px; }
 .founder-text { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .founder-body { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: #D2CEC8; line-height: 1.6; }
-.how-operate { background: #43330B; padding: 96px 40px; }
+.home-videos .section-heading, .home-courses .section-heading, .home-resources .section-heading, .newsletter-section .section-heading { font-family: var(--font-outfit); font-size: 3rem; font-weight: 700; letter-spacing: -0.01em; }
+.how-operate { background: #43330B; padding: 120px 40px; }
 .operate-header { text-align: center; margin-bottom: 64px; }
 .how-operate .section-heading { font-size: 3.75rem; font-weight: 500; }
 .operate-sub { font-family: var(--font-outfit); font-size: 1.5rem; color: #D2CEC8; line-height: 1.6; max-width: 720px; margin: 0 auto; }
-.operate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+.operate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .operate-col { display: flex; flex-direction: column; gap: 16px; }
 .operate-icon { height: 240px; display: flex; align-items: center; justify-content: flex-start; }
 .operate-icon img { max-height: 220px; max-width: 100%; object-fit: contain; }
