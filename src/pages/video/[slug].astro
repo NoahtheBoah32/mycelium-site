@@ -15,7 +15,7 @@ const { video } = Astro.props;
 const ytMatch = video.embedUrl?.match(/[?&]v=([^&]+)/);
 const ytId = video.youtubeId || (ytMatch ? ytMatch[1] : null);
 const embedSrc = video.embedSrc || (ytId ? `https://www.youtube-nocookie.com/embed/${ytId}` : null);
-const thumb = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : video.thumbnail;
+const thumb = video.thumbnail || (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : null);
 const isYoutube = !!(ytId && video.videoType !== "webinar");
 ---
 

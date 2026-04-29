@@ -1,0 +1,769 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const WINSTON_URL = "http://localhost:3456";
+---
+<BaseLayout title="Pipeline — Mycelium">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #222222;
+    --gold: #D4A832;
+    --gold-dim: rgba(212,168,50,0.12);
+    --green: #4CAF50;
+    --green-dim: rgba(76,175,80,0.12);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.1);
+    --amber: #f59e0b;
+    --amber-dim: rgba(245,158,11,0.1);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.1);
+    --text: #e8e8e8;
+    --text-muted: #666;
+    --text-dim: #999;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .brand {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: var(--mono);
+  }
+  .divider { width: 1px; height: 16px; background: var(--border); }
+  .page-title { font-size: 13px; color: var(--text-muted); letter-spacing: 0.04em; }
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+  }
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+  /* ── LAYOUT ── */
+  .shell {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+  }
+  .sidebar-section { margin-bottom: 32px; }
+  .sidebar-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 20px;
+    margin-bottom: 8px;
+  }
+  .sidebar-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+  .sidebar-stat .label { color: var(--text-dim); }
+  .sidebar-stat .val {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .val-gold { color: var(--gold); }
+  .val-green { color: var(--green); }
+  .val-amber { color: var(--amber); }
+  .val-muted { color: var(--text-muted); }
+
+  .quality-bar-wrap { padding: 0 20px; margin-top: 4px; }
+  .quality-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    font-family: var(--mono);
+  }
+  .quality-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .quality-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.8s ease;
+  }
+
+  /* ── MAIN ── */
+  .main { padding: 32px; overflow-y: auto; }
+
+  /* ── QUEUE HEADER ── */
+  .queue-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .queue-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .queue-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-family: var(--mono);
+  }
+  .refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--mono);
+  }
+  .refresh-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    text-align: center;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    color: var(--text-muted);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.4; }
+  .empty-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; color: var(--text-dim); }
+  .empty-sub { font-size: 12px; font-family: var(--mono); }
+
+  /* ── VIDEO CARD ── */
+  .video-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .video-card:hover { border-color: #333; }
+  .video-card.approved { border-left: 3px solid var(--green); }
+  .video-card.reviewing { border-left: 3px solid var(--amber); }
+  .video-card.rendering { border-left: 3px solid var(--blue); }
+  .video-card.failed { border-left: 3px solid var(--red); }
+
+  .card-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    padding: 18px 20px 14px;
+    gap: 16px;
+  }
+  .card-filename {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 5px;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+  }
+  .tag-style { background: var(--gold-dim); color: var(--gold); border-color: rgba(212,168,50,0.25); }
+  .tag-hook { background: rgba(255,255,255,0.04); color: var(--text-dim); }
+
+  .card-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .badge-approved { background: var(--green-dim); color: var(--green); }
+  .badge-reviewing { background: var(--amber-dim); color: var(--amber); }
+  .badge-rendering { background: var(--blue-dim); color: var(--blue); }
+  .badge-failed { background: var(--red-dim); color: var(--red); }
+  .badge-pending { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+
+  /* ── SCORES ROW ── */
+  .scores-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 20px 16px;
+    flex-wrap: wrap;
+  }
+  .score-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    font-size: 11px;
+    font-family: var(--mono);
+  }
+  .score-chip .dim { color: var(--text-muted); }
+  .score-num { font-weight: 700; }
+  .score-10 { color: var(--green); }
+  .score-8 { color: var(--green); }
+  .score-7 { color: var(--gold); }
+  .score-6 { color: var(--amber); }
+  .score-low { color: var(--red); }
+
+  /* ── EDITH NOTES ── */
+  .edith-notes {
+    margin: 0 20px 16px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .edith-notes-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap { padding: 0 20px 16px; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #f0c040);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  /* ── ITERATION HISTORY ── */
+  .iter-section { padding: 0 20px 16px; }
+  .iter-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .iter-track {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .iter-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-family: var(--mono);
+    font-weight: 700;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: var(--surface2);
+    position: relative;
+  }
+  .iter-dot.approved { background: var(--green-dim); border-color: rgba(76,175,80,0.3); color: var(--green); }
+  .iter-dot.failed { background: var(--red-dim); border-color: rgba(239,68,68,0.2); color: var(--red); }
+  .iter-dot.current { background: var(--gold-dim); border-color: rgba(212,168,50,0.4); color: var(--gold); }
+  .iter-arrow { color: var(--border); font-size: 10px; }
+  .iter-goal {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    border: 1px dashed rgba(76,175,80,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: rgba(76,175,80,0.4);
+  }
+
+  /* ── VIDEO PREVIEW ── */
+  .card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+  }
+  .action-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    transition: all 0.15s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .action-btn:hover { border-color: #444; color: var(--text); }
+  .action-btn.primary { background: var(--gold-dim); border-color: rgba(212,168,50,0.3); color: var(--gold); }
+  .action-btn.primary:hover { background: rgba(212,168,50,0.2); }
+  .action-time { margin-left: auto; font-size: 10px; font-family: var(--mono); color: var(--text-muted); }
+
+  /* ── WINSTON STATUS ── */
+  .winston-offline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--red-dim);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--red);
+    font-family: var(--mono);
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .shell { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main { padding: 20px 16px; }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="brand">Mycelium</span>
+    <div class="divider"></div>
+    <span class="page-title">Pipeline</span>
+  </div>
+  <div id="winston-status" class="status-pill">
+    <div class="status-dot" style="background:#666;box-shadow:none;"></div>
+    <span>Connecting…</span>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <div class="sidebar-stat">
+        <span class="label">Total renders</span>
+        <span class="val val-muted" id="stat-total">—</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="label">EDITH approved</span>
+        <span class="val val-green" id="stat-approved">—</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="label">In review</span>
+        <span class="val val-amber" id="stat-review">—</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="label">Rendering</span>
+        <span class="val" style="color:var(--blue)" id="stat-rendering">—</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Quality Avg</div>
+      <div class="quality-bar-wrap">
+        <div class="quality-bar-label"><span>Captions</span><span id="avg-captions">—</span></div>
+        <div class="quality-bar"><div class="quality-bar-fill" id="bar-captions" style="width:0%;background:var(--gold)"></div></div>
+        <div class="quality-bar-label"><span>Pacing</span><span id="avg-pacing">—</span></div>
+        <div class="quality-bar"><div class="quality-bar-fill" id="bar-pacing" style="width:0%;background:var(--green)"></div></div>
+        <div class="quality-bar-label"><span>Framing</span><span id="avg-framing">—</span></div>
+        <div class="quality-bar"><div class="quality-bar-fill" id="bar-framing" style="width:0%;background:var(--blue)"></div></div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Iteration Health</div>
+      <div class="sidebar-stat">
+        <span class="label">Avg iterations</span>
+        <span class="val val-gold" id="stat-avg-iter">—</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="label">First-pass rate</span>
+        <span class="val val-green" id="stat-first-pass">—</span>
+      </div>
+      <div class="sidebar-stat">
+        <span class="label">Max iterations</span>
+        <span class="val val-muted" id="stat-max-iter">—</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="queue-header">
+      <div>
+        <div class="queue-title">Render Queue</div>
+        <div class="queue-sub" id="last-refresh">Last refresh: —</div>
+      </div>
+      <button class="refresh-btn" onclick="loadJobs()">
+        <span id="refresh-icon">↻</span> Refresh
+      </button>
+    </div>
+
+    <div id="winston-offline-banner" class="winston-offline" style="display:none">
+      ⚠ WINSTON offline — start with: <code style="margin-left:6px">node winston-worker.cjs</code>
+    </div>
+
+    <div id="job-list">
+      <div class="empty">
+        <div class="empty-icon">◎</div>
+        <div class="empty-title">No renders yet</div>
+        <div class="empty-sub">Deploy an ARTHUR to start the pipeline</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script define:vars={{ WINSTON_URL }}>
+const WINSTON = WINSTON_URL;
+
+// Jobs stored locally (pipeline augments with EDITH scores)
+let allJobs = JSON.parse(localStorage.getItem('pipeline_jobs') || '[]');
+let winstonOnline = false;
+
+function scoreClass(n) {
+  if (!n || n === '—') return 'score-low';
+  const v = parseFloat(n);
+  if (v >= 9) return 'score-10';
+  if (v >= 8) return 'score-8';
+  if (v >= 7) return 'score-7';
+  if (v >= 6) return 'score-6';
+  return 'score-low';
+}
+
+function statusBadge(status) {
+  const map = {
+    'edith-approved': ['badge-approved', '✓ Approved'],
+    'rendered':       ['badge-reviewing', '⏳ Pending Review'],
+    'rendering':      ['badge-rendering', '◌ Rendering'],
+    'render-complete':['badge-reviewing', '⌛ Review Queue'],
+    'upload-failed':  ['badge-failed', '✗ Upload Failed'],
+    'render-failed':  ['badge-failed', '✗ Render Failed'],
+    'pending':        ['badge-pending', '· Queued'],
+    'uploading':      ['badge-reviewing', '↑ Uploading'],
+  };
+  const [cls, label] = map[status] || ['badge-pending', status || 'Unknown'];
+  return `<span class="card-status-badge ${cls}">${label}</span>`;
+}
+
+function cardClass(status) {
+  if (status === 'edith-approved') return 'approved';
+  if (['rendered','render-complete','uploading'].includes(status)) return 'reviewing';
+  if (status === 'rendering') return 'rendering';
+  if (['render-failed','upload-failed'].includes(status)) return 'failed';
+  return '';
+}
+
+function iterDots(iterCount, status) {
+  const approved = status === 'edith-approved';
+  let html = '';
+  for (let i = 1; i <= iterCount; i++) {
+    const isLast = i === iterCount;
+    const cls = (approved && isLast) ? 'approved' : (isLast ? 'current' : '');
+    html += `<div class="iter-dot ${cls}">v${i}</div>`;
+    if (i < iterCount) html += `<span class="iter-arrow">›</span>`;
+  }
+  if (!approved) html += `<span class="iter-arrow">›</span><div class="iter-goal">✓</div>`;
+  return html;
+}
+
+function timeAgo(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - ts;
+  if (diff < 60000) return 'just now';
+  if (diff < 3600000) return Math.floor(diff/60000) + 'm ago';
+  if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
+  return Math.floor(diff/86400000) + 'd ago';
+}
+
+function renderCard(job) {
+  const r = job.result || {};
+  const status = r.analysisStatus || job.status || 'pending';
+  const progress = job.progress || {};
+  const iterCount = job.iterationCount || 1;
+  const hasScores = r.edithScore;
+
+  const scoresHtml = hasScores ? `
+    <div class="scores-row">
+      <div class="score-chip">
+        <span class="dim">Overall</span>
+        <span class="score-num ${scoreClass(r.edithScore)}">${r.edithScore}/10</span>
+      </div>
+      <div class="score-chip">
+        <span class="dim">Captions</span>
+        <span class="score-num ${scoreClass(r.captionScore)}">${r.captionScore || '—'}/10</span>
+      </div>
+      <div class="score-chip">
+        <span class="dim">Pacing</span>
+        <span class="score-num ${scoreClass(r.pacingScore)}">${r.pacingScore || '—'}/10</span>
+      </div>
+      <div class="score-chip">
+        <span class="dim">Framing</span>
+        <span class="score-num ${scoreClass(r.framingScore)}">${r.framingScore || '—'}/10</span>
+      </div>
+    </div>` : '';
+
+  const notesHtml = r.edithNotes ? `
+    <div class="edith-notes">
+      <div class="edith-notes-label">EDITH</div>
+      ${r.edithNotes}
+    </div>` : '';
+
+  const progressHtml = (status === 'rendering' || status === 'uploading') ? `
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>${progress.progressLabel || 'Working…'}</span>
+        <span>${progress.progress || 0}%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:${progress.progress || 0}%"></div>
+      </div>
+    </div>` : '';
+
+  const videoUrl = r.videoUrl || '';
+  const filePath = r.outputPath || '';
+  const actionsHtml = `
+    <div class="card-actions">
+      ${videoUrl ? `<a class="action-btn primary" href="${videoUrl}" target="_blank">▶ Watch</a>` : ''}
+      ${filePath ? `<span class="action-btn" title="${filePath}">📁 ${filePath.split(/[/\\]/).pop()}</span>` : ''}
+      <span class="action-time">${timeAgo(r.completedAt || job.createdAt)}</span>
+    </div>`;
+
+  return `
+    <div class="video-card ${cardClass(status)}" data-job-id="${job.jobId}">
+      <div class="card-top">
+        <div>
+          <div class="card-filename">${r.title || job.filename || job.jobId}</div>
+          <div class="card-meta">
+            ${job.reference ? `<span class="meta-tag tag-style">${job.reference}</span>` : ''}
+            ${job.hook ? `<span class="meta-tag tag-hook">"${job.hook.slice(0,40)}${job.hook.length>40?'…':''}"</span>` : ''}
+          </div>
+        </div>
+        ${statusBadge(status)}
+      </div>
+      ${scoresHtml}
+      ${notesHtml}
+      ${progressHtml}
+      <div class="iter-section">
+        <div class="iter-label">Iterations</div>
+        <div class="iter-track">${iterDots(iterCount, status)}</div>
+      </div>
+      ${actionsHtml}
+    </div>`;
+}
+
+function updateSidebar() {
+  const total = allJobs.length;
+  const approved = allJobs.filter(j => (j.result||{}).analysisStatus === 'edith-approved').length;
+  const reviewing = allJobs.filter(j => ['rendered','render-complete','uploading'].includes((j.result||{}).analysisStatus)).length;
+  const rendering = allJobs.filter(j => (j.result||{}).analysisStatus === 'rendering' || j.status === 'rendering').length;
+
+  document.getElementById('stat-total').textContent = total || '—';
+  document.getElementById('stat-approved').textContent = approved || '—';
+  document.getElementById('stat-review').textContent = reviewing || '—';
+  document.getElementById('stat-rendering').textContent = rendering || '—';
+
+  // Avg scores from approved jobs
+  const scored = allJobs.filter(j => (j.result||{}).edithScore);
+  const avg = (key) => scored.length ? (scored.reduce((s,j) => s + parseFloat((j.result||{})[key]||0), 0) / scored.length).toFixed(1) : '—';
+  const avgC = avg('captionScore'), avgP = avg('pacingScore'), avgF = avg('framingScore');
+  document.getElementById('avg-captions').textContent = avgC;
+  document.getElementById('avg-pacing').textContent = avgP;
+  document.getElementById('avg-framing').textContent = avgF;
+  document.getElementById('bar-captions').style.width = avgC === '—' ? '0%' : (avgC * 10) + '%';
+  document.getElementById('bar-pacing').style.width = avgP === '—' ? '0%' : (avgP * 10) + '%';
+  document.getElementById('bar-framing').style.width = avgF === '—' ? '0%' : (avgF * 10) + '%';
+
+  // Iteration health
+  const iters = allJobs.map(j => j.iterationCount || 1);
+  const avgIter = iters.length ? (iters.reduce((a,b)=>a+b,0)/iters.length).toFixed(1) : '—';
+  const firstPass = iters.length ? Math.round(iters.filter(i=>i===1).length/iters.length*100)+'%' : '—';
+  const maxIter = iters.length ? Math.max(...iters) : '—';
+  document.getElementById('stat-avg-iter').textContent = avgIter;
+  document.getElementById('stat-first-pass').textContent = firstPass;
+  document.getElementById('stat-max-iter').textContent = maxIter;
+}
+
+async function loadJobs() {
+  const icon = document.getElementById('refresh-icon');
+  icon.style.transform = 'rotate(180deg)';
+
+  try {
+    // Check WINSTON is alive
+    const ping = await fetch(WINSTON + '/progress?job=ping', { signal: AbortSignal.timeout(3000) });
+    winstonOnline = true;
+    document.getElementById('winston-offline-banner').style.display = 'none';
+    document.getElementById('winston-status').innerHTML = `<div class="status-dot"></div><span>WINSTON online</span>`;
+
+    // Fetch live job results for all tracked jobs
+    for (const job of allJobs) {
+      if (['edith-approved','render-failed','upload-failed'].includes((job.result||{}).analysisStatus)) continue;
+      try {
+        const [progRes, resultRes] = await Promise.all([
+          fetch(WINSTON + '/progress?job=' + job.jobId),
+          fetch(WINSTON + '/result?job=' + job.jobId),
+        ]);
+        if (progRes.ok) job.progress = await progRes.json();
+        if (resultRes.ok) {
+          const r = await resultRes.json();
+          if (r.status === 'done' || r.analysisStatus) job.result = r;
+        }
+      } catch (_) {}
+    }
+  } catch {
+    winstonOnline = false;
+    document.getElementById('winston-offline-banner').style.display = 'flex';
+    document.getElementById('winston-status').innerHTML = `<div class="status-dot" style="background:var(--red);box-shadow:0 0 6px var(--red);animation:none"></div><span>WINSTON offline</span>`;
+  }
+
+  localStorage.setItem('pipeline_jobs', JSON.stringify(allJobs));
+
+  const list = document.getElementById('job-list');
+  if (allJobs.length === 0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">◎</div><div class="empty-title">No renders yet</div><div class="empty-sub">Deploy an ARTHUR to start the pipeline</div></div>`;
+  } else {
+    // Sort: in-progress first, then by time desc
+    const sorted = [...allJobs].sort((a,b) => {
+      const aActive = !['edith-approved','render-failed','upload-failed'].includes((a.result||{}).analysisStatus);
+      const bActive = !['edith-approved','render-failed','upload-failed'].includes((b.result||{}).analysisStatus);
+      if (aActive !== bActive) return aActive ? -1 : 1;
+      return (b.createdAt||0) - (a.createdAt||0);
+    });
+    list.innerHTML = sorted.map(renderCard).join('');
+  }
+
+  updateSidebar();
+  document.getElementById('last-refresh').textContent = 'Last refresh: ' + new Date().toLocaleTimeString();
+  setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 400);
+}
+
+// Listen for new jobs registered via postMessage (WINSTON can send these)
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'pipeline_job') {
+    const job = e.data.job;
+    const existing = allJobs.findIndex(j => j.jobId === job.jobId);
+    if (existing >= 0) {
+      allJobs[existing] = { ...allJobs[existing], ...job };
+    } else {
+      allJobs.unshift(job);
+    }
+    localStorage.setItem('pipeline_jobs', JSON.stringify(allJobs));
+    loadJobs();
+  }
+});
+
+// Auto-refresh every 15s while active renders exist
+setInterval(() => {
+  const hasActive = allJobs.some(j => !['edith-approved','render-failed','upload-failed'].includes((j.result||{}).analysisStatus));
+  if (hasActive) loadJobs();
+}, 15000);
+
+// Initial load
+loadJobs();
+</script>
+</BaseLayout>

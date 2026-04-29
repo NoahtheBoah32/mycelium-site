@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import videos from '../../public/data/videos.json';
+
+const featuredVideos = videos.slice(0, 3);
+---
+
+<BaseLayout title='Home - Mycelium'>
+  <SiteNav />
+
+  <!-- HERO -->
+  <section class='hero'>
+    <div class='hero-inner'>
+      <div class='hero-text'>
+        <h1 class='hero-heading'>What if it's time we look down<br>to move forward?</h1>
+        <p class='hero-sub'>Building food security starts with education</p>
+        <a href='#start-your-journey' class='btn-primary'>Start Your Journey</a>
+      </div>
+      <div class='hero-images'>
+        <img src='https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-01.webp' alt='Permaculture' class='hi' loading='eager' />
+        <img src='https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-02.webp' alt='Permaculture' class='hi' loading='eager' />
+        <img src='https://mycelium-learn.com/wp-content/uploads/2026/02/homepage-img-03-2.png' alt='Permaculture' class='hi' loading='eager' />
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter />
+</BaseLayout>

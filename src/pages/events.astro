@@ -7,71 +7,87 @@ import SiteFooter from '../components/SiteFooter.astro';
 <BaseLayout title="Events - Mycelium">
   <SiteNav />
 
+  <!-- Hero -->
   <section class="ev-hero">
-    <div class="section-inner">
-      <span class="eyebrow">Events</span>
-      <h1 class="ev-title">Upcoming Events</h1>
-      <p class="ev-sub">Live permaculture workshops, camps, and community gatherings across the Philippines</p>
+    <div class="ev-inner">
+      <h1 class="ev-title">UPCOMING EVENTS</h1>
+      <p class="ev-sub">Discover and attend community events focused on permaculture and regenerative living. These community gatherings offer a place for learning, connection, and growth.</p>
     </div>
   </section>
 
-  <section class="ev-section">
-    <div class="section-inner">
-      <div class="ev-grid">
+  <!-- Perma-Kapihan -->
+  <section class="ev-find">
+    <div class="ev-inner">
+      <span class="ev-eyebrow">FIND AN EVENT</span>
+    </div>
+  </section>
 
-        <article class="ev-card">
-          <div class="ev-card-header">
-            <span class="ev-tag">Monthly</span>
-            <h2 class="ev-name">Perma-Kapihan sa Eco-house</h2>
-            <p class="ev-tagline">CONNECT OVER COFFEE &amp; PERMACULTURE</p>
-          </div>
-          <div class="ev-card-body">
-            <div class="ev-detail-row">
-              <span class="ev-detail-label">When</span>
-              <span class="ev-detail-value">Every Sunday (except last), 10 AM &ndash; 2 PM</span>
-            </div>
-            <div class="ev-detail-row">
-              <span class="ev-detail-label">Where</span>
-              <span class="ev-detail-value">The Philippine Permaculture Association, Hereford St., Marikina</span>
-            </div>
-            <div class="ev-detail-row">
-              <span class="ev-detail-label">Cost</span>
-              <span class="ev-detail-value">Free &mdash; coffee and snacks provided</span>
-            </div>
-            <p class="ev-desc">A recurring monthly Sunday gathering for community conversation and permaculture knowledge sharing.</p>
-            <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="btn-register">Register</a>
-          </div>
-        </article>
-
-        <article class="ev-card">
-          <div class="ev-card-header">
-            <span class="ev-tag">May 2026</span>
-            <h2 class="ev-name">Permaculture Camp 2026</h2>
-            <p class="ev-tagline">GOOD THINGS GROW SLOWLY</p>
-          </div>
-          <div class="ev-card-body">
-            <div class="ev-detail-row">
-              <span class="ev-detail-label">When</span>
-              <span class="ev-detail-value">May 1&ndash;3, 2026 (Thursday &ndash; Saturday)</span>
-            </div>
-            <div class="ev-detail-row">
-              <span class="ev-detail-label">Where</span>
-              <span class="ev-detail-value">Ecodee Research Institute, Cabiao, Nueva Ecija</span>
-            </div>
-            <div class="ev-detail-row">
-              <span class="ev-detail-label">Cost</span>
-              <span class="ev-detail-value">Sliding scale &#8369;800&ndash;&#8369;3,500</span>
-            </div>
-            <div class="ev-detail-row">
-              <span class="ev-detail-label">Organizer</span>
-              <span class="ev-detail-value">Philippine Permaculture Association</span>
-            </div>
-            <p class="ev-desc">Camping, swimming, forest walks, permaculture introduction, and communal cooking at Ecodee Research Institute.</p>
-            <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="btn-register">Register</a>
-          </div>
-        </article>
-
+  <section class="ev-kapihan">
+    <div class="ev-inner ev-two-col">
+      <div class="ev-col-text">
+        <p class="ev-sunday-label">Every Sunday of The Month Except for The Last Sunday</p>
+        <h2 class="ev-kapihan-title">Perma-Kapihan sa Eco-house</h2>
+        <p class="ev-kapihan-desc">Perma-Kapihan is a monthly Sunday event organized by the Philippine Permaculture Association, serving as an informal space for conversation and learning. Past Perma-Kapihan gatherings have touched on many aspects of permaculture, showing how it can build systems that shape our values when guided by clear principles and actions. Sessions have also explored natural ponds and the idea of permaculture as an expanded art, lived as a practice rather than treated as something purely theoretical.</p>
+        <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="btn-register">REGISTER HERE →</a>
       </div>
+      <div class="ev-col-img">
+        <img src="https://mycelium-learn.com/wp-content/uploads/2025/11/PERMA-KAPIHAN-SA-ECO-HOUSE.jpg" alt="Perma-Kapihan sa Eco-house" loading="lazy" onerror="this.style.background='#c8d5b9';this.style.minHeight='320px';this.removeAttribute('src')" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Connect Over Coffee -->
+  <section class="ev-coffee">
+    <div class="ev-inner">
+      <h3 class="ev-coffee-title">CONNECT OVER COFFEE &amp; PERMACULTURE</h3>
+      <p class="ev-coffee-time">SUNDAY | 10 AM - 2 PM</p>
+      <p class="ev-coffee-detail">Free Coffee &amp; Snacks &nbsp;·&nbsp; Bring Merienda to Share (optional) &nbsp;·&nbsp; To RSVP click the link in bio.</p>
+      <p class="ev-coffee-loc">📍 The Philippine Permaculture Association, Hereford St., Marikina</p>
+    </div>
+  </section>
+
+  <!-- Permaculture Camp 2026 -->
+  <section class="ev-camp">
+    <div class="ev-camp-bg">
+      <div class="ev-inner ev-camp-inner">
+        <div class="ev-camp-date">
+          <span class="ev-camp-month">MAY</span>
+          <span class="ev-camp-days">1–3</span>
+        </div>
+        <div class="ev-camp-card">
+          <h2 class="ev-camp-title">Permaculture<br>Camp 2026</h2>
+          <p class="ev-camp-org">Philippine Permaculture Association</p>
+          <p class="ev-camp-tagline">🌱 Swim · Camp · Connect · Grow</p>
+          <p class="ev-camp-desc">Step away from the noise and into nature. Join the Philippine Permaculture Association for a camping experience rooted in shared living, mutual support, and learning from the land.</p>
+          <ul class="ev-camp-list">
+            <li>🏕 Simple, intentional camping</li>
+            <li>🌊 Swimming in a natural pool</li>
+            <li>🌲 Forest walk &amp; land learning</li>
+            <li>🌿 Permaculture 101</li>
+            <li>🤝 Shared stewardship, cooking &amp; community</li>
+          </ul>
+          <div class="ev-camp-meta">
+            <div class="ev-camp-meta-row">
+              <span class="ev-camp-meta-label">PRICE</span>
+              <span class="ev-camp-meta-val">₱800–₱3,500 (sliding scale)</span>
+            </div>
+            <div class="ev-camp-meta-row">
+              <span class="ev-camp-meta-label">LOCATION</span>
+              <span class="ev-camp-meta-val">Ecodee Research Institute, Nueva Ecija</span>
+            </div>
+          </div>
+          <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="btn-register btn-register-camp">REGISTER HERE →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coming Soon -->
+  <section class="ev-soon">
+    <div class="ev-inner">
+      <p class="ev-soon-tag">Eco-house</p>
+      <h2 class="ev-soon-title">—Coming Soon—</h2>
+      <p class="ev-soon-sub">GOOD THINGS GROW SLOWLY</p>
     </div>
   </section>
 
@@ -79,26 +95,89 @@ import SiteFooter from '../components/SiteFooter.astro';
 </BaseLayout>
 
 <style>
-.section-inner { max-width: 1260px; margin: 0 auto; padding: 0 40px; }
-.eyebrow { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-primary); margin-bottom: 12px; display: block; }
-.ev-hero { background: #43330B; padding: 96px 40px 80px; }
-.ev-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: #D2CEC8; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
-.ev-sub { font-family: var(--font-outfit); font-size: 1.1rem; color: #888; }
-.ev-section { background: #F7F7F5; padding: 64px 40px 80px; }
-.ev-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
-.ev-card { background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid #e8e8e8; transition: box-shadow 0.2s; }
-.ev-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
-.ev-card-header { background: #2F2A1F; padding: 28px 28px 24px; }
-.ev-tag { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFD53B; background: rgba(255,213,59,0.12); padding: 4px 10px; border-radius: 50px; display: inline-block; margin-bottom: 12px; }
-.ev-name { font-family: var(--font-lora); font-size: 1.4rem; font-weight: 600; color: #D2CEC8; line-height: 1.3; margin-bottom: 6px; }
-.ev-tagline { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #7A8B55; }
-.ev-card-body { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
-.ev-detail-row { display: flex; flex-direction: column; gap: 2px; }
-.ev-detail-label { font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #999; }
-.ev-detail-value { font-family: var(--font-inter); font-size: 0.9rem; color: #333; }
-.ev-desc { font-family: var(--font-outfit); font-size: 0.95rem; color: #555; line-height: 1.6; margin-top: 4px; }
-.btn-register { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; background: #5A3A1C; color: #fff; padding: 10px 24px; border-radius: 50px; transition: background 0.2s; text-decoration: none; display: inline-block; margin-top: 8px; }
-.btn-register:hover { background: #947153; }
-@media (max-width: 768px) { .ev-grid { grid-template-columns: 1fr; } }
-@media (max-width: 600px) { .section-inner { padding: 0 20px; } .ev-hero { padding: 64px 20px 48px; } .ev-section { padding: 40px 20px; } }
+.ev-inner { max-width: 1260px; margin: 0 auto; padding: 0 40px; }
+
+/* Hero */
+.ev-hero { background: #2B2B2B; padding: 80px 40px 72px; text-align: center; }
+.ev-title { font-family: var(--font-inter); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; margin-bottom: 20px; }
+.ev-sub { font-family: var(--font-outfit); font-size: 1rem; color: #aaa; line-height: 1.7; max-width: 680px; margin: 0 auto; }
+
+/* Find an Event */
+.ev-find { background: #fff; padding: 48px 40px 0; }
+.ev-eyebrow { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #2F4F2F; display: block; }
+
+/* Perma-Kapihan */
+.ev-kapihan { background: #fff; padding: 32px 40px 64px; }
+.ev-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.ev-sunday-label { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 600; color: #5A3A1C; letter-spacing: 0.04em; margin-bottom: 12px; }
+.ev-kapihan-title { font-family: var(--font-serif); font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 400; color: #242424; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 20px; }
+.ev-kapihan-desc { font-family: var(--font-outfit); font-size: 0.95rem; color: #555; line-height: 1.7; margin-bottom: 28px; }
+.ev-col-img { border-radius: 10px; overflow: hidden; background: #c8d5b9; min-height: 320px; }
+.ev-col-img img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 320px; }
+
+/* Connect Over Coffee */
+.ev-coffee { background: #2F4F2F; padding: 52px 40px; text-align: center; }
+.ev-coffee-title { font-family: var(--font-inter); font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 700; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; margin-bottom: 14px; }
+.ev-coffee-time { font-family: var(--font-inter); font-size: 1rem; font-weight: 600; color: #b8d4a8; letter-spacing: 0.1em; margin-bottom: 12px; }
+.ev-coffee-detail { font-family: var(--font-outfit); font-size: 0.9rem; color: #c5d5c5; line-height: 1.6; margin-bottom: 8px; }
+.ev-coffee-loc { font-family: var(--font-outfit); font-size: 0.9rem; color: #c5d5c5; }
+
+/* Camp */
+.ev-camp { position: relative; }
+.ev-camp-bg {
+  background-image: url('https://mycelium-learn.com/wp-content/uploads/2025/11/PERMACULTURE-CAMP-2026.jpg');
+  background-size: cover;
+  background-position: center;
+  background-color: #2a3a20;
+  padding: 80px 40px;
+  position: relative;
+}
+.ev-camp-bg::before { content: ''; position: absolute; inset: 0; background: rgba(20,30,15,0.55); }
+.ev-camp-inner { position: relative; z-index: 1; display: grid; grid-template-columns: auto 1fr; gap: 60px; align-items: start; max-width: 1000px; }
+.ev-camp-date { display: flex; flex-direction: column; align-items: flex-start; padding-top: 8px; }
+.ev-camp-month { font-family: var(--font-inter); font-size: 1rem; font-weight: 700; letter-spacing: 0.2em; color: #b8d4a8; text-transform: uppercase; }
+.ev-camp-days { font-family: var(--font-serif); font-size: clamp(4rem, 8vw, 7rem); font-weight: 400; color: #fff; line-height: 1; letter-spacing: -0.02em; }
+.ev-camp-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 32px; }
+.ev-camp-title { font-family: var(--font-serif); font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 6px; }
+.ev-camp-org { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; color: #b8d4a8; text-transform: uppercase; margin-bottom: 16px; }
+.ev-camp-tagline { font-family: var(--font-inter); font-size: 0.9rem; color: #e0ead0; margin-bottom: 12px; }
+.ev-camp-desc { font-family: var(--font-outfit); font-size: 0.9rem; color: #c8d8c0; line-height: 1.6; margin-bottom: 16px; }
+.ev-camp-list { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-direction: column; gap: 6px; }
+.ev-camp-list li { font-family: var(--font-outfit); font-size: 0.88rem; color: #d5e5cc; }
+.ev-camp-meta { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.ev-camp-meta-row { display: flex; gap: 12px; align-items: baseline; }
+.ev-camp-meta-label { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #90b080; min-width: 70px; }
+.ev-camp-meta-val { font-family: var(--font-inter); font-size: 0.88rem; color: #e8f0e0; }
+
+/* Register button */
+.btn-register { font-family: var(--font-inter); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; background: #5A3A1C; color: #fff; padding: 10px 22px; border-radius: 4px; transition: background 0.2s; text-decoration: none; display: inline-block; }
+.btn-register:hover { background: #7a5030; }
+.btn-register-camp { background: #fff; color: #2F2A1F; }
+.btn-register-camp:hover { background: #e8e0d0; }
+
+/* Coming Soon */
+.ev-soon { background: #1a1a1a; padding: 80px 40px; text-align: center;
+  background-image: url('https://mycelium-learn.com/wp-content/uploads/2025/11/COMING-SOON-ECO-HOUSE.jpg');
+  background-size: cover; background-position: center; position: relative; }
+.ev-soon::before { content: ''; position: absolute; inset: 0; background: rgba(10,12,8,0.72); }
+.ev-soon > * { position: relative; z-index: 1; }
+.ev-soon-tag { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #90b080; margin-bottom: 16px; }
+.ev-soon-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: #e8e0d0; letter-spacing: -0.01em; margin-bottom: 12px; }
+.ev-soon-sub { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #7a8a70; }
+
+@media (max-width: 900px) {
+  .ev-two-col { grid-template-columns: 1fr; gap: 32px; }
+  .ev-col-img { order: -1; }
+  .ev-camp-inner { grid-template-columns: 1fr; gap: 24px; }
+  .ev-camp-days { font-size: 4rem; }
+}
+@media (max-width: 600px) {
+  .ev-inner { padding: 0 20px; }
+  .ev-hero { padding: 56px 20px 48px; }
+  .ev-find { padding: 32px 20px 0; }
+  .ev-kapihan { padding: 24px 20px 48px; }
+  .ev-coffee { padding: 40px 20px; }
+  .ev-camp-bg { padding: 48px 20px; }
+  .ev-soon { padding: 56px 20px; }
+}
 </style>
