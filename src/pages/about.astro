@@ -45,8 +45,11 @@ import SiteFooter from '../components/SiteFooter.astro';
           <p class="why-caption">Permaculture composting can divert up to 77% of organic waste from landfills, reducing the organic waste proportion in landfill from about 35% to just 11%. This significant reduction helps decrease landfill volume and greenhouse gas emissions, promoting a more sustainable waste management system.</p>
         </div>
         <div class="why-right">
-          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
-          <p class="why-caption">Permaculture areas show three times more plant species than conventional agriculture (Farming insider). Urban permaculture contributes to habitat restoration, supports pollinators, and increases soil biodiversity and nutrient cycling.</p>
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-03.png" alt="Permaculture landscape" loading="lazy" class="why-landscape" />
+          <div class="why-bio-row">
+            <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
+            <p class="why-caption">Permaculture areas show three times more plant species than conventional agriculture (Farming insider). Urban permaculture contributes to habitat restoration, supports pollinators, and increases soil biodiversity and nutrient cycling.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -54,14 +57,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-thing">
     <div class="section-inner thing-inner">
-      <div class="thing-text">
-        <h2 class="section-h2 center">HERE&rsquo;S THE THING...</h2>
-        <p>As I went deeper into permaculture, I realized how overwhelming it can be to enter the field. The knowledge is vast, scattered across books, courses, YouTube channels, and forums — often inaccessible, overly technical, or disconnected from real practice.</p>
-        <p class="outfit-p">It was also there that a specific moment had a profound impact on me: a banana tree mulching area that was filled with layers upon layers of decomposing leaves and plant matter. Banana plants contended with each other and those that fell didn&rsquo;t vanish uselessly. They cycled back into the soil, enriching it and catalyzing the emergence of new plants. This organic nutrient-rich mulch that would typically contribute to municipal landfills instead became the foundation of soil regeneration.</p>
-        <p class="outfit-p">All of this ultimately inspired Mycelium. The platform represents my attempt to translate the principles and lessons I&rsquo;ve experienced into something clear, organized, and freely available to anyone.</p>
+      <div class="thing-col">
+        <h2 class="section-h2">HERE&rsquo;S THE THING...</h2>
+        <p>As I went deeper into permaculture, I realized how overwhelming it can be to enter the field. The knowledge is vast, scattered across books, courses, research papers, and personal interpretations. For someone just starting out, it&rsquo;s difficult to know where to begin and how to translate abstract principles into something tangible.</p>
       </div>
-      <div class="thing-imgs">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-03.png" alt="Permaculture practice" loading="lazy" />
+      <div class="thing-col">
+        <p>All of this ultimately inspired Mycelium. The platform represents my attempt to translate the principles and lessons I&rsquo;ve experienced into something concrete, organized, accessible resource where curious minds can explore, learn, and apply holistic systems thinking. Creating Mycelium matters to me because it allows me to share the insights I&rsquo;ve gained, while making Permaculture less overwhelming for others starting out, just as I once was.</p>
       </div>
     </div>
   </section>
@@ -215,20 +216,19 @@ import SiteFooter from '../components/SiteFooter.astro';
 .why-left { flex: 1; min-width: 0; }
 .why-left img { width: 100%; border-radius: 12px; }
 .why-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
-.why-bio-card { width: 100%; border-radius: 20px 20px 0 0; }
+.why-landscape { width: 100%; border-radius: 20px 20px 0 0; }
+.why-bio-row { display: flex; gap: 20px; align-items: flex-start; }
+.why-bio-card { flex: 1; min-width: 0; border-radius: 20px 20px 0 0; }
 .why-chart { width: 100%; border-radius: 20px 20px 0 0; margin-top: 24px; }
-.why-caption { font-family: var(--font-outfit); font-size: 1.5rem; color: #fff; line-height: 1.4; margin-top: 12px; }
+.why-caption { font-family: var(--font-outfit); font-size: 1.5rem; color: #fff; line-height: 1.4; flex: 1; min-width: 0; }
 .why-text { display: flex; flex-direction: column; gap: 20px; }
 .why-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
 
 /* HERE'S THE THING */
 .about-thing { background: #43330B; padding: 120px 40px; }
-.thing-inner { display: flex; align-items: center; gap: 40px; }
-.thing-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
-.thing-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
-.thing-text .outfit-p { font-family: var(--font-outfit); }
-.thing-imgs { flex: 1; min-width: 0; }
-.thing-imgs img { width: 100%; border-radius: 24px; }
+.thing-inner { display: flex; align-items: flex-start; gap: 40px; }
+.thing-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.thing-col p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
 
 /* Stats */
 .about-stats { background: #2B2F31; padding: 120px 40px; }
