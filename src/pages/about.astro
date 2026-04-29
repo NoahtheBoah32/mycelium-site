@@ -9,37 +9,44 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-hero">
     <div class="section-inner">
-      <h1 class="about-title">Mycelium connects what grows beneath the surface</h1>
       <a href="#how-it-started" class="about-hero-link">READ THE FULL JOURNEY</a>
+      <h1 class="about-title">Mycelium connects what grows beneath the surface</h1>
     </div>
   </section>
 
   <section class="about-story" id="how-it-started">
-    <div class="section-inner story-inner">
-      <div class="story-text">
-        <h2 class="section-h2">HOW IT STARTED</h2>
-        <p>Have you ever wondered why nature wastes nothing, and wondered why we can&rsquo;t do the same?</p>
-        <p>In natural systems, there is no such thing as waste. All organic matter moves through closed-loop cycles where what one process discards becomes essential input for another.</p>
-        <p>I found the answer at Perma-Kapihan, an event held by the Philippine Permaculture Association, where I first heard of permaculture.</p>
-        <p>After visiting Bert&rsquo;s home and taking a formal Permaculture Design Course in Nueva Ecija hosted by Bert, a 7-day immersive program, the foundation for Mycelium was born.</p>
-        <p>A banana tree mulching area filled with layers upon layers of decomposing leaves and plant matter, where fallen plants cycled back into the soil, enriching it, became the moment that inspired Mycelium.</p>
-      </div>
-      <div class="story-img">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-02.webp" alt="Permaculture journey" loading="lazy" />
+    <div class="section-inner">
+      <h2 class="section-h2 center">HOW IT STARTED</h2>
+      <p class="story-intro">Have you ever wondered why nature wastes nothing, and wondered why we can&rsquo;t do the same?</p>
+      <div class="story-inner">
+        <div class="story-text">
+          <p>In natural systems, there is no such thing as waste. All organic matter moves through closed-loop cycles where what one process discards becomes essential input for another.</p>
+          <p>I found the answer at Perma-Kapihan, an event held by the Philippine Permaculture Association, where I first heard of permaculture.</p>
+          <p>After visiting Bert&rsquo;s home and taking a formal Permaculture Design Course in Nueva Ecija hosted by Bert, a 7-day immersive program, the foundation for Mycelium was born.</p>
+          <p>A banana tree mulching area filled with layers upon layers of decomposing leaves and plant matter, where fallen plants cycled back into the soil, enriching it, became the moment that inspired Mycelium.</p>
+        </div>
+        <div class="story-img">
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-02.webp" alt="Permaculture journey" loading="lazy" />
+        </div>
       </div>
     </div>
   </section>
 
   <section class="about-why">
-    <div class="section-inner why-inner">
-      <div class="why-text">
-        <h2 class="section-h2">WHY THIS MATTERS TO ME</h2>
-        <p>Stepping foot into Bert&rsquo;s home felt like entering an entirely new universe. Seeing food, water, and nature orchestrated in a manner that worked harmoniously with natural patterns rather than against them.</p>
-        <p>Exploring these ideas further, I discovered that the patterns I observed in Bert&rsquo;s home were echoed in the research I came across, with permaculture systems consistently demonstrating improvements in soil health, biodiversity, and food security.</p>
-        <p>Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attend a formal Permaculture Design Course in Nueva Ecija.</p>
-      </div>
-      <div class="why-img">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Why this matters" loading="lazy" />
+    <div class="section-inner">
+      <h2 class="section-h2 center">WHY THIS MATTERS TO ME</h2>
+      <div class="why-inner">
+        <div class="why-left">
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Landfill waste composition before and after permaculture" loading="lazy" />
+        </div>
+        <div class="why-right">
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
+          <div class="why-text">
+            <p>Stepping foot into Bert&rsquo;s home felt like entering an entirely new universe. Seeing food, water, and nature orchestrated in a manner that worked harmoniously with natural patterns rather than against them.</p>
+            <p>Exploring these ideas further, I discovered that the patterns I observed in Bert&rsquo;s home were echoed in the research I came across, with permaculture systems consistently demonstrating improvements in soil health, biodiversity, and food security.</p>
+            <p>Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attend a formal Permaculture Design Course in Nueva Ecija.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -53,7 +60,6 @@ import SiteFooter from '../components/SiteFooter.astro';
       </div>
       <div class="thing-imgs">
         <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-03.png" alt="Permaculture practice" loading="lazy" />
-        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Permaculture practice" loading="lazy" />
       </div>
     </div>
   </section>
@@ -181,35 +187,38 @@ import SiteFooter from '../components/SiteFooter.astro';
 }
 .about-hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,16,8,0.6); }
 .about-hero > * { position: relative; z-index: 1; }
-.about-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 5.5vw, 5rem); font-weight: 400; color: #D2CEC8; line-height: 1.05; letter-spacing: -0.03em; max-width: 900px; margin: 0 auto 32px; }
-.about-hero-link { display: inline-block; font-family: var(--font-inter); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #D2CEC8; border-bottom: 2px solid #FFD53B; padding-bottom: 3px; text-decoration: none; transition: color 0.2s; }
+.about-hero-link { display: inline-block; font-family: var(--font-outfit); font-size: 1.5rem; font-weight: 400; letter-spacing: 0.06em; color: #D2CEC8; text-decoration: none; margin-bottom: 20px; transition: color 0.2s; }
 .about-hero-link:hover { color: #FFD53B; }
+.about-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 5.5vw, 5rem); font-weight: 400; color: #D2CEC8; line-height: 1.05; letter-spacing: -0.03em; max-width: 900px; margin: 0 auto 0; }
 
 /* HOW IT STARTED */
 .about-story { background: #43330B; padding: 112px 40px; }
-.story-inner { display: flex; align-items: center; gap: 80px; }
-.story-text { flex: 1; display: flex; flex-direction: column; gap: 20px; }
 .about-story .section-h2 { color: #D2CEC8; }
-.story-text p { font-family: var(--font-outfit); font-size: 1.5rem; color: rgba(210,206,200,0.85); line-height: 1.55; }
+.story-intro { font-family: var(--font-serif); font-size: 1.5rem; color: rgba(210,206,200,0.9); line-height: 1.5; text-align: center; max-width: 800px; margin: 0 auto 56px; }
+.story-inner { display: flex; align-items: flex-start; gap: 80px; margin-top: 0; }
+.story-text { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+.story-text p { font-family: var(--font-serif); font-size: 1.5rem; color: rgba(210,206,200,0.85); line-height: 1.55; }
 .story-img { flex-shrink: 0; width: 520px; }
 .story-img img { width: 100%; border-radius: 12px; }
 
 /* WHY THIS MATTERS TO ME */
 .about-why { background: #43330B; padding: 112px 40px; }
-.why-inner { display: flex; align-items: center; gap: 80px; }
-.why-img { flex-shrink: 0; width: 480px; }
-.why-img img { width: 100%; border-radius: 12px; }
-.why-text { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-.why-text .section-h2 { color: #D2CEC8; }
-.why-text p { font-family: var(--font-outfit); font-size: 1.5rem; color: #D2CEC8; line-height: 1.55; opacity: 0.85; }
+.about-why .section-h2 { color: #D2CEC8; }
+.why-inner { display: flex; align-items: flex-start; gap: 64px; }
+.why-left { flex-shrink: 0; width: 440px; }
+.why-left img { width: 100%; border-radius: 12px; }
+.why-right { flex: 1; display: flex; flex-direction: column; gap: 24px; }
+.why-bio-card { width: 100%; border-radius: 12px; }
+.why-text { display: flex; flex-direction: column; gap: 20px; }
+.why-text p { font-family: var(--font-serif); font-size: 1.5rem; color: rgba(210,206,200,0.85); line-height: 1.55; }
 
 /* HERE'S THE THING */
 .about-thing { background: #F7F7F5; padding: 112px 40px; }
 .thing-inner { display: flex; align-items: center; gap: 80px; }
 .thing-text { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-.thing-text p { font-family: var(--font-outfit); font-size: 1.5rem; color: #555; line-height: 1.55; }
-.thing-imgs { flex-shrink: 0; width: 420px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.thing-imgs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; }
+.thing-text p { font-family: var(--font-serif); font-size: 1.5rem; color: #555; line-height: 1.55; }
+.thing-imgs { flex-shrink: 0; width: 440px; }
+.thing-imgs img { width: 100%; border-radius: 12px; }
 
 /* Stats */
 .about-stats { background: #2B2F31; padding: 100px 40px; }
@@ -221,7 +230,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* MEASURING IMPACT */
 .about-impact { background: #fff; padding: 112px 40px; }
 .about-impact .section-h2 { color: #242424; }
-.about-impact .story-text p { font-size: 1.5rem; color: #555; }
+.about-impact .story-text p { font-family: var(--font-serif); font-size: 1.5rem; color: #555; }
 
 /* MISSION */
 .about-mission { background: #2F2A1F; padding: 100px 40px; text-align: center; }
@@ -251,18 +260,18 @@ import SiteFooter from '../components/SiteFooter.astro';
 .partner-desc { font-family: var(--font-outfit); font-size: 1.2rem; color: #555; line-height: 1.6; }
 
 @media (max-width: 1100px) {
-  .story-img { width: 420px; }
-  .why-img { width: 380px; }
+  .story-img { width: 380px; }
+  .why-left { width: 360px; }
   .thing-imgs { width: 360px; }
 }
 @media (max-width: 900px) {
   .story-inner { flex-direction: column; } .story-img { width: 100%; }
-  .why-inner { flex-direction: column; } .why-img { width: 100%; }
+  .why-inner { flex-direction: column; } .why-left { width: 100%; }
   .thing-inner { flex-direction: column; } .thing-imgs { width: 100%; }
   .about-stats-grid { grid-template-columns: 1fr; gap: 40px; }
   .partners-grid { grid-template-columns: 1fr; }
   .mission-pillars { grid-template-columns: 1fr; }
-  .story-text p, .why-text p, .thing-text p, .about-impact .story-text p { font-size: 1.2rem; }
+  .story-text p, .why-text p, .thing-text p, .about-impact .story-text p, .story-intro { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
   .section-inner { padding: 0 20px; }
