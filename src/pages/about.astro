@@ -33,36 +33,36 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-why">
     <div class="section-inner">
-      <h2 class="section-h2 center">WHY THIS MATTERS TO ME</h2>
       <div class="why-inner">
         <div class="why-left">
-          <div class="why-text">
+          <div class="why-text-block">
+            <h2 class="section-h2 center">WHY THIS MATTERS TO ME</h2>
             <p>Stepping foot into Bert&rsquo;s home felt like entering an entirely new universe. Seeing food, water, and nature orchestrated in a manner that worked harmoniously fundamentally redefined how I thought environments could be designed. The reciprocity I observed inspired me to understand not just the &ldquo;what&rdquo; of these systems, but also the &ldquo;why&rdquo; and &ldquo;how&rdquo;.</p>
             <p>Exploring these ideas further, I discovered that the patterns I observed in Bert&rsquo;s home were echoed in the research I came across, with permaculture systems continuously sustaining notably higher biodiversity than conventional land use, improving environmental health like air quality, and redirecting waste streams away from disposal and towards repurposing.</p>
             <p>Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attended a formal Permaculture Design Course in Nueva Ecija, hosted by Beert. This 7 day immersive course gave me the opportunity to understand all the mechanics that i had initially observed at Bert&rsquo;s house.</p>
           </div>
-          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
-          <p class="why-caption">Permaculture composting can divert up to 77% of organic waste from landfills, reducing the organic waste proportion in landfill from about 35% to just 11%. This significant reduction helps decrease landfill volume and greenhouse gas emissions, promoting a more sustainable waste management system.</p>
-        </div>
-        <div class="why-right">
-          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-03.png" alt="Permaculture landscape" loading="lazy" class="why-landscape" />
-          <div class="why-bio-row">
-            <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
-            <p class="why-caption">Permaculture areas show three times more plant speciesthan conventional agriculture (Farming insider). Urban permaculture contributes to habitat restoration, supports pollinators, and increases soil microorganisms essential for nutrient cycling and decomposition</p>
+          <div class="why-dark-box">
+            <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
+            <p class="why-chart-caption">Permaculture composting can divert up to 77% of organic waste from landfills, reducing the organic waste proportion in landfill from about 35% to just 11%. This significant reduction helps decrease landfill volume and greenhouse gas emissions, promoting a more sustainable waste management system.</p>
+          </div>
+          <div class="why-thing-block">
+            <h2 class="section-h2 center">HERE&rsquo;S THE THING...</h2>
+            <p>As I went deeper into permaculture, I realized how overwhelming it can be to enter the field. The knowledge is vast, scattered across books, courses, research papers, and personal interpretations. For someone just starting out, it&rsquo;s difficult to know where to begin and how to translate abstract principles into something tangible.</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="about-thing">
-    <div class="section-inner thing-inner">
-      <div class="thing-col">
-        <h2 class="section-h2">HERE&rsquo;S THE THING...</h2>
-        <p>As I went deeper into permaculture, I realized how overwhelming it can be to enter the field. The knowledge is vast, scattered across books, courses, research papers, and personal interpretations. For someone just starting out, it&rsquo;s difficult to know where to begin and how to translate abstract principles into something tangible.</p>
-      </div>
-      <div class="thing-col">
-        <p>All of this ultimately inspired Mycelium. The platform represents my attempt to translate the principles and lessons I&rsquo;ve experienced into something concrete, organized, accessible resource where curious minds can explore, learn, and apply holistic systems thinking. Creating Mycelium matters to me because it allows me to share the insights I&rsquo;ve gained, while making Permaculture less overwhelming for others starting out, just as I once was.</p>
+        <div class="why-right">
+          <div class="why-landscape-wrap">
+            <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-03.png" alt="Permaculture landscape" loading="lazy" class="why-landscape" />
+          </div>
+          <div class="why-dark-box">
+            <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
+            <p class="why-bio-caption">Permaculture areas show three times more plant speciesthan conventional agriculture (Farming insider). Urban permaculture contributes to habitat restoration, supports pollinators, and increases soil microorganisms essential for nutrient cycling and decomposition</p>
+          </div>
+          <div class="why-thing-block">
+            <p>It was also there that a specific moment had a profound impact on me: a banana tree mulching area that was filled with layers upon layers of decomposing leaves and plant matter. Banana plants contended with each other and those that fell didn&rsquo;t vanish uselessly. They cycled back into the soil, enriching it and catalyzing the emergence of new plants. This organic nutrient-rich mulch that would typically contribute to municipal landfills instead became the foundation of soil regeneration.</p>
+            <p>All of this ultimately inspired Mycelium. The platform represents my attempt to translate the principles and lessons I&rsquo;ve experienced into something concrete, organized, accessible resource where curious minds can explore, learn, and apply holistic systems thinking. Creating Mycelium matters to me because it allows me to share the insights I&rsquo;ve gained, while making Permaculture less overwhelming for others starting out, just as I once was.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -161,7 +161,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 .section-h2 { font-family: var(--font-lora); font-size: clamp(2rem, 5.76vw, 3.75rem); font-weight: 500; color: #242424; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 32px; }
 .section-h2.center { text-align: center; }
 /* Section label headings (HOW IT STARTED, WHY, HERE'S THE THING, MEASURING IMPACT) */
-.about-story .section-h2, .about-why .section-h2, .about-thing .section-h2, .about-impact .section-h2 { font-size: 2.44rem; font-weight: 100; letter-spacing: -0.195px; color: #fff; }
+.about-story .section-h2, .about-why .section-h2, .about-impact .section-h2 { font-size: 2.44rem; font-weight: 100; letter-spacing: -0.195px; color: #fff; }
 .about-mission .section-h2 { font-weight: 500; font-size: clamp(2rem, 5.76vw, 3.75rem); }
 .about-criteria .section-h2, .about-partners .section-h2 { font-weight: 600; font-size: clamp(2rem, 5.76vw, 3.75rem); }
 
@@ -185,7 +185,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* HOW IT STARTED */
 .about-story { background: #2F2A1F; padding: 120px 40px; }
 .story-intro { font-family: var(--font-lora); font-size: 1.5rem; font-weight: 100; color: rgb(210,206,200); line-height: 1.24; text-align: center; max-width: 800px; margin: 0 auto 56px; }
-.story-inner { display: flex; align-items: flex-start; gap: 40px; margin-top: 0; }
+.story-inner { display: flex; align-items: center; gap: 40px; margin-top: 0; }
 .story-text { flex: 1; display: flex; flex-direction: column; gap: 20px; }
 .story-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
 .story-img { flex-shrink: 0; width: 487px; }
@@ -194,22 +194,20 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* WHY THIS MATTERS TO ME */
 .about-why { background: #43330B; padding: 120px 40px; }
 .why-inner { display: flex; align-items: flex-start; gap: 40px; }
-.why-left { flex: 1; min-width: 0; }
-.why-left img { width: 100%; border-radius: 12px; }
-.why-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
-.why-landscape { width: 100%; border-radius: 20px 20px 0 0; }
-.why-bio-row { display: flex; gap: 20px; align-items: flex-start; }
-.why-bio-card { flex: 1; min-width: 0; border-radius: 20px 20px 0 0; }
-.why-chart { width: 100%; border-radius: 20px 20px 0 0; margin-top: 24px; }
-.why-caption { font-family: var(--font-outfit); font-size: 1.5rem; color: #fff; line-height: 1.4; flex: 1; min-width: 0; }
-.why-text { display: flex; flex-direction: column; gap: 20px; }
-.why-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
-
-/* HERE'S THE THING */
-.about-thing { background: #43330B; padding: 120px 40px; }
-.thing-inner { display: flex; align-items: flex-start; gap: 40px; }
-.thing-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
-.thing-col p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
+.why-left { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 40px; }
+.why-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 40px; }
+.why-text-block { display: flex; flex-direction: column; gap: 20px; }
+.why-text-block p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
+.why-dark-box { background: rgb(34,36,33); display: flex; flex-direction: column; }
+.why-dark-box img { width: 100%; }
+.why-chart { border-radius: 20px 20px 0 0; }
+.why-chart-caption { font-family: var(--font-outfit); font-size: 1.5rem; color: #fff; line-height: 1.4; padding: 0 20px; }
+.why-bio-card { border-radius: 20px 20px 0 0; }
+.why-bio-caption { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.4; padding: 0 20px; }
+.why-landscape-wrap { flex-shrink: 0; }
+.why-landscape { width: 100%; border-radius: 24px; display: block; }
+.why-thing-block { display: flex; flex-direction: column; gap: 20px; }
+.why-thing-block p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
 
 
 /* MEASURING IMPACT */
@@ -255,18 +253,17 @@ import SiteFooter from '../components/SiteFooter.astro';
 }
 @media (max-width: 900px) {
   .story-inner { flex-direction: column; } .story-img { width: 100%; }
-  .why-inner { flex-direction: column; } .why-left { width: 100%; }
-  .thing-inner { flex-direction: column; }
+  .why-inner { flex-direction: column; }
   .impact-inner { flex-direction: column; }
   .impact-text { padding: 60px 20px; }
   .impact-imgs { padding: 40px 20px; }
   .partners-grid { grid-template-columns: 1fr; }
   .mission-pillars { grid-template-columns: 1fr; }
-  .story-text p, .why-text p, .thing-text p, .impact-text p, .story-intro, .mission-body, .partner-desc { font-size: 1.2rem; }
+  .story-text p, .why-text-block p, .why-thing-block p, .impact-text p, .story-intro, .mission-body, .partner-desc { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
   .section-inner { padding: 0 20px; }
-  .about-hero, .about-story, .about-why, .about-thing, .about-impact, .about-mission, .about-criteria, .about-partners { padding-left: 20px; padding-right: 20px; }
+  .about-hero, .about-story, .about-why, .about-impact, .about-mission, .about-criteria, .about-partners { padding-left: 20px; padding-right: 20px; }
   .section-h2 { font-size: 2rem; }
   .about-title { font-size: 2.5rem; }
 }
