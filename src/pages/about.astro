@@ -67,25 +67,6 @@ import SiteFooter from '../components/SiteFooter.astro';
     </div>
   </section>
 
-  <section class="about-stats">
-    <div class="section-inner">
-      <div class="about-stats-grid">
-        <div class="as-item">
-          <p class="as-stat">77%</p>
-          <p class="as-label">Permaculture composting can divert up to 77% of organic waste from landfills</p>
-        </div>
-        <div class="as-item">
-          <p class="as-stat">3x</p>
-          <p class="as-label">Permaculture areas show three times more plant species than conventional agriculture</p>
-        </div>
-        <div class="as-item">
-          <p class="as-stat">+</p>
-          <p class="as-label">Urban permaculture supports habitat restoration, pollinators, and soil microorganisms</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="about-impact">
     <div class="impact-inner">
       <div class="impact-text">
@@ -230,12 +211,6 @@ import SiteFooter from '../components/SiteFooter.astro';
 .thing-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
 .thing-col p { font-family: var(--font-lora); font-size: 1.5rem; color: rgb(210,206,200); line-height: 1.24; }
 
-/* Stats */
-.about-stats { background: #2B2F31; padding: 120px 40px; }
-.about-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-.as-item { text-align: center; }
-.as-stat { font-family: var(--font-lora); font-size: 4.5rem; font-weight: 500; color: #fff; margin-bottom: 16px; }
-.as-label { font-family: var(--font-outfit); font-size: 1.25rem; color: #D2CEC8; line-height: 1.5; }
 
 /* MEASURING IMPACT */
 .about-impact { background: #2F2A1F; padding: 0; }
@@ -281,20 +256,18 @@ import SiteFooter from '../components/SiteFooter.astro';
 @media (max-width: 900px) {
   .story-inner { flex-direction: column; } .story-img { width: 100%; }
   .why-inner { flex-direction: column; } .why-left { width: 100%; }
-  .thing-inner { flex-direction: column; } .thing-imgs { width: 100%; }
+  .thing-inner { flex-direction: column; }
   .impact-inner { flex-direction: column; }
   .impact-text { padding: 60px 20px; }
   .impact-imgs { padding: 40px 20px; }
-  .about-stats-grid { grid-template-columns: 1fr; gap: 40px; }
   .partners-grid { grid-template-columns: 1fr; }
   .mission-pillars { grid-template-columns: 1fr; }
   .story-text p, .why-text p, .thing-text p, .impact-text p, .story-intro, .mission-body, .partner-desc { font-size: 1.2rem; }
 }
 @media (max-width: 600px) {
   .section-inner { padding: 0 20px; }
-  .about-hero, .about-story, .about-why, .about-thing, .about-stats, .about-impact, .about-mission, .about-criteria, .about-partners { padding-left: 20px; padding-right: 20px; }
+  .about-hero, .about-story, .about-why, .about-thing, .about-impact, .about-mission, .about-criteria, .about-partners { padding-left: 20px; padding-right: 20px; }
   .section-h2 { font-size: 2rem; }
   .about-title { font-size: 2.5rem; }
-  .as-stat { font-size: 3.5rem; }
 }
 </style>
