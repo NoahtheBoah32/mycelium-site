@@ -10,10 +10,11 @@ import SiteFooter from '../components/SiteFooter.astro';
   <section class="about-hero">
     <div class="section-inner">
       <h1 class="about-title">Mycelium connects what grows beneath the surface</h1>
+      <a href="#how-it-started" class="about-hero-link">READ THE FULL JOURNEY</a>
     </div>
   </section>
 
-  <section class="about-story">
+  <section class="about-story" id="how-it-started">
     <div class="section-inner story-inner">
       <div class="story-text">
         <h2 class="section-h2">HOW IT STARTED</h2>
@@ -31,14 +32,14 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-why">
     <div class="section-inner why-inner">
-      <div class="why-img">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Why this matters" loading="lazy" />
-      </div>
       <div class="why-text">
         <h2 class="section-h2">WHY THIS MATTERS TO ME</h2>
         <p>Stepping foot into Bert&rsquo;s home felt like entering an entirely new universe. Seeing food, water, and nature orchestrated in a manner that worked harmoniously with natural patterns rather than against them.</p>
         <p>Exploring these ideas further, I discovered that the patterns I observed in Bert&rsquo;s home were echoed in the research I came across, with permaculture systems consistently demonstrating improvements in soil health, biodiversity, and food security.</p>
         <p>Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attend a formal Permaculture Design Course in Nueva Ecija.</p>
+      </div>
+      <div class="why-img">
+        <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Why this matters" loading="lazy" />
       </div>
     </div>
   </section>
@@ -169,8 +170,20 @@ import SiteFooter from '../components/SiteFooter.astro';
 .section-h2.light { color: #D2CEC8; }
 
 /* Hero */
-.about-hero { background: #2F2A1F; padding: 96px 40px 80px; text-align: center; }
-.about-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; color: #D2CEC8; line-height: 1.1; letter-spacing: -0.02em; max-width: 800px; margin: 0 auto; }
+.about-hero {
+  background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-01.webp');
+  background-size: cover;
+  background-position: center;
+  background-color: #2F2A1F;
+  position: relative;
+  padding: 120px 40px 100px;
+  text-align: center;
+}
+.about-hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,16,8,0.6); }
+.about-hero > * { position: relative; z-index: 1; }
+.about-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; color: #D2CEC8; line-height: 1.1; letter-spacing: -0.02em; max-width: 800px; margin: 0 auto 24px; }
+.about-hero-link { display: inline-block; font-family: var(--font-inter); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #D2CEC8; border-bottom: 2px solid #FFD53B; padding-bottom: 2px; text-decoration: none; transition: color 0.2s; }
+.about-hero-link:hover { color: #FFD53B; }
 
 /* HOW IT STARTED */
 .about-story { background: #fff; padding: 96px 40px; }
@@ -236,7 +249,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 
 @media (max-width: 900px) {
   .story-inner { flex-direction: column; } .story-img { width: 100%; }
-  .why-inner { flex-direction: column-reverse; } .why-img { width: 100%; }
+  .why-inner { flex-direction: column; } .why-img { width: 100%; }
   .thing-inner { flex-direction: column; } .thing-imgs { width: 100%; }
   .about-stats-grid { grid-template-columns: 1fr; gap: 32px; }
   .partners-grid { grid-template-columns: 1fr; }
