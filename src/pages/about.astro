@@ -20,10 +20,9 @@ import SiteFooter from '../components/SiteFooter.astro';
       <p class="story-intro">Have you ever wondered why nature wastes nothing, and wondered why we can&rsquo;t do the same?</p>
       <div class="story-inner">
         <div class="story-text">
-          <p>In natural systems, there is no such thing as waste. All organic matter moves through closed-loop cycles where what one process discards becomes essential input for another.</p>
+          <p>In natural systems, there is no such thing as waste. All organic matter moves through closed-loop cycles where what one process discards becomes essential input for another. The result is a self-sufficient balance that sustains anything around it.</p>
+          <p>Human systems often operate differently. We extract, consume, and discard linearly. So how do we construct systems that don&rsquo;t inevitably create the very problems they set out to solve?</p>
           <p>I found the answer at Perma-Kapihan, an event held by the Philippine Permaculture Association, where I first heard of permaculture.</p>
-          <p>After visiting Bert&rsquo;s home and taking a formal Permaculture Design Course in Nueva Ecija hosted by Bert, a 7-day immersive program, the foundation for Mycelium was born.</p>
-          <p>A banana tree mulching area filled with layers upon layers of decomposing leaves and plant matter, where fallen plants cycled back into the soil, enriching it, became the moment that inspired Mycelium.</p>
         </div>
         <div class="story-img">
           <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-02.webp" alt="Permaculture journey" loading="lazy" />
@@ -37,15 +36,17 @@ import SiteFooter from '../components/SiteFooter.astro';
       <h2 class="section-h2 center">WHY THIS MATTERS TO ME</h2>
       <div class="why-inner">
         <div class="why-left">
-          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Landfill waste composition before and after permaculture" loading="lazy" />
-        </div>
-        <div class="why-right">
-          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
           <div class="why-text">
             <p>Stepping foot into Bert&rsquo;s home felt like entering an entirely new universe. Seeing food, water, and nature orchestrated in a manner that worked harmoniously with natural patterns rather than against them.</p>
             <p>Exploring these ideas further, I discovered that the patterns I observed in Bert&rsquo;s home were echoed in the research I came across, with permaculture systems consistently demonstrating improvements in soil health, biodiversity, and food security.</p>
-            <p>Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attend a formal Permaculture Design Course in Nueva Ecija.</p>
+            <p>Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attended a formal Permaculture Design Course in Nueva Ecija, hosted by Bert. This 7 day immersive course gave me the opportunity to understand all the mechanics that I had initially observed at Bert&rsquo;s house.</p>
           </div>
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-05.png" alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
+          <p class="why-caption">Permaculture composting can divert up to 77% of organic waste from landfills, reducing the organic waste proportion in landfill from about 35% to just 11%. This significant reduction helps decrease landfill volume and greenhouse gas emissions, promoting a more sustainable waste management system.</p>
+        </div>
+        <div class="why-right">
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
+          <p class="why-caption">Permaculture areas show three times more plant species than conventional agriculture (Farming insider). Urban permaculture contributes to habitat restoration, supports pollinators, and increases soil biodiversity and nutrient cycling.</p>
         </div>
       </div>
     </div>
@@ -213,6 +214,8 @@ import SiteFooter from '../components/SiteFooter.astro';
 .why-left img { width: 100%; border-radius: 12px; }
 .why-right { flex: 1; display: flex; flex-direction: column; gap: 24px; }
 .why-bio-card { width: 100%; border-radius: 12px; }
+.why-chart { width: 100%; border-radius: 12px; margin-top: 24px; }
+.why-caption { font-family: var(--font-lora); font-size: 0.9rem; color: rgba(210,206,200,0.65); line-height: 1.4; font-style: italic; margin-top: 8px; }
 .why-text { display: flex; flex-direction: column; gap: 20px; }
 .why-text p { font-family: var(--font-lora); font-size: 1.5rem; color: rgba(210,206,200,0.85); line-height: 1.24; }
 
