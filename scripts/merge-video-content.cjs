@@ -5,15 +5,15 @@ const videosPath = path.join(__dirname, '../public/data/videos.json');
 const videos = JSON.parse(fs.readFileSync(videosPath, 'utf8'));
 
 const GEOFF_BIO = 'Geoff Lawton is a world renowned permaculture consultant, designer and teacher. He first took his Permaculture Design Certificate (PDC) Course in 1983 with Bill Mollison, widely considered the "father of permaculture." Geoff has undertaken thousands of jobs teaching, consulting, designing, administering and implementing, in 6 continents and over 50 countries around the world.';
-const GEOFF_THUMB = 'https://secure.gravatar.com/avatar/ca88db5714ce5ba92d66c2ff80b8ac14ad7ad189c131d54aafa3854cebd08363?s=96&d=mm&r=g';
+const GEOFF_THUMB = 'https://secure.gravatar.com/avatar/ca88db5714ce5ba92d66c2ff80b8ac14ad7ad189c131d54aafa3854cebd08363?s=300&d=mm&r=g';
 const GEOFF_ROLE = 'Permaculture Consultant & Designer';
 
 const HUBERT_BIO = 'Hubert Posadas is a Filipino permaculture practitioner and community organizer leading the Bayanihan Project, a program that integrates modern permaculture with indigenous Filipino practices across six pilot communities nationwide. His work is rooted in the belief that food security and community resilience are inseparable, drawing on the Filipino value of bayanihan as the foundation for sustainable land stewardship.';
-const HUBERT_THUMB = 'https://secure.gravatar.com/avatar/56bdba3d8d5e2178b74a425a46edd195748af0af7ac6fe02e3d2913c5c3b6a1a?s=96&d=mm&r=g';
+const HUBERT_THUMB = 'https://secure.gravatar.com/avatar/56bdba3d8d5e2178b74a425a46edd195748af0af7ac6fe02e3d2913c5c3b6a1a?s=300&d=mm&r=g';
 const HUBERT_ROLE = 'Filipino Permaculture Practitioner';
 
 const PPA_BIO = 'Bert Peeters and Sixto Bereber are permaculture educators and long-time practitioners leading the Philippine Permaculture Association (PPA). Through the Kapitbahay: Kwentong Permakultura series, they share conversations and practical insights on soil health and community-based permaculture in the Philippine context.';
-const PPA_THUMB = 'https://secure.gravatar.com/avatar/03322ca2f73b406d2c5c89c2419d83cbc51ca39ba088bba9801dc865aa3dbc89?s=96&d=mm&r=g';
+const PPA_THUMB = 'https://secure.gravatar.com/avatar/03322ca2f73b406d2c5c89c2419d83cbc51ca39ba088bba9801dc865aa3dbc89?s=300&d=mm&r=g';
 const PPA_ROLE = 'Philippine Permaculture Association';
 
 const scraped = [
