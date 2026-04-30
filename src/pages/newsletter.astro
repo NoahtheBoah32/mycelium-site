@@ -5,12 +5,19 @@ import SiteFooter from '../components/SiteFooter.astro';
 ---
 
 <BaseLayout title="Newsletter - Mycelium">
-  <SiteNav />
+  <SiteNav overlay={true} />
+
   <section class="nl-hero">
     <div class="nl-inner">
-      <span class="eyebrow">Newsletter</span>
-      <h1 class="nl-title">Get Monthly Permaculture Resources</h1>
-      <p class="nl-sub">Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.</p>
+      <p class="nl-label">Stay Rooted &amp; Keep Growing</p>
+      <h1 class="nl-tagline">Curated permaculture resources, seasonal growing tips, and field-tested knowledge delivered straight to your inbox. Always free, no exceptions.</h1>
+    </div>
+  </section>
+
+  <section class="nl-signup">
+    <div class="nl-signup-inner">
+      <h2 class="nl-signup-heading">Get Monthly Permaculture Resources</h2>
+      <p class="nl-signup-sub">Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.</p>
       <form class="nl-form" action="https://mycelium-learn.com/newsletter/" method="get">
         <input type="email" placeholder="Your email address" class="nl-input" />
         <button type="submit" class="nl-btn">Subscribe</button>
@@ -18,19 +25,37 @@ import SiteFooter from '../components/SiteFooter.astro';
       <p class="nl-privacy">We respect your privacy. Unsubscribe anytime.</p>
     </div>
   </section>
+
   <SiteFooter />
 </BaseLayout>
 
 <style>
-.nl-hero { background: #F7F7F5; min-height: 60vh; display: flex; align-items: center; padding: 80px 40px; }
-.nl-inner { max-width: 600px; margin: 0 auto; text-align: center; }
-.eyebrow { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #2F4F2F; margin-bottom: 12px; display: block; }
-.nl-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 400; color: #242424; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
-.nl-sub { font-family: var(--font-outfit); font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 32px; }
+.nl-hero {
+  background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/newsletter-bg-scaled.webp');
+  background-size: cover; background-position: center;
+  background-color: #1a2a14;
+  min-height: 500px; display: flex; flex-direction: column; justify-content: center;
+  padding: calc(72px + 40px) 40px 80px; margin-top: -72px; text-align: center; position: relative;
+}
+.nl-hero::before { content: ''; position: absolute; inset: 0; background: rgba(8,14,6,0.68); }
+.nl-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+.nl-label { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; color: #D2CEC8; margin-bottom: 16px; letter-spacing: -0.01em; }
+.nl-tagline { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.6; }
+
+.nl-signup { background: #F7F7F5; padding: 72px 40px; }
+.nl-signup-inner { max-width: 560px; margin: 0 auto; text-align: center; }
+.nl-signup-heading { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; color: #242424; letter-spacing: -0.01em; margin-bottom: 12px; }
+.nl-signup-sub { font-family: var(--font-outfit); font-size: 1rem; color: #666; line-height: 1.6; margin-bottom: 32px; }
 .nl-form { display: flex; gap: 12px; justify-content: center; margin-bottom: 16px; }
-.nl-input { flex: 1; max-width: 300px; padding: 12px 20px; border: 1px solid #ccc; border-radius: 50px; font-family: var(--font-inter); font-size: 0.875rem; outline: none; }
-.nl-btn { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; background: #5A3A1C; color: #fff; padding: 12px 24px; border-radius: 50px; border: none; cursor: pointer; transition: background 0.2s; }
-.nl-btn:hover { background: #947153; }
+.nl-input { flex: 1; max-width: 300px; padding: 12px 20px; border: 1px solid #ccc; border-radius: 50px; font-family: var(--font-inter); font-size: 0.875rem; outline: none; transition: border-color 0.15s; }
+.nl-input:focus { border-color: #2F4F2F; }
+.nl-btn { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 600; background: #2F4F2F; color: #fff; padding: 12px 28px; border-radius: 50px; border: none; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+.nl-btn:hover { background: #3d6b3d; }
 .nl-privacy { font-family: var(--font-inter); font-size: 0.75rem; color: #999; }
-@media (max-width: 600px) { .nl-form { flex-direction: column; } .nl-input { max-width: 100%; } }
+@media (max-width: 600px) {
+  .nl-hero { padding: calc(72px + 24px) 20px 48px; }
+  .nl-signup { padding: 48px 20px; }
+  .nl-form { flex-direction: column; align-items: center; }
+  .nl-input { max-width: 100%; width: 100%; }
+}
 </style>

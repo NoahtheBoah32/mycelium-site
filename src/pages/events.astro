@@ -98,18 +98,19 @@ import SiteFooter from '../components/SiteFooter.astro';
   background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/banner-event.webp');
   background-size: cover; background-position: center;
   background-color: #1a1e1a;
-  padding: calc(120px + 72px) 40px 120px; margin-top: -72px; text-align: center; position: relative;
+  min-height: 500px; display: flex; flex-direction: column; justify-content: center;
+  padding: calc(72px + 40px) 40px 60px; margin-top: -72px; text-align: center; position: relative;
 }
 .ev-hero::before { content: ''; position: absolute; inset: 0; background: rgba(10,14,10,0.62); }
 .ev-hero .ev-inner { position: relative; z-index: 1; }
-.ev-title { font-family: var(--font-inter); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; margin-bottom: 20px; }
-.ev-sub { font-family: var(--font-outfit); font-size: 1rem; color: #c8d0c8; line-height: 1.7; max-width: 680px; margin: 0 auto; }
-.ev-sub-accent { color: #C8A01A; }
+.ev-title { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; letter-spacing: -0.01em; color: #D2CEC8; text-transform: none; margin-bottom: 12px; }
+.ev-sub { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.5; max-width: 680px; margin: 0 auto; }
+.ev-sub-accent { color: #C8A01A; font-style: normal; }
 
 /* Find an Event */
 .ev-find { background: #2B2F31; padding: 48px 40px 40px; text-align: center; }
-.ev-find-heading { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #8aaa7a; margin-bottom: 16px; }
-.ev-find-sub { font-family: var(--font-outfit); font-size: 1rem; color: #9aaa9a; line-height: 1.7; max-width: 640px; margin: 0 auto; }
+.ev-find-heading { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; letter-spacing: -0.01em; color: #D2CEC8; text-transform: none; margin-bottom: 12px; }
+.ev-find-sub { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.5; max-width: 640px; margin: 0 auto; }
 
 /* Perma-Kapihan */
 .ev-kapihan {
