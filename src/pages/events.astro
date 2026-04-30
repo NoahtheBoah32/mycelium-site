@@ -138,14 +138,42 @@ import SiteFooter from '../components/SiteFooter.astro';
         </div>
       </div>
 
-    </div>
-  </section>
+      <!-- Card 3: Coming Soon -->
+      <div class="ev-card ev-card-soon">
+        <div class="ev-soon-bg">
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/event-comingsoon-bg.webp" alt="" loading="lazy" class="ev-soon-bg-img" />
+          <div class="ev-soon-overlay"></div>
+        </div>
 
-  <!-- Coming Soon -->
-  <section class="ev-soon">
-    <div class="ev-inner">
-      <p class="ev-soon-sub">GOOD THINGS GROW SLOWLY</p>
-      <h2 class="ev-soon-title">—Coming Soon—</h2>
+        <div class="ev-soon-content">
+          <!-- Left: ghosted fake event details to sell "locked" feel -->
+          <div class="ev-soon-ghost">
+            <div class="ev-soon-ghost-badges">
+              <span class="ev-soon-ghost-pill"></span>
+              <span class="ev-soon-ghost-pill short"></span>
+              <span class="ev-soon-ghost-pill"></span>
+            </div>
+            <div class="ev-soon-ghost-sched"></div>
+            <div class="ev-soon-ghost-title"></div>
+            <div class="ev-soon-ghost-title short"></div>
+            <div class="ev-soon-ghost-title sub"></div>
+            <div class="ev-soon-ghost-body"></div>
+            <div class="ev-soon-ghost-body short"></div>
+            <div class="ev-soon-ghost-body"></div>
+            <div class="ev-soon-ghost-cta"></div>
+          </div>
+
+          <!-- Right: glassmorphism lock panel -->
+          <div class="ev-soon-glass">
+            <div class="ev-soon-lock">🔒</div>
+            <p class="ev-soon-eyebrow">GOOD THINGS GROW SLOWLY</p>
+            <h2 class="ev-soon-heading">—Coming Soon—</h2>
+            <p class="ev-soon-desc">More events are being planned. Join the newsletter to be notified first when new events go live.</p>
+            <a href="/newsletter" class="ev-cta ev-cta-soon">Get Notified Early</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -261,14 +289,45 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-cta-camp { background: #fff; color: #1a1400; }
 .ev-cta-camp:hover { background: #f0ece0; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
 
-/* ─── Coming Soon ────────────────────────────────────────── */
-.ev-soon { background: #1a1a1a; padding: 80px 40px; text-align: center;
-  background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/event-comingsoon-bg.webp');
-  background-size: cover; background-position: center; position: relative; }
-.ev-soon::before { content: ''; position: absolute; inset: 0; background: rgba(10,12,8,0.72); }
-.ev-soon .ev-inner { position: relative; z-index: 1; }
-.ev-soon-sub { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #d0d8c8; margin-bottom: 16px; }
-.ev-soon-title { font-family: var(--font-lora); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: #e8e0d0; letter-spacing: -0.01em; }
+/* ─── Card 3: Coming Soon ────────────────────────────────── */
+.ev-card-soon { position: relative; min-height: 480px; display: flex; align-items: stretch; }
+
+.ev-soon-bg { position: absolute; inset: 0; }
+.ev-soon-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ev-soon-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(8,16,8,0.92) 0%, rgba(20,30,14,0.78) 100%); }
+
+.ev-soon-content { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 480px; width: 100%; }
+
+/* Ghost left side */
+.ev-soon-ghost { padding: 52px 56px; display: flex; flex-direction: column; gap: 14px; filter: blur(5px); opacity: 0.22; pointer-events: none; }
+.ev-soon-ghost-badges { display: flex; gap: 8px; }
+.ev-soon-ghost-pill { height: 24px; width: 90px; background: rgba(255,255,255,0.35); border-radius: 50px; }
+.ev-soon-ghost-pill.short { width: 60px; }
+.ev-soon-ghost-sched { height: 12px; width: 220px; background: rgba(200,160,26,0.6); border-radius: 4px; margin-top: 4px; }
+.ev-soon-ghost-title { height: 36px; width: 85%; background: rgba(255,255,255,0.5); border-radius: 6px; }
+.ev-soon-ghost-title.short { width: 60%; }
+.ev-soon-ghost-title.sub { height: 28px; width: 45%; background: rgba(184,212,168,0.5); }
+.ev-soon-ghost-body { height: 14px; width: 95%; background: rgba(255,255,255,0.25); border-radius: 4px; }
+.ev-soon-ghost-body.short { width: 70%; }
+.ev-soon-ghost-cta { height: 44px; width: 160px; background: rgba(200,160,26,0.5); border-radius: 8px; margin-top: 8px; }
+
+/* Glass right side */
+.ev-soon-glass {
+  margin: 32px; border-radius: 16px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 48px 40px; gap: 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.ev-soon-lock { font-size: 2.2rem; margin-bottom: 20px; filter: grayscale(0.2); }
+.ev-soon-eyebrow { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(200,188,150,0.9); margin-bottom: 14px; }
+.ev-soon-heading { font-family: var(--font-lora); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; color: #f0ebe0; letter-spacing: -0.01em; margin-bottom: 16px; line-height: 1.2; }
+.ev-soon-desc { font-family: var(--font-outfit); font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.65; max-width: 320px; margin-bottom: 28px; }
+.ev-cta-soon { background: rgba(255,255,255,0.12); color: #f0ebe0; border: 1px solid rgba(255,255,255,0.25); }
+.ev-cta-soon:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1000px) {
@@ -278,6 +337,9 @@ import SiteFooter from '../components/SiteFooter.astro';
   .ev-camp-content { grid-template-columns: 1fr; }
   .ev-camp-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 40px 32px 32px; }
   .ev-camp-right { padding: 32px; }
+  .ev-soon-content { grid-template-columns: 1fr; }
+  .ev-soon-ghost { display: none; }
+  .ev-soon-glass { margin: 24px; padding: 40px 28px; }
 }
 @media (max-width: 600px) {
   .ev-inner { padding: 0 20px; }
