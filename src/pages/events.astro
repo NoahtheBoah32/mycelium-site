@@ -7,11 +7,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 <BaseLayout title="Events - Mycelium">
   <SiteNav overlay={true} />
 
+
   <!-- Hero -->
   <section class="ev-hero">
     <div class="ev-inner">
       <h1 class="ev-title">UPCOMING EVENTS</h1>
-      <p class="ev-sub">Discover and attend community events focused on permaculture and regenerative living. These community gatherings offer a place for learning, connection, and growth.</p>
+      <p class="ev-sub">Community meetups, talks, relaxed conversations over coffee, and exploring permaculture through <span class="ev-sub-accent">ideas and actions</span></p>
     </div>
   </section>
 
@@ -37,7 +38,7 @@ import SiteFooter from '../components/SiteFooter.astro';
         </div>
       </div>
       <div class="ev-col-img">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2025/11/PERMA-KAPIHAN-SA-ECO-HOUSE.jpg" alt="Perma-Kapihan sa Eco-house" loading="lazy" onerror="this.style.background='#3a4a2a';this.style.minHeight='480px';this.removeAttribute('src')" />
+        <img src="https://mycelium-learn.com/wp-content/uploads/2026/03/event-Perma-Kapihan-sa-Eco-house.webp" alt="Perma-Kapihan sa Eco-house" loading="lazy" />
         <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="btn-register btn-register-img">REGISTER HERE →</a>
       </div>
     </div>
@@ -94,18 +95,26 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-inner { max-width: 1260px; margin: 0 auto; padding: 0 40px; }
 
 /* Hero */
-.ev-hero { background: #2B2B2B; padding: calc(80px + 72px) 40px 72px; margin-top: -72px; text-align: center; }
+.ev-hero {
+  background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/banner-event.webp');
+  background-size: cover; background-position: center;
+  background-color: #1a1e1a;
+  padding: calc(120px + 72px) 40px 120px; margin-top: -72px; text-align: center; position: relative;
+}
+.ev-hero::before { content: ''; position: absolute; inset: 0; background: rgba(10,14,10,0.62); }
+.ev-hero .ev-inner { position: relative; z-index: 1; }
 .ev-title { font-family: var(--font-inter); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; margin-bottom: 20px; }
-.ev-sub { font-family: var(--font-outfit); font-size: 1rem; color: #aaa; line-height: 1.7; max-width: 680px; margin: 0 auto; }
+.ev-sub { font-family: var(--font-outfit); font-size: 1rem; color: #c8d0c8; line-height: 1.7; max-width: 680px; margin: 0 auto; }
+.ev-sub-accent { color: #C8A01A; }
 
 /* Find an Event */
-.ev-find { background: #fff; padding: 48px 40px 32px; text-align: center; }
-.ev-find-heading { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #2F4F2F; margin-bottom: 16px; }
-.ev-find-sub { font-family: var(--font-outfit); font-size: 1rem; color: #555; line-height: 1.7; max-width: 640px; margin: 0 auto; }
+.ev-find { background: #2B2F31; padding: 48px 40px 40px; text-align: center; }
+.ev-find-heading { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #8aaa7a; margin-bottom: 16px; }
+.ev-find-sub { font-family: var(--font-outfit); font-size: 1rem; color: #9aaa9a; line-height: 1.7; max-width: 640px; margin: 0 auto; }
 
 /* Perma-Kapihan */
 .ev-kapihan {
-  background-image: url('https://mycelium-learn.com/wp-content/uploads/2025/11/PERMA-KAPIHAN-SA-ECO-HOUSE.jpg');
+  background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/03/event-Perma-Kapihan-sa-Eco-house.webp');
   background-size: cover; background-position: center;
   background-color: #2a3a20; padding: 60px 40px; position: relative;
 }
