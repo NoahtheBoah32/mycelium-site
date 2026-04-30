@@ -169,10 +169,13 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-section-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
 
 /* ─── Vines ──────────────────────────────────────────────── */
-.ev-vine { position: absolute; top: 40px; width: 400px; pointer-events: none; z-index: 2; }
-.ev-vine img { width: 100%; mix-blend-mode: multiply; opacity: 0.9; display: block; }
-.ev-vine-left { left: -55px; }
-.ev-vine-right { right: -55px; transform: scaleX(-1); }
+/* vine image is 1024×512 horizontal. rotating 90° makes it run vertically.
+   width here = how tall the vine appears; after rotation visual width = width * 512/1024 = width/2.
+   we push it almost fully off-screen so only ~55px of leaf tips graze the card edge. */
+.ev-vine { position: absolute; top: 50%; pointer-events: none; z-index: 0; width: 1000px; }
+.ev-vine img { width: 100%; mix-blend-mode: multiply; opacity: 0.88; display: block; }
+.ev-vine-left { left: -638px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
+.ev-vine-right { right: -638px; transform: translateY(-50%) rotate(90deg); transform-origin: center center; }
 
 .ev-label-row { display: flex; align-items: center; gap: 16px; margin-bottom: 4px; }
 .ev-label-line { flex: 1; height: 1px; background: #C8B89A; }
