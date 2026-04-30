@@ -7,7 +7,6 @@ import SiteFooter from '../components/SiteFooter.astro';
 <BaseLayout title="Events - Mycelium">
   <SiteNav overlay={true} />
 
-
   <!-- Hero -->
   <section class="ev-hero">
     <div class="ev-inner">
@@ -16,66 +15,114 @@ import SiteFooter from '../components/SiteFooter.astro';
     </div>
   </section>
 
-  <!-- Perma-Kapihan -->
-  <section class="ev-find">
-    <div class="ev-inner">
-      <h2 class="ev-find-heading">FIND AN EVENT</h2>
-      <p class="ev-find-sub">Discover and attend community events focused on permaculture and regenerative living. These community gatherings offer a place for learning, connection, and growth.</p>
-    </div>
-  </section>
+  <!-- Events Section -->
+  <section class="ev-section">
+    <div class="ev-section-inner">
 
-  <section class="ev-kapihan">
-    <div class="ev-inner ev-two-col">
-      <div class="ev-col-text">
-        <p class="ev-sunday-label">Every Sunday of The Month Except for The Last Sunday</p>
-        <h2 class="ev-kapihan-title">Perma-Kapihan sa Eco-house</h2>
-        <p class="ev-kapihan-desc">Perma-Kapihan is a monthly Sunday event organized by the Philippine Permaculture Association, serving as an informal space for conversation and learning. Past Perma-Kapihan gatherings have touched on many aspects of permaculture, showing how it can build systems that shape our values when guided by clear principles and actions. Sessions have also explored natural ponds and the idea of permaculture as an expanded art, lived as a practice rather than treated as something purely theoretical.</p>
-        <div class="ev-coffee-block">
-          <h3 class="ev-coffee-title">CONNECT OVER COFFEE &amp; PERMACULTURE</h3>
-          <p class="ev-coffee-time">SUNDAY | 10 AM - 2 PM</p>
-          <p class="ev-coffee-detail">Free Coffee &amp; Snacks &nbsp;·&nbsp; Bring Merienda to Share (optional) &nbsp;·&nbsp; To RSVP click the link in bio.</p>
-          <p class="ev-coffee-loc">📍 The Philippine Permaculture Association, Hereford St., Marikina</p>
+      <div class="ev-label-row">
+        <span class="ev-label-line"></span>
+        <span class="ev-label-text">FIND AN EVENT</span>
+        <span class="ev-label-line"></span>
+      </div>
+
+      <!-- Card 1: Perma-Kapihan -->
+      <div class="ev-card ev-card-kapihan">
+        <div class="ev-card-body">
+          <div class="ev-card-badge-row">
+            <span class="ev-badge ev-badge-recurring">↺ RECURRING</span>
+            <span class="ev-badge ev-badge-free">FREE ENTRY</span>
+            <span class="ev-badge ev-badge-location">📍 Marikina</span>
+          </div>
+          <p class="ev-card-schedule">Every Sunday · Except Last Sunday of Month</p>
+          <h2 class="ev-card-title">Perma-Kapihan<br><em>sa Eco-house</em></h2>
+          <p class="ev-card-desc">An informal Sunday gathering where permaculture enthusiasts connect over coffee, share ideas, and explore how design principles shape the way we live. Open to all — beginners welcome.</p>
+
+          <div class="ev-card-details">
+            <div class="ev-detail">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <span>10:00 AM – 2:00 PM</span>
+            </div>
+            <div class="ev-detail">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+              <span>PPA Eco-house, Hereford St., Marikina</span>
+            </div>
+            <div class="ev-detail">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6h12M5 1v2M11 1v2M3 3h10a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <span>Free Coffee &amp; Snacks · Bring merienda to share (optional)</span>
+            </div>
+          </div>
+
+          <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="ev-cta ev-cta-primary">
+            Register Here
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="ev-card-img-wrap">
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/03/event-Perma-Kapihan-sa-Eco-house.webp" alt="Perma-Kapihan sa Eco-house" loading="lazy" />
+          <div class="ev-card-img-overlay"></div>
+          <div class="ev-card-img-tag">
+            <span class="ev-img-tag-num">☕</span>
+            <span class="ev-img-tag-label">Weekly Gathering</span>
+          </div>
         </div>
       </div>
-      <div class="ev-col-img">
-        <img src="https://mycelium-learn.com/wp-content/uploads/2026/03/event-Perma-Kapihan-sa-Eco-house.webp" alt="Perma-Kapihan sa Eco-house" loading="lazy" />
-        <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="btn-register btn-register-img">REGISTER HERE →</a>
-      </div>
-    </div>
-  </section>
 
-  <!-- Permaculture Camp 2026 -->
-  <section class="ev-camp">
-    <div class="ev-inner ev-camp-inner">
-      <div class="ev-camp-date">
-        <span class="ev-camp-month">MAY</span>
-        <span class="ev-camp-days">1—3</span>
-        <span class="ev-camp-dow">THU – SAT</span>
-        <span class="ev-camp-loc-label">LOCATION</span>
-        <span class="ev-camp-loc-name">Ecodee Research Institute Cabiao, Nueva Ecija</span>
-        <span class="ev-camp-price-label">SLIDING SCALE</span>
-        <span class="ev-camp-price">₱800—<br>₱3,500</span>
-        <span class="ev-camp-slots">LIMITED SLOTS</span>
-      </div>
-      <div class="ev-camp-card">
-        <div class="ev-camp-tags">
-          <span class="ev-camp-tag">🏕 IMMERSIVE CAMP</span>
-          <span class="ev-camp-tag">👥 IN-PERSON</span>
-          <span class="ev-camp-tag">📍 NUEVA ECIJA</span>
+      <!-- Card 2: Permaculture Camp 2026 -->
+      <div class="ev-card ev-card-camp">
+        <div class="ev-camp-bg">
+          <img src="https://mycelium-learn.com/wp-content/uploads/2026/02/event-cs1.webp" alt="" loading="lazy" class="ev-camp-bg-img" />
+          <div class="ev-camp-overlay"></div>
         </div>
-        <h2 class="ev-camp-title">Permaculture<br><em>Camp 2026</em></h2>
-        <p class="ev-camp-org-bold">Philippine Permaculture Association</p>
-        <p class="ev-camp-tagline">🌱 Swim · Camp · Connect · Grow</p>
-        <p class="ev-camp-desc">Step away from the noise and into nature. Join the Philippine Permaculture Association for a camping experience rooted in shared living, mutual support, and learning from the land.</p>
-        <ul class="ev-camp-list">
-          <li>🏕 Simple, intentional camping</li>
-          <li>🌊 Swimming in a natural pool</li>
-          <li>🌲 Forest walk &amp; land learning</li>
-          <li>🌿 Permaculture 101 — customized to your group</li>
-          <li>🤝 Shared stewardship, cooking &amp; community</li>
-        </ul>
-        <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="btn-register btn-register-camp">REGISTER HERE →</a>
+
+        <div class="ev-camp-content">
+          <div class="ev-camp-left">
+            <div class="ev-camp-date-block">
+              <span class="ev-camp-month-label">MAY 2026</span>
+              <span class="ev-camp-days-big">1—3</span>
+              <span class="ev-camp-dow-label">THU — SAT</span>
+            </div>
+            <div class="ev-camp-meta-block">
+              <div class="ev-camp-meta-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+                <span>Ecodee Research Institute<br>Cabiao, Nueva Ecija</span>
+              </div>
+              <div class="ev-camp-meta-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 10l4-6 3 4 2-3 3 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Sliding Scale<br><strong>₱800 — ₱3,500</strong></span>
+              </div>
+              <div class="ev-camp-meta-item">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2a3 3 0 100 6 3 3 0 000-6zM3 14a5 5 0 0110 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                <span>Limited Slots Available</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ev-camp-right">
+            <div class="ev-camp-tags-row">
+              <span class="ev-camp-pill">🏕 Immersive</span>
+              <span class="ev-camp-pill">👥 In-Person</span>
+              <span class="ev-camp-pill">🌿 Permaculture</span>
+            </div>
+            <h2 class="ev-camp-title">Permaculture<br><em>Camp 2026</em></h2>
+            <p class="ev-camp-org">Philippine Permaculture Association</p>
+            <p class="ev-camp-tagline">Swim · Camp · Connect · Grow</p>
+
+            <div class="ev-camp-activities">
+              <span class="ev-activity">🏕 Simple camping</span>
+              <span class="ev-activity">🌊 Natural pool swim</span>
+              <span class="ev-activity">🌲 Forest walk</span>
+              <span class="ev-activity">🌿 Permaculture 101</span>
+              <span class="ev-activity">🤝 Shared cooking</span>
+            </div>
+
+            <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="ev-cta ev-cta-camp">
+              Reserve Your Spot
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -93,7 +140,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 <style>
 .ev-inner { max-width: 1260px; margin: 0 auto; padding: 0 40px; }
 
-/* Hero */
+/* ─── Hero ──────────────────────────────────────────────── */
 .ev-hero {
   background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/banner-event.webp');
   background-size: cover; background-position: center;
@@ -105,84 +152,115 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-hero .ev-inner { position: relative; z-index: 1; }
 .ev-title { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; letter-spacing: -0.01em; color: #D2CEC8; text-transform: none; margin-bottom: 12px; }
 .ev-sub { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.5; max-width: 680px; margin: 0 auto; }
-.ev-sub-accent { color: #C8A01A; font-style: normal; }
+.ev-sub-accent { color: #C8A01A; }
 
-/* Find an Event */
-.ev-find { background: #2B2F31; padding: 48px 40px 40px; text-align: center; }
-.ev-find-heading { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; letter-spacing: -0.01em; color: #D2CEC8; text-transform: none; margin-bottom: 12px; }
-.ev-find-sub { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.5; max-width: 640px; margin: 0 auto; }
+/* ─── Events Section ─────────────────────────────────────── */
+.ev-section { background: #F4F2EE; padding: 80px 40px 100px; }
+.ev-section-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
 
-/* Perma-Kapihan */
-.ev-kapihan {
-  background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/03/event-Perma-Kapihan-sa-Eco-house.webp');
-  background-size: cover; background-position: center;
-  background-color: #2a3a20; padding: 60px 40px; position: relative;
-}
-.ev-kapihan::before { content: ''; position: absolute; inset: 0; background: rgba(20,28,14,0.72); }
-.ev-kapihan .ev-inner { position: relative; z-index: 1; }
-.ev-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-.ev-sunday-label { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 600; color: #b8d4a8; letter-spacing: 0.04em; margin-bottom: 12px; }
-.ev-kapihan-title { font-family: var(--font-serif); font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 400; color: #fff; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 20px; }
-.ev-kapihan-desc { font-family: var(--font-outfit); font-size: 0.95rem; color: #c8d8c0; line-height: 1.7; margin-bottom: 32px; }
-.ev-coffee-block { margin-top: 8px; }
-.ev-coffee-title { font-family: var(--font-inter); font-size: clamp(1rem, 1.6vw, 1.4rem); font-weight: 700; letter-spacing: 0.08em; color: #fff; text-transform: uppercase; margin-bottom: 10px; }
-.ev-coffee-time { font-family: var(--font-inter); font-size: 1rem; font-weight: 600; color: #b8d4a8; letter-spacing: 0.1em; margin-bottom: 10px; }
-.ev-coffee-detail { font-family: var(--font-outfit); font-size: 0.88rem; color: #c5d5c5; line-height: 1.6; margin-bottom: 6px; }
-.ev-coffee-loc { font-family: var(--font-outfit); font-size: 0.88rem; color: #c5d5c5; }
-.ev-col-img { position: relative; border-radius: 10px; overflow: hidden; background: #3a4a2a; min-height: 480px; }
-.ev-col-img img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 480px; }
-.btn-register-img { position: absolute; bottom: 20px; right: 20px; }
+.ev-label-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.ev-label-line { flex: 1; height: 1px; background: #C8B89A; }
+.ev-label-text { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8a7a5a; white-space: nowrap; }
 
-/* Camp */
-.ev-camp { background: #fff; padding: 80px 40px; }
-.ev-camp-inner { display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: start; max-width: 1000px; }
-.ev-camp-date { display: flex; flex-direction: column; align-items: flex-start; min-width: 160px; }
-.ev-camp-month { font-family: var(--font-inter); font-size: 1rem; font-weight: 700; letter-spacing: 0.2em; color: #7a6a30; text-transform: uppercase; margin-bottom: 4px; }
-.ev-camp-days { font-family: var(--font-serif); font-style: italic; font-size: clamp(3.5rem, 7vw, 6rem); font-weight: 400; color: #8a7830; line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px; }
-.ev-camp-dow { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; color: #7a6a30; text-transform: uppercase; margin-bottom: 12px; }
-.ev-camp-loc-label { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; color: #7a6a30; text-transform: uppercase; margin-bottom: 4px; }
-.ev-camp-loc-name { font-family: var(--font-inter); font-size: 0.82rem; color: #2F4F2F; font-weight: 600; line-height: 1.4; margin-bottom: 16px; }
-.ev-camp-price-label { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; color: #7a6a30; text-transform: uppercase; margin-bottom: 4px; }
-.ev-camp-price { font-family: var(--font-inter); font-size: 1.3rem; font-weight: 700; color: #2F4F2F; line-height: 1.2; margin-bottom: 8px; }
-.ev-camp-slots { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; color: #7a6a30; text-transform: uppercase; }
-.ev-camp-card { background: #fff; border: 1px solid #e0e0d8; border-radius: 12px; padding: 32px; }
-.ev-camp-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-.ev-camp-tag { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; color: #5a6a40; background: #f0f4e8; border-radius: 4px; padding: 4px 10px; text-transform: uppercase; }
-.ev-camp-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 2.5vw, 2.4rem); font-weight: 400; color: #242424; line-height: 1.15; margin-bottom: 6px; }
-.ev-camp-title em { font-style: italic; color: #5a6a30; }
-.ev-camp-org-bold { font-family: var(--font-inter); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; color: #2F4F2F; text-transform: uppercase; margin-bottom: 16px; }
-.ev-camp-tagline { font-family: var(--font-outfit); font-size: 0.9rem; color: #555; margin-bottom: 12px; }
-.ev-camp-desc { font-family: var(--font-outfit); font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 16px; }
-.ev-camp-list { list-style: none; padding: 0; margin: 0 0 24px; display: flex; flex-direction: column; gap: 6px; }
-.ev-camp-list li { font-family: var(--font-outfit); font-size: 0.88rem; color: #444; }
+/* ─── Card Shell ─────────────────────────────────────────── */
+.ev-card { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.12); }
 
-/* Register button */
-.btn-register { font-family: var(--font-inter); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; background: #5A3A1C; color: #fff; padding: 10px 22px; border-radius: 4px; transition: background 0.2s; text-decoration: none; display: inline-block; }
-.btn-register:hover { background: #7a5030; }
-.btn-register-camp { background: #2F4F2F; color: #fff; display: block; text-align: center; padding: 14px 24px; border-radius: 6px; }
-.btn-register-camp:hover { background: #3d6b3d; }
+/* ─── Card 1: Perma-Kapihan ──────────────────────────────── */
+.ev-card-kapihan { display: grid; grid-template-columns: 1fr 420px; min-height: 500px; background: #1C2E18; }
 
-/* Coming Soon */
+.ev-card-body { padding: 52px 56px; display: flex; flex-direction: column; gap: 0; }
+
+.ev-card-badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.ev-badge { font-family: var(--font-inter); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; }
+.ev-badge-recurring { background: rgba(200,160,26,0.18); color: #C8A01A; border: 1px solid rgba(200,160,26,0.35); }
+.ev-badge-free { background: rgba(97,206,112,0.15); color: #7ae886; border: 1px solid rgba(97,206,112,0.3); }
+.ev-badge-location { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.15); }
+
+.ev-card-schedule { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; color: #C8A01A; text-transform: uppercase; margin-bottom: 12px; }
+
+.ev-card-title { font-family: var(--font-lora); font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 400; color: #fff; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 20px; }
+.ev-card-title em { font-style: italic; color: #b8d4a8; }
+
+.ev-card-desc { font-family: var(--font-outfit); font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 32px; max-width: 480px; }
+
+.ev-card-details { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; padding: 20px 24px; background: rgba(255,255,255,0.05); border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); }
+.ev-detail { display: flex; align-items: flex-start; gap: 10px; font-family: var(--font-outfit); font-size: 0.875rem; color: rgba(255,255,255,0.75); line-height: 1.45; }
+.ev-detail svg { flex-shrink: 0; margin-top: 2px; color: #8aaa7a; }
+
+.ev-cta { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-inter); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; padding: 14px 28px; border-radius: 8px; text-decoration: none; transition: all 0.2s; width: fit-content; }
+.ev-cta-primary { background: #C8A01A; color: #1a1400; }
+.ev-cta-primary:hover { background: #e0b520; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(200,160,26,0.35); }
+
+.ev-card-img-wrap { position: relative; overflow: hidden; }
+.ev-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ev-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to right, #1C2E18 0%, transparent 35%); }
+.ev-card-img-tag { position: absolute; bottom: 24px; right: 24px; background: rgba(28,46,24,0.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 16px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.ev-img-tag-num { font-size: 1.4rem; line-height: 1; }
+.ev-img-tag-label { font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+
+/* ─── Card 2: Camp 2026 ──────────────────────────────────── */
+.ev-card-camp { position: relative; min-height: 520px; display: flex; align-items: flex-end; }
+
+.ev-camp-bg { position: absolute; inset: 0; }
+.ev-camp-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ev-camp-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(8,20,6,0.95) 0%, rgba(15,30,10,0.85) 40%, rgba(8,20,6,0.6) 100%); }
+
+.ev-camp-content { position: relative; z-index: 1; display: grid; grid-template-columns: 260px 1fr; gap: 0; width: 100%; }
+
+.ev-camp-left { padding: 52px 40px 52px 52px; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 32px; justify-content: center; }
+
+.ev-camp-date-block { display: flex; flex-direction: column; gap: 4px; }
+.ev-camp-month-label { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; color: #C8A01A; text-transform: uppercase; }
+.ev-camp-days-big { font-family: var(--font-lora); font-style: italic; font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 400; color: #fff; line-height: 1; letter-spacing: -0.03em; }
+.ev-camp-dow-label { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+
+.ev-camp-meta-block { display: flex; flex-direction: column; gap: 14px; }
+.ev-camp-meta-item { display: flex; align-items: flex-start; gap: 10px; font-family: var(--font-outfit); font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.ev-camp-meta-item svg { flex-shrink: 0; margin-top: 2px; color: #8aaa7a; }
+.ev-camp-meta-item strong { color: #fff; }
+
+.ev-camp-right { padding: 52px 52px 52px 48px; display: flex; flex-direction: column; gap: 0; justify-content: center; }
+
+.ev-camp-tags-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.ev-camp-pill { font-family: var(--font-inter); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.18); }
+
+.ev-camp-title { font-family: var(--font-lora); font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 400; color: #fff; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 8px; }
+.ev-camp-title em { font-style: italic; color: #b8d4a8; }
+
+.ev-camp-org { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: #C8A01A; text-transform: uppercase; margin-bottom: 8px; }
+.ev-camp-tagline { font-family: var(--font-outfit); font-size: 1rem; color: rgba(255,255,255,0.55); margin-bottom: 24px; letter-spacing: 0.04em; }
+
+.ev-camp-activities { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.ev-activity { font-family: var(--font-outfit); font-size: 0.8rem; color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px; }
+
+.ev-cta-camp { background: #fff; color: #1a1400; }
+.ev-cta-camp:hover { background: #f0ece0; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+
+/* ─── Coming Soon ────────────────────────────────────────── */
 .ev-soon { background: #1a1a1a; padding: 80px 40px; text-align: center;
   background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/event-comingsoon-bg.webp');
   background-size: cover; background-position: center; position: relative; }
 .ev-soon::before { content: ''; position: absolute; inset: 0; background: rgba(10,12,8,0.72); }
-.ev-soon > * { position: relative; z-index: 1; }
+.ev-soon .ev-inner { position: relative; z-index: 1; }
 .ev-soon-sub { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #d0d8c8; margin-bottom: 16px; }
-.ev-soon-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: #e8e0d0; letter-spacing: -0.01em; }
+.ev-soon-title { font-family: var(--font-lora); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: #e8e0d0; letter-spacing: -0.01em; }
 
-@media (max-width: 900px) {
-  .ev-two-col { grid-template-columns: 1fr; gap: 32px; }
-  .ev-col-img { order: -1; }
-  .ev-camp-inner { grid-template-columns: 1fr; gap: 24px; }
-  .ev-camp-days { font-size: 4rem; }
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .ev-card-kapihan { grid-template-columns: 1fr; }
+  .ev-card-img-wrap { height: 300px; }
+  .ev-card-img-overlay { background: linear-gradient(to bottom, #1C2E18 0%, transparent 40%); }
+  .ev-camp-content { grid-template-columns: 1fr; }
+  .ev-camp-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 40px 32px 32px; }
+  .ev-camp-right { padding: 32px; }
 }
 @media (max-width: 600px) {
   .ev-inner { padding: 0 20px; }
   .ev-hero { padding: 56px 20px 48px; }
-  .ev-find { padding: 32px 20px 24px; }
-  .ev-kapihan { padding: 40px 20px; }
-  .ev-camp { padding: 48px 20px; }
-  .ev-soon { padding: 56px 20px; }
+  .ev-section { padding: 48px 20px 64px; }
+  .ev-card-body { padding: 32px 24px; }
+  .ev-camp-left { padding: 32px 24px 24px; }
+  .ev-camp-right { padding: 24px; }
+  .ev-camp-days-big { font-size: 3.5rem; }
 }
 </style>

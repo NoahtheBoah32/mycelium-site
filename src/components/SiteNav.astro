@@ -53,18 +53,16 @@ const { overlay = false } = Astro.props;
     position: sticky;
     top: 0;
     z-index: 9999;
-    background: #ffffff;
-    border-bottom: 1px solid #e8e8e8;
+    background: #3D2B00;
   }
   .site-nav.nav-overlay {
     position: absolute;
     background: transparent;
-    border-bottom: none;
     width: 100%;
   }
-  .site-nav.nav-overlay .sn-link { color: rgba(255,255,255,0.88); }
-  .site-nav.nav-overlay .sn-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
-  .site-nav.nav-overlay .sn-link.active { color: #61CE70; }
+  .sn-link { color: rgba(255,255,255,0.85); }
+  .sn-link:hover { color: #fff !important; background: rgba(255,255,255,0.08) !important; }
+  .sn-link.active { color: #61CE70 !important; font-weight: 600; }
   .sn-inner {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -90,19 +88,10 @@ const { overlay = false } = Astro.props;
     font-family: var(--font-inter);
     font-size: 1rem;
     font-weight: 500;
-    color: #242424;
     padding: 13px 16px;
     border-radius: 4px;
     transition: color 0.15s, background 0.15s;
     white-space: nowrap;
-  }
-  .sn-link:hover {
-    color: var(--color-primary);
-    background: rgba(47, 79, 47, 0.06);
-  }
-  .sn-link.active {
-    color: #61CE70;
-    font-weight: 600;
   }
   .sn-burger {
     display: none;
@@ -132,8 +121,8 @@ const { overlay = false } = Astro.props;
       top: 72px;
       left: 0;
       right: 0;
-      background: #ffffff;
-      border-bottom: 1px solid #e8e8e8;
+      background: #3D2B00;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
       flex-direction: column;
       align-items: flex-start;
       gap: 0;
