@@ -82,9 +82,8 @@ import SiteFooter from '../components/SiteFooter.astro';
   <!-- Coming Soon -->
   <section class="ev-soon">
     <div class="ev-inner">
-      <p class="ev-soon-tag">Eco-house</p>
-      <h2 class="ev-soon-title">—Coming Soon—</h2>
       <p class="ev-soon-sub">GOOD THINGS GROW SLOWLY</p>
+      <h2 class="ev-soon-title">—Coming Soon—</h2>
     </div>
   </section>
 
@@ -164,13 +163,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 
 /* Coming Soon */
 .ev-soon { background: #1a1a1a; padding: 80px 40px; text-align: center;
-  background-image: url('https://mycelium-learn.com/wp-content/uploads/2025/11/COMING-SOON-ECO-HOUSE.jpg');
+  background-image: url('https://mycelium-learn.com/wp-content/uploads/2026/02/event-comingsoon-bg.webp');
   background-size: cover; background-position: center; position: relative; }
 .ev-soon::before { content: ''; position: absolute; inset: 0; background: rgba(10,12,8,0.72); }
 .ev-soon > * { position: relative; z-index: 1; }
-.ev-soon-tag { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #90b080; margin-bottom: 16px; }
-.ev-soon-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: #e8e0d0; letter-spacing: -0.01em; margin-bottom: 12px; }
-.ev-soon-sub { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #7a8a70; }
+.ev-soon-sub { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #d0d8c8; margin-bottom: 16px; }
+.ev-soon-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: #e8e0d0; letter-spacing: -0.01em; }
 
 @media (max-width: 900px) {
   .ev-two-col { grid-template-columns: 1fr; gap: 32px; }
