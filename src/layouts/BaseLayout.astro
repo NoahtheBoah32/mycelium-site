@@ -53,6 +53,50 @@ const {
       --max-width: 1260px;
     }
 
+    /* Scroll reveal — content elements only, never section containers */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.in-view {
+      opacity: 1;
+      transform: none;
+    }
   </style>
+
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+
+    function initReveal() {
+      const vh = window.innerHeight;
+      // Only animate content elements — never section backgrounds
+      const targets = document.querySelectorAll(
+        '.operate-col, .hvc, .hcc, .hrc, .vc, .stat-item, .founder-inner, ' +
+        '.hero-text-block, .mission-text, .ev-card, .ev-soon-inner, ' +
+        '.nl-signup-inner, .vp-inner h1, .vp-inner p'
+      );
+      targets.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top > vh * 0.88) {
+          el.classList.add('reveal');
+          io.observe(el);
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal);
+    } else {
+      initReveal();
+    }
+  </script>
 </body>
 </html>
