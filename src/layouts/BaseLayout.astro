@@ -77,11 +77,20 @@ const {
 
     function initReveal() {
       const vh = window.innerHeight;
-      // Only animate content elements — never section backgrounds
       const targets = document.querySelectorAll(
         '.operate-col, .hvc, .hcc, .hrc, .vc, .stat-item, .founder-inner, ' +
-        '.hero-text-block, .mission-text, .ev-card, .ev-soon-inner, ' +
-        '.nl-signup-inner, .vp-inner h1, .vp-inner p'
+        '.ev-card, .ev-soon-inner, .nl-signup-inner, ' +
+        '.vp-inner h1, .vp-inner p, ' +
+        '.section-heading, .section-sub, .section-cta, ' +
+        '.mission-heading, .mission-body, ' +
+        '.founder-body, .founder-img, .btn-underline, ' +
+        '.operate-title, .operate-body, .operate-sub, ' +
+        '.story-intro, .story-text, .story-img, ' +
+        '.impact-text, .why-text-block, .why-dark-box, .why-thing-block, ' +
+        '.criteria-item, .partner-card, ' +
+        '.cp-title, .cp-sub, .cp-grid, ' +
+        '.fb-badge, .fb-title, .fb-sub, .fb-form-wrap, ' +
+        '.ev-label-row, .ev-card-title, .ev-card-desc, .ev-card-details, .ev-cta'
       );
       targets.forEach(el => {
         const rect = el.getBoundingClientRect();

@@ -228,13 +228,13 @@ const featuredVideos = videos.slice(0, 3);
 .btn-underline { display: inline; font-family: var(--font-inter); font-size: 0.875rem; font-weight: 700; color: #D2CEC8; border-bottom: 2px solid #FFD53B; padding-bottom: 3px; letter-spacing: 0.05em; transition: color 0.2s; text-decoration: none; }
 .hero { background: #43330B; padding: calc(120px + 72px) 40px 32px; margin-top: -72px; }
 .hero-inner { max-width: var(--max-width); margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 56px; }
-.hero-heading { font-family: var(--font-serif); font-size: clamp(2.4rem, 5.5vw, 5rem); font-weight: 400; line-height: 1.08; letter-spacing: -0.02em; color: #D2CEC8; text-align: center; }
+.hero-heading { font-family: var(--font-serif); font-size: 4.5rem; font-weight: 400; line-height: 1.0; letter-spacing: -0.02em; color: #D2CEC8; text-align: center; }
 .hero-images { display: flex; gap: 24px; width: 100%; max-width: 1260px; justify-content: center; }
-.hi { border-radius: 12px; object-fit: cover; flex: 1; height: 400px; min-width: 0; }
+.hi { border-radius: 12px; object-fit: cover; flex: 1; height: 406px; min-width: 0; }
 .mission { background: #43330B; padding: 16px 40px 80px; }
-.mission-heading { font-size: 3.5rem; font-weight: 400; color: #D2CEC8; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 28px; }
+.mission-heading { font-size: 3.5rem; font-weight: 400; color: #D2CEC8; letter-spacing: -0.02em; line-height: 1.28; margin-bottom: 28px; }
 .mission-inner { text-align: center; }
-.mission-body { font-family: var(--font-outfit); font-size: 1.25rem; color: #D2CEC8; line-height: 1.7; max-width: 910px; margin: 0 auto; }
+.mission-body { font-family: var(--font-lora); font-size: 1.25rem; font-weight: 500; color: #D2CEC8; line-height: 1.44; max-width: 910px; margin: 0 auto; }
 .stats { background: #2B2F31; padding: 96px 40px; }
 .stats .eyebrow-label { margin-bottom: 40px; }
 .stats-row { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
@@ -243,11 +243,11 @@ const featuredVideos = videos.slice(0, 3);
 .stat-label { font-family: var(--font-outfit); font-size: 1rem; color: #D2CEC8; text-align: center; max-width: 160px; line-height: 1.4; }
 .founder { background: #2F2A1F; padding: 120px 40px; }
 .founder-inner { display: flex; align-items: center; gap: 60px; }
-.founder-img { flex-shrink: 0; width: 440px; }
-.founder-img img { width: 100%; border-radius: 40px; }
+.founder-img { flex-shrink: 0; width: 452px; }
+.founder-img img { width: 100%; border-radius: 0px; }
 .founder-text { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
-.founder .section-heading { font-size: 2.44rem; font-weight: 500; }
-.founder-body { font-family: var(--font-outfit); font-size: 1.5rem; font-weight: 400; color: #D2CEC8; line-height: 1.65; max-width: 631px; }
+.founder .section-heading { font-size: 2.44rem; font-weight: 500; line-height: 1.33; }
+.founder-body { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #D2CEC8; line-height: 1.2; max-width: 631px; }
 .home-videos .section-heading, .home-courses .section-heading, .home-resources .section-heading { font-family: var(--font-outfit); font-size: 3rem; font-weight: 700; letter-spacing: -0.01em; }
 .how-operate { background: #43330B; padding: 120px 40px; }
 .operate-header { text-align: center; margin-bottom: 64px; }
@@ -264,7 +264,7 @@ const featuredVideos = videos.slice(0, 3);
 .home-courses { background: #fff; padding: 80px 40px; }
 .home-videos .section-heading, .home-courses .section-heading { text-align: center; }
 .home-videos .section-sub, .home-courses .section-sub { text-align: center; }
-.home-videos .section-heading { color: #1a1c1e; font-size: clamp(2rem, 4vw, 3rem); }
+.home-videos .section-heading { color: #1a1c1e; font-size: 3rem; }
 .home-videos .section-sub { color: #555; }
 .home-video-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
 .home-courses-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }

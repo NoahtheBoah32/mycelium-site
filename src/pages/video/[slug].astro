@@ -17,94 +17,233 @@ const ytId = video.youtubeId || (ytMatch ? ytMatch[1] : null);
 const embedSrc = video.embedSrc || (ytId ? `https://www.youtube-nocookie.com/embed/${ytId}` : null);
 const thumb = video.thumbnail || (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : null);
 const isYoutube = !!(ytId && video.videoType !== "webinar");
+const hasRichContent = !!(video.about || video.idealFor);
 ---
 
 <BaseLayout title={video.title + " - Mycelium"}>
   <SiteNav />
 
-  <article class="vd-page">
+  <div class="vd-page">
     <div class="vd-inner">
-      <div class="vd-back">
-        <a href="/videos" class="back-link">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          All Videos
-        </a>
+
+      <!-- Back nav -->
+      <a href="/videos" class="vd-back">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All Videos
+      </a>
+
+      <!-- Header -->
+      <div class="vd-header">
+        <div class="vd-header-left">
+          {video.category && <span class="vd-category">{video.category}</span>}
+          <h1 class="vd-title">{video.title}</h1>
+          {video.series && <p class="vd-series">{video.series}</p>}
+        </div>
       </div>
+
+      <!-- Two-column layout -->
       <div class="vd-layout">
+
+        <!-- Main column -->
         <div class="vd-main">
-          {isYoutube && embedSrc ? (
-            <div class="vd-embed">
-              <iframe src={embedSrc} title={video.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-          ) : (
-            <div class="vd-embed-fallback">
-              {(thumb || video.thumbnail) && <img src={thumb || video.thumbnail} alt={video.title} />}
-              {video.embedUrl && (
-                <div class="vd-external">
-                  <a href={video.embedUrl} target="_blank" rel="noopener" class="btn-watch-full">Watch Full Video</a>
-                </div>
-              )}
-            </div>
-          )}
-          <div class="vd-meta">
-            <p class="vd-author">{video.author}</p>
-            <h1 class="vd-title">{video.title}</h1>
-            {video.tags && video.tags.length > 0 && (
-              <div class="vd-tags">
-                {video.tags.map((tag: string) => <span class="vd-tag">{tag}</span>)}
+
+          <!-- Video embed -->
+          <div class="vd-embed-wrap">
+            {isYoutube && embedSrc ? (
+              <div class="vd-embed">
+                <iframe src={embedSrc} title={video.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+              </div>
+            ) : (
+              <div class="vd-embed vd-embed-thumb">
+                {thumb && <img src={thumb} alt={video.title} />}
+                {video.embedUrl && (
+                  <a href={video.embedUrl} target="_blank" rel="noopener" class="vd-play-btn" aria-label="Watch video">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                      <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.62)"/>
+                      <polygon points="22,18 42,28 22,38" fill="white"/>
+                    </svg>
+                  </a>
+                )}
               </div>
             )}
-            {video.description && <p class="vd-desc">{video.description}</p>}
           </div>
+
+          <!-- About This Video -->
+          {video.about && (
+            <div class="vd-section">
+              <div class="vd-section-header">
+                <h2 class="vd-section-title">About This Video</h2>
+                {video.publishedAgo && <span class="vd-published">Published {video.publishedAgo}</span>}
+              </div>
+              <div class="vd-body-text">
+                {video.about.split('\n').filter((p: string) => p.trim()).map((p: string) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Ideal For -->
+          {video.idealFor && (
+            <div class="vd-section">
+              <h2 class="vd-section-title">Ideal For...</h2>
+              <div class="vd-body-text">
+                {video.idealFor.split('\n').filter((p: string) => p.trim()).map((p: string) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- Fallback description if no rich content -->
+          {!hasRichContent && video.description && (
+            <div class="vd-section">
+              <h2 class="vd-section-title">About This Video</h2>
+              <div class="vd-body-text"><p>{video.description}</p></div>
+            </div>
+          )}
+
+          <!-- Watch CTA -->
+          {video.embedUrl && (
+            <div class="vd-cta-wrap">
+              <a href={video.embedUrl} target="_blank" rel="noopener" class="vd-watch-btn">
+                Watch Video
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          )}
         </div>
-        <div class="vd-sidebar">
-          <h3 class="sidebar-title">About this Video</h3>
-          <div class="sidebar-info">
-            {video.author && (<div class="si-row"><span class="si-label">Speaker</span><span class="si-value">{video.author}</span></div>)}
-            {video.videoType && (<div class="si-row"><span class="si-label">Format</span><span class="si-value si-cap">{video.videoType}</span></div>)}
+
+        <!-- Sidebar -->
+        <aside class="vd-sidebar">
+          <div class="vd-author-card">
+            {video.authorThumb && (
+              <div class="vda-top">
+                <img src={video.authorThumb} alt={video.author} class="vda-avatar" />
+                <div class="vda-name-wrap">
+                  <span class="vda-name">{video.author}</span>
+                  {video.authorRole && <span class="vda-role">{video.authorRole}</span>}
+                </div>
+              </div>
+            )}
+            {!video.authorThumb && (
+              <div class="vda-top">
+                <div class="vda-avatar-placeholder">{video.author?.charAt(0) || 'A'}</div>
+                <div class="vda-name-wrap">
+                  <span class="vda-name">{video.author}</span>
+                  {video.authorRole && <span class="vda-role">{video.authorRole}</span>}
+                </div>
+              </div>
+            )}
+            {video.authorBio && <p class="vda-bio">{video.authorBio}</p>}
+            {video.wpLink && (
+              <a href={video.wpLink} target="_blank" rel="noopener" class="vda-biography-link">
+                Read Full Biography
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            )}
           </div>
-          <div class="sidebar-links">
-            {video.embedUrl && <a href={video.embedUrl} target="_blank" rel="noopener" class="btn-watch-full">Watch Full Video</a>}
-            <a href="/videos" class="btn-all">Browse All Videos</a>
+
+          {video.awards && video.awards.length > 0 && (
+            <div class="vd-sidebar-block">
+              <h3 class="vd-sidebar-heading">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 3.5L12 5l-2.5 2.5.6 3.5L7 9.5 3.9 11l.6-3.5L2 5l3.5-.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+                Awards &amp; Recognition
+              </h3>
+              <ul class="vd-awards-list">
+                {video.awards.map((award: string) => <li>{award}</li>)}
+              </ul>
+            </div>
+          )}
+
+          <div class="vd-sidebar-block">
+            <h3 class="vd-sidebar-heading">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1C3.686 1 1 3.686 1 7s2.686 6 6 6 6-2.686 6-6-2.686-6-6-6z" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v4M7 9.5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              More from {video.author?.split(' ')[0]}
+            </h3>
+            <a href={`/videos?author=${encodeURIComponent(video.author || '')}`} class="vd-more-link">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+              All videos by {video.author}
+            </a>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
-  </article>
+  </div>
 
   <SiteFooter />
 </BaseLayout>
 
 <style>
-.vd-page { background: #fff; min-height: 60vh; padding: 48px 40px 80px; }
+/* Page shell */
+.vd-page { background: #F7F7F5; min-height: 100vh; padding: 40px 40px 96px; }
 .vd-inner { max-width: 1100px; margin: 0 auto; }
-.vd-back { margin-bottom: 32px; }
-.back-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-inter); font-size: 0.875rem; color: #666; transition: color 0.15s; text-decoration: none; }
-.back-link:hover { color: #2F4F2F; }
-.vd-layout { display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: flex-start; }
-.vd-embed { position: relative; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; }
+
+/* Back link */
+.vd-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-inter); font-size: 0.8rem; font-weight: 500; color: #666; text-decoration: none; margin-bottom: 28px; transition: color 0.15s; }
+.vd-back:hover { color: #2F4F2F; }
+.vd-back svg { opacity: 0.6; }
+
+/* Header */
+.vd-header { margin-bottom: 28px; }
+.vd-category { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #2F4F2F; display: block; margin-bottom: 10px; }
+.vd-title { font-family: var(--font-lora); font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 700; color: #1a1a1a; line-height: 1.25; margin-bottom: 8px; }
+.vd-series { font-family: var(--font-inter); font-size: 0.85rem; font-weight: 600; color: #2F4F2F; letter-spacing: 0.04em; }
+
+/* Two-column layout */
+.vd-layout { display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: flex-start; }
+
+/* Video embed */
+.vd-embed-wrap { margin-bottom: 36px; }
+.vd-embed { position: relative; aspect-ratio: 16/9; background: #1a1a1a; border-radius: 16px; overflow: hidden; }
 .vd-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-.vd-embed-fallback { border-radius: 12px; overflow: hidden; background: #f0f0f0; }
-.vd-embed-fallback img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
-.vd-external { padding: 20px; text-align: center; background: #f9f9f9; }
-.vd-meta { margin-top: 28px; }
-.vd-author { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #2F4F2F; margin-bottom: 8px; }
-.vd-title { font-family: var(--font-lora); font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 600; color: #242424; line-height: 1.3; margin-bottom: 16px; }
-.vd-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.vd-tag { font-family: var(--font-inter); font-size: 0.72rem; background: #F7F7F5; color: #555; padding: 4px 12px; border-radius: 50px; }
-.vd-desc { font-family: var(--font-outfit); font-size: 1rem; color: #555; line-height: 1.7; }
-.vd-sidebar { position: sticky; top: 88px; }
-.sidebar-title { font-family: var(--font-lora); font-size: 1.1rem; font-weight: 600; color: #242424; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0; }
-.sidebar-info { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-.si-row { display: flex; flex-direction: column; gap: 2px; }
-.si-label { font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #999; }
-.si-value { font-family: var(--font-inter); font-size: 0.9rem; color: #242424; }
-.si-cap { text-transform: capitalize; }
-.sidebar-links { display: flex; flex-direction: column; gap: 10px; }
-.btn-watch-full { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; background: #5A3A1C; color: #fff; padding: 10px 20px; border-radius: 50px; transition: background 0.2s; text-decoration: none; display: block; text-align: center; }
-.btn-watch-full:hover { background: #947153; }
-.btn-all { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; color: #242424; border: 1px solid #ccc; padding: 10px 20px; border-radius: 50px; transition: border-color 0.2s; text-decoration: none; display: block; text-align: center; }
-.btn-all:hover { border-color: #2F4F2F; color: #2F4F2F; }
-@media (max-width: 900px) { .vd-layout { grid-template-columns: 1fr; } .vd-sidebar { position: static; } }
-@media (max-width: 600px) { .vd-page { padding: 32px 20px 60px; } }
+.vd-embed-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vd-play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+.vd-play-btn:hover { transform: scale(1.08); }
+
+/* Content sections */
+.vd-section { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid #e8e4dc; }
+.vd-section:last-of-type { border-bottom: none; }
+.vd-section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+.vd-section-title { font-family: var(--font-lora); font-size: 1.25rem; font-weight: 700; color: #1a1a1a; }
+.vd-published { font-family: var(--font-inter); font-size: 0.75rem; color: #999; }
+.vd-body-text { display: flex; flex-direction: column; gap: 16px; }
+.vd-body-text p { font-family: var(--font-outfit); font-size: 1rem; color: #3a3a3a; line-height: 1.72; }
+
+/* CTA */
+.vd-cta-wrap { text-align: center; padding: 8px 0 16px; }
+.vd-watch-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-inter); font-size: 0.95rem; font-weight: 600; background: #3d2a0a; color: #fff; padding: 14px 36px; border-radius: 50px; text-decoration: none; transition: background 0.2s; }
+.vd-watch-btn:hover { background: #5A3A1C; }
+
+/* Sidebar */
+.vd-sidebar { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 20px; }
+
+.vd-author-card { background: #fff; border: 1px solid #e8e4dc; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.vda-top { display: flex; align-items: center; gap: 12px; }
+.vda-avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.vda-avatar-placeholder { width: 52px; height: 52px; border-radius: 50%; background: #2F4F2F; color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-lora); font-size: 1.4rem; font-weight: 700; flex-shrink: 0; }
+.vda-name-wrap { display: flex; flex-direction: column; gap: 2px; }
+.vda-name { font-family: var(--font-inter); font-size: 0.95rem; font-weight: 700; color: #1a1a1a; }
+.vda-role { font-family: var(--font-inter); font-size: 0.75rem; color: #666; }
+.vda-bio { font-family: var(--font-outfit); font-size: 0.82rem; color: #555; line-height: 1.65; }
+.vda-biography-link { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-inter); font-size: 0.8rem; font-weight: 600; color: #2F4F2F; text-decoration: none; border-bottom: 1px solid #2F4F2F; padding-bottom: 1px; transition: color 0.15s; }
+.vda-biography-link:hover { color: #61CE70; border-color: #61CE70; }
+
+.vd-sidebar-block { background: #fff; border: 1px solid #e8e4dc; border-radius: 14px; padding: 20px 24px; }
+.vd-sidebar-heading { display: flex; align-items: center; gap: 7px; font-family: var(--font-inter); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #555; margin-bottom: 14px; }
+.vd-sidebar-heading svg { color: #2F4F2F; flex-shrink: 0; }
+.vd-awards-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.vd-awards-list li { font-family: var(--font-outfit); font-size: 0.82rem; color: #444; line-height: 1.55; padding-left: 12px; position: relative; }
+.vd-awards-list li::before { content: '·'; position: absolute; left: 0; color: #C8A01A; font-weight: 700; }
+.vd-more-link { display: flex; align-items: center; gap: 8px; font-family: var(--font-inter); font-size: 0.82rem; color: #2F4F2F; text-decoration: none; font-weight: 500; transition: color 0.15s; }
+.vd-more-link:hover { color: #61CE70; }
+
+@media (max-width: 900px) {
+  .vd-layout { grid-template-columns: 1fr; }
+  .vd-sidebar { position: static; }
+}
+@media (max-width: 600px) {
+  .vd-page { padding: 24px 20px 64px; }
+  .vd-title { font-size: 1.4rem; }
+}
 </style>
