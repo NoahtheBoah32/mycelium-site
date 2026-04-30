@@ -18,6 +18,11 @@ import SiteFooter from '../components/SiteFooter.astro';
   <!-- Events Section -->
   <section class="ev-section">
 
+    <!-- Top vine -->
+    <div class="ev-vine ev-vine-top" aria-hidden="true">
+      <img src="/images/vine.png" alt="" />
+    </div>
+
     <!-- Left vine -->
     <div class="ev-vine ev-vine-left" aria-hidden="true">
       <img src="/images/vine.png" alt="" />
@@ -172,10 +177,11 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* vine image is 1024×512 horizontal. rotating 90° makes it run vertically.
    width here = how tall the vine appears; after rotation visual width = width * 512/1024 = width/2.
    we push it almost fully off-screen so only ~55px of leaf tips graze the card edge. */
-.ev-vine { position: absolute; top: 50%; pointer-events: none; z-index: 0; width: 1000px; }
+.ev-vine { position: absolute; pointer-events: none; z-index: 0; }
 .ev-vine img { width: 100%; mix-blend-mode: multiply; opacity: 0.88; display: block; }
-.ev-vine-left { left: -638px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
-.ev-vine-right { right: -638px; transform: translateY(-50%) rotate(90deg); transform-origin: center center; }
+.ev-vine-left { width: 1000px; top: 50%; left: -638px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
+.ev-vine-right { width: 1000px; top: 50%; right: -638px; transform: translateY(-50%) rotate(90deg); transform-origin: center center; }
+.ev-vine-top { width: 100%; top: 0; left: 0; transform: translateY(-82%); }
 
 .ev-label-row { display: flex; align-items: center; gap: 16px; margin-bottom: 4px; }
 .ev-label-line { flex: 1; height: 1px; background: #C8B89A; }
