@@ -192,13 +192,22 @@ import SiteFooter from '../components/SiteFooter.astro';
   padding: calc(72px + 60px) 40px 80px; margin-top: -72px; text-align: center; position: relative;
 }
 .ev-hero::before { content: ''; position: absolute; inset: 0; background: rgba(10,14,10,0.62); }
+.ev-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 60%, #ffffff 100%);
+  z-index: 2;
+  pointer-events: none;
+}
 .ev-hero .ev-inner { position: relative; z-index: 1; }
 .ev-title { font-family: var(--font-outfit); font-size: 1.875rem; font-weight: 700; letter-spacing: -0.01em; color: #D2CEC8; text-transform: none; margin-bottom: 12px; }
 .ev-sub { font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; color: #fff; line-height: 1.5; max-width: 680px; margin: 0 auto; }
 .ev-sub-accent { color: #C8A01A; }
 
 /* ─── Events Section ─────────────────────────────────────── */
-.ev-section { background: #ffffff; padding: 40px 40px 56px; position: relative; overflow: hidden; }
+.ev-section { background: #ffffff; padding: 40px 40px 56px; position: relative; overflow: hidden; margin-top: -80px; }
 .ev-section-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
 
 /* ─── Vines ──────────────────────────────────────────────── */
