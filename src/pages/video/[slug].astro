@@ -47,25 +47,19 @@ const hasRichContent = !!(video.about || video.idealFor);
         <!-- Main column -->
         <div class="vd-main">
 
-          <!-- Video embed -->
+          <!-- Video thumbnail -->
           <div class="vd-embed-wrap">
-            {isYoutube && embedSrc ? (
-              <div class="vd-embed">
-                <iframe src={embedSrc} title={video.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-              </div>
-            ) : (
-              <div class="vd-embed vd-embed-thumb">
-                {thumb && <img src={thumb} alt={video.title} />}
-                {video.embedUrl && (
-                  <a href={video.embedUrl} target="_blank" rel="noopener" class="vd-play-btn" aria-label="Watch video">
-                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                      <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.62)"/>
-                      <polygon points="22,18 42,28 22,38" fill="white"/>
-                    </svg>
-                  </a>
-                )}
-              </div>
-            )}
+            <div class="vd-embed vd-embed-thumb">
+              {thumb && <img src={thumb} alt={video.title} />}
+              {video.embedUrl && (
+                <a href={video.embedUrl} target="_blank" rel="noopener" class="vd-play-btn" aria-label="Watch video">
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                    <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.62)"/>
+                    <polygon points="22,18 42,28 22,38" fill="white"/>
+                  </svg>
+                </a>
+              )}
+            </div>
           </div>
 
           <!-- About This Video -->
