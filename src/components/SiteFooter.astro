@@ -41,13 +41,13 @@
       </ul>
       <h4 class="sf-col-title sf-socials-title">Follow Our Socials</h4>
       <div class="sf-socials">
-        <a href="https://www.instagram.com/mycelium.learn/" target="_blank" rel="noopener" class="sf-social-link">
+        <a href="https://www.instagram.com/mycelium.learn/" target="_blank" rel="noopener" class="sf-social-link instagram">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
           </svg>
           <span>@mycelium.learn</span>
         </a>
-        <a href="https://www.youtube.com/@JoaquinRiego-ih9yv" target="_blank" rel="noopener" class="sf-social-link">
+        <a href="https://www.youtube.com/@JoaquinRiego-ih9yv" target="_blank" rel="noopener" class="sf-social-link youtube">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
           </svg>
@@ -112,7 +112,9 @@
   .sf-socials { display: flex; flex-direction: column; gap: 10px; }
   .sf-social-link { display: flex; align-items: center; gap: 8px; font-family: var(--font-inter); font-size: 0.875rem; color: #D2CEC8; text-decoration: none; transition: color 0.15s; }
   .sf-social-link:hover { color: #ffffff; }
-  .sf-social-link svg { flex-shrink: 0; opacity: 0.8; }
+  .sf-social-link svg { flex-shrink: 0; }
+  .sf-social-link.instagram svg { color: #E1306C; }
+  .sf-social-link.youtube svg { color: #FF0000; }
   .sf-bottom {
     max-width: var(--max-width);
     margin: 0 auto;
