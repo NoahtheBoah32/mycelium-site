@@ -12,9 +12,11 @@ export function getStaticPaths() {
 }
 
 const { video } = Astro.props;
-const ytMatch = video.embedUrl?.match(/[?&]v=([^&]+)/);
+const ytMatch = video.embedUrl?.match(/(?:[?&]v=|youtu\.be\/|\/embed\/)([A-Za-z0-9_-]{11})/);
 const ytId = video.youtubeId || (ytMatch ? ytMatch[1] : null);
-const embedSrc = video.embedSrc || (ytId ? `https://www.youtube-nocookie.com/embed/${ytId}` : null);
+const embedSrc = (video.embedSrc && video.embedSrc !== '')
+  ? video.embedSrc
+  : (ytId ? `https://www.youtube-nocookie.com/embed/${ytId}?rel=0&modestbranding=1` : null);
 const thumb = video.thumbnail || (ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : null);
 const isYoutube = !!(ytId && video.videoType !== "webinar");
 const hasRichContent = !!(video.about || video.idealFor);
@@ -47,19 +49,31 @@ const hasRichContent = !!(video.about || video.idealFor);
         <!-- Main column -->
         <div class="vd-main">
 
-          <!-- Video thumbnail -->
+          <!-- Video embed -->
           <div class="vd-embed-wrap">
-            <div class="vd-embed vd-embed-thumb">
-              {thumb && <img src={thumb} alt={video.title} />}
-              {video.embedUrl && (
-                <a href={video.embedUrl} target="_blank" rel="noopener" class="vd-play-btn" aria-label="Watch video">
-                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                    <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.62)"/>
-                    <polygon points="22,18 42,28 22,38" fill="white"/>
-                  </svg>
-                </a>
-              )}
-            </div>
+            {embedSrc ? (
+              <div class="vd-embed">
+                <iframe
+                  src={embedSrc}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  loading="lazy"
+                />
+              </div>
+            ) : (
+              <div class="vd-embed vd-embed-thumb">
+                {thumb && <img src={thumb} alt={video.title} />}
+                {video.embedUrl && (
+                  <a href={video.embedUrl} target="_blank" rel="noopener" class="vd-play-btn" aria-label="Watch video">
+                    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                      <circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.62)"/>
+                      <polygon points="22,18 42,28 22,38" fill="white"/>
+                    </svg>
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           <!-- About This Video -->
@@ -97,11 +111,11 @@ const hasRichContent = !!(video.about || video.idealFor);
             </div>
           )}
 
-          <!-- Watch CTA -->
-          {video.embedUrl && (
+          <!-- Watch CTA — only shown for non-embeddable videos -->
+          {!embedSrc && video.embedUrl && (
             <div class="vd-cta-wrap">
               <a href={video.embedUrl} target="_blank" rel="noopener" class="vd-watch-btn">
-                Watch Video
+                Watch on YouTube
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
             </div>
