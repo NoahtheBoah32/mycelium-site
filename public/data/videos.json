@@ -12,7 +12,7 @@
     "thumbnail": "/images/wp/Frame-150-2-1024x646.png",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/the-farm-why-the-philippines-cant-feed-itself-atty-esteban-salonga-with-baganihan-collective/",
-    "about": null,
+    "about": "Atty. Esteban Salonga critically examines the historical",
     "idealFor": null,
     "category": "Visual Learning",
     "series": null,
@@ -33,7 +33,7 @@
     "thumbnail": "/images/wp/How-to-Grow-Food-Security-Discover-Permaculture-The-Podcast.jpg",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/how-to-grow-food-security-discover-permaculture-the-podcast/",
-    "about": null,
+    "about": "This discussion delves into the critical fragility of the global",
     "idealFor": null,
     "category": "Podcast",
     "series": "Discover Permaculture: The Podcast",
@@ -54,7 +54,7 @@
     "thumbnail": "/images/wp/Water-The-Lifeblood-of-the-Landscape-Discover-Permaculture-The-Podcast.jpg",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/water-the-lifeblood-of-the-landscape-discover-permaculture-the-podcast/",
-    "about": null,
+    "about": "This episode delves into the critical role of water in",
     "idealFor": null,
     "category": "Podcast",
     "series": "Discover Permaculture: The Podcast",
@@ -75,7 +75,7 @@
     "thumbnail": "/images/wp/Lupa-Soil-EP2.png",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/kapitbahay-kwentong-permakultura-permaculture-tails-episode-2-lupa/",
-    "about": null,
+    "about": "Episode 2 of Kapitbahay: Kwentong",
     "idealFor": null,
     "category": "Podcast",
     "series": "Kapitbahay: Kwentong Permakultura",
@@ -96,7 +96,7 @@
     "thumbnail": "/images/wp/why-permaculture.png",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/kapitbahay-kwentong-permakultura-episode-1-bakit-kami-nasa-permakultura-why-are-we-in-permaculture/",
-    "about": null,
+    "about": "Bert and Sixto share their personal journeys into",
     "idealFor": null,
     "category": "Podcast",
     "series": "Kapitbahay: Kwentong Permakultura",
@@ -194,7 +194,7 @@
     "thumbnail": "/images/wp/How-to-Build-a-Worm-Tower.png",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/how-to-build-a-worm-tower-2/",
-    "about": null,
+    "about": "Discover how to create a simple yet highly effective worm tower,",
     "idealFor": null,
     "category": "Visual Learning",
     "series": null,
@@ -256,7 +256,8 @@
     "description": "beginners learning the specific recipes different crops require for successful growth. If youve struggled with carrot germination, wondered when to apply mulch in your garden beds, or want to understand why direct sowing produces better results than transplanting for certain vegetables, this video provides the practical clarity to grow quality carr",
     "thumbnail": "/images/wp/Is-it-always-blah-blah-1.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/is-it-always-better-to-layer-cardboard-and-mulch-before-planting/"
+    "wpLink": "https://mycelium-learn.com/video/is-it-always-better-to-layer-cardboard-and-mulch-before-planting/",
+    "about": "While layering cardboard and mulch is often beneficial, this video explores"
   },
   {
     "id": 1869,
@@ -270,7 +271,8 @@
     "description": "learners interested in sustainable water management and onsite greywater treatment. If youre looking to understand how to recycle household wastewater for irrigation, reduce freshwater demand, or integrate greywater systems into permaculture designs, this video provides a scalable, cost-effective model that maximizes water and nutrient reuse with m",
     "thumbnail": "/images/wp/Water-Recycling-with-Reed-Beds-in-permaculture.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/water-recycling-with-reed-beds/"
+    "wpLink": "https://mycelium-learn.com/video/water-recycling-with-reed-beds/",
+    "about": "This video demonstrates practical, simple methods for recycling greywater using"
   },
   {
     "id": 1868,
@@ -284,7 +286,8 @@
     "description": "This video documents Geoff Lawton’s return to Zaytuna Farm during one of the most severe bushfire seasons in Australia’s history. As record-breaking drought and uncontrollable fires close in on the surrounding region, the film grounds itself in a real, unfolding crisis shaped by climate instability, water scarcity, and prolonged environmental stres",
     "thumbnail": "/images/wp/How-to-Make-Your-Property-Fire-Resistant-with-Permaculture-Design.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/how-to-make-your-property-fire-resistant-with-permaculture-design/"
+    "wpLink": "https://mycelium-learn.com/video/how-to-make-your-property-fire-resistant-with-permaculture-design/",
+    "about": "In the face of devastating bushfires and extended drought, perm"
   },
   {
     "id": 1838,
@@ -298,7 +301,8 @@
     "description": "Before anything is built, planted, or altered, permaculture begins with restraint. This first episode of a five-part series focuses on the most overlooked step in starting a permaculture farm: learning how to observe the land before intervening in it. Framed around the first permaculture principle, Observe and Interact, the video lays the groundwor",
     "thumbnail": "/images/wp/Observe-and-Interact.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/starting-a-permaculture-farm-step-1-observe-interact/"
+    "wpLink": "https://mycelium-learn.com/video/starting-a-permaculture-farm-step-1-observe-interact/",
+    "about": "Embark on the foundational first step of starting a permaculture"
   },
   {
     "id": 1837,
@@ -312,7 +316,8 @@
     "description": "Chickens can do more than provide eggs—they can become powerful allies in building fertile, productive gardens. This video demonstrates a scalable chicken composting system, showing how chickens’ natural behaviors—scratching, feeding on insects, and consuming weed seeds—can continuously generate nutrient-rich compost while also supporting egg and p",
     "thumbnail": "/images/wp/image-3-1024x1024.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/how-to-make-a-chicken-composting-system/"
+    "wpLink": "https://mycelium-learn.com/video/how-to-make-a-chicken-composting-system/",
+    "about": "Discover how to design and implement a highly effective chicken composting"
   },
   {
     "id": 1834,
@@ -326,7 +331,8 @@
     "description": "Transforming discarded materials into living soil is at the heart of this video, which walks through the process of sheet mulching—a low-effort method to build fertile, productive garden beds. Using items like old trees, cardboard, paper, manure, and vegetable scraps, the system creates layers that feed worms and countless soil organisms while supp",
     "thumbnail": "/images/wp/How-to-Build-an-Instant-Garden.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/how-to-build-an-instant-garden/"
+    "wpLink": "https://mycelium-learn.com/video/how-to-build-an-instant-garden/",
+    "about": "Discover how to quickly establish a thriving garden using"
   },
   {
     "id": 1819,
@@ -340,7 +346,8 @@
     "description": "Geoff Lawton reframes how we think about weeds entirely. Rather than treating them as problems to be eliminated, this video examines what weeds are actually telling you about your soil. Different weeds germinate in response to specific conditions like compaction, nutrient depletion, or post-fire recovery, and understanding that pattern is what sepa",
     "thumbnail": "/images/wp/All-about-weeds.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/all-about-weeds/"
+    "wpLink": "https://mycelium-learn.com/video/all-about-weeds/",
+    "about": "Weeds are not just \"plants in the wrong place,\""
   },
   {
     "id": 1818,
@@ -354,7 +361,8 @@
     "description": "Geoff Lawton walks through how to get serious productivity out of a small garden space. The video covers dense layered planting, on-site composting using simple cage systems, companion planting for natural pest management, and how integrating chickens creates a closed-loop fertility cycle. It shows exactly how these systems are built and maintained",
     "thumbnail": "/images/wp/How-to-Make-and-Maintain-Soil-Fertility.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/how-to-make-and-maintain-soil-fertility/"
+    "wpLink": "https://mycelium-learn.com/video/how-to-make-and-maintain-soil-fertility/",
+    "about": "Discover how to create incredibly productive and diverse garden beds"
   },
   {
     "id": 1817,
@@ -368,7 +376,8 @@
     "description": "Geoff Lawton breaks down how to build a home worm farm system using something as simple as an old bathtub. The video covers the difference between compost worms and regular earthworms, what to feed them, how the three month harvest cycle works, and how to get both liquid and solid fertilizer out of the same system. Its a genuinely low cost, low mai",
     "thumbnail": "/images/wp/Compost-Worm-Farming.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/compost-worm-farming/"
+    "wpLink": "https://mycelium-learn.com/video/compost-worm-farming/",
+    "about": "Learn to create a simple, effective compost worm farm"
   },
   {
     "id": 1816,
@@ -382,7 +391,8 @@
     "description": "This video takes a step back from the practical side of permaculture and examines what the discipline actually is at its core. The speaker covers permaculture as a connecting framework between different fields rather than a standalone expertise, why ethics and science form its foundation, how climate literacy shapes every design decision, and where",
     "thumbnail": "/images/wp/Connecting-Science-Ethics-and-Climate-with-Permaculture-Design.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/connecting-science-ethics-and-climate-with-permaculture-design/"
+    "wpLink": "https://mycelium-learn.com/video/connecting-science-ethics-and-climate-with-permaculture-design/",
+    "about": "Permaculture is fundamentally a connecting system, emphasizing the synthesis"
   },
   {
     "id": 1815,
@@ -396,7 +406,8 @@
     "description": "Geoff Lawton walks through the mainframe approach to landscape design  a hierarchical framework that starts with water, then access routes, then structures. The video explains why the order matters, how water patterns should inform every subsequent decision, and how designing access along contour lines doubles as passive water harvesting infrastruc",
     "thumbnail": "/images/wp/What-is-a-Mainframe-in-Permaculture.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/what-is-a-mainframe-in-permaculture/"
+    "wpLink": "https://mycelium-learn.com/video/what-is-a-mainframe-in-permaculture/",
+    "about": "Discover the foundational \"mainframe\" principles of permaculture design,"
   },
   {
     "id": 1798,
@@ -410,7 +421,8 @@
     "description": "Geoff Lawton gets into the specifics of nitrogen fixation  how it actually works, which legumes do it, which ones dont, and why inoculation with rhizobium bacteria makes the difference between a cover crop that builds your soil and one that doesnt. The video covers practical identification of nitrogen-fixing nodules on roots, how to source and appl",
     "thumbnail": "/images/wp/Why-Do-We-Focus-on-Legumes-for-Nitrogen-Fixing.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/why-do-we-focus-on-legumes-for-nitrogen-fixing/"
+    "wpLink": "https://mycelium-learn.com/video/why-do-we-focus-on-legumes-for-nitrogen-fixing/",
+    "about": "Geoff Lawton explains why legumes are a primary focus for"
   },
   {
     "id": 1797,
@@ -424,7 +436,8 @@
     "description": "This video reframes how we think about yield in ecological systems. Rather than measuring output against what you put in, it examines yield as a function of how well a system captures and converts solar energy. The core argument is that diversity alone isnt enough  its the connectivity and interaction between elements that determines how productive",
     "thumbnail": "/images/wp/Yields-Surpluses-Overabundance-and-Resource-Consumption-within-a-System-1.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/yields-surpluses-overabundance-and-resource-consumption-within-a-system/"
+    "wpLink": "https://mycelium-learn.com/video/yields-surpluses-overabundance-and-resource-consumption-within-a-system/",
+    "about": "Explore the fundamental permaculture principle of creating truly sustainable systems"
   },
   {
     "id": 1794,
@@ -438,7 +451,8 @@
     "description": "This video makes a direct case for why industrial agriculture is failing and how permaculture and urban food systems could replace it faster than most people assume. The speaker backs the argument with concrete numbers  land use efficiency, yield per acre, nutrient density comparisons  and argues that the transition isnt about sacrifice but about p",
     "thumbnail": "/images/wp/How-to-Transition-From-Industrialized-Agriculture-to-Permaculture.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/how-to-transition-from-industrialized-agriculture-to-permaculture/"
+    "wpLink": "https://mycelium-learn.com/video/how-to-transition-from-industrialized-agriculture-to-permaculture/",
+    "about": "Geoff Lawton dismantles the myth that"
   },
   {
     "id": 1792,
@@ -452,7 +466,8 @@
     "description": "Geoff Lawton tackles a question that doesnt get asked enough in permaculture  when is it actually ethical to intervene in land thats already recovering on its own? The video examines how to read the quality and stage of forest regrowth, why non-native pioneer species deserve more respect than they get, and where the line is between responsible deve",
     "thumbnail": "/images/wp/image-2-768x1024.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/design-it-or-leave-it-alone-geoff-on-ethical-design-regrowth/"
+    "wpLink": "https://mycelium-learn.com/video/design-it-or-leave-it-alone-geoff-on-ethical-design-regrowth/",
+    "about": "Navigating the ethics of intervening in regenerating landscapes, Geoff"
   },
   {
     "id": 1790,
@@ -466,7 +481,8 @@
     "description": "A straightforward rundown of 11 natural mulching materials and how each one performs in a permaculture context. The video covers everything from wood chip and comfrey to seaweed and sheeps wool, explaining the specific conditions each mulch suits best, how they affect soil biology, and why choosing locally available materials over imported ones is ",
     "thumbnail": "/images/wp/11-Amazing-Mulch-Materials-for-Permaculture-Gardening.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/11-amazing-mulch-materials-for-permaculture-gardening/"
+    "wpLink": "https://mycelium-learn.com/video/11-amazing-mulch-materials-for-permaculture-gardening/",
+    "about": "Explore 11 natural mulch materials perfect for permaculture gardening"
   },
   {
     "id": 1772,
@@ -480,7 +496,8 @@
     "description": "This video breaks down one of the most fundamental concepts in permaculture design  the relationship between elements and their functions. Using a real working example of a gravity-fed water system that connects a dam, pipe, tap, kitchen garden, and cattle trough, it shows how every component in a well-designed system serves a deliberate purpose an",
     "thumbnail": "/images/wp/Elements-vs.-Functions-in-Permaculture.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/elements-vs-functions-in-permaculture/"
+    "wpLink": "https://mycelium-learn.com/video/elements-vs-functions-in-permaculture/",
+    "about": "Geoff Lawton clarifies the fundamental distinction between elements and functions"
   },
   {
     "id": 1771,
@@ -515,7 +532,8 @@
     "description": "Jacob Kollen, a soil scientist with a permaculture background, breaks down what soil actually is and why pore space matters as much as the solid material itself. The video walks through how climate drives weathering, how dryland, temperate, and tropical soils differ in structure and behavior, and why those differences demand completely different ag",
     "thumbnail": "/images/wp/Permaculture-Soils-Perspective.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/permaculture-soils-perspective/"
+    "wpLink": "https://mycelium-learn.com/video/permaculture-soils-perspective/",
+    "about": "This video delves into the fundamental role of space in"
   },
   {
     "id": 1769,
@@ -529,7 +547,8 @@
     "description": "This video covers swales from the ground up  what they actually are in a permaculture context versus how conventional landscaping uses the term, how to construct them correctly, and why trees on the berm arent optional. The presenter walks through how swale dimensions should be adapted to soil type, slope, and rainfall, uses his own site in Central",
     "thumbnail": "/images/wp/Before-You-Create-Permaculture-Swales-Watch-this-Swale-Guide-and-Example.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/before-you-create-permaculture-swales-watch-this-swale-guide-and-example/"
+    "wpLink": "https://mycelium-learn.com/video/before-you-create-permaculture-swales-watch-this-swale-guide-and-example/",
+    "about": "Demystify permaculture swales with this comprehensive guide"
   },
   {
     "id": 1768,
@@ -543,7 +562,8 @@
     "description": "This video works through 12 of the most common misconceptions about permaculture  that its only for rural land, only for experts, only for warm climates, too expensive, too complicated, or only about growing food. Each myth gets a direct, practical rebuttal. Its a good reset for anyone whos picked up assumptions about what permaculture is or isnt b",
     "thumbnail": "/images/wp/The-12-Myths-of-Permaculture-Setting-The-Record-Straight.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/the-12-myths-of-permaculture-setting-the-record-straight/"
+    "wpLink": "https://mycelium-learn.com/video/the-12-myths-of-permaculture-setting-the-record-straight/",
+    "about": "This video debunks common misconceptions about permaculture, clarifying"
   },
   {
     "id": 1752,
@@ -557,7 +577,8 @@
     "description": "The presenter covers soil building, nitrogen fixation, nutrient accumulation, pollinator attraction, and pest deterrence, then walks through six real guilds on his own property showing how those functions play out in practice. The emphasis throughout is on adapting to your specific conditions and letting the system evolve through observation rather",
     "thumbnail": "/images/wp/A-comprehensive-guide-to-Permaculture-Guilds.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/a-comprehensive-guide-to-permaculture-guilds/"
+    "wpLink": "https://mycelium-learn.com/video/a-comprehensive-guide-to-permaculture-guilds/",
+    "about": "This guide demystifies permaculture guilds,"
   },
   {
     "id": 1751,
@@ -571,7 +592,8 @@
     "description": "This video walks through the full scope of pond design in permaculture  the different types of ponds and what each one is actually built to do, how landscape position and soil type determine where a pond should go, and the engineering fundamentals behind dam construction, water outlets, and spillways. Its not a beginner overview  it gets into the d",
     "thumbnail": "/images/wp/PERMACULTURE-PONDS-Why-Where-How.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/permaculture-ponds-why-where-how/"
+    "wpLink": "https://mycelium-learn.com/video/permaculture-ponds-why-where-how/",
+    "about": "Permaculture ponds are powerful landscape elements, but their design is"
   },
   {
     "id": 1749,
@@ -613,7 +635,8 @@
     "description": "This mini-documentary zooms in on a particular project, which involves restoration through Permaculture, to represent the broader and vaster environmental issues taking storm in our world today. It begins by addressing the problematic situations plaguing our modern world (climate change, water and food scarcity), but then it immediately transports ",
     "thumbnail": "/images/wp/Garden-Cs-Compost-and-Cover-Crops.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/garden-cs-compost-and-cover-crops/"
+    "wpLink": "https://mycelium-learn.com/video/garden-cs-compost-and-cover-crops/",
+    "about": "Discover the critical role of soil organic matter in garden health,"
   },
   {
     "id": 1590,
@@ -627,7 +650,8 @@
     "description": "Geoff Lawton is a world renowned permaculture consultant, designer and teacher. He first took his Permaculture Design Certificate (PDC) Course in 1983 with Bill Mollison, widely considered the “father of permaculture.” Geoff has undertaken thousands of jobs teaching, consulting, designing, administering and implementing, in 6 continents and over 50",
     "thumbnail": "/images/wp/Got-Some-Land-Now-What-5-First-Steps-When-Starting-a-Permaculture-Garden-or-Farm.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/got-some-land-now-what-5-first-steps-when-starting-a-permaculture-garden-or-farm/"
+    "wpLink": "https://mycelium-learn.com/video/got-some-land-now-what-5-first-steps-when-starting-a-permaculture-garden-or-farm/",
+    "about": "Starting a permaculture journey on new land can feel"
   },
   {
     "id": 1589,
@@ -642,7 +666,7 @@
     "thumbnail": "/images/wp/The-Permaculture-Principles.png",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/the-permaculture-principles/",
-    "about": null,
+    "about": "Explore the foundational framework of permaculture design through David Holmg",
     "idealFor": null,
     "category": "Visual Learning",
     "series": null,
@@ -663,7 +687,7 @@
     "thumbnail": "/images/wp/Permaculture-for-Beginners-The-Permaculture-Designers-Manual-in-One-Hour.png",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/permaculture-for-beginners-the-permaculture-designers-manual-in-one-hour/",
-    "about": null,
+    "about": "Unlock the profound wisdom of Bill Mollison's Permaculture",
     "idealFor": null,
     "category": "Visual Learning",
     "series": null,
@@ -683,7 +707,8 @@
     "description": "Geoff Lawton is a world renowned permaculture consultant, designer and teacher. He first took his Permaculture Design Certificate (PDC) Course in 1983 with Bill Mollison, widely considered the “father of permaculture.” Geoff has undertaken thousands of jobs teaching, consulting, designing, administering and implementing, in 6 continents and over 50",
     "thumbnail": "/images/wp/Waste-Not-Transform-your-waste-into-soil-water-and-energy.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/waste-not-transform-your-waste-into-soil-water-and-energy/"
+    "wpLink": "https://mycelium-learn.com/video/waste-not-transform-your-waste-into-soil-water-and-energy/",
+    "about": "Discover how to transform everyday \"waste\" into valuable resources,"
   },
   {
     "id": 1585,
@@ -697,7 +722,8 @@
     "description": "This video introduces one of the most important principles in permaculture design: starting with observation and planning before taking action on the land. The speaker explains why beginners often feel overwhelmed when beginning a permaculture project and why rushing into planting or earthworks can lead to costly mistakes.",
     "thumbnail": "/images/wp/Where-to-Begin-When-Evolving-a-Piece-of-Land-into-a-Permaculture-Site.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/where-to-begin-when-evolving-a-piece-of-land-into-a-permaculture-site/"
+    "wpLink": "https://mycelium-learn.com/video/where-to-begin-when-evolving-a-piece-of-land-into-a-permaculture-site/",
+    "about": "When evolving a piece of land into a permaculture site"
   },
   {
     "id": 1584,
@@ -711,7 +737,8 @@
     "description": "Geoff Lawton is a world renowned permaculture consultant, designer and teacher. He first took his Permaculture Design Certificate (PDC) Course in 1983 with Bill Mollison, widely considered the “father of permaculture.” Geoff has undertaken thousands of jobs teaching, consulting, designing, administering and implementing, in 6 continents and over 50",
     "thumbnail": "/images/wp/Traditional-Landscape-Design-vs-Permaculture-Landscape-Design.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/traditional-landscape-design-vs-permaculture-landscape-design/"
+    "wpLink": "https://mycelium-learn.com/video/traditional-landscape-design-vs-permaculture-landscape-design/",
+    "about": "Discover the stark contrast between conventional and permaculture landscape design through"
   },
   {
     "id": 1583,
@@ -726,7 +753,7 @@
     "thumbnail": "/images/wp/81775031-73f8-41a0-b60f-fcaf32b7967d.jpg",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/reading-the-landscape-with-permaculture-design/",
-    "about": null,
+    "about": "Geoff Lawton explains how to read the two major landscape",
     "idealFor": null,
     "category": "Visual Learning",
     "series": null,
@@ -746,7 +773,8 @@
     "description": "Geoff Lawton explains how mapping is one of the most important first steps in permaculture design. Before planting trees or building systems, a designer must understand the landscape itself. Permaculture works by studying real patterns in nature and using them to guide sustainable land use. By analyzing a site’s location, altitude, climate influenc",
     "thumbnail": "/images/wp/Mapping-in-Permaculture.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/mapping-in-permaculture/"
+    "wpLink": "https://mycelium-learn.com/video/mapping-in-permaculture/",
+    "about": "Mapping is a fundamental step in permaculture design"
   },
   {
     "id": 1581,
@@ -760,7 +788,8 @@
     "description": "Geoff Lawton is a world renowned permaculture consultant, designer and teacher. He first took his Permaculture Design Certificate (PDC) Course in 1983 with Bill Mollison, widely considered the “father of permaculture.” Geoff has undertaken thousands of jobs teaching, consulting, designing, administering and implementing, in 6 continents and over 50",
     "thumbnail": "/images/wp/Working-with-Natural-Patterns.jpg",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/working-with-natural-patterns/"
+    "wpLink": "https://mycelium-learn.com/video/working-with-natural-patterns/",
+    "about": "Witness the transformation of a neglected coastal site into"
   },
   {
     "id": 1580,
@@ -774,7 +803,8 @@
     "description": "Geoff Lawton is a world renowned permaculture consultant, designer and teacher. He first took his Permaculture Design Certificate (PDC) Course in 1983 with Bill Mollison, widely considered the “father of permaculture.” Geoff has undertaken thousands of jobs teaching, consulting, designing, administering and implementing, in 6 continents and over 50",
     "thumbnail": "/images/wp/How-I-designed-my-permaculture-food-forest-A-step-by-step-guide.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/how-i-designed-my-permaculture-food-forest-a-step-by-step-guide/"
+    "wpLink": "https://mycelium-learn.com/video/how-i-designed-my-permaculture-food-forest-a-step-by-step-guide/",
+    "about": "Discover how to design a resilient permaculture food forest by"
   },
   {
     "id": 1579,
@@ -788,7 +818,8 @@
     "description": "Geoff Lawton is a world renowned permaculture consultant, designer and teacher. He first took his Permaculture Design Certificate (PDC) Course in 1983 with Bill Mollison, widely considered the “father of permaculture.” Geoff has undertaken thousands of jobs teaching, consulting, designing, administering and implementing, in 6 continents and over 50",
     "thumbnail": "/images/wp/How-to-Make-a-Rainwater-Harvesting-System.png",
     "tags": [],
-    "wpLink": "https://mycelium-learn.com/video/how-to-make-a-rainwater-harvesting-system/"
+    "wpLink": "https://mycelium-learn.com/video/how-to-make-a-rainwater-harvesting-system/",
+    "about": "Learn to harvest healthy rainwater, from collection to purification and"
   },
   {
     "id": 1578,
@@ -803,7 +834,7 @@
     "thumbnail": "/images/wp/What-is-Permaculture.png",
     "tags": [],
     "wpLink": "https://mycelium-learn.com/video/what-is-permaculture/",
-    "about": null,
+    "about": "Geoff Lawton introduces permaculture as the world's",
     "idealFor": null,
     "category": "Visual Learning",
     "series": null,
