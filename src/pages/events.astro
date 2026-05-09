@@ -263,7 +263,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* ─── Card 2: Baganihan Seed Sovereignty Talk ────────────── */
 .ev-card-bag {
   position: relative; isolation: isolate;
-  display: grid; grid-template-columns: 1fr 320px; min-height: 500px;
+  display: grid; grid-template-columns: 1fr 320px;
   background: #0F0D08; overflow: hidden;
 }
 
@@ -277,7 +277,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* Glass body panel */
 .ev-bag-body {
   position: relative; z-index: 1;
-  padding: 52px 56px; display: flex; flex-direction: column; gap: 0;
+  padding: 40px 44px; display: flex; flex-direction: column; gap: 0;
   background: rgba(15,12,6,0.45);
   backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
   border-right: 1px solid rgba(255,255,255,0.07);
@@ -286,9 +286,9 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-badge-online { background: rgba(232,168,74,0.12); color: #E8A84A; border: 1px solid rgba(232,168,74,0.25); backdrop-filter: blur(8px); }
 .ev-badge-talk { background: rgba(196,122,82,0.12); color: #C47A52; border: 1px solid rgba(196,122,82,0.25); backdrop-filter: blur(8px); }
 
-.ev-bag-schedule { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; color: #E8A84A; text-transform: uppercase; margin-bottom: 12px; }
+.ev-bag-schedule { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; color: #E8A84A; text-transform: uppercase; margin-bottom: 10px; }
 
-.ev-bag-title { font-family: var(--font-lora); font-size: clamp(1.7rem, 2.5vw, 2.4rem); font-weight: 400; color: #F5EDD8; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 24px; }
+.ev-bag-title { font-family: var(--font-lora); font-size: clamp(1.7rem, 2.5vw, 2.4rem); font-weight: 400; color: #F5EDD8; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
 .ev-bag-title em { font-style: italic; color: #F0C97A; }
 
 /* Glass detail block */
@@ -303,12 +303,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 
 /* Speaker glass card */
 .ev-speaker-block {
-  margin-top: 20px; margin-bottom: 28px;
+  margin-top: 14px; margin-bottom: 16px;
   background: rgba(255,255,255,0.04);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255,255,255,0.09);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-  border-radius: 12px; padding: 16px 20px;
+  border-radius: 12px; padding: 14px 16px;
 }
 .ev-speaker-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .ev-speaker-avatar {
@@ -331,7 +331,7 @@ details[open] .ev-bio-toggle::after { content: '−'; }
 
 .ev-cta-bag {
   background: linear-gradient(135deg, #E8A84A, #F0C97A);
-  color: #1A1200; margin-top: auto;
+  color: #1A1200;
   box-shadow: 0 4px 20px rgba(232,168,74,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
