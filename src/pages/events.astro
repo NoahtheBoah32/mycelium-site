@@ -84,6 +84,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 
 <!-- Card 2: Baganihan Collective — Seed Sovereignty Talk -->
       <div class="ev-card ev-card-bag">
+        <!-- Background blobs (needed for glass to read) -->
+        <div class="ev-bag-bg" aria-hidden="true">
+          <div class="ev-bag-blob ev-bag-blob-1"></div>
+          <div class="ev-bag-blob ev-bag-blob-2"></div>
+          <div class="ev-bag-blob ev-bag-blob-3"></div>
+        </div>
         <div class="ev-card-body ev-bag-body">
           <div class="ev-card-badge-row">
             <span class="ev-badge ev-badge-online">🌐 ONLINE</span>
@@ -255,26 +261,63 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-img-tag-label { font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
 
 /* ─── Card 2: Baganihan Seed Sovereignty Talk ────────────── */
-.ev-card-bag { display: grid; grid-template-columns: 1fr 340px; min-height: 500px; background: #1E1810; }
+.ev-card-bag {
+  position: relative; isolation: isolate;
+  display: grid; grid-template-columns: 1fr 320px; min-height: 500px;
+  background: #0F0D08; overflow: hidden;
+}
 
-.ev-bag-body { padding: 52px 56px; display: flex; flex-direction: column; gap: 0; }
+/* Gradient blobs behind the glass */
+.ev-bag-bg { position: absolute; inset: 0; pointer-events: none; }
+.ev-bag-blob { position: absolute; border-radius: 50%; filter: blur(72px); opacity: 0.55; }
+.ev-bag-blob-1 { width: 420px; height: 420px; background: radial-gradient(circle, #C47A52 0%, transparent 70%); top: -80px; left: -60px; }
+.ev-bag-blob-2 { width: 380px; height: 380px; background: radial-gradient(circle, #E8A84A 0%, transparent 70%); bottom: -100px; right: 200px; opacity: 0.4; }
+.ev-bag-blob-3 { width: 300px; height: 300px; background: radial-gradient(circle, #3D5C30 0%, transparent 70%); top: 40px; right: 60px; opacity: 0.5; }
 
-.ev-badge-online { background: rgba(232,168,74,0.15); color: #E8A84A; border: 1px solid rgba(232,168,74,0.3); }
-.ev-badge-talk { background: rgba(196,122,82,0.15); color: #C47A52; border: 1px solid rgba(196,122,82,0.3); }
+/* Glass body panel */
+.ev-bag-body {
+  position: relative; z-index: 1;
+  padding: 52px 56px; display: flex; flex-direction: column; gap: 0;
+  background: rgba(15,12,6,0.45);
+  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+
+.ev-badge-online { background: rgba(232,168,74,0.12); color: #E8A84A; border: 1px solid rgba(232,168,74,0.25); backdrop-filter: blur(8px); }
+.ev-badge-talk { background: rgba(196,122,82,0.12); color: #C47A52; border: 1px solid rgba(196,122,82,0.25); backdrop-filter: blur(8px); }
 
 .ev-bag-schedule { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; color: #E8A84A; text-transform: uppercase; margin-bottom: 12px; }
 
 .ev-bag-title { font-family: var(--font-lora); font-size: clamp(1.7rem, 2.5vw, 2.4rem); font-weight: 400; color: #F5EDD8; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 24px; }
 .ev-bag-title em { font-style: italic; color: #F0C97A; }
 
-.ev-bag-details { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); }
+/* Glass detail block */
+.ev-bag-details {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
 .ev-bag-details .ev-detail { color: rgba(255,255,255,0.72); }
 .ev-bag-details .ev-detail svg { color: #C47A52; }
 
-/* Speaker */
-.ev-speaker-block { margin-top: 24px; margin-bottom: 28px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; }
+/* Speaker glass card */
+.ev-speaker-block {
+  margin-top: 20px; margin-bottom: 28px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  border-radius: 12px; padding: 16px 20px;
+}
 .ev-speaker-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.ev-speaker-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #C47A52, #E8A84A); color: #1E1810; display: flex; align-items: center; justify-content: center; font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; flex-shrink: 0; }
+.ev-speaker-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, #C47A52, #E8A84A);
+  color: #0F0D08; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
+  box-shadow: 0 0 16px rgba(232,168,74,0.4);
+}
 .ev-speaker-meta { display: flex; flex-direction: column; gap: 2px; }
 .ev-speaker-name { font-family: var(--font-inter); font-size: 0.9rem; font-weight: 700; color: #F5EDD8; }
 .ev-speaker-role { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #E8A84A; }
@@ -282,23 +325,46 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-bio-details summary { list-style: none; }
 .ev-bio-details summary::-webkit-details-marker { display: none; }
 .ev-bio-toggle { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 600; color: #C47A52; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.04em; user-select: none; }
-.ev-bio-toggle::after { content: '+'; font-size: 1rem; line-height: 1; transition: transform 0.2s; }
+.ev-bio-toggle::after { content: '+'; font-size: 1rem; line-height: 1; }
 details[open] .ev-bio-toggle::after { content: '−'; }
 .ev-bio-text { font-family: var(--font-outfit); font-size: 0.875rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-top: 10px; max-width: 460px; }
 
-.ev-cta-bag { background: #E8A84A; color: #1E1810; margin-top: auto; }
-.ev-cta-bag:hover { background: #F0C97A; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(232,168,74,0.35); }
+.ev-cta-bag {
+  background: linear-gradient(135deg, #E8A84A, #F0C97A);
+  color: #1A1200; margin-top: auto;
+  box-shadow: 0 4px 20px rgba(232,168,74,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
 
-/* Right logo panel */
-.ev-bag-logo-panel { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; background: #2A2218; border-left: 1px solid rgba(255,255,255,0.06); padding: 40px 32px; }
-.ev-bag-logo-wrap { width: 160px; height: 160px; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.4); flex-shrink: 0; }
+/* Right glass logo panel */
+.ev-bag-logo-panel {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+  padding: 40px 28px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  box-shadow: inset 1px 0 0 rgba(255,255,255,0.06);
+}
+.ev-bag-logo-wrap {
+  width: 152px; height: 152px; border-radius: 20px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
 .ev-bag-logo { width: 100%; height: 100%; object-fit: cover; display: block; }
 .ev-bag-org-info { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
-.ev-bag-presents { font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,168,74,0.7); }
+.ev-bag-presents { font-family: var(--font-inter); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,168,74,0.65); }
 .ev-bag-org-name { font-family: var(--font-lora); font-size: 1rem; font-weight: 700; color: #F5EDD8; text-align: center; }
-.ev-bag-date-block { display: flex; flex-direction: column; align-items: center; gap: 2px; background: rgba(232,168,74,0.1); border: 1px solid rgba(232,168,74,0.2); border-radius: 10px; padding: 12px 20px; }
-.ev-bag-date-num { font-family: var(--font-lora); font-size: 2.2rem; font-weight: 400; color: #E8A84A; line-height: 1; }
-.ev-bag-date-mo { font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,168,74,0.7); }
+.ev-bag-date-block {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: rgba(232,168,74,0.08);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(232,168,74,0.2);
+  box-shadow: inset 0 1px 0 rgba(232,168,74,0.15), 0 4px 16px rgba(0,0,0,0.2);
+  border-radius: 12px; padding: 14px 24px;
+}
+.ev-bag-date-num { font-family: var(--font-lora); font-size: 2.4rem; font-weight: 400; color: #E8A84A; line-height: 1; text-shadow: 0 0 20px rgba(232,168,74,0.5); }
+.ev-bag-date-mo { font-family: var(--font-inter); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,168,74,0.7); }
 
 /* ─── Card 2: Camp 2026 ──────────────────────────────────── */
 .ev-card-camp { position: relative; min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; }
@@ -384,7 +450,9 @@ details[open] .ev-bio-toggle::after { content: '−'; }
   .ev-card-img-wrap { height: 300px; }
   .ev-card-img-overlay { background: linear-gradient(to bottom, #1C2E18 0%, transparent 40%); }
   .ev-card-bag { grid-template-columns: 1fr; }
-  .ev-bag-logo-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.06); flex-direction: row; justify-content: center; gap: 32px; padding: 28px 32px; }
+  .ev-bag-logo-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); flex-direction: row; justify-content: center; gap: 32px; padding: 28px 32px; }
+  .ev-bag-blob-1 { width: 300px; height: 300px; top: -40px; left: -40px; }
+  .ev-bag-blob-2 { width: 260px; height: 260px; bottom: -60px; right: 80px; }
   .ev-camp-content { grid-template-columns: 1fr; }
   .ev-camp-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 40px 32px 32px; }
   .ev-camp-right { padding: 32px; }
