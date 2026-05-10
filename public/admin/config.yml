@@ -1,0 +1,42 @@
+backend:
+  name: github
+  repo: NoahtheBoah32/mycelium-site
+  branch: master
+
+media_folder: public/images/cms
+public_folder: /images/cms
+
+collections:
+  - name: events
+    label: Events
+    folder: src/content/events
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: "Event Title", name: title, widget: string }
+      - label: "Card Style"
+        name: template
+        widget: select
+        options:
+          - { label: "Kapihan (green, recurring)", value: kapihan }
+          - { label: "Baganihan (dark glass, one-time talk)", value: bag }
+      - { label: "Schedule Line", name: schedule, widget: string, required: false }
+      - { label: "Event Date", name: date, widget: datetime, required: false }
+      - { label: "Time", name: time, widget: string, required: false }
+      - { label: "Location", name: location, widget: string, required: false }
+      - { label: "Extra Detail (e.g. Free Coffee)", name: notes, widget: string, required: false }
+      - { label: "Online Event", name: isOnline, widget: boolean, default: false }
+      - { label: "Free Entry", name: isFree, widget: boolean, default: false }
+      - { label: "Recurring Event", name: isRecurring, widget: boolean, default: false }
+      - { label: "Description", name: description, widget: text, required: false }
+      - { label: "Button Label", name: ctaLabel, widget: string, required: false }
+      - { label: "Button URL", name: ctaUrl, widget: string, required: false }
+      - { label: "Event Image (Kapihan card)", name: image, widget: image, required: false }
+      - { label: "Sort Order (lower = first)", name: sortOrder, widget: number, default: 0 }
+      - { label: "Speaker Name", name: speakerName, widget: string, required: false }
+      - { label: "Speaker Role", name: speakerRole, widget: string, required: false }
+      - { label: "Speaker Bio", name: speakerBio, widget: text, required: false }
+      - { label: "Organizer Name", name: organizer, widget: string, required: false }
+      - { label: "Organizer Logo", name: organizerLogo, widget: image, required: false }
