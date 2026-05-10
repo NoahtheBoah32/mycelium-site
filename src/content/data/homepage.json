@@ -1,0 +1,32 @@
+{
+  "heroHeading": "What if it’s time we look down to move forward?",
+  "missionHeading": "Building food security starts with education",
+  "missionBody": "Our goals start with confronting the issue of finding clear and uncomplicated permaculture education. The chaos of scattered resources, conflicting advice, and no clear starting point often turn eager learners away. Mycelium exists to bridge these gaps. Similar to mycelial systems which connect ecosystems underground, the platform links scattered knowledge together to lower the barrier of learning. Mycelium strengthens permaculture education at its roots, encouraging informed action to support the overarching goal of addressing food insecurity.",
+  "statsEyebrow": "Mycelium Resources and Content to Date",
+  "stats": [
+    { "number": "240", "label": "Resources Curated" },
+    { "number": "600+", "label": "Hours of Organized Content" },
+    { "number": "1", "label": "Community in Active Implementation" }
+  ],
+  "founderHeading": "Why did I build Mycelium at 16?",
+  "founderBody": "I built Mycelium at 16 because I wanted uncomplicated permaculture guidance. I got exhausted finding conflicting advice and resources that didn’t apply to me. So I spent the next year building a platform I couldn’t find. With the guidance I got from the Philippine Permaculture Association and hours of curating content, Mycelium is now what I wish existed when I was searching alone at 2 am with too many tabs to count.",
+  "howOperateHeading": "How We Operate",
+  "howOperateSub": "We prioritize transparency with all our users, we want you to know how we create resources and build this platform.",
+  "operateColumns": [
+    {
+      "title": "Zero Gatekeeping",
+      "body": "100% Free, forever. No paywalls, no ads interrupting your learning. We believe permaculture knowledge should be accessible to everyone, regardless of income or location."
+    },
+    {
+      "title": "We verify every resource",
+      "body": "We personally review every video, course, and article before adding it to Mycelium. Each resource is checked thoroughly, prioritizing beginner-friendliness."
+    },
+    {
+      "title": "We work with expert partners",
+      "body": "Our resources are credible and field-tested, shaped by indigenous permaculture from the Baganihan Collective, content contributions from the PPA, and medicinal plant knowledge from the Sanghiblayan Collective."
+    }
+  ],
+  "newsletterHeading": "Get Monthly Permaculture Resources",
+  "newsletterSub": "Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.",
+  "newsletterPrivacy": "We respect your privacy. Unsubscribe anytime."
+}

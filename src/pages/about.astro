@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import ab from '../content/data/about.json';
 ---
 
 <BaseLayout title="About - Mycelium">
@@ -10,19 +11,17 @@ import SiteFooter from '../components/SiteFooter.astro';
   <section class="about-hero">
     <div class="section-inner">
       <a href="#how-it-started" class="about-hero-link">READ THE FULL JOURNEY</a>
-      <h1 class="about-title">Mycelium connects what grows beneath the surface</h1>
+      <h1 class="about-title">{ab.heroTitle}</h1>
     </div>
   </section>
 
   <section class="about-story" id="how-it-started">
     <div class="section-inner">
       <h2 class="section-h2 center">HOW IT STARTED</h2>
-      <p class="story-intro">Have you ever wondered why nature wastes nothing, and wondered why we can&rsquo;t do the same?</p>
+      <p class="story-intro">{ab.storyIntro}</p>
       <div class="story-inner">
         <div class="story-text">
-          <p>In natural systems, there is no such thing as waste. All organic matter moves through closed-loop cycles where what one process discards becomes essential for another. The result is a self-sufficient balance that sustains everything around it.</p>
-          <p>Human systems often operate differently. We extract, consume, and discard linearly. So how do we construct systems that don&rsquo;t inevitably create the very problems they set out to solve?</p>
-          <p>I found the answer at Perma-Kapihan, an event held by the Philippine Permaculture Association, where I first heard of permaculture.</p>
+          {ab.storyParagraphs.map((p: string) => <p>{p}</p>)}
         </div>
         <div class="story-img">
           <img src="/images/wp/about-img-02.webp" alt="Permaculture journey" loading="lazy" />
@@ -36,18 +35,16 @@ import SiteFooter from '../components/SiteFooter.astro';
       <div class="why-inner">
         <div class="why-left">
           <div class="why-text-block">
-            <h2 class="section-h2">WHY THIS MATTERS TO ME</h2>
-            <p>Stepping foot into Bert&rsquo;s home felt like entering an entirely new universe. Seeing food, water, and nature orchestrated in a manner that worked harmoniously fundamentally redefined how I thought environments could be designed. The reciprocity I observed inspired me to understand not just the &ldquo;what&rdquo; of these systems, but also the &ldquo;why&rdquo; and &ldquo;how&rdquo;.</p>
-            <p>Exploring these ideas further, I discovered that the patterns I observed in Bert&rsquo;s home were echoed in the research I came across, with permaculture systems continuously sustaining notably higher biodiversity than conventional land use, improving environmental health like air quality, and redirecting waste streams away from disposal and towards repurposing.</p>
-            <p>Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attended a formal Permaculture Design Course in Nueva Ecija, hosted by Beert. This 7 day immersive course gave me the opportunity to understand all the mechanics that i had initially observed at Bert&rsquo;s house.</p>
+            <h2 class="section-h2">{ab.whyHeading}</h2>
+            {ab.whyParagraphs.map((p: string) => <p>{p}</p>)}
           </div>
           <div class="why-dark-box">
             <img src="/images/wp/about-img-05.png" alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
-            <p class="why-chart-caption">Permaculture composting can divert up to 77% of organic waste from landfills, reducing the organic waste proportion in landfill from about 35% to just 11%. This significant reduction helps decrease landfill volume and greenhouse gas emissions, promoting a more sustainable waste management system.</p>
+            <p class="why-chart-caption">{ab.whyChartCaption}</p>
           </div>
           <div class="why-thing-block">
-            <h2 class="section-h2">HERE&rsquo;S THE THING...</h2>
-            <p>As I went deeper into permaculture, I realized how overwhelming it can be to enter the field. The knowledge is vast, scattered across books, courses, research papers, and personal interpretations. For someone just starting out, it&rsquo;s difficult to know where to begin and how to translate abstract principles into something tangible.</p>
+            <h2 class="section-h2">{ab.heresthethingHeading}</h2>
+            <p>{ab.heresthethingLeft}</p>
           </div>
         </div>
         <div class="why-right">
@@ -56,11 +53,11 @@ import SiteFooter from '../components/SiteFooter.astro';
           </div>
           <div class="why-dark-box">
             <img src="/images/wp/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
-            <p class="why-bio-caption">Permaculture areas show three times more plant speciesthan conventional agriculture (Farming insider). Urban permaculture contributes to habitat restoration, supports pollinators, and increases soil microorganisms essential for nutrient cycling and decomposition</p>
+            <p class="why-bio-caption">{ab.whyBioCaption}</p>
           </div>
           <div class="why-thing-block">
-            <p>It was also there that a specific moment had a profound impact on me: a banana tree mulching area that was filled with layers upon layers of decomposing leaves and plant matter. Banana plants contended with each other and those that fell didn&rsquo;t vanish uselessly. They cycled back into the soil, enriching it and catalyzing the emergence of new plants. This organic nutrient-rich mulch that would typically contribute to municipal landfills instead became the foundation of soil regeneration.</p>
-            <p>All of this ultimately inspired Mycelium. The platform represents my attempt to translate the principles and lessons I&rsquo;ve experienced into something concrete, organized, accessible resource where curious minds can explore, learn, and apply holistic systems thinking. Creating Mycelium matters to me because it allows me to share the insights I&rsquo;ve gained, while making Permaculture less overwhelming for others starting out, just as I once was.</p>
+            <p>{ab.heresthethingRight1}</p>
+            <p>{ab.heresthethingRight2}</p>
           </div>
         </div>
       </div>
@@ -70,11 +67,8 @@ import SiteFooter from '../components/SiteFooter.astro';
   <section class="about-impact">
     <div class="impact-inner">
       <div class="impact-text">
-        <h2 class="section-h2">MEASURING IMPACT WITH RIGHT START DEVELOPMENT COMMUNITY CENTER</h2>
-        <p>Right Start Community Development Center supports children and families in Quezon City, Metro Manila, through education, creativity, and daily engagement.</p>
-        <p>Through Right Start, Mycelium observes what happens when permaculture knowledge enters a community as a way of thinking rather than a set of instructions. Instead of tracking just participation I also look at shifts in perspective: how people begin to see waste, food, land, and responsibility as parts of a connected system.</p>
-        <p>I&rsquo;ve observed that the earliest signs of impact often aren&rsquo;t physical. They appear in questions asked, in habits slowly adjusted, and in how individuals begin to explain these ideas to others. Over time, this knowledge compounds, passing between others and adapting to unique situations.</p>
-        <p>Right Start provides a living environment to observe this process. The community is not a test site, but an environment where learning and adaptation happen continuously. Measuring impact here means paying attention to growth that isn&rsquo;t always immediate or visible, but rooted deeply enough to last.</p>
+        <h2 class="section-h2">{ab.impactHeading}</h2>
+        {ab.impactParagraphs.map((p: string) => <p>{p}</p>)}
       </div>
       <div class="impact-imgs">
         <img src="/images/wp/about-img-06.png" alt="Right Start Community" loading="lazy" />
@@ -86,67 +80,53 @@ import SiteFooter from '../components/SiteFooter.astro';
 
   <section class="about-mission">
     <div class="section-inner">
-      <h3 class="section-eyebrow">OUR MISSION</h3>
-      <h2 class="section-h2 center">Permaculture knowledge is scattered.<br>So Mycelium organizes it.</h2>
-      <p class="mission-body">Mycelium connects scattered permaculture resources into one clear, organized, platform. Content is featured from partners like The Baganihan Collective, and contributions from The Philippine Permaculture Association (PPA). Mycelium keeps all its resources in real community implementation.</p>
+      <h3 class="section-eyebrow">{ab.missionEyebrow}</h3>
+      <h2 class="section-h2 center">{ab.missionHeading}</h2>
+      <p class="mission-body">{ab.missionBody}</p>
       <div class="mission-pillars">
-        <div class="pillar">
-          <h3 class="pillar-label">VIDEO LEARNING</h3>
-          <p class="pillar-body">Mycelium organizes permaculture videos into clear categories &ndash; from beginner introductions to podcasts and deeper philosophical discussions on regenerative systems.</p>
-        </div>
-        <div class="pillar">
-          <h3 class="pillar-label">EVENTS AND LIVE LEARNING</h3>
-          <p class="pillar-body">Mycelium connects learners to workshops and live seminars. These cover all the way from on-the-ground-training to discussions on indigenous site assessment, and resilient design.</p>
-        </div>
+        {ab.missionPillars.map((pillar: {label: string, body: string}) => (
+          <div class="pillar">
+            <h3 class="pillar-label">{pillar.label}</h3>
+            <p class="pillar-body">{pillar.body}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
   <section class="about-criteria">
     <div class="section-inner">
-      <h3 class="section-eyebrow center">OUR CRITERIA</h3>
-      <h2 class="section-h2 center">Three questions every resource must answer.</h2>
+      <h3 class="section-eyebrow center">{ab.criteriaEyebrow}</h3>
+      <h2 class="section-h2 center">{ab.criteriaHeading}</h2>
       <div class="criteria-grid">
-        <div class="criteria-item">
-          <span class="criteria-num">01</span>
-          <div>
-            <h3 class="criteria-q">Can a beginner understand it?</h3>
-            <p class="criteria-a">Mycelium organizes permaculture videos into clear categories &ndash; from beginner introductions to podcasts and deeper philosophical discussions on regenerative systems.</p>
+        {ab.criteriaItems.map((item: {number: string, question: string, answer: string}) => (
+          <div class="criteria-item">
+            <span class="criteria-num">{item.number}</span>
+            <div>
+              <h3 class="criteria-q">{item.question}</h3>
+              <p class="criteria-a">{item.answer}</p>
+            </div>
           </div>
-        </div>
-        <div class="criteria-item">
-          <span class="criteria-num">02</span>
-          <div>
-            <h3 class="criteria-q">Is this knowledge proven in practice?</h3>
-            <p class="criteria-a">Not just written about, but also practiced in an actual location. A resource passes this check if the knowledge it teaches has been applied somewhere real.</p>
-          </div>
-        </div>
-        <div class="criteria-item">
-          <span class="criteria-num">03</span>
-          <div>
-            <h3 class="criteria-q">Do we trust this source?</h3>
-            <p class="criteria-a">Content connected to our partner network holds accountability. When it&rsquo;s outside that network, we cross-check it against what our partners have taught in the field.</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>
 
   <section class="about-partners">
     <div class="section-inner">
-      <h3 class="section-eyebrow center">OUR PARTNERS</h3>
-      <h2 class="section-h2 center">The field organizations that keep us honest</h2>
-      <p class="partners-intro">Every resource and every claim is backed by people who have spent decades growing food, building communities, and practicing permaculture on the ground.</p>
+      <h3 class="section-eyebrow center">{ab.partnersEyebrow}</h3>
+      <h2 class="section-h2 center">{ab.partnersHeading}</h2>
+      <p class="partners-intro">{ab.partnersIntro}</p>
       <div class="partners-grid">
         <div class="partner-card">
           <img src="/images/wp/about-img-09.webp" alt="Baganihan Collective" loading="lazy" />
-          <h3 class="partner-name">Baganihan Collective</h3>
-          <p class="partner-desc">A network of permaculture practitioners, led by Hubert Posadas, working across six pilot communities in the Philippines. Their fieldwork, experiments, and local knowledge are documented and shared through Mycelium.</p>
+          <h3 class="partner-name">{ab.partners[0].name}</h3>
+          <p class="partner-desc">{ab.partners[0].description}</p>
         </div>
         <div class="partner-card">
           <img src="/images/wp/about-img-10.webp" alt="Philippine Permaculture Association" loading="lazy" />
-          <h3 class="partner-name">Philippine Permaculture Association</h3>
-          <p class="partner-desc">The national network advancing permaculture in the Philippine through education and community projects. PPA is led by Bert Peeters.</p>
+          <h3 class="partner-name">{ab.partners[1].name}</h3>
+          <p class="partner-desc">{ab.partners[1].description}</p>
         </div>
       </div>
     </div>

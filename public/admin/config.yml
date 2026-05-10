@@ -7,6 +7,90 @@ media_folder: public/images/cms
 public_folder: /images/cms
 
 collections:
+  - name: pages
+    label: Pages
+    files:
+      - name: homepage
+        label: Homepage
+        file: src/content/data/homepage.json
+        fields:
+          - { label: "Hero Heading", name: heroHeading, widget: string }
+          - { label: "Mission Heading", name: missionHeading, widget: string }
+          - { label: "Mission Body", name: missionBody, widget: text }
+          - { label: "Stats Eyebrow", name: statsEyebrow, widget: string }
+          - label: "Stats"
+            name: stats
+            widget: list
+            fields:
+              - { label: "Number", name: number, widget: string }
+              - { label: "Label", name: label, widget: string }
+          - { label: "Founder Heading", name: founderHeading, widget: string }
+          - { label: "Founder Body", name: founderBody, widget: text }
+          - { label: "How We Operate Heading", name: howOperateHeading, widget: string }
+          - { label: "How We Operate Subtext", name: howOperateSub, widget: text }
+          - label: "Operate Columns"
+            name: operateColumns
+            widget: list
+            fields:
+              - { label: "Title", name: title, widget: string }
+              - { label: "Body", name: body, widget: text }
+          - { label: "Newsletter Heading", name: newsletterHeading, widget: string }
+          - { label: "Newsletter Subtext", name: newsletterSub, widget: text }
+          - { label: "Newsletter Privacy Text", name: newsletterPrivacy, widget: string }
+      - name: about
+        label: About
+        file: src/content/data/about.json
+        fields:
+          - { label: "Hero Title", name: heroTitle, widget: string }
+          - { label: "Story Intro", name: storyIntro, widget: text }
+          - label: "Story Paragraphs"
+            name: storyParagraphs
+            widget: list
+            field: { label: "Paragraph", name: text, widget: text }
+          - { label: "Why This Matters Heading", name: whyHeading, widget: string }
+          - label: "Why Paragraphs"
+            name: whyParagraphs
+            widget: list
+            field: { label: "Paragraph", name: text, widget: text }
+          - { label: "Waste Chart Caption", name: whyChartCaption, widget: text }
+          - { label: "Biodiversity Caption", name: whyBioCaption, widget: text }
+          - { label: "Here's the Thing Heading", name: heresthethingHeading, widget: string }
+          - { label: "Here's the Thing (left column)", name: heresthethingLeft, widget: text }
+          - { label: "Here's the Thing (right, paragraph 1)", name: heresthethingRight1, widget: text }
+          - { label: "Here's the Thing (right, paragraph 2)", name: heresthethingRight2, widget: text }
+          - { label: "Impact Heading", name: impactHeading, widget: string }
+          - label: "Impact Paragraphs"
+            name: impactParagraphs
+            widget: list
+            field: { label: "Paragraph", name: text, widget: text }
+          - { label: "Mission Eyebrow", name: missionEyebrow, widget: string }
+          - { label: "Mission Heading", name: missionHeading, widget: string }
+          - { label: "Mission Body", name: missionBody, widget: text }
+          - label: "Mission Pillars"
+            name: missionPillars
+            widget: list
+            fields:
+              - { label: "Label", name: label, widget: string }
+              - { label: "Body", name: body, widget: text }
+          - { label: "Criteria Eyebrow", name: criteriaEyebrow, widget: string }
+          - { label: "Criteria Heading", name: criteriaHeading, widget: string }
+          - label: "Criteria Items"
+            name: criteriaItems
+            widget: list
+            fields:
+              - { label: "Number", name: number, widget: string }
+              - { label: "Question", name: question, widget: string }
+              - { label: "Answer", name: answer, widget: text }
+          - { label: "Partners Eyebrow", name: partnersEyebrow, widget: string }
+          - { label: "Partners Heading", name: partnersHeading, widget: string }
+          - { label: "Partners Intro", name: partnersIntro, widget: text }
+          - label: "Partners"
+            name: partners
+            widget: list
+            fields:
+              - { label: "Name", name: name, widget: string }
+              - { label: "Description", name: description, widget: text }
+
   - name: events
     label: Events
     folder: src/content/events

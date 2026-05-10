@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import videos from '../../public/data/videos.json';
+import hp from '../content/data/homepage.json';
 
 const featuredVideos = videos.slice(0, 3);
 ---
@@ -12,7 +13,7 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="hero">
     <div class="hero-inner">
-      <h1 class="hero-heading">What if it&rsquo;s time we look down<br>to move forward?</h1>
+      <h1 class="hero-heading">{hp.heroHeading}</h1>
       <div class="hero-images">
         <img src="/images/wp/homepage-img-01.webp" alt="" class="hi" loading="eager" />
         <img src="/images/wp/homepage-img-02.webp" alt="" class="hi" loading="eager" />
@@ -24,18 +25,18 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="mission" id="start-your-journey">
     <div class="section-inner mission-inner">
-      <h2 class="section-heading mission-heading">Building food security starts with education</h2>
-      <p class="mission-body">Our goals start with confronting the issue of finding clear and uncomplicated permaculture education. The chaos of scattered resources, conflicting advice, and no clear starting point often turn eager learners away. Mycelium exists to bridge these gaps. Similar to mycelial systems which connect ecosystems underground, the platform links scattered knowledge together to lower the barrier of learning. Mycelium strengthens permaculture education at its roots, encouraging informed action to support the overarching goal of addressing food insecurity.</p>
+      <h2 class="section-heading mission-heading">{hp.missionHeading}</h2>
+      <p class="mission-body">{hp.missionBody}</p>
     </div>
   </section>
 
   <section class="stats">
     <div class="section-inner">
-      <span class="eyebrow-label light">Mycelium Resources and Content to Date</span>
+      <span class="eyebrow-label light">{hp.statsEyebrow}</span>
       <div class="stats-row">
-        <div class="stat-item"><span class="stat-number">240</span><span class="stat-label">Resources Curated</span></div>
-        <div class="stat-item"><span class="stat-number">600+</span><span class="stat-label">Hours of Organized Content</span></div>
-        <div class="stat-item"><span class="stat-number">1</span><span class="stat-label">Community in Active Implementation</span></div>
+        {hp.stats.map(s => (
+          <div class="stat-item"><span class="stat-number">{s.number}</span><span class="stat-label">{s.label}</span></div>
+        ))}
       </div>
     </div>
   </section>
@@ -46,8 +47,8 @@ const featuredVideos = videos.slice(0, 3);
         <img src="/images/wp/homepage-img-09.webp" alt="Founder" loading="lazy" />
       </div>
       <div class="founder-text">
-        <h2 class="section-heading light">Why did I build Mycelium at 16?</h2>
-        <p class="founder-body">I built Mycelium at 16 because I wanted uncomplicated permaculture guidance. I got exhausted finding conflicting advice and resources that didn't apply to me. So I spent the next year building a platform I couldn't find. With the guidance I got from the Philippine Permaculture Association and hours of curating content, Mycelium is now what I wish existed when I was searching alone at 2 am with too many tabs to count.</p>
+        <h2 class="section-heading light">{hp.founderHeading}</h2>
+        <p class="founder-body">{hp.founderBody}</p>
         <a href="/about" class="btn-underline">READ MY FULL JOURNEY</a>
       </div>
     </div>
@@ -56,20 +57,20 @@ const featuredVideos = videos.slice(0, 3);
   <section class="how-operate">
     <div class="section-inner">
       <div class="operate-header">
-        <h2 class="section-heading light center">How We Operate</h2>
-        <p class="operate-sub">We prioritize transparency with all our users, we want you to know how we create resources and build this platform.</p>
+        <h2 class="section-heading light center">{hp.howOperateHeading}</h2>
+        <p class="operate-sub">{hp.howOperateSub}</p>
       </div>
       <div class="operate-grid">
         <div class="operate-col">
           <div class="operate-icon"><img src="/images/wp/homepage-img-05.png" alt="" loading="lazy" /></div>
-          <h3 class="operate-title">Zero Gatekeeping</h3>
-          <p class="operate-body">100% Free, forever. No paywalls, no ads interrupting your learning. We believe permaculture knowledge should be accessible to everyone, regardless of income or location.</p>
+          <h3 class="operate-title">{hp.operateColumns[0].title}</h3>
+          <p class="operate-body">{hp.operateColumns[0].body}</p>
           <a href="/about" class="btn-underline">OUR MISSION</a>
         </div>
         <div class="operate-col">
           <div class="operate-icon"><img src="/images/wp/homepage-img-06.png" alt="" loading="lazy" /></div>
-          <h3 class="operate-title">We verify every resource</h3>
-          <p class="operate-body">We personally review every video, course, and article before adding it to Mycelium. Each resource is checked thoroughly, prioritizing beginner-friendliness.</p>
+          <h3 class="operate-title">{hp.operateColumns[1].title}</h3>
+          <p class="operate-body">{hp.operateColumns[1].body}</p>
           <a href="/about" class="btn-underline">SEE OUR CRITERIA</a>
         </div>
         <div class="operate-col">
@@ -80,8 +81,8 @@ const featuredVideos = videos.slice(0, 3);
               <img src="/images/sanghiblayan.jpg" alt="Sanghiblayan Collective" class="partner-sanghiblayan-logo" loading="lazy" />
             </div>
           </div>
-          <h3 class="operate-title">We work with expert partners</h3>
-          <p class="operate-body">Our resources are credible and field-tested, shaped by indigenous permaculture from the Baganihan Collective, content contributions from the PPA, and medicinal plant knowledge from the Sanghiblayan Collective.</p>
+          <h3 class="operate-title">{hp.operateColumns[2].title}</h3>
+          <p class="operate-body">{hp.operateColumns[2].body}</p>
           <a href="/about" class="btn-underline">LEARN MORE</a>
         </div>
       </div>
@@ -196,15 +197,15 @@ const featuredVideos = videos.slice(0, 3);
     <div class="section-inner">
       <div class="newsletter-card">
         <div class="newsletter-left">
-          <h2 class="newsletter-heading">Get Monthly Permaculture Resources</h2>
-          <p class="newsletter-sub">Curated resources, seasonal tips, and permaculture news delivered to your inbox. No spam, unsubscribe anytime.</p>
+          <h2 class="newsletter-heading">{hp.newsletterHeading}</h2>
+          <p class="newsletter-sub">{hp.newsletterSub}</p>
         </div>
         <div class="newsletter-right">
           <form class="newsletter-form" action="https://mycelium-learn.com/newsletter/" method="get">
             <input type="email" placeholder="Enter your email" class="newsletter-input" />
             <button type="submit" class="btn-primary small">Subscribe</button>
           </form>
-          <p class="newsletter-privacy">We respect your privacy. Unsubscribe anytime.</p>
+          <p class="newsletter-privacy">{hp.newsletterPrivacy}</p>
         </div>
       </div>
     </div>
