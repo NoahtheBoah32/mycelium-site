@@ -1,0 +1,23 @@
+fragment EventParts on Event {
+  __typename
+  title
+  template
+  schedule
+  date
+  time
+  location
+  notes
+  isOnline
+  isFree
+  isRecurring
+  description
+  ctaLabel
+  ctaUrl
+  image
+  sortOrder
+  speakerName
+  speakerRole
+  speakerBio
+  organizer
+  organizerLogo
+}

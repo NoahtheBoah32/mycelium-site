@@ -2,6 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { getCollection } from 'astro:content';
+
+const allEvents = await getCollection('events');
+const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOrder ?? 0));
 ---
 
 <BaseLayout title="Events - Mycelium">
@@ -32,6 +36,7 @@ import SiteFooter from '../components/SiteFooter.astro';
     <div class="ev-vine ev-vine-right" aria-hidden="true">
       <img src="/images/vine.png" alt="" />
     </div>
+
     <div class="ev-section-inner">
 
       <div class="ev-label-row">
@@ -40,114 +45,148 @@ import SiteFooter from '../components/SiteFooter.astro';
         <span class="ev-label-line"></span>
       </div>
 
-      <!-- Card 1: Perma-Kapihan -->
-      <div class="ev-card ev-card-kapihan">
-        <div class="ev-card-body">
-          <div class="ev-card-badge-row">
-            <span class="ev-badge ev-badge-recurring">↺ RECURRING</span>
-            <span class="ev-badge ev-badge-free">FREE ENTRY</span>
-            <span class="ev-badge ev-badge-location">📍 Marikina</span>
-          </div>
-          <p class="ev-card-schedule">Every Sunday · Except Last Sunday of Month</p>
-          <h2 class="ev-card-title">Perma-Kapihan<br><em>sa Eco-house</em></h2>
-          <p class="ev-card-desc">An informal Sunday gathering where permaculture enthusiasts connect over coffee, share ideas, and explore how design principles shape the way we live. Open to all — beginners welcome.</p>
+      {events.map(ev => {
+        const d = ev.data;
+        const dateDay = d.date ? d.date.getDate().toString() : '';
+        const dateMo = d.date
+          ? `${d.date.toLocaleString('en-US', { month: 'short' }).toUpperCase()} ${d.date.getFullYear()}`
+          : '';
+        const speakerInitial = d.speakerName?.charAt(0) ?? '?';
 
-          <div class="ev-card-details">
-            <div class="ev-detail">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <span>10:00 AM – 2:00 PM</span>
-            </div>
-            <div class="ev-detail">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
-              <span>PPA Eco-house, Hereford St., Marikina</span>
-            </div>
-            <div class="ev-detail">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6h12M5 1v2M11 1v2M3 3h10a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <span>Free Coffee &amp; Snacks · Bring merienda to share (optional)</span>
-            </div>
-          </div>
-
-          <a href="https://mycelium-learn.com/events/" target="_blank" rel="noopener" class="ev-cta ev-cta-primary">
-            Register Here
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-        <div class="ev-card-img-wrap">
-          <img src="/images/wp/event-Perma-Kapihan-sa-Eco-house.webp" alt="Perma-Kapihan sa Eco-house" loading="lazy" />
-          <div class="ev-card-img-overlay"></div>
-          <div class="ev-card-img-tag">
-            <span class="ev-img-tag-num">☕</span>
-            <span class="ev-img-tag-label">Weekly Gathering</span>
-          </div>
-        </div>
-      </div>
-
-<!-- Card 2: Baganihan Collective — Seed Sovereignty Talk -->
-      <div class="ev-card ev-card-bag">
-        <!-- Background blobs (needed for glass to read) -->
-        <div class="ev-bag-bg" aria-hidden="true">
-          <div class="ev-bag-blob ev-bag-blob-1"></div>
-          <div class="ev-bag-blob ev-bag-blob-2"></div>
-          <div class="ev-bag-blob ev-bag-blob-3"></div>
-        </div>
-        <div class="ev-card-body ev-bag-body">
-          <div class="ev-card-badge-row">
-            <span class="ev-badge ev-badge-online">🌐 ONLINE</span>
-            <span class="ev-badge ev-badge-free">FREE ENTRY</span>
-            <span class="ev-badge ev-badge-talk">TALK</span>
-          </div>
-          <p class="ev-card-schedule ev-bag-schedule">Friday, May 23, 2026 · 8:00 PM PHT</p>
-          <h2 class="ev-card-title ev-bag-title">A Talk on the Importance<br>and Need for<br><em>Seed Sovereignty</em></h2>
-
-          <div class="ev-card-details ev-bag-details">
-            <div class="ev-detail">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <span>8:00 PM · Philippine Standard Time</span>
-            </div>
-            <div class="ev-detail">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6h14" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="9.5" r="1" fill="currentColor"/></svg>
-              <span>Online — link sent upon registration</span>
-            </div>
-          </div>
-
-          <!-- Speaker block -->
-          <div class="ev-speaker-block">
-            <div class="ev-speaker-header">
-              <div class="ev-speaker-avatar">K</div>
-              <div class="ev-speaker-meta">
-                <span class="ev-speaker-name">K Lee Hizola</span>
-                <span class="ev-speaker-role">Featured Speaker</span>
+        if (d.template === 'kapihan') return (
+          <div class="ev-card ev-card-kapihan">
+            <div class="ev-card-body">
+              <div class="ev-card-badge-row">
+                {d.isRecurring && <span class="ev-badge ev-badge-recurring">↺ RECURRING</span>}
+                {d.isFree && <span class="ev-badge ev-badge-free">FREE ENTRY</span>}
+                {d.location && !d.isOnline && <span class="ev-badge ev-badge-location">📍 {d.location.split(',')[0]}</span>}
               </div>
+              {d.schedule && <p class="ev-card-schedule">{d.schedule}</p>}
+              <h2 class="ev-card-title">{d.title}</h2>
+              {d.description && <p class="ev-card-desc">{d.description}</p>}
+
+              <div class="ev-card-details">
+                {d.time && (
+                  <div class="ev-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    <span>{d.time}</span>
+                  </div>
+                )}
+                {d.location && (
+                  <div class="ev-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <span>{d.location}</span>
+                  </div>
+                )}
+                {d.notes && (
+                  <div class="ev-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6h12M5 1v2M11 1v2M3 3h10a1 1 0 011 1v9a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    <span set:html={d.notes.replace('&', '&amp;')} />
+                  </div>
+                )}
+              </div>
+
+              {d.ctaUrl && (
+                <a href={d.ctaUrl} target="_blank" rel="noopener" class="ev-cta ev-cta-primary">
+                  {d.ctaLabel ?? 'Learn More'}
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              )}
             </div>
-            <details class="ev-bio-details">
-              <summary class="ev-bio-toggle">About the Speaker</summary>
-              <p class="ev-bio-text">K Lee Hizola is a seed-saving practitioner and food sovereignty advocate based in the Philippines. With years of hands-on experience working alongside farming communities, he bridges traditional seed-keeping practices with contemporary food systems thinking — making the case for seeds as living commons rather than commodities.</p>
-            </details>
+            {d.image && (
+              <div class="ev-card-img-wrap">
+                <img src={d.image} alt={d.title} loading="lazy" />
+                <div class="ev-card-img-overlay"></div>
+                <div class="ev-card-img-tag">
+                  <span class="ev-img-tag-num">☕</span>
+                  <span class="ev-img-tag-label">Weekly Gathering</span>
+                </div>
+              </div>
+            )}
           </div>
+        );
 
-          <a href="#" class="ev-cta ev-cta-bag">
-            Reserve Your Spot
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
+        return (
+          <div class="ev-card ev-card-bag">
+            <div class="ev-bag-bg" aria-hidden="true">
+              <div class="ev-bag-blob ev-bag-blob-1"></div>
+              <div class="ev-bag-blob ev-bag-blob-2"></div>
+              <div class="ev-bag-blob ev-bag-blob-3"></div>
+            </div>
+            <div class="ev-card-body ev-bag-body">
+              <div class="ev-card-badge-row">
+                {d.isOnline && <span class="ev-badge ev-badge-online">🌐 ONLINE</span>}
+                {d.isFree && <span class="ev-badge ev-badge-free">FREE ENTRY</span>}
+                <span class="ev-badge ev-badge-talk">TALK</span>
+              </div>
+              {d.schedule && <p class="ev-card-schedule ev-bag-schedule">{d.schedule}</p>}
+              <h2 class="ev-card-title ev-bag-title">{d.title}</h2>
 
-        <!-- Right: Logo panel -->
-        <div class="ev-bag-logo-panel">
-          <div class="ev-bag-logo-wrap">
-            <img src="/images/baganihan-logo.jpg" alt="Baganihan Collective" class="ev-bag-logo" />
-          </div>
-          <div class="ev-bag-org-info">
-            <span class="ev-bag-presents">PRESENTED BY</span>
-            <span class="ev-bag-org-name">Baganihan Collective</span>
-          </div>
-          <div class="ev-bag-date-block">
-            <span class="ev-bag-date-num">23</span>
-            <span class="ev-bag-date-mo">MAY 2026</span>
-          </div>
-        </div>
-      </div>
+              <div class="ev-card-details ev-bag-details">
+                {d.time && (
+                  <div class="ev-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                    <span>{d.time}</span>
+                  </div>
+                )}
+                {d.location && (
+                  <div class="ev-detail">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6h14" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="9.5" r="1" fill="currentColor"/></svg>
+                    <span>{d.location}</span>
+                  </div>
+                )}
+              </div>
 
-<!-- Card 3: Coming Soon -->
+              {d.speakerName && (
+                <div class="ev-speaker-block">
+                  <div class="ev-speaker-header">
+                    <div class="ev-speaker-avatar">{speakerInitial}</div>
+                    <div class="ev-speaker-meta">
+                      <span class="ev-speaker-name">{d.speakerName}</span>
+                      {d.speakerRole && <span class="ev-speaker-role">{d.speakerRole}</span>}
+                    </div>
+                  </div>
+                  {d.speakerBio && (
+                    <details class="ev-bio-details">
+                      <summary class="ev-bio-toggle">About the Speaker</summary>
+                      <p class="ev-bio-text">{d.speakerBio}</p>
+                    </details>
+                  )}
+                </div>
+              )}
+
+              {d.ctaUrl && (
+                <a href={d.ctaUrl} class="ev-cta ev-cta-bag">
+                  {d.ctaLabel ?? 'Reserve Your Spot'}
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              )}
+            </div>
+
+            <div class="ev-bag-logo-panel">
+              {d.organizerLogo && (
+                <div class="ev-bag-logo-wrap">
+                  <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-bag-logo" />
+                </div>
+              )}
+              {d.organizer && (
+                <div class="ev-bag-org-info">
+                  <span class="ev-bag-presents">PRESENTED BY</span>
+                  <span class="ev-bag-org-name">{d.organizer}</span>
+                </div>
+              )}
+              {dateDay && (
+                <div class="ev-bag-date-block">
+                  <span class="ev-bag-date-num">{dateDay}</span>
+                  <span class="ev-bag-date-mo">{dateMo}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+
+      <!-- Coming Soon -->
       <div class="ev-card ev-card-soon">
         <div class="ev-soon-bg">
           <img src="/images/wp/event-comingsoon-bg.webp" alt="" loading="lazy" class="ev-soon-bg-img" />
@@ -155,7 +194,6 @@ import SiteFooter from '../components/SiteFooter.astro';
         </div>
 
         <div class="ev-soon-content">
-          <!-- Left: ghosted fake event details to sell "locked" feel -->
           <div class="ev-soon-ghost">
             <div class="ev-soon-ghost-badges">
               <span class="ev-soon-ghost-pill"></span>
@@ -172,7 +210,6 @@ import SiteFooter from '../components/SiteFooter.astro';
             <div class="ev-soon-ghost-cta"></div>
           </div>
 
-          <!-- Right: glassmorphism lock panel -->
           <div class="ev-soon-glass">
             <div class="ev-soon-lock">🔒</div>
             <p class="ev-soon-eyebrow">GOOD THINGS GROW SLOWLY</p>
@@ -211,9 +248,6 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-section-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
 
 /* ─── Vines ──────────────────────────────────────────────── */
-/* vine image is 1024×512 horizontal. rotating 90° makes it run vertically.
-   width here = how tall the vine appears; after rotation visual width = width * 512/1024 = width/2.
-   we push it almost fully off-screen so only ~55px of leaf tips graze the card edge. */
 .ev-vine { position: absolute; pointer-events: none; z-index: 0; }
 .ev-vine img { width: 100%; mix-blend-mode: multiply; opacity: 0.88; display: block; }
 .ev-vine-left { width: 1000px; top: 50%; left: -560px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
@@ -227,7 +261,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 /* ─── Card Shell ─────────────────────────────────────────── */
 .ev-card { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.12); }
 
-/* ─── Card 1: Perma-Kapihan ──────────────────────────────── */
+/* ─── Card: Perma-Kapihan ────────────────────────────────── */
 .ev-card-kapihan { display: grid; grid-template-columns: 1fr 420px; min-height: 500px; background: #1C2E18; }
 
 .ev-card-body { padding: 52px 56px; display: flex; flex-direction: column; gap: 0; }
@@ -260,21 +294,19 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-img-tag-num { font-size: 1.4rem; line-height: 1; }
 .ev-img-tag-label { font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
 
-/* ─── Card 2: Baganihan Seed Sovereignty Talk ────────────── */
+/* ─── Card: Baganihan Glass Talk ─────────────────────────── */
 .ev-card-bag {
   position: relative; isolation: isolate;
   display: grid; grid-template-columns: 1fr 320px;
   background: #0F0D08; overflow: hidden;
 }
 
-/* Gradient blobs behind the glass */
 .ev-bag-bg { position: absolute; inset: 0; pointer-events: none; }
 .ev-bag-blob { position: absolute; border-radius: 50%; filter: blur(72px); opacity: 0.55; }
 .ev-bag-blob-1 { width: 420px; height: 420px; background: radial-gradient(circle, #C47A52 0%, transparent 70%); top: -80px; left: -60px; }
 .ev-bag-blob-2 { width: 380px; height: 380px; background: radial-gradient(circle, #E8A84A 0%, transparent 70%); bottom: -100px; right: 200px; opacity: 0.4; }
 .ev-bag-blob-3 { width: 300px; height: 300px; background: radial-gradient(circle, #3D5C30 0%, transparent 70%); top: 40px; right: 60px; opacity: 0.5; }
 
-/* Glass body panel */
 .ev-bag-body {
   position: relative; z-index: 1;
   padding: 40px 44px; display: flex; flex-direction: column; gap: 0;
@@ -291,7 +323,6 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-bag-title { font-family: var(--font-lora); font-size: clamp(1.7rem, 2.5vw, 2.4rem); font-weight: 400; color: #F5EDD8; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
 .ev-bag-title em { font-style: italic; color: #F0C97A; }
 
-/* Glass detail block */
 .ev-bag-details {
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -301,7 +332,6 @@ import SiteFooter from '../components/SiteFooter.astro';
 .ev-bag-details .ev-detail { color: rgba(255,255,255,0.72); }
 .ev-bag-details .ev-detail svg { color: #C47A52; }
 
-/* Speaker glass card */
 .ev-speaker-block {
   margin-top: 14px; margin-bottom: 16px;
   background: rgba(255,255,255,0.04);
@@ -336,7 +366,6 @@ details[open] .ev-bio-toggle::after { content: '−'; }
 }
 .ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
 
-/* Right glass logo panel */
 .ev-bag-logo-panel {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
@@ -366,45 +395,7 @@ details[open] .ev-bio-toggle::after { content: '−'; }
 .ev-bag-date-num { font-family: var(--font-lora); font-size: 2.4rem; font-weight: 400; color: #E8A84A; line-height: 1; text-shadow: 0 0 20px rgba(232,168,74,0.5); }
 .ev-bag-date-mo { font-family: var(--font-inter); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,168,74,0.7); }
 
-/* ─── Card 2: Camp 2026 ──────────────────────────────────── */
-.ev-card-camp { position: relative; min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; }
-
-.ev-camp-bg { position: absolute; inset: 0; }
-.ev-camp-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ev-camp-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(42,18,4,0.97) 0%, rgba(62,30,6,0.88) 38%, rgba(30,12,2,0.65) 100%); }
-
-.ev-camp-content { position: relative; z-index: 1; display: grid; grid-template-columns: 260px 1fr; gap: 0; width: 100%; }
-
-.ev-camp-left { padding: 52px 40px 52px 52px; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 32px; justify-content: center; }
-
-.ev-camp-date-block { display: flex; flex-direction: column; gap: 4px; }
-.ev-camp-month-label { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; color: #C8A01A; text-transform: uppercase; }
-.ev-camp-days-big { font-family: var(--font-lora); font-style: italic; font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 400; color: #fff; line-height: 1; letter-spacing: -0.03em; }
-.ev-camp-dow-label { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
-
-.ev-camp-meta-block { display: flex; flex-direction: column; gap: 14px; }
-.ev-camp-meta-item { display: flex; align-items: flex-start; gap: 10px; font-family: var(--font-outfit); font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
-.ev-camp-meta-item svg { flex-shrink: 0; margin-top: 2px; color: #8aaa7a; }
-.ev-camp-meta-item strong { color: #fff; }
-
-.ev-camp-right { padding: 52px 52px 52px 48px; display: flex; flex-direction: column; gap: 0; justify-content: center; }
-
-.ev-camp-tags-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.ev-camp-pill { font-family: var(--font-inter); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.18); }
-
-.ev-camp-title { font-family: var(--font-lora); font-size: clamp(2.2rem, 3.5vw, 3.2rem); font-weight: 400; color: #fff; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 8px; }
-.ev-camp-title em { font-style: italic; color: #b8d4a8; }
-
-.ev-camp-org { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: #C8A01A; text-transform: uppercase; margin-bottom: 8px; }
-.ev-camp-tagline { font-family: var(--font-outfit); font-size: 1rem; color: rgba(255,255,255,0.55); margin-bottom: 24px; letter-spacing: 0.04em; }
-
-.ev-camp-activities { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-.ev-activity { font-family: var(--font-outfit); font-size: 0.8rem; color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 6px 12px; }
-
-.ev-cta-camp { background: #fff; color: #1a1400; }
-.ev-cta-camp:hover { background: #f0ece0; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-
-/* ─── Card 3: Coming Soon ────────────────────────────────── */
+/* ─── Coming Soon ────────────────────────────────────────── */
 .ev-card-soon { position: relative; min-height: 480px; display: flex; align-items: stretch; overflow: hidden; isolation: isolate; }
 
 .ev-soon-bg { position: absolute; inset: 0; }
@@ -413,7 +404,6 @@ details[open] .ev-bio-toggle::after { content: '−'; }
 
 .ev-soon-content { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 480px; width: 100%; }
 
-/* Ghost left side */
 .ev-soon-ghost { padding: 52px 56px; display: flex; flex-direction: column; gap: 14px; filter: blur(5px); opacity: 0.22; pointer-events: none; }
 .ev-soon-ghost-badges { display: flex; gap: 8px; }
 .ev-soon-ghost-pill { height: 24px; width: 90px; background: rgba(255,255,255,0.35); border-radius: 50px; }
@@ -426,12 +416,10 @@ details[open] .ev-bio-toggle::after { content: '−'; }
 .ev-soon-ghost-body.short { width: 70%; }
 .ev-soon-ghost-cta { height: 44px; width: 160px; background: rgba(200,160,26,0.5); border-radius: 8px; margin-top: 8px; }
 
-/* Glass right side */
 .ev-soon-glass {
   margin: 32px; border-radius: 16px;
   background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.15);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; padding: 48px 40px; gap: 0;
@@ -453,9 +441,6 @@ details[open] .ev-bio-toggle::after { content: '−'; }
   .ev-bag-logo-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); flex-direction: row; justify-content: center; gap: 32px; padding: 28px 32px; }
   .ev-bag-blob-1 { width: 300px; height: 300px; top: -40px; left: -40px; }
   .ev-bag-blob-2 { width: 260px; height: 260px; bottom: -60px; right: 80px; }
-  .ev-camp-content { grid-template-columns: 1fr; }
-  .ev-camp-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 40px 32px 32px; }
-  .ev-camp-right { padding: 32px; }
   .ev-soon-content { grid-template-columns: 1fr; }
   .ev-soon-ghost { display: none; }
   .ev-soon-glass { margin: 24px; padding: 40px 28px; }
@@ -465,8 +450,6 @@ details[open] .ev-bio-toggle::after { content: '−'; }
   .ev-hero { padding: 56px 20px 48px; }
   .ev-section { padding: 48px 20px 64px; }
   .ev-card-body { padding: 32px 24px; }
-  .ev-camp-left { padding: 32px 24px 24px; }
-  .ev-camp-right { padding: 24px; }
-  .ev-camp-days-big { font-size: 3.5rem; }
+  .ev-bag-body { padding: 28px 24px; }
 }
 </style>

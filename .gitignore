@@ -1,5 +1,8 @@
 # build output
 dist/
+
+# tina admin UI (generated at Vercel build time by tinacms build)
+public/admin/
 # generated types
 .astro/
 
