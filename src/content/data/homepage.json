@@ -14,9 +14,18 @@
   "stats": {
     "eyebrow": "Mycelium Resources and Content to Date",
     "items": [
-      { "number": "240", "label": "Resources Curated" },
-      { "number": "600+", "label": "Hours of Organized Content" },
-      { "number": "1", "label": "Community in Active Implementation" }
+      {
+        "number": "240",
+        "label": "Resources Curated"
+      },
+      {
+        "number": "600+",
+        "label": "Hours of Organized Content"
+      },
+      {
+        "number": "1",
+        "label": "Community in Active Implementation"
+      }
     ]
   },
   "founder": {
@@ -40,7 +49,7 @@
       },
       {
         "title": "We work with expert partners",
-        "body": "Our resources are credible and field-tested, shaped by indigenous permaculture from the Baganihan Collective, content contributions from the PPA, and medicinal plant knowledge from the Sanghiblayan Collective.",
+        "body": "Our resources are credible and field-tested, shaped by indigenous permaculture from the Baganihan Collective, content contributions from the Philippine Permaculture Association (PPA), and medicinal plant knowledge from the Sanghiblayan Collective.",
         "partnersImage": "/images/wp/homepage-img-10.webp",
         "sanghiblayanImage": "/images/sanghiblayan.jpg"
       }
