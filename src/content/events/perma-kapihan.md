@@ -12,5 +12,5 @@ description: "An informal Sunday gathering where permaculture enthusiasts connec
 ctaLabel: "Register Here"
 ctaUrl: "https://mycelium-learn.com/events/"
 image: "/images/wp/event-Perma-Kapihan-sa-Eco-house.webp"
-sortOrder: 1
+sortOrder: 99
 ---
