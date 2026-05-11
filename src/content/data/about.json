@@ -1,6 +1,8 @@
 {
+  "heroImage": "/images/wp/about-img-hb.webp",
   "heroTitle": "Mycelium connects what grows beneath the surface",
   "storyIntro": "Have you ever wondered why nature wastes nothing, and wondered why we can't do the same?",
+  "storyImage": "/images/wp/about-img-02.webp",
   "storyParagraphs": [
     "In natural systems, there is no such thing as waste. All organic matter moves through closed-loop cycles where what one process discards becomes essential for another. The result is a self-sufficient balance that sustains everything around it.",
     "Human systems often operate differently. We extract, consume, and discard linearly. So how do we construct systems that don't inevitably create the very problems they set out to solve?",
@@ -12,7 +14,10 @@
     "Exploring these ideas further, I discovered that the patterns I observed in Bert's home were echoed in the research I came across, with permaculture systems continuously sustaining notably higher biodiversity than conventional land use, improving environmental health like air quality, and redirecting waste streams away from disposal and towards repurposing.",
     "Falling into this rabbit hole of holism and seeing their real-world impact compelled me to attended a formal Permaculture Design Course in Nueva Ecija, hosted by Beert. This 7 day immersive course gave me the opportunity to understand all the mechanics that i had initially observed at Bert's house."
   ],
+  "whyChartImage": "/images/wp/about-img-05.png",
   "whyChartCaption": "Permaculture composting can divert up to 77% of organic waste from landfills, reducing the organic waste proportion in landfill from about 35% to just 11%. This significant reduction helps decrease landfill volume and greenhouse gas emissions, promoting a more sustainable waste management system.",
+  "whyLandscapeImage": "/images/wp/about-img-03.png",
+  "whyBioImage": "/images/wp/about-img-04.png",
   "whyBioCaption": "Permaculture areas show three times more plant species than conventional agriculture (Farming insider). Urban permaculture contributes to habitat restoration, supports pollinators, and increases soil microorganisms essential for nutrient cycling and decomposition.",
   "heresthethingHeading": "HERE'S THE THING...",
   "heresthethingLeft": "As I went deeper into permaculture, I realized how overwhelming it can be to enter the field. The knowledge is vast, scattered across books, courses, research papers, and personal interpretations. For someone just starting out, it's difficult to know where to begin and how to translate abstract principles into something tangible.",
@@ -24,6 +29,11 @@
     "Through Right Start, Mycelium observes what happens when permaculture knowledge enters a community as a way of thinking rather than a set of instructions. Instead of tracking just participation I also look at shifts in perspective: how people begin to see waste, food, land, and responsibility as parts of a connected system.",
     "I've observed that the earliest signs of impact often aren't physical. They appear in questions asked, in habits slowly adjusted, and in how individuals begin to explain these ideas to others. Over time, this knowledge compounds, passing between others and adapting to unique situations.",
     "Right Start provides a living environment to observe this process. The community is not a test site, but an environment where learning and adaptation happen continuously. Measuring impact here means paying attention to growth that isn't always immediate or visible, but rooted deeply enough to last."
+  ],
+  "impactImages": [
+    "/images/wp/about-img-06.png",
+    "/images/wp/about-img-07.png",
+    "/images/wp/about-img-08.png"
   ],
   "missionEyebrow": "OUR MISSION",
   "missionHeading": "Permaculture knowledge is scattered. So Mycelium organizes it.",
@@ -63,11 +73,13 @@
   "partners": [
     {
       "name": "Baganihan Collective",
-      "description": "A network of permaculture practitioners, led by Hubert Posadas, working across six pilot communities in the Philippines. Their fieldwork, experiments, and local knowledge are documented and shared through Mycelium."
+      "description": "A network of permaculture practitioners, led by Hubert Posadas, working across six pilot communities in the Philippines. Their fieldwork, experiments, and local knowledge are documented and shared through Mycelium.",
+      "image": "/images/wp/about-img-09.webp"
     },
     {
       "name": "Philippine Permaculture Association",
-      "description": "The national network advancing permaculture in the Philippine through education and community projects. PPA is led by Bert Peeters."
+      "description": "The national network advancing permaculture in the Philippine through education and community projects. PPA is led by Bert Peeters.",
+      "image": "/images/wp/about-img-10.webp"
     }
   ]
 }

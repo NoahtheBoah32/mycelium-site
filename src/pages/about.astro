@@ -8,7 +8,7 @@ import ab from '../content/data/about.json';
 <BaseLayout title="About - Mycelium">
   <SiteNav overlay={true} />
 
-  <section class="about-hero">
+  <section class="about-hero" style={`background-image: url('${ab.heroImage}')`}>
     <div class="section-inner">
       <a href="#how-it-started" class="about-hero-link">READ THE FULL JOURNEY</a>
       <h1 class="about-title">{ab.heroTitle}</h1>
@@ -24,7 +24,7 @@ import ab from '../content/data/about.json';
           {ab.storyParagraphs.map((p: string) => <p>{p}</p>)}
         </div>
         <div class="story-img">
-          <img src="/images/wp/about-img-02.webp" alt="Permaculture journey" loading="lazy" />
+          <img src={ab.storyImage} alt="Permaculture journey" loading="lazy" />
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@ import ab from '../content/data/about.json';
             {ab.whyParagraphs.map((p: string) => <p>{p}</p>)}
           </div>
           <div class="why-dark-box">
-            <img src="/images/wp/about-img-05.png" alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
+            <img src={ab.whyChartImage} alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
             <p class="why-chart-caption">{ab.whyChartCaption}</p>
           </div>
           <div class="why-thing-block">
@@ -49,10 +49,10 @@ import ab from '../content/data/about.json';
         </div>
         <div class="why-right">
           <div class="why-landscape-wrap">
-            <img src="/images/wp/about-img-03.png" alt="Permaculture landscape" loading="lazy" class="why-landscape" />
+            <img src={ab.whyLandscapeImage} alt="Permaculture landscape" loading="lazy" class="why-landscape" />
           </div>
           <div class="why-dark-box">
-            <img src="/images/wp/about-img-04.png" alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
+            <img src={ab.whyBioImage} alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
             <p class="why-bio-caption">{ab.whyBioCaption}</p>
           </div>
           <div class="why-thing-block">
@@ -71,9 +71,9 @@ import ab from '../content/data/about.json';
         {ab.impactParagraphs.map((p: string) => <p>{p}</p>)}
       </div>
       <div class="impact-imgs">
-        <img src="/images/wp/about-img-06.png" alt="Right Start Community" loading="lazy" />
-        <img src="/images/wp/about-img-07.png" alt="Right Start Community" loading="lazy" />
-        <img src="/images/wp/about-img-08.png" alt="Right Start Community" loading="lazy" />
+        {ab.impactImages.map((src: string) => (
+          <img src={src} alt="Right Start Community" loading="lazy" />
+        ))}
       </div>
     </div>
   </section>
@@ -118,16 +118,13 @@ import ab from '../content/data/about.json';
       <h2 class="section-h2 center">{ab.partnersHeading}</h2>
       <p class="partners-intro">{ab.partnersIntro}</p>
       <div class="partners-grid">
-        <div class="partner-card">
-          <img src="/images/wp/about-img-09.webp" alt="Baganihan Collective" loading="lazy" />
-          <h3 class="partner-name">{ab.partners[0].name}</h3>
-          <p class="partner-desc">{ab.partners[0].description}</p>
-        </div>
-        <div class="partner-card">
-          <img src="/images/wp/about-img-10.webp" alt="Philippine Permaculture Association" loading="lazy" />
-          <h3 class="partner-name">{ab.partners[1].name}</h3>
-          <p class="partner-desc">{ab.partners[1].description}</p>
-        </div>
+        {ab.partners.map((p: {name: string, description: string, image: string}) => (
+          <div class="partner-card">
+            <img src={p.image} alt={p.name} loading="lazy" />
+            <h3 class="partner-name">{p.name}</h3>
+            <p class="partner-desc">{p.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -147,7 +144,6 @@ import ab from '../content/data/about.json';
 
 /* Hero */
 .about-hero {
-  background-image: url('/images/wp/about-img-hb.webp');
   background-size: cover;
   background-position: center;
   margin-top: -64px;

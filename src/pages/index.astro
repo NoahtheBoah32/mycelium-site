@@ -15,9 +15,9 @@ const featuredVideos = videos.slice(0, 3);
     <div class="hero-inner">
       <h1 class="hero-heading">{hp.heroHeading}</h1>
       <div class="hero-images">
-        <img src="/images/wp/homepage-img-01.webp" alt="" class="hi" loading="eager" />
-        <img src="/images/wp/homepage-img-02.webp" alt="" class="hi" loading="eager" />
-        <img src="/images/wp/homepage-img-03-2.png" alt="" class="hi" loading="eager" />
+        {hp.heroImages.map((src: string, i: number) => (
+          <img src={src} alt="" class="hi" loading={i === 0 ? 'eager' : 'lazy'} />
+        ))}
       </div>
       <a href="#start-your-journey" class="btn-primary">Start Your Journey</a>
     </div>
@@ -44,7 +44,7 @@ const featuredVideos = videos.slice(0, 3);
   <section class="founder">
     <div class="section-inner founder-inner">
       <div class="founder-img">
-        <img src="/images/wp/homepage-img-09.webp" alt="Founder" loading="lazy" />
+        <img src={hp.founderImage} alt="Founder" loading="lazy" />
       </div>
       <div class="founder-text">
         <h2 class="section-heading light">{hp.founderHeading}</h2>
@@ -62,13 +62,13 @@ const featuredVideos = videos.slice(0, 3);
       </div>
       <div class="operate-grid">
         <div class="operate-col">
-          <div class="operate-icon"><img src="/images/wp/homepage-img-05.png" alt="" loading="lazy" /></div>
+          <div class="operate-icon"><img src={hp.operateColumns[0].icon} alt="" loading="lazy" /></div>
           <h3 class="operate-title">{hp.operateColumns[0].title}</h3>
           <p class="operate-body">{hp.operateColumns[0].body}</p>
           <a href="/about" class="btn-underline">OUR MISSION</a>
         </div>
         <div class="operate-col">
-          <div class="operate-icon"><img src="/images/wp/homepage-img-06.png" alt="" loading="lazy" /></div>
+          <div class="operate-icon"><img src={hp.operateColumns[1].icon} alt="" loading="lazy" /></div>
           <h3 class="operate-title">{hp.operateColumns[1].title}</h3>
           <p class="operate-body">{hp.operateColumns[1].body}</p>
           <a href="/about" class="btn-underline">SEE OUR CRITERIA</a>
@@ -76,9 +76,9 @@ const featuredVideos = videos.slice(0, 3);
         <div class="operate-col">
           <div class="operate-icon">
             <div class="partners-row">
-              <img src="/images/wp/homepage-img-10.webp" alt="Baganihan Collective and Philippine Permaculture Association" class="partners-existing" loading="lazy" />
+              <img src={hp.operateColumns[2].partnersImage} alt="Baganihan Collective and Philippine Permaculture Association" class="partners-existing" loading="lazy" />
               <span class="partner-plus">+</span>
-              <img src="/images/sanghiblayan.jpg" alt="Sanghiblayan Collective" class="partner-sanghiblayan-logo" loading="lazy" />
+              <img src={hp.operateColumns[2].sanghiblayanImage} alt="Sanghiblayan Collective" class="partner-sanghiblayan-logo" loading="lazy" />
             </div>
           </div>
           <h3 class="operate-title">{hp.operateColumns[2].title}</h3>
@@ -91,8 +91,8 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-videos">
     <div class="section-inner">
-      <h2 class="section-heading dark">Curated Permaculture Videos</h2>
-      <p class="section-sub dark">Visual learning paths from beginner introductions to advanced techniques</p>
+      <h2 class="section-heading dark">{hp.videosHeading}</h2>
+      <p class="section-sub dark">{hp.videosSub}</p>
       <div class="home-video-grid">
         {featuredVideos.map(v => {
           const ytMatch = v.embedUrl?.match(/[?&]v=([^&]+)/);
@@ -122,30 +122,18 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-courses">
     <div class="section-inner">
-      <h2 class="section-heading dark">Learning Pathways &amp; Courses</h2>
-      <p class="section-sub dark">From free introductions to full PDC certifications</p>
+      <h2 class="section-heading dark">{hp.coursesHeading}</h2>
+      <p class="section-sub dark">{hp.coursesSub}</p>
       <div class="home-courses-grid">
-        <a href="https://permaculturevisions.com/permaculture-design-course/" target="_blank" rel="noopener" class="hcc">
-          <div class="hcc-thumb"><img src="/images/wp/Permaculture-Vision-Design-Course.jpg" alt="Permaculture Vision Design Course" loading="lazy" /></div>
-          <div class="hcc-body">
-            <h3 class="hcc-title">Permaculture Vision Design Course</h3>
-            <p class="hcc-meta">All Countries &middot; All Types</p>
-          </div>
-        </a>
-        <a href="https://pangaiapermaculture.com/course/live-permaculture-design-certificate-pdc/" target="_blank" rel="noopener" class="hcc">
-          <div class="hcc-thumb"><img src="/images/wp/Pan-Gaia-Permaculture-Online-Permaculture-Design-Course-1.png" alt="Pan Gaia Permaculture Online PDC" loading="lazy" /></div>
-          <div class="hcc-body">
-            <h3 class="hcc-title">Pan Gaia Permaculture Online PDC</h3>
-            <p class="hcc-meta">All Countries &middot; All Types</p>
-          </div>
-        </a>
-        <a href="https://crystalwaters.org.au/permaculture-design-course/" target="_blank" rel="noopener" class="hcc">
-          <div class="hcc-thumb"><img src="/images/wp/Crystal-Waters-Permaculture-Design-Course.png" alt="Crystal Waters Permaculture Design Course" loading="lazy" /></div>
-          <div class="hcc-body">
-            <h3 class="hcc-title">Crystal Waters Permaculture Design Course</h3>
-            <p class="hcc-meta">All Countries &middot; All Types</p>
-          </div>
-        </a>
+        {hp.featuredCourses.map((c: {title: string, meta: string, url: string, image: string}) => (
+          <a href={c.url} target="_blank" rel="noopener" class="hcc">
+            <div class="hcc-thumb"><img src={c.image} alt={c.title} loading="lazy" /></div>
+            <div class="hcc-body">
+              <h3 class="hcc-title">{c.title}</h3>
+              <p class="hcc-meta">{c.meta}</p>
+            </div>
+          </a>
+        ))}
       </div>
       <div class="section-cta"><a href="/courses" class="btn-primary">View All Courses</a></div>
     </div>
@@ -153,41 +141,19 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-resources">
     <div class="section-inner">
-      <h2 class="section-heading dark">Organized Blog Resources</h2>
-      <p class="section-sub dark">Quality permaculture content organized by topic</p>
+      <h2 class="section-heading dark">{hp.resourcesHeading}</h2>
+      <p class="section-sub dark">{hp.resourcesSub}</p>
       <div class="home-resources-grid">
-        <a href="https://mycelium-learn.com/resources/growing-resilience/" target="_blank" rel="noopener" class="hrc">
-          <div class="hrc-thumb"><img src="/images/wp/RESIZED-PERMACULTURE-FOR-BEGGINERS.png" alt="What is Permaculture?" loading="lazy" /></div>
-          <div class="hrc-body">
-            <span class="hrc-cat">Getting Started</span>
-            <h3 class="hrc-title">What is Permaculture? — Article</h3>
-            <p class="hrc-desc">Permaculture is not just organic gardening. It is a design system that applies to backyards, communities, and entire ways of living.</p>
-          </div>
-        </a>
-        <a href="https://mycelium-learn.com/resources/the-eco-blueprint/" target="_blank" rel="noopener" class="hrc">
-          <div class="hrc-thumb"><img src="/images/wp/HOW-TO-START-A-PERMACULTURE-GARDEN.png" alt="First Steps" loading="lazy" /></div>
-          <div class="hrc-body">
-            <span class="hrc-cat">Beginner</span>
-            <h3 class="hrc-title">First Steps — Article</h3>
-            <p class="hrc-desc">How to read your space, what to prioritize first, and what you can realistically start in a week.</p>
-          </div>
-        </a>
-        <a href="https://mycelium-learn.com/resources/designing-with-nature/" target="_blank" rel="noopener" class="hrc">
-          <div class="hrc-thumb"><img src="/images/wp/DESIGN-PRINCIPLES.png" alt="Design Principles" loading="lazy" /></div>
-          <div class="hrc-body">
-            <span class="hrc-cat">Beginner</span>
-            <h3 class="hrc-title">Design Principles — Article</h3>
-            <p class="hrc-desc">The thinking tools behind every permaculture decision.</p>
-          </div>
-        </a>
-        <a href="https://mycelium-learn.com/resources/sustainable-abundance/" target="_blank" rel="noopener" class="hrc">
-          <div class="hrc-thumb"><img src="/images/wp/HOW-TO-CREATE-A-FOOD-FOREST.png" alt="Food Forest" loading="lazy" /></div>
-          <div class="hrc-body">
-            <span class="hrc-cat">Beginner</span>
-            <h3 class="hrc-title">Designing a Food Forest</h3>
-            <p class="hrc-desc">A food forest is a layered ecosystem that produces food and largely takes care of itself.</p>
-          </div>
-        </a>
+        {hp.featuredResources.map((r: {title: string, category: string, description: string, url: string, image: string}) => (
+          <a href={r.url} target="_blank" rel="noopener" class="hrc">
+            <div class="hrc-thumb"><img src={r.image} alt={r.title} loading="lazy" /></div>
+            <div class="hrc-body">
+              <span class="hrc-cat">{r.category}</span>
+              <h3 class="hrc-title">{r.title}</h3>
+              <p class="hrc-desc">{r.description}</p>
+            </div>
+          </a>
+        ))}
       </div>
       <div class="section-cta"><a href="/resources" class="btn-primary">View All Resources</a></div>
     </div>

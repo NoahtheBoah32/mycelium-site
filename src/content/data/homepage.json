@@ -1,5 +1,10 @@
 {
-  "heroHeading": "What if it’s time we look down to move forward?",
+  "heroHeading": "What if it's time we look down to move forward?",
+  "heroImages": [
+    "/images/wp/homepage-img-01.webp",
+    "/images/wp/homepage-img-02.webp",
+    "/images/wp/homepage-img-03-2.png"
+  ],
   "missionHeading": "Building food security starts with education",
   "missionBody": "Our goals start with confronting the issue of finding clear and uncomplicated permaculture education. The chaos of scattered resources, conflicting advice, and no clear starting point often turn eager learners away. Mycelium exists to bridge these gaps. Similar to mycelial systems which connect ecosystems underground, the platform links scattered knowledge together to lower the barrier of learning. Mycelium strengthens permaculture education at its roots, encouraging informed action to support the overarching goal of addressing food insecurity.",
   "statsEyebrow": "Mycelium Resources and Content to Date",
@@ -8,22 +13,83 @@
     { "number": "600+", "label": "Hours of Organized Content" },
     { "number": "1", "label": "Community in Active Implementation" }
   ],
+  "founderImage": "/images/wp/homepage-img-09.webp",
   "founderHeading": "Why did I build Mycelium at 16?",
-  "founderBody": "I built Mycelium at 16 because I wanted uncomplicated permaculture guidance. I got exhausted finding conflicting advice and resources that didn’t apply to me. So I spent the next year building a platform I couldn’t find. With the guidance I got from the Philippine Permaculture Association and hours of curating content, Mycelium is now what I wish existed when I was searching alone at 2 am with too many tabs to count.",
+  "founderBody": "I built Mycelium at 16 because I wanted uncomplicated permaculture guidance. I got exhausted finding conflicting advice and resources that didn't apply to me. So I spent the next year building a platform I couldn't find. With the guidance I got from the Philippine Permaculture Association and hours of curating content, Mycelium is now what I wish existed when I was searching alone at 2 am with too many tabs to count.",
   "howOperateHeading": "How We Operate",
   "howOperateSub": "We prioritize transparency with all our users, we want you to know how we create resources and build this platform.",
   "operateColumns": [
     {
       "title": "Zero Gatekeeping",
-      "body": "100% Free, forever. No paywalls, no ads interrupting your learning. We believe permaculture knowledge should be accessible to everyone, regardless of income or location."
+      "body": "100% Free, forever. No paywalls, no ads interrupting your learning. We believe permaculture knowledge should be accessible to everyone, regardless of income or location.",
+      "icon": "/images/wp/homepage-img-05.png"
     },
     {
       "title": "We verify every resource",
-      "body": "We personally review every video, course, and article before adding it to Mycelium. Each resource is checked thoroughly, prioritizing beginner-friendliness."
+      "body": "We personally review every video, course, and article before adding it to Mycelium. Each resource is checked thoroughly, prioritizing beginner-friendliness.",
+      "icon": "/images/wp/homepage-img-06.png"
     },
     {
       "title": "We work with expert partners",
-      "body": "Our resources are credible and field-tested, shaped by indigenous permaculture from the Baganihan Collective, content contributions from the PPA, and medicinal plant knowledge from the Sanghiblayan Collective."
+      "body": "Our resources are credible and field-tested, shaped by indigenous permaculture from the Baganihan Collective, content contributions from the PPA, and medicinal plant knowledge from the Sanghiblayan Collective.",
+      "partnersImage": "/images/wp/homepage-img-10.webp",
+      "sanghiblayanImage": "/images/sanghiblayan.jpg"
+    }
+  ],
+  "videosHeading": "Curated Permaculture Videos",
+  "videosSub": "Visual learning paths from beginner introductions to advanced techniques",
+  "coursesHeading": "Learning Pathways & Courses",
+  "coursesSub": "From free introductions to full PDC certifications",
+  "featuredCourses": [
+    {
+      "title": "Permaculture Vision Design Course",
+      "meta": "All Countries · All Types",
+      "url": "https://permaculturevisions.com/permaculture-design-course/",
+      "image": "/images/wp/Permaculture-Vision-Design-Course.jpg"
+    },
+    {
+      "title": "Pan Gaia Permaculture Online PDC",
+      "meta": "All Countries · All Types",
+      "url": "https://pangaiapermaculture.com/course/live-permaculture-design-certificate-pdc/",
+      "image": "/images/wp/Pan-Gaia-Permaculture-Online-Permaculture-Design-Course-1.png"
+    },
+    {
+      "title": "Crystal Waters Permaculture Design Course",
+      "meta": "All Countries · All Types",
+      "url": "https://crystalwaters.org.au/permaculture-design-course/",
+      "image": "/images/wp/Crystal-Waters-Permaculture-Design-Course.png"
+    }
+  ],
+  "resourcesHeading": "Organized Blog Resources",
+  "resourcesSub": "Quality permaculture content organized by topic",
+  "featuredResources": [
+    {
+      "title": "What is Permaculture? — Article",
+      "category": "Getting Started",
+      "description": "Permaculture is not just organic gardening. It is a design system that applies to backyards, communities, and entire ways of living.",
+      "url": "https://mycelium-learn.com/resources/growing-resilience/",
+      "image": "/images/wp/RESIZED-PERMACULTURE-FOR-BEGGINERS.png"
+    },
+    {
+      "title": "First Steps — Article",
+      "category": "Beginner",
+      "description": "How to read your space, what to prioritize first, and what you can realistically start in a week.",
+      "url": "https://mycelium-learn.com/resources/the-eco-blueprint/",
+      "image": "/images/wp/HOW-TO-START-A-PERMACULTURE-GARDEN.png"
+    },
+    {
+      "title": "Design Principles — Article",
+      "category": "Beginner",
+      "description": "The thinking tools behind every permaculture decision.",
+      "url": "https://mycelium-learn.com/resources/designing-with-nature/",
+      "image": "/images/wp/DESIGN-PRINCIPLES.png"
+    },
+    {
+      "title": "Designing a Food Forest",
+      "category": "Beginner",
+      "description": "A food forest is a layered ecosystem that produces food and largely takes care of itself.",
+      "url": "https://mycelium-learn.com/resources/sustainable-abundance/",
+      "image": "/images/wp/HOW-TO-CREATE-A-FOOD-FOREST.png"
     }
   ],
   "newsletterHeading": "Get Monthly Permaculture Resources",
