@@ -8,23 +8,23 @@ import ab from '../content/data/about.json';
 <BaseLayout title="About - Mycelium">
   <SiteNav overlay={true} />
 
-  <section class="about-hero" style={`background-image: url('${ab.heroImage}')`}>
+  <section class="about-hero" style={`background-image: url('${ab.hero.image}')`}>
     <div class="section-inner">
       <a href="#how-it-started" class="about-hero-link">READ THE FULL JOURNEY</a>
-      <h1 class="about-title">{ab.heroTitle}</h1>
+      <h1 class="about-title">{ab.hero.title}</h1>
     </div>
   </section>
 
   <section class="about-story" id="how-it-started">
     <div class="section-inner">
       <h2 class="section-h2 center">HOW IT STARTED</h2>
-      <p class="story-intro">{ab.storyIntro}</p>
+      <p class="story-intro">{ab.story.intro}</p>
       <div class="story-inner">
         <div class="story-text">
-          {ab.storyParagraphs.map((p: string) => <p>{p}</p>)}
+          {ab.story.paragraphs.map((p: string) => <p>{p}</p>)}
         </div>
         <div class="story-img">
-          <img src={ab.storyImage} alt="Permaculture journey" loading="lazy" />
+          <img src={ab.story.image} alt="Permaculture journey" loading="lazy" />
         </div>
       </div>
     </div>
@@ -35,29 +35,29 @@ import ab from '../content/data/about.json';
       <div class="why-inner">
         <div class="why-left">
           <div class="why-text-block">
-            <h2 class="section-h2">{ab.whyHeading}</h2>
-            {ab.whyParagraphs.map((p: string) => <p>{p}</p>)}
+            <h2 class="section-h2">{ab.why.heading}</h2>
+            {ab.why.paragraphs.map((p: string) => <p>{p}</p>)}
           </div>
           <div class="why-dark-box">
-            <img src={ab.whyChartImage} alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
-            <p class="why-chart-caption">{ab.whyChartCaption}</p>
+            <img src={ab.why.chartImage} alt="Landfill waste composition before and after permaculture" loading="lazy" class="why-chart" />
+            <p class="why-chart-caption">{ab.why.chartCaption}</p>
           </div>
           <div class="why-thing-block">
-            <h2 class="section-h2">{ab.heresthethingHeading}</h2>
-            <p>{ab.heresthethingLeft}</p>
+            <h2 class="section-h2">{ab.heresthething.heading}</h2>
+            <p>{ab.heresthething.left}</p>
           </div>
         </div>
         <div class="why-right">
           <div class="why-landscape-wrap">
-            <img src={ab.whyLandscapeImage} alt="Permaculture landscape" loading="lazy" class="why-landscape" />
+            <img src={ab.why.landscapeImage} alt="Permaculture landscape" loading="lazy" class="why-landscape" />
           </div>
           <div class="why-dark-box">
-            <img src={ab.whyBioImage} alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
-            <p class="why-bio-caption">{ab.whyBioCaption}</p>
+            <img src={ab.why.bioImage} alt="Improves biodiversity 3x" loading="lazy" class="why-bio-card" />
+            <p class="why-bio-caption">{ab.why.bioCaption}</p>
           </div>
           <div class="why-thing-block">
-            <p>{ab.heresthethingRight1}</p>
-            <p>{ab.heresthethingRight2}</p>
+            <p>{ab.heresthething.right1}</p>
+            <p>{ab.heresthething.right2}</p>
           </div>
         </div>
       </div>
@@ -67,11 +67,11 @@ import ab from '../content/data/about.json';
   <section class="about-impact">
     <div class="impact-inner">
       <div class="impact-text">
-        <h2 class="section-h2">{ab.impactHeading}</h2>
-        {ab.impactParagraphs.map((p: string) => <p>{p}</p>)}
+        <h2 class="section-h2">{ab.impact.heading}</h2>
+        {ab.impact.paragraphs.map((p: string) => <p>{p}</p>)}
       </div>
       <div class="impact-imgs">
-        {ab.impactImages.map((src: string) => (
+        {ab.impact.images.map((src: string) => (
           <img src={src} alt="Right Start Community" loading="lazy" />
         ))}
       </div>
@@ -80,11 +80,11 @@ import ab from '../content/data/about.json';
 
   <section class="about-mission">
     <div class="section-inner">
-      <h3 class="section-eyebrow">{ab.missionEyebrow}</h3>
-      <h2 class="section-h2 center">{ab.missionHeading}</h2>
-      <p class="mission-body">{ab.missionBody}</p>
+      <h3 class="section-eyebrow">{ab.mission.eyebrow}</h3>
+      <h2 class="section-h2 center">{ab.mission.heading}</h2>
+      <p class="mission-body">{ab.mission.body}</p>
       <div class="mission-pillars">
-        {ab.missionPillars.map((pillar: {label: string, body: string}) => (
+        {ab.mission.pillars.map((pillar: {label: string, body: string}) => (
           <div class="pillar">
             <h3 class="pillar-label">{pillar.label}</h3>
             <p class="pillar-body">{pillar.body}</p>
@@ -96,10 +96,10 @@ import ab from '../content/data/about.json';
 
   <section class="about-criteria">
     <div class="section-inner">
-      <h3 class="section-eyebrow center">{ab.criteriaEyebrow}</h3>
-      <h2 class="section-h2 center">{ab.criteriaHeading}</h2>
+      <h3 class="section-eyebrow center">{ab.criteria.eyebrow}</h3>
+      <h2 class="section-h2 center">{ab.criteria.heading}</h2>
       <div class="criteria-grid">
-        {ab.criteriaItems.map((item: {number: string, question: string, answer: string}) => (
+        {ab.criteria.items.map((item: {number: string, question: string, answer: string}) => (
           <div class="criteria-item">
             <span class="criteria-num">{item.number}</span>
             <div>
@@ -114,11 +114,11 @@ import ab from '../content/data/about.json';
 
   <section class="about-partners">
     <div class="section-inner">
-      <h3 class="section-eyebrow center">{ab.partnersEyebrow}</h3>
-      <h2 class="section-h2 center">{ab.partnersHeading}</h2>
-      <p class="partners-intro">{ab.partnersIntro}</p>
+      <h3 class="section-eyebrow center">{ab.partners.eyebrow}</h3>
+      <h2 class="section-h2 center">{ab.partners.heading}</h2>
+      <p class="partners-intro">{ab.partners.intro}</p>
       <div class="partners-grid">
-        {ab.partners.map((p: {name: string, description: string, image: string}) => (
+        {ab.partners.items.map((p: {name: string, description: string, image: string}) => (
           <div class="partner-card">
             <img src={p.image} alt={p.name} loading="lazy" />
             <h3 class="partner-name">{p.name}</h3>

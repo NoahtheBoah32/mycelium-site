@@ -13,9 +13,9 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="hero">
     <div class="hero-inner">
-      <h1 class="hero-heading">{hp.heroHeading}</h1>
+      <h1 class="hero-heading">{hp.hero.heading}</h1>
       <div class="hero-images">
-        {hp.heroImages.map((src: string, i: number) => (
+        {hp.hero.images.map((src: string, i: number) => (
           <img src={src} alt="" class="hi" loading={i === 0 ? 'eager' : 'lazy'} />
         ))}
       </div>
@@ -25,16 +25,16 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="mission" id="start-your-journey">
     <div class="section-inner mission-inner">
-      <h2 class="section-heading mission-heading">{hp.missionHeading}</h2>
-      <p class="mission-body">{hp.missionBody}</p>
+      <h2 class="section-heading mission-heading">{hp.mission.heading}</h2>
+      <p class="mission-body">{hp.mission.body}</p>
     </div>
   </section>
 
   <section class="stats">
     <div class="section-inner">
-      <span class="eyebrow-label light">{hp.statsEyebrow}</span>
+      <span class="eyebrow-label light">{hp.stats.eyebrow}</span>
       <div class="stats-row">
-        {hp.stats.map(s => (
+        {hp.stats.items.map(s => (
           <div class="stat-item"><span class="stat-number">{s.number}</span><span class="stat-label">{s.label}</span></div>
         ))}
       </div>
@@ -44,11 +44,11 @@ const featuredVideos = videos.slice(0, 3);
   <section class="founder">
     <div class="section-inner founder-inner">
       <div class="founder-img">
-        <img src={hp.founderImage} alt="Founder" loading="lazy" />
+        <img src={hp.founder.image} alt="Founder" loading="lazy" />
       </div>
       <div class="founder-text">
-        <h2 class="section-heading light">{hp.founderHeading}</h2>
-        <p class="founder-body">{hp.founderBody}</p>
+        <h2 class="section-heading light">{hp.founder.heading}</h2>
+        <p class="founder-body">{hp.founder.body}</p>
         <a href="/about" class="btn-underline">READ MY FULL JOURNEY</a>
       </div>
     </div>
@@ -57,32 +57,32 @@ const featuredVideos = videos.slice(0, 3);
   <section class="how-operate">
     <div class="section-inner">
       <div class="operate-header">
-        <h2 class="section-heading light center">{hp.howOperateHeading}</h2>
-        <p class="operate-sub">{hp.howOperateSub}</p>
+        <h2 class="section-heading light center">{hp.howOperate.heading}</h2>
+        <p class="operate-sub">{hp.howOperate.sub}</p>
       </div>
       <div class="operate-grid">
         <div class="operate-col">
-          <div class="operate-icon"><img src={hp.operateColumns[0].icon} alt="" loading="lazy" /></div>
-          <h3 class="operate-title">{hp.operateColumns[0].title}</h3>
-          <p class="operate-body">{hp.operateColumns[0].body}</p>
+          <div class="operate-icon"><img src={hp.howOperate.columns[0].icon} alt="" loading="lazy" /></div>
+          <h3 class="operate-title">{hp.howOperate.columns[0].title}</h3>
+          <p class="operate-body">{hp.howOperate.columns[0].body}</p>
           <a href="/about" class="btn-underline">OUR MISSION</a>
         </div>
         <div class="operate-col">
-          <div class="operate-icon"><img src={hp.operateColumns[1].icon} alt="" loading="lazy" /></div>
-          <h3 class="operate-title">{hp.operateColumns[1].title}</h3>
-          <p class="operate-body">{hp.operateColumns[1].body}</p>
+          <div class="operate-icon"><img src={hp.howOperate.columns[1].icon} alt="" loading="lazy" /></div>
+          <h3 class="operate-title">{hp.howOperate.columns[1].title}</h3>
+          <p class="operate-body">{hp.howOperate.columns[1].body}</p>
           <a href="/about" class="btn-underline">SEE OUR CRITERIA</a>
         </div>
         <div class="operate-col">
           <div class="operate-icon">
             <div class="partners-row">
-              <img src={hp.operateColumns[2].partnersImage} alt="Baganihan Collective and Philippine Permaculture Association" class="partners-existing" loading="lazy" />
+              <img src={hp.howOperate.columns[2].partnersImage} alt="Baganihan Collective and Philippine Permaculture Association" class="partners-existing" loading="lazy" />
               <span class="partner-plus">+</span>
-              <img src={hp.operateColumns[2].sanghiblayanImage} alt="Sanghiblayan Collective" class="partner-sanghiblayan-logo" loading="lazy" />
+              <img src={hp.howOperate.columns[2].sanghiblayanImage} alt="Sanghiblayan Collective" class="partner-sanghiblayan-logo" loading="lazy" />
             </div>
           </div>
-          <h3 class="operate-title">{hp.operateColumns[2].title}</h3>
-          <p class="operate-body">{hp.operateColumns[2].body}</p>
+          <h3 class="operate-title">{hp.howOperate.columns[2].title}</h3>
+          <p class="operate-body">{hp.howOperate.columns[2].body}</p>
           <a href="/about" class="btn-underline">LEARN MORE</a>
         </div>
       </div>
@@ -91,8 +91,8 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-videos">
     <div class="section-inner">
-      <h2 class="section-heading dark">{hp.videosHeading}</h2>
-      <p class="section-sub dark">{hp.videosSub}</p>
+      <h2 class="section-heading dark">{hp.videos.heading}</h2>
+      <p class="section-sub dark">{hp.videos.sub}</p>
       <div class="home-video-grid">
         {featuredVideos.map(v => {
           const ytMatch = v.embedUrl?.match(/[?&]v=([^&]+)/);
@@ -122,10 +122,10 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-courses">
     <div class="section-inner">
-      <h2 class="section-heading dark">{hp.coursesHeading}</h2>
-      <p class="section-sub dark">{hp.coursesSub}</p>
+      <h2 class="section-heading dark">{hp.courses.heading}</h2>
+      <p class="section-sub dark">{hp.courses.sub}</p>
       <div class="home-courses-grid">
-        {hp.featuredCourses.map((c: {title: string, meta: string, url: string, image: string}) => (
+        {hp.courses.items.map((c: {title: string, meta: string, url: string, image: string}) => (
           <a href={c.url} target="_blank" rel="noopener" class="hcc">
             <div class="hcc-thumb"><img src={c.image} alt={c.title} loading="lazy" /></div>
             <div class="hcc-body">
@@ -141,10 +141,10 @@ const featuredVideos = videos.slice(0, 3);
 
   <section class="home-resources">
     <div class="section-inner">
-      <h2 class="section-heading dark">{hp.resourcesHeading}</h2>
-      <p class="section-sub dark">{hp.resourcesSub}</p>
+      <h2 class="section-heading dark">{hp.resources.heading}</h2>
+      <p class="section-sub dark">{hp.resources.sub}</p>
       <div class="home-resources-grid">
-        {hp.featuredResources.map((r: {title: string, category: string, description: string, url: string, image: string}) => (
+        {hp.resources.items.map((r: {title: string, category: string, description: string, url: string, image: string}) => (
           <a href={r.url} target="_blank" rel="noopener" class="hrc">
             <div class="hrc-thumb"><img src={r.image} alt={r.title} loading="lazy" /></div>
             <div class="hrc-body">
@@ -163,15 +163,15 @@ const featuredVideos = videos.slice(0, 3);
     <div class="section-inner">
       <div class="newsletter-card">
         <div class="newsletter-left">
-          <h2 class="newsletter-heading">{hp.newsletterHeading}</h2>
-          <p class="newsletter-sub">{hp.newsletterSub}</p>
+          <h2 class="newsletter-heading">{hp.newsletter.heading}</h2>
+          <p class="newsletter-sub">{hp.newsletter.sub}</p>
         </div>
         <div class="newsletter-right">
           <form class="newsletter-form" action="https://mycelium-learn.com/newsletter/" method="get">
             <input type="email" placeholder="Enter your email" class="newsletter-input" />
             <button type="submit" class="btn-primary small">Subscribe</button>
           </form>
-          <p class="newsletter-privacy">{hp.newsletterPrivacy}</p>
+          <p class="newsletter-privacy">{hp.newsletter.privacy}</p>
         </div>
       </div>
     </div>

@@ -14,124 +14,224 @@ collections:
         label: Homepage
         file: src/content/data/homepage.json
         fields:
-          - { label: "Hero Heading", name: heroHeading, widget: string }
-          - label: "Hero Images (3 side-by-side)"
-            name: heroImages
-            widget: list
-            field: { label: "Image", name: image, widget: image }
-          - { label: "Mission Heading", name: missionHeading, widget: string }
-          - { label: "Mission Body", name: missionBody, widget: text }
-          - { label: "Stats Eyebrow", name: statsEyebrow, widget: string }
+          - label: "Hero"
+            name: hero
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - label: "Images (3 side-by-side)"
+                name: images
+                widget: list
+                field: { label: "Image", name: image, widget: image }
+
+          - label: "Mission"
+            name: mission
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Body", name: body, widget: text }
+
           - label: "Stats"
             name: stats
-            widget: list
+            widget: object
+            collapsed: true
             fields:
-              - { label: "Number", name: number, widget: string }
-              - { label: "Label", name: label, widget: string }
-          - { label: "Founder Photo", name: founderImage, widget: image }
-          - { label: "Founder Heading", name: founderHeading, widget: string }
-          - { label: "Founder Body", name: founderBody, widget: text }
-          - { label: "How We Operate Heading", name: howOperateHeading, widget: string }
-          - { label: "How We Operate Subtext", name: howOperateSub, widget: text }
-          - label: "Operate Columns"
-            name: operateColumns
-            widget: list
+              - { label: "Eyebrow Label", name: eyebrow, widget: string }
+              - label: "Stat Items"
+                name: items
+                widget: list
+                fields:
+                  - { label: "Number", name: number, widget: string }
+                  - { label: "Label", name: label, widget: string }
+
+          - label: "Founder Section"
+            name: founder
+            widget: object
+            collapsed: true
             fields:
-              - { label: "Title", name: title, widget: string }
+              - { label: "Photo", name: image, widget: image }
+              - { label: "Heading", name: heading, widget: string }
               - { label: "Body", name: body, widget: text }
-              - { label: "Icon Image (columns 1 & 2)", name: icon, widget: image, required: false }
-              - { label: "Partners Logo (column 3 only)", name: partnersImage, widget: image, required: false }
-              - { label: "Sanghiblayan Logo (column 3 only)", name: sanghiblayanImage, widget: image, required: false }
-          - { label: "Videos Section Heading", name: videosHeading, widget: string }
-          - { label: "Videos Section Subtext", name: videosSub, widget: string }
-          - { label: "Courses Section Heading", name: coursesHeading, widget: string }
-          - { label: "Courses Section Subtext", name: coursesSub, widget: string }
-          - label: "Featured Courses"
-            name: featuredCourses
-            widget: list
+
+          - label: "How We Operate"
+            name: howOperate
+            widget: object
+            collapsed: true
             fields:
-              - { label: "Title", name: title, widget: string }
-              - { label: "Meta (e.g. All Countries · All Types)", name: meta, widget: string }
-              - { label: "URL", name: url, widget: string }
-              - { label: "Thumbnail Image", name: image, widget: image }
-          - { label: "Resources Section Heading", name: resourcesHeading, widget: string }
-          - { label: "Resources Section Subtext", name: resourcesSub, widget: string }
-          - label: "Featured Resources"
-            name: featuredResources
-            widget: list
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Subtext", name: sub, widget: text }
+              - label: "Columns"
+                name: columns
+                widget: list
+                fields:
+                  - { label: "Title", name: title, widget: string }
+                  - { label: "Body", name: body, widget: text }
+                  - { label: "Icon Image (columns 1 & 2)", name: icon, widget: image, required: false }
+                  - { label: "Partners Logo (column 3)", name: partnersImage, widget: image, required: false }
+                  - { label: "Sanghiblayan Logo (column 3)", name: sanghiblayanImage, widget: image, required: false }
+
+          - label: "Videos Section"
+            name: videos
+            widget: object
+            collapsed: true
             fields:
-              - { label: "Title", name: title, widget: string }
-              - { label: "Category Tag", name: category, widget: string }
-              - { label: "Description", name: description, widget: text }
-              - { label: "URL", name: url, widget: string }
-              - { label: "Thumbnail Image", name: image, widget: image }
-          - { label: "Newsletter Heading", name: newsletterHeading, widget: string }
-          - { label: "Newsletter Subtext", name: newsletterSub, widget: text }
-          - { label: "Newsletter Privacy Text", name: newsletterPrivacy, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Subtext", name: sub, widget: string }
+
+          - label: "Courses Section"
+            name: courses
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Subtext", name: sub, widget: string }
+              - label: "Featured Courses"
+                name: items
+                widget: list
+                fields:
+                  - { label: "Title", name: title, widget: string }
+                  - { label: "Meta (e.g. All Countries · All Types)", name: meta, widget: string }
+                  - { label: "URL", name: url, widget: string }
+                  - { label: "Thumbnail", name: image, widget: image }
+
+          - label: "Resources Section"
+            name: resources
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Subtext", name: sub, widget: string }
+              - label: "Featured Resources"
+                name: items
+                widget: list
+                fields:
+                  - { label: "Title", name: title, widget: string }
+                  - { label: "Category Tag", name: category, widget: string }
+                  - { label: "Description", name: description, widget: text }
+                  - { label: "URL", name: url, widget: string }
+                  - { label: "Thumbnail", name: image, widget: image }
+
+          - label: "Newsletter"
+            name: newsletter
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Subtext", name: sub, widget: text }
+              - { label: "Privacy Text", name: privacy, widget: string }
 
       - name: about
         label: About
         file: src/content/data/about.json
         fields:
-          - { label: "Hero Background Image", name: heroImage, widget: image }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Story Intro", name: storyIntro, widget: text }
-          - { label: "Story Photo", name: storyImage, widget: image }
-          - label: "Story Paragraphs"
-            name: storyParagraphs
-            widget: list
-            field: { label: "Paragraph", name: text, widget: text }
-          - { label: "Why This Matters Heading", name: whyHeading, widget: string }
-          - label: "Why Paragraphs"
-            name: whyParagraphs
-            widget: list
-            field: { label: "Paragraph", name: text, widget: text }
-          - { label: "Waste Chart Image", name: whyChartImage, widget: image }
-          - { label: "Waste Chart Caption", name: whyChartCaption, widget: text }
-          - { label: "Landscape Photo", name: whyLandscapeImage, widget: image }
-          - { label: "Biodiversity Card Image", name: whyBioImage, widget: image }
-          - { label: "Biodiversity Caption", name: whyBioCaption, widget: text }
-          - { label: "Here's the Thing Heading", name: heresthethingHeading, widget: string }
-          - { label: "Here's the Thing (left column)", name: heresthethingLeft, widget: text }
-          - { label: "Here's the Thing (right, paragraph 1)", name: heresthethingRight1, widget: text }
-          - { label: "Here's the Thing (right, paragraph 2)", name: heresthethingRight2, widget: text }
-          - { label: "Impact Heading", name: impactHeading, widget: string }
-          - label: "Impact Paragraphs"
-            name: impactParagraphs
-            widget: list
-            field: { label: "Paragraph", name: text, widget: text }
-          - label: "Impact Photos (3 images)"
-            name: impactImages
-            widget: list
-            field: { label: "Photo", name: image, widget: image }
-          - { label: "Mission Eyebrow", name: missionEyebrow, widget: string }
-          - { label: "Mission Heading", name: missionHeading, widget: string }
-          - { label: "Mission Body", name: missionBody, widget: text }
-          - label: "Mission Pillars"
-            name: missionPillars
-            widget: list
+          - label: "Hero"
+            name: hero
+            widget: object
+            collapsed: true
             fields:
-              - { label: "Label", name: label, widget: string }
+              - { label: "Background Image", name: image, widget: image }
+              - { label: "Title", name: title, widget: string }
+
+          - label: "How It Started"
+            name: story
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Intro Line", name: intro, widget: text }
+              - { label: "Photo", name: image, widget: image }
+              - label: "Paragraphs"
+                name: paragraphs
+                widget: list
+                field: { label: "Paragraph", name: text, widget: text }
+
+          - label: "Why This Matters"
+            name: why
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - label: "Paragraphs"
+                name: paragraphs
+                widget: list
+                field: { label: "Paragraph", name: text, widget: text }
+              - { label: "Waste Chart Image", name: chartImage, widget: image }
+              - { label: "Waste Chart Caption", name: chartCaption, widget: text }
+              - { label: "Landscape Photo", name: landscapeImage, widget: image }
+              - { label: "Biodiversity Image", name: bioImage, widget: image }
+              - { label: "Biodiversity Caption", name: bioCaption, widget: text }
+
+          - label: "Here's the Thing"
+            name: heresthething
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Left Column Paragraph", name: left, widget: text }
+              - { label: "Right Column — Paragraph 1", name: right1, widget: text }
+              - { label: "Right Column — Paragraph 2", name: right2, widget: text }
+
+          - label: "Measuring Impact"
+            name: impact
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Heading", name: heading, widget: string }
+              - label: "Paragraphs"
+                name: paragraphs
+                widget: list
+                field: { label: "Paragraph", name: text, widget: text }
+              - label: "Photos (3 images)"
+                name: images
+                widget: list
+                field: { label: "Photo", name: image, widget: image }
+
+          - label: "Mission"
+            name: mission
+            widget: object
+            collapsed: true
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Heading", name: heading, widget: string }
               - { label: "Body", name: body, widget: text }
-          - { label: "Criteria Eyebrow", name: criteriaEyebrow, widget: string }
-          - { label: "Criteria Heading", name: criteriaHeading, widget: string }
-          - label: "Criteria Items"
-            name: criteriaItems
-            widget: list
+              - label: "Pillars"
+                name: pillars
+                widget: list
+                fields:
+                  - { label: "Label", name: label, widget: string }
+                  - { label: "Body", name: body, widget: text }
+
+          - label: "Criteria"
+            name: criteria
+            widget: object
+            collapsed: true
             fields:
-              - { label: "Number", name: number, widget: string }
-              - { label: "Question", name: question, widget: string }
-              - { label: "Answer", name: answer, widget: text }
-          - { label: "Partners Eyebrow", name: partnersEyebrow, widget: string }
-          - { label: "Partners Heading", name: partnersHeading, widget: string }
-          - { label: "Partners Intro", name: partnersIntro, widget: text }
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - label: "Items"
+                name: items
+                widget: list
+                fields:
+                  - { label: "Number", name: number, widget: string }
+                  - { label: "Question", name: question, widget: string }
+                  - { label: "Answer", name: answer, widget: text }
+
           - label: "Partners"
             name: partners
-            widget: list
+            widget: object
+            collapsed: true
             fields:
-              - { label: "Name", name: name, widget: string }
-              - { label: "Description", name: description, widget: text }
-              - { label: "Photo", name: image, widget: image }
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Intro", name: intro, widget: text }
+              - label: "Partner List"
+                name: items
+                widget: list
+                fields:
+                  - { label: "Name", name: name, widget: string }
+                  - { label: "Description", name: description, widget: text }
+                  - { label: "Photo", name: image, widget: image }
 
   - name: events
     label: Events
