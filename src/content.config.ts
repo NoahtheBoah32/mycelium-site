@@ -5,7 +5,7 @@ const events = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
   schema: z.object({
     title: z.string(),
-    template: z.enum(['kapihan', 'bag']),
+    template: z.enum(['kapihan', 'bag', 'pdc']),
     schedule: z.string().optional(),
     date: z.coerce.date().optional(),
     time: z.string().optional(),
@@ -23,9 +23,12 @@ const events = defineCollection({
     speakerName: z.string().optional(),
     speakerRole: z.string().optional(),
     speakerBio: z.string().optional(),
-    // Organizer (bag template)
+    // Organizer
     organizer: z.string().optional(),
     organizerLogo: z.string().optional(),
+    // PDC template
+    dateRange: z.string().optional(),
+    highlights: z.array(z.string()).optional(),
   }),
 });
 

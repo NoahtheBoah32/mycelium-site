@@ -248,6 +248,7 @@ collections:
         options:
           - { label: "Kapihan (green, recurring)", value: kapihan }
           - { label: "Baganihan (dark glass, one-time talk)", value: bag }
+          - { label: "PDC / Course (warm peach, multi-day)", value: pdc }
       - { label: "Schedule Line", name: schedule, widget: string, required: false }
       - { label: "Event Date", name: date, widget: datetime, required: false }
       - { label: "Time", name: time, widget: string, required: false }
@@ -266,3 +267,9 @@ collections:
       - { label: "Speaker Bio", name: speakerBio, widget: text, required: false }
       - { label: "Organizer Name", name: organizer, widget: string, required: false }
       - { label: "Organizer Logo", name: organizerLogo, widget: image, required: false }
+      - { label: "Date Range Display (e.g. 4–10, PDC only)", name: dateRange, widget: string, required: false }
+      - label: "Course Highlights (PDC only)"
+        name: highlights
+        widget: list
+        required: false
+        field: { label: "Highlight", name: text, widget: string }

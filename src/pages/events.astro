@@ -53,6 +53,62 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
           : '';
         const speakerInitial = d.speakerName?.charAt(0) ?? '?';
 
+        if (d.template === 'pdc') return (
+          <div class="ev-card ev-card-pdc">
+            <div class="ev-pdc-left">
+              <div class="ev-card-badge-row">
+                <span class="ev-badge ev-badge-pdc-course">7-DAY COURSE</span>
+                {!d.isFree && <span class="ev-badge ev-badge-pdc-paid">PAID</span>}
+                {!d.isOnline && <span class="ev-badge ev-badge-pdc-loc">📍 IN PERSON</span>}
+              </div>
+              <p class="ev-pdc-schedule">{d.schedule}</p>
+              <h2 class="ev-pdc-title">{d.title}</h2>
+              {d.description && <p class="ev-pdc-desc">{d.description}</p>}
+              {d.highlights && d.highlights.length > 0 && (
+                <ul class="ev-pdc-highlights">
+                  {d.highlights.map((h: string) => (
+                    <li class="ev-pdc-highlight-item">
+                      <span class="ev-pdc-check">✦</span>
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {d.notes && <p class="ev-pdc-note">{d.notes}</p>}
+              {d.ctaUrl && (
+                <a href={d.ctaUrl} target="_blank" rel="noopener" class="ev-cta ev-cta-pdc">
+                  {d.ctaLabel ?? 'Register Now'}
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              )}
+            </div>
+
+            <div class="ev-pdc-right">
+              <div class="ev-pdc-date-block">
+                <span class="ev-pdc-date-range">{d.dateRange ?? dateDay}</span>
+                <span class="ev-pdc-date-mo">{dateMo}</span>
+              </div>
+              {d.location && (
+                <div class="ev-pdc-location">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+                  <span>{d.location}</span>
+                </div>
+              )}
+              {d.organizerLogo && (
+                <div class="ev-pdc-logo-wrap">
+                  <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-pdc-logo" />
+                </div>
+              )}
+              {d.organizer && (
+                <div class="ev-pdc-org">
+                  <span class="ev-pdc-presents">PRESENTED BY</span>
+                  <span class="ev-pdc-org-name">{d.organizer}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
         if (d.template === 'kapihan') return (
           <div class="ev-card ev-card-kapihan">
             <div class="ev-card-body">
@@ -261,6 +317,141 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 /* ─── Card Shell ─────────────────────────────────────────── */
 .ev-card { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.12); }
 
+/* ─── Card: PDC Course ───────────────────────────────────── */
+.ev-card-pdc {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  min-height: 480px;
+  background: #FBF0E6;
+  position: relative;
+  overflow: hidden;
+}
+.ev-card-pdc::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at -10% 120%, rgba(197,106,88,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 110% -10%, rgba(107,127,74,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ev-pdc-left {
+  position: relative; z-index: 1;
+  padding: 48px 52px;
+  display: flex; flex-direction: column; gap: 0;
+  border-right: 1px solid rgba(197,106,88,0.15);
+}
+
+.ev-badge-pdc-course { background: rgba(197,106,88,0.12); color: #C56A58; border: 1px solid rgba(197,106,88,0.3); }
+.ev-badge-pdc-paid   { background: rgba(107,127,74,0.1);  color: #5A6E3A; border: 1px solid rgba(107,127,74,0.28); }
+.ev-badge-pdc-loc    { background: rgba(245,168,48,0.1);  color: #9A6A10; border: 1px solid rgba(245,168,48,0.25); }
+
+.ev-pdc-schedule {
+  font-family: var(--font-inter);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #C56A58; margin-bottom: 10px; margin-top: 20px;
+}
+
+.ev-pdc-title {
+  font-family: var(--font-outfit);
+  font-size: clamp(2rem, 3.2vw, 2.9rem);
+  font-weight: 800; color: #2A1A0E;
+  line-height: 1.05; letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+
+.ev-pdc-desc {
+  font-family: var(--font-lora);
+  font-size: 1rem; color: #6B4A34;
+  line-height: 1.7; margin-bottom: 24px; max-width: 480px;
+}
+
+.ev-pdc-highlights {
+  list-style: none; padding: 0; margin: 0 0 24px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.ev-pdc-highlight-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-family: var(--font-outfit); font-size: 0.95rem; color: #3A2210; line-height: 1.4;
+}
+.ev-pdc-check {
+  color: #6B7F4A; font-size: 0.7rem; flex-shrink: 0; margin-top: 3px; opacity: 0.85;
+}
+
+.ev-pdc-note {
+  font-family: var(--font-inter);
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+  color: #C56A58; text-transform: uppercase;
+  margin-bottom: 28px;
+  padding: 10px 16px;
+  background: rgba(197,106,88,0.08);
+  border-left: 3px solid #C56A58;
+  border-radius: 0 6px 6px 0;
+}
+
+.ev-cta-pdc {
+  background: #C56A58; color: #FBF0E6;
+  box-shadow: 0 4px 20px rgba(197,106,88,0.35);
+}
+.ev-cta-pdc:hover {
+  background: #AD5644; transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(197,106,88,0.45);
+}
+
+.ev-pdc-right {
+  position: relative; z-index: 1;
+  background: #C56A58;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px; padding: 40px 28px;
+}
+
+.ev-pdc-date-block {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px; padding: 20px 32px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.ev-pdc-date-range {
+  font-family: var(--font-lora);
+  font-size: 3.2rem; font-weight: 700; color: #fff;
+  line-height: 1; letter-spacing: -0.03em;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.ev-pdc-date-mo {
+  font-family: var(--font-inter);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+}
+
+.ev-pdc-location {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-family: var(--font-outfit); font-size: 0.78rem;
+  color: rgba(255,255,255,0.85); line-height: 1.5; text-align: center;
+  max-width: 200px;
+}
+.ev-pdc-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(255,255,255,0.7); }
+
+.ev-pdc-logo-wrap {
+  width: 110px; height: 110px; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.2);
+}
+.ev-pdc-logo { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.ev-pdc-org { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.ev-pdc-presents {
+  font-family: var(--font-inter); font-size: 0.55rem;
+  font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+.ev-pdc-org-name {
+  font-family: var(--font-lora); font-size: 0.9rem;
+  font-weight: 700; color: #fff; text-align: center;
+}
+
 /* ─── Card: Perma-Kapihan ────────────────────────────────── */
 .ev-card-kapihan { display: grid; grid-template-columns: 1fr 420px; min-height: 500px; background: #1C2E18; }
 
@@ -434,6 +625,8 @@ details[open] .ev-bio-toggle::after { content: '−'; }
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1000px) {
+  .ev-card-pdc { grid-template-columns: 1fr; }
+  .ev-pdc-right { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 32px 28px; }
   .ev-card-kapihan { grid-template-columns: 1fr; }
   .ev-card-img-wrap { height: 300px; }
   .ev-card-img-overlay { background: linear-gradient(to bottom, #1C2E18 0%, transparent 40%); }
