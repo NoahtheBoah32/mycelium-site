@@ -213,8 +213,8 @@ const featuredVideos = videos.slice(0, 3);
 .mission-body { font-family: var(--font-lora); font-size: 1.25rem; font-weight: 500; color: #D2CEC8; line-height: 1.44; max-width: 910px; margin: 0 auto; }
 .stats { background: #2B2F31; padding: 96px 40px; }
 .stats .eyebrow-label { margin-bottom: 40px; }
-.stats-row { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
-.stat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 180px; }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 720px; margin: 0 auto; }
+.stat-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .stat-number { font-family: var(--font-lora); font-size: clamp(2.5rem, 5vw, 3.75rem); font-weight: 500; color: #fff; line-height: 1; letter-spacing: -0.02em; }
 .stat-label { font-family: var(--font-outfit); font-size: 1rem; color: #D2CEC8; text-align: center; max-width: 160px; line-height: 1.4; }
 .founder { background: #2F2A1F; padding: 120px 40px; }
