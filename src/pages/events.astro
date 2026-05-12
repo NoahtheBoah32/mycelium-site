@@ -189,53 +189,54 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         if (d.template === 'workshop') return (
           <div class="ev-card ev-card-workshop" data-partner={d.partner || undefined}>
 
-            {/* Left page: date + time + big QR */}
-            <div class="ev-ws-left">
-              <div class="ev-ws-left-datebox">
-                <span class="ev-ws-left-label">DATE</span>
-                <span class="ev-ws-left-day">{dateDay}</span>
-                <span class="ev-ws-left-mo">{dateMo}</span>
-              </div>
-              <div class="ev-ws-left-timebox">
-                <span class="ev-ws-left-label">TIME</span>
-                <span class="ev-ws-left-time">{d.time}</span>
-              </div>
-              <div class="ev-ws-qr">
-                <img src="/images/events/design-thinking-qr.jpg" alt="Scan to register" class="ev-ws-qr-img" />
-                <span class="ev-ws-qr-label">SCAN TO REGISTER</span>
-              </div>
-            </div>
+            {/* Color Flora gradient bg + poster as subtle texture */}
+            <img src={d.image ?? '/images/events/design-thinking-bg.jpg'} aria-hidden="true" class="ev-ws-poster-bg" />
 
-            {/* Center: poster as the "book cover" */}
-            <div class="ev-ws-center">
-              <img src={d.image ?? '/images/events/design-thinking-bg.jpg'} alt="Event poster" class="ev-ws-center-img" loading="lazy" />
-            </div>
+            <div class="ev-ws-content">
 
-            {/* Right page: full event details */}
-            <div class="ev-ws-right">
-              <div class="ev-ws-badges">
-                <span class="ev-badge ev-badge-ws-type">WORKSHOP</span>
-                {!d.isFree && <span class="ev-badge ev-badge-ws-paid">PAID</span>}
-                {!d.isOnline && <span class="ev-badge ev-badge-ws-loc">IN PERSON</span>}
-              </div>
-              {d.schedule && <p class="ev-ws-schedule">{d.schedule}</p>}
-              <h2 class="ev-ws-title">{d.title}</h2>
-              {d.description && <p class="ev-ws-desc">{d.description}</p>}
-              <div class="ev-ws-footer">
-                {d.organizerLogo && <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-ws-footer-logo" />}
-                <div class="ev-ws-footer-org">
-                  <span class="ev-ws-presents">PRESENTED BY</span>
-                  <span class="ev-ws-org-name">{d.organizer}</span>
+              {/* Left glass panel: date + QR */}
+              <div class="ev-ws-left">
+                <div class="ev-ws-left-datebox">
+                  <span class="ev-ws-left-label">DATE</span>
+                  <span class="ev-ws-left-day">{dateDay}</span>
+                  <span class="ev-ws-left-mo">{dateMo}</span>
                 </div>
-                {d.location && (
-                  <div class="ev-ws-location">
-                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
-                    <span>{d.location}</span>
-                  </div>
-                )}
+                <div class="ev-ws-left-timebox">
+                  <span class="ev-ws-left-label">TIME</span>
+                  <span class="ev-ws-left-time">{d.time}</span>
+                </div>
+                <div class="ev-ws-qr">
+                  <img src="/images/events/design-thinking-qr.jpg" alt="Scan to register" class="ev-ws-qr-img" />
+                  <span class="ev-ws-qr-label">SCAN TO REGISTER</span>
+                </div>
               </div>
-            </div>
 
+              {/* Right glass panel: event details */}
+              <div class="ev-ws-right">
+                <div class="ev-ws-badges">
+                  <span class="ev-badge ev-badge-ws-type">WORKSHOP</span>
+                  {!d.isFree && <span class="ev-badge ev-badge-ws-paid">PAID</span>}
+                  {!d.isOnline && <span class="ev-badge ev-badge-ws-loc">IN PERSON</span>}
+                </div>
+                {d.schedule && <p class="ev-ws-schedule">{d.schedule}</p>}
+                <h2 class="ev-ws-title">{d.title}</h2>
+                {d.description && <p class="ev-ws-desc">{d.description}</p>}
+                <div class="ev-ws-footer">
+                  {d.organizerLogo && <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-ws-footer-logo" />}
+                  <div class="ev-ws-footer-org">
+                    <span class="ev-ws-presents">PRESENTED BY</span>
+                    <span class="ev-ws-org-name">{d.organizer}</span>
+                  </div>
+                  {d.location && (
+                    <div class="ev-ws-location">
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+                      <span>{d.location}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+            </div>
           </div>
         );
 
@@ -770,118 +771,111 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
 }
 .ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
 
-/* ─── Card: Workshop — open-book 3-column layout ─────────── */
+/* ─── Card: Workshop — glassmorphism over Color Flora bg ──── */
 .ev-card-workshop {
-  display: grid;
-  grid-template-columns: 220px 1fr 1fr;
-  min-height: 540px;
-  border-radius: 16px; overflow: hidden;
+  position: relative; isolation: isolate;
+  min-height: 460px; border-radius: 16px; overflow: hidden;
+  /* Color Flora gradient: dark olive → warm amber → olive */
+  background: linear-gradient(140deg, #2B2E12 0%, #6B3A0A 52%, #3A3C18 100%);
 }
 
-/* ── Left page: date + time + QR — dark olive ── */
-.ev-ws-left {
-  background: #3D4220;
-  padding: 44px 28px;
-  display: flex; flex-direction: column; align-items: center;
-  gap: 28px; position: relative;
+/* Poster as ghost texture in bg */
+.ev-ws-poster-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 38%;
+  opacity: 0.12; display: block; pointer-events: none;
+  mix-blend-mode: luminosity;
 }
-.ev-ws-left::after {
-  content: ''; position: absolute; inset-block: 0; right: 0; width: 44px;
-  background: linear-gradient(to left, rgba(20,22,8,0.35), transparent);
-  pointer-events: none;
+
+/* Content grid floats over bg */
+.ev-ws-content {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 196px 1fr;
+  min-height: 460px; padding: 24px; gap: 18px; align-items: stretch;
+}
+
+/* ── Left glass: date + QR ── */
+.ev-ws-left {
+  background: rgba(43,46,18,0.55);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(240,194,48,0.22);
+  border-radius: 12px; padding: 28px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  box-shadow: inset 0 1px 0 rgba(240,194,48,0.12), 0 8px 32px rgba(0,0,0,0.25);
 }
 .ev-ws-left-datebox { text-align: center; }
 .ev-ws-left-timebox { text-align: center; }
 .ev-ws-left-label {
-  display: block; font-family: var(--font-inter); font-size: 0.52rem; font-weight: 800;
-  letter-spacing: 0.24em; text-transform: uppercase; color: rgba(240,194,48,0.55); margin-bottom: 4px;
+  display: block; font-family: var(--font-inter); font-size: 0.5rem; font-weight: 800;
+  letter-spacing: 0.26em; text-transform: uppercase; color: rgba(240,194,48,0.5); margin-bottom: 4px;
 }
 .ev-ws-left-day {
-  display: block; font-family: var(--font-lora); font-size: 4rem; font-weight: 700;
+  display: block; font-family: var(--font-lora); font-size: 3.8rem; font-weight: 700;
   color: #F0C230; line-height: 1; letter-spacing: -0.04em;
 }
 .ev-ws-left-mo {
-  display: block; font-family: var(--font-inter); font-size: 0.62rem; font-weight: 700;
-  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,194,48,0.75); margin-top: 2px;
+  display: block; font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,194,48,0.7); margin-top: 3px;
 }
 .ev-ws-left-time {
-  display: block; font-family: var(--font-outfit); font-size: 0.82rem; font-weight: 700;
-  color: rgba(255,255,255,0.7); line-height: 1.35;
+  display: block; font-family: var(--font-outfit); font-size: 0.8rem; font-weight: 600;
+  color: rgba(255,255,255,0.65); line-height: 1.4;
 }
 .ev-ws-qr { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: auto; }
 .ev-ws-qr-img {
-  width: 148px; height: 148px; object-fit: cover; display: block;
-  border-radius: 10px; border: 3px solid rgba(240,194,48,0.4);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  width: 144px; height: 144px; object-fit: cover; display: block;
+  border-radius: 10px; border: 2px solid rgba(240,194,48,0.35);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 4px rgba(240,194,48,0.08);
 }
 .ev-ws-qr-label {
-  font-family: var(--font-inter); font-size: 0.5rem; font-weight: 800;
-  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,194,48,0.55);
+  font-family: var(--font-inter); font-size: 0.48rem; font-weight: 800;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,194,48,0.5);
 }
 
-/* ── Center: poster as book cover ── */
-.ev-ws-center { position: relative; overflow: hidden; background: #EDE0C0; }
-.ev-ws-center-img {
-  width: 100%; height: 100%; object-fit: cover;
-  object-position: 50% 38%; display: block;
-}
-.ev-ws-center::before {
-  content: ''; position: absolute; inset-block: 0; left: 0; width: 36px; z-index: 1;
-  background: linear-gradient(to right, rgba(20,22,8,0.3), transparent);
-  pointer-events: none;
-}
-.ev-ws-center::after {
-  content: ''; position: absolute; inset-block: 0; right: 0; width: 36px; z-index: 1;
-  background: linear-gradient(to left, rgba(180,100,20,0.25), transparent);
-  pointer-events: none;
-}
-
-/* ── Right page: event details — golden yellow ── */
+/* ── Right glass: event details ── */
 .ev-ws-right {
-  background: #F0C230;
-  padding: 44px 48px;
-  display: flex; flex-direction: column; position: relative;
+  background: rgba(15,12,4,0.5);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(240,194,48,0.14);
+  border-radius: 12px; padding: 32px 36px;
+  display: flex; flex-direction: column;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.2);
 }
-.ev-ws-right::before {
-  content: ''; position: absolute; inset-block: 0; left: 0; width: 44px;
-  background: linear-gradient(to right, rgba(180,100,20,0.22), transparent);
-  pointer-events: none;
-}
-.ev-ws-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-.ev-badge-ws-type { background: rgba(61,66,32,0.18); color: #2A2E10; border: 1px solid rgba(61,66,32,0.35); }
-.ev-badge-ws-paid { background: rgba(61,66,32,0.13); color: #353818; border: 1px solid rgba(61,66,32,0.28); }
-.ev-badge-ws-loc  { background: rgba(61,66,32,0.1); color: #3A3E18; border: 1px solid rgba(61,66,32,0.22); }
+.ev-ws-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.ev-badge-ws-type { background: rgba(240,194,48,0.14); color: #E8B830; border: 1px solid rgba(240,194,48,0.3); }
+.ev-badge-ws-paid { background: rgba(200,120,48,0.14); color: #C87838; border: 1px solid rgba(200,120,48,0.3); }
+.ev-badge-ws-loc  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.14); }
 .ev-ws-schedule {
-  font-family: var(--font-inter); font-size: 0.66rem; font-weight: 800;
-  letter-spacing: 0.18em; text-transform: uppercase; color: #5A4010; margin-bottom: 12px;
+  font-family: var(--font-inter); font-size: 0.65rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; color: #C87838; margin-bottom: 12px;
 }
 .ev-ws-title {
-  font-family: var(--font-outfit); font-size: clamp(1.4rem, 1.8vw, 2.1rem);
-  font-weight: 900; color: #1E2008; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 14px;
+  font-family: var(--font-outfit); font-size: clamp(1.4rem, 1.9vw, 2.2rem);
+  font-weight: 900; color: #F8EDD8; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 12px;
 }
 .ev-ws-desc {
   font-family: var(--font-outfit); font-size: 0.86rem;
-  color: rgba(30,32,8,0.65); line-height: 1.65; margin-bottom: 0;
+  color: rgba(248,237,216,0.52); line-height: 1.65; margin-bottom: 0;
 }
 .ev-ws-footer {
   display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(30,32,8,0.18);
+  margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(240,194,48,0.12);
 }
 .ev-ws-footer-logo {
-  width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(30,32,8,0.2);
+  width: 38px; height: 38px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(240,194,48,0.25), 0 3px 10px rgba(0,0,0,0.4);
 }
 .ev-ws-footer-org { display: flex; flex-direction: column; gap: 2px; }
 .ev-ws-presents {
   font-family: var(--font-inter); font-size: 0.46rem; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(30,32,8,0.45);
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,194,48,0.45);
 }
-.ev-ws-org-name { font-family: var(--font-lora); font-size: 0.85rem; font-weight: 700; color: #1E2008; }
+.ev-ws-org-name { font-family: var(--font-lora); font-size: 0.85rem; font-weight: 700; color: rgba(248,237,216,0.88); }
 .ev-ws-location {
   display: flex; align-items: flex-start; gap: 5px;
-  font-family: var(--font-outfit); font-size: 0.74rem; color: rgba(30,32,8,0.55);
+  font-family: var(--font-outfit); font-size: 0.74rem; color: rgba(248,237,216,0.4);
 }
-.ev-ws-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(61,66,32,0.7); }
+.ev-ws-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(200,120,48,0.7); }
 
 /* ─── Coming Soon ────────────────────────────────────────── */
 .ev-card-soon { position: relative; min-height: 480px; display: flex; align-items: stretch; overflow: hidden; isolation: isolate; }
@@ -932,13 +926,10 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
   .ev-card-img-wrap { height: 300px; }
   .ev-card-img-overlay { background: linear-gradient(to bottom, transparent 60%, #1C2E18 100%); }
   .ev-kapihan-overlay { background: linear-gradient(to bottom, transparent 60%, #1C2E18 100%); }
-  .ev-card-workshop { grid-template-columns: 1fr; }
-  .ev-ws-left { flex-direction: row; flex-wrap: wrap; justify-content: space-between; padding: 24px 28px; gap: 16px; }
-  .ev-ws-left::after { display: none; }
+  .ev-ws-content { grid-template-columns: 1fr; min-height: unset; }
+  .ev-ws-left { flex-direction: row; flex-wrap: wrap; justify-content: space-between; padding: 20px 24px; gap: 16px; }
   .ev-ws-qr { margin-top: 0; }
-  .ev-ws-center { min-height: 260px; }
-  .ev-ws-right { padding: 32px 28px; }
-  .ev-ws-right::before { display: none; }
+  .ev-ws-right { padding: 24px 28px; }
   .ev-bag-content { padding: 28px 28px; }
   .ev-bag-headline { font-size: clamp(1.8rem, 5vw, 2.4rem); }
   .ev-soon-content { grid-template-columns: 1fr; }
