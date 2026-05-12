@@ -135,6 +135,16 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 
         if (d.template === 'kapihan') return (
           <div class="ev-card ev-card-kapihan" data-partner={d.partner || undefined}>
+            {d.image && (
+              <div class="ev-card-img-wrap ev-kapihan-img">
+                <img src={d.image} alt={d.title} loading="lazy" />
+                <div class="ev-card-img-overlay ev-kapihan-overlay"></div>
+                <div class="ev-card-img-tag">
+                  <span class="ev-img-tag-num">☕</span>
+                  <span class="ev-img-tag-label">Weekly Gathering</span>
+                </div>
+              </div>
+            )}
             <div class="ev-card-body">
               <div class="ev-card-badge-row">
                 {d.isRecurring && <span class="ev-badge ev-badge-recurring">↺ RECURRING</span>}
@@ -173,16 +183,6 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
                 </a>
               )}
             </div>
-            {d.image && (
-              <div class="ev-card-img-wrap">
-                <img src={d.image} alt={d.title} loading="lazy" />
-                <div class="ev-card-img-overlay"></div>
-                <div class="ev-card-img-tag">
-                  <span class="ev-img-tag-num">☕</span>
-                  <span class="ev-img-tag-label">Weekly Gathering</span>
-                </div>
-              </div>
-            )}
           </div>
         );
 
@@ -222,9 +222,10 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
               </div>
             </div>
 
-            {/* Right: full poster shown contained, centered in cream panel */}
+            {/* Right: poster image as background texture, stages section visible */}
             <div class="ev-ws-img-panel">
-              <img src={d.image ?? '/images/events/design-thinking-bg.jpg'} alt="Event poster" class="ev-ws-img" loading="lazy" />
+              <img src={d.image ?? '/images/events/design-thinking-bg.jpg'} alt="" class="ev-ws-img" loading="lazy" />
+              <div class="ev-ws-img-fade"></div>
             </div>
 
           </div>
@@ -362,7 +363,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 
 /* ─── Events Section ─────────────────────────────────────── */
 .ev-section {
-  background: #EDF2EE;
+  background: #FAFAF8;
   padding: 60px 40px 80px;
   position: relative;
   overflow: hidden;
@@ -591,7 +592,8 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 }
 
 /* ─── Card: Perma-Kapihan ────────────────────────────────── */
-.ev-card-kapihan { display: grid; grid-template-columns: 1fr 420px; min-height: 500px; background: #1C2E18; }
+/* image LEFT, content RIGHT — opposite direction from PDC */
+.ev-card-kapihan { display: grid; grid-template-columns: 400px 1fr; min-height: 500px; background: #1C2E18; }
 
 .ev-card-body { padding: 52px 56px; display: flex; flex-direction: column; gap: 0; }
 
@@ -619,6 +621,8 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 .ev-card-img-wrap { position: relative; overflow: hidden; }
 .ev-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .ev-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to right, #1C2E18 0%, transparent 35%); }
+/* Kapihan: image is LEFT, so fade bleeds rightward into content */
+.ev-kapihan-overlay { background: linear-gradient(to left, #1C2E18 0%, transparent 35%); }
 .ev-card-img-tag { position: absolute; bottom: 24px; right: 24px; background: rgba(28,46,24,0.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 16px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .ev-img-tag-num { font-size: 1.4rem; line-height: 1; }
 .ev-img-tag-label { font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
@@ -821,15 +825,15 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
   letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,168,64,0.65);
 }
 
-/* Right: cream panel, full poster centered + contained */
-.ev-ws-img-panel {
-  background: #EDE4D4;
-  display: flex; align-items: center; justify-content: center;
-  padding: 20px 16px; overflow: hidden;
-}
-.ev-ws-img {
-  width: auto; height: 100%; max-width: 100%; max-height: 100%;
-  object-fit: contain; display: block;
+/* Right: poster as integrated background — stages section visible through amber overlay */
+.ev-ws-img-panel { position: relative; overflow: hidden; }
+.ev-ws-img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; display: block; }
+.ev-ws-img-fade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, #261806 0%, rgba(38,24,6,0.55) 28%, rgba(38,24,6,0.15) 100%),
+    linear-gradient(to bottom, rgba(38,24,6,0.3) 0%, transparent 30%, transparent 70%, rgba(38,24,6,0.5) 100%);
+  mix-blend-mode: multiply;
 }
 
 /* ─── Coming Soon ────────────────────────────────────────── */
@@ -879,11 +883,11 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
   .ev-pdc-highlights { grid-template-columns: 1fr; }
   .ev-card-kapihan { grid-template-columns: 1fr; }
   .ev-card-img-wrap { height: 300px; }
+  .ev-card-img-overlay { background: linear-gradient(to bottom, transparent 60%, #1C2E18 100%); }
+  .ev-kapihan-overlay { background: linear-gradient(to bottom, transparent 60%, #1C2E18 100%); }
   .ev-card-workshop { grid-template-columns: 1fr; }
-  .ev-ws-img-panel { height: 320px; padding: 16px; }
-  .ev-ws-img { width: 100%; height: 100%; object-fit: contain; }
+  .ev-ws-img-panel { min-height: 260px; }
   .ev-ws-panel { padding: 36px 32px; }
-  .ev-card-img-overlay { background: linear-gradient(to bottom, #1C2E18 0%, transparent 40%); }
   .ev-bag-content { padding: 28px 28px; }
   .ev-bag-headline { font-size: clamp(1.8rem, 5vw, 2.4rem); }
   .ev-soon-content { grid-template-columns: 1fr; }
