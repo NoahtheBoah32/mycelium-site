@@ -189,43 +189,51 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         if (d.template === 'workshop') return (
           <div class="ev-card ev-card-workshop" data-partner={d.partner || undefined}>
 
-            {/* Left: warm amber content panel */}
-            <div class="ev-ws-panel">
+            {/* Left page: date + time + big QR */}
+            <div class="ev-ws-left">
+              <div class="ev-ws-left-datebox">
+                <span class="ev-ws-left-label">DATE</span>
+                <span class="ev-ws-left-day">{dateDay}</span>
+                <span class="ev-ws-left-mo">{dateMo}</span>
+              </div>
+              <div class="ev-ws-left-timebox">
+                <span class="ev-ws-left-label">TIME</span>
+                <span class="ev-ws-left-time">{d.time}</span>
+              </div>
+              <div class="ev-ws-qr">
+                <img src="/images/events/design-thinking-qr.jpg" alt="Scan to register" class="ev-ws-qr-img" />
+                <span class="ev-ws-qr-label">SCAN TO REGISTER</span>
+              </div>
+            </div>
+
+            {/* Center: poster as the "book cover" */}
+            <div class="ev-ws-center">
+              <img src={d.image ?? '/images/events/design-thinking-bg.jpg'} alt="Event poster" class="ev-ws-center-img" loading="lazy" />
+            </div>
+
+            {/* Right page: full event details */}
+            <div class="ev-ws-right">
               <div class="ev-ws-badges">
                 <span class="ev-badge ev-badge-ws-type">WORKSHOP</span>
                 {!d.isFree && <span class="ev-badge ev-badge-ws-paid">PAID</span>}
                 {!d.isOnline && <span class="ev-badge ev-badge-ws-loc">IN PERSON</span>}
               </div>
-
               {d.schedule && <p class="ev-ws-schedule">{d.schedule}</p>}
               <h2 class="ev-ws-title">{d.title}</h2>
               {d.description && <p class="ev-ws-desc">{d.description}</p>}
-
               <div class="ev-ws-footer">
-                <div class="ev-ws-footer-left">
-                  {d.organizerLogo && <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-ws-footer-logo" />}
-                  <div class="ev-ws-footer-org">
-                    <span class="ev-ws-presents">PRESENTED BY</span>
-                    <span class="ev-ws-org-name">{d.organizer}</span>
+                {d.organizerLogo && <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-ws-footer-logo" />}
+                <div class="ev-ws-footer-org">
+                  <span class="ev-ws-presents">PRESENTED BY</span>
+                  <span class="ev-ws-org-name">{d.organizer}</span>
+                </div>
+                {d.location && (
+                  <div class="ev-ws-location">
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+                    <span>{d.location}</span>
                   </div>
-                  {d.location && (
-                    <div class="ev-ws-location">
-                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
-                      <span>{d.location}</span>
-                    </div>
-                  )}
-                </div>
-                <div class="ev-ws-qr">
-                  <img src="/images/events/design-thinking-qr.jpg" alt="Scan to register" class="ev-ws-qr-img" />
-                  <span class="ev-ws-qr-label">SCAN TO REGISTER</span>
-                </div>
+                )}
               </div>
-            </div>
-
-            {/* Right: poster image as background texture, stages section visible */}
-            <div class="ev-ws-img-panel">
-              <img src={d.image ?? '/images/events/design-thinking-bg.jpg'} alt="" class="ev-ws-img" loading="lazy" />
-              <div class="ev-ws-img-fade"></div>
             </div>
 
           </div>
@@ -762,79 +770,121 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
 }
 .ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
 
-/* ─── Card: Workshop ────────────────────────────────────── */
+/* ─── Card: Workshop — open-book 3-column layout ─────────── */
 .ev-card-workshop {
-  display: grid; grid-template-columns: 1fr 38%;
-  min-height: 520px; border-radius: 16px; overflow: hidden;
+  display: grid;
+  grid-template-columns: 220px 1fr 1fr;
+  min-height: 540px;
+  border-radius: 16px; overflow: hidden;
 }
 
-/* Left: warm dark amber content panel */
-.ev-ws-panel {
-  background: linear-gradient(160deg, #261806 0%, #2E1E08 60%, #261A06 100%);
-  padding: 48px 52px; display: flex; flex-direction: column; gap: 0;
+/* ── Left page: date + time + QR ── */
+.ev-ws-left {
+  background: #E2C98A;
+  padding: 44px 28px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 28px; position: relative;
 }
-
-.ev-ws-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-.ev-badge-ws-type { background: rgba(232,168,64,0.18); color: #E8A840; border: 1px solid rgba(232,168,64,0.35); }
-.ev-badge-ws-paid { background: rgba(200,120,64,0.14); color: #C87840; border: 1px solid rgba(200,120,64,0.3); }
-.ev-badge-ws-loc  { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.12); }
-
-.ev-ws-schedule {
-  font-family: var(--font-inter); font-size: 0.68rem; font-weight: 800;
-  letter-spacing: 0.18em; text-transform: uppercase; color: #C87840; margin-bottom: 12px;
+/* Book shadow — right edge of left page */
+.ev-ws-left::after {
+  content: ''; position: absolute; inset-block: 0; right: 0; width: 44px;
+  background: linear-gradient(to left, rgba(60,30,4,0.22), transparent);
+  pointer-events: none;
 }
-.ev-ws-title {
-  font-family: var(--font-outfit); font-size: clamp(1.7rem, 2.2vw, 2.5rem);
-  font-weight: 900; color: #F8EDD8; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 14px;
+.ev-ws-left-datebox { text-align: center; }
+.ev-ws-left-timebox { text-align: center; }
+.ev-ws-left-label {
+  display: block; font-family: var(--font-inter); font-size: 0.52rem; font-weight: 800;
+  letter-spacing: 0.24em; text-transform: uppercase; color: rgba(60,30,4,0.45); margin-bottom: 4px;
 }
-.ev-ws-desc {
-  font-family: var(--font-outfit); font-size: 0.88rem;
-  color: rgba(248,237,216,0.52); line-height: 1.65; max-width: 480px; margin-bottom: 0;
+.ev-ws-left-day {
+  display: block; font-family: var(--font-lora); font-size: 4rem; font-weight: 700;
+  color: #3C1E04; line-height: 1; letter-spacing: -0.04em;
 }
-
-.ev-ws-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap; margin-top: auto;
-  padding-top: 22px; border-top: 1px solid rgba(232,168,64,0.15);
+.ev-ws-left-mo {
+  display: block; font-family: var(--font-inter); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(60,30,4,0.55); margin-top: 2px;
 }
-.ev-ws-footer-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.ev-ws-footer-logo {
-  width: 42px; height: 42px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(232,168,64,0.3), 0 3px 10px rgba(0,0,0,0.4);
+.ev-ws-left-time {
+  display: block; font-family: var(--font-outfit); font-size: 0.82rem; font-weight: 700;
+  color: #6A3810; line-height: 1.35;
 }
-.ev-ws-footer-org { display: flex; flex-direction: column; gap: 2px; }
-.ev-ws-presents {
-  font-family: var(--font-inter); font-size: 0.48rem; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,168,64,0.5);
-}
-.ev-ws-org-name { font-family: var(--font-lora); font-size: 0.85rem; font-weight: 700; color: rgba(248,237,216,0.88); }
-.ev-ws-location {
-  display: flex; align-items: flex-start; gap: 5px;
-  font-family: var(--font-outfit); font-size: 0.75rem; color: rgba(248,237,216,0.38);
-}
-.ev-ws-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(200,120,64,0.65); }
-
-.ev-ws-qr { display: flex; flex-direction: column; align-items: center; gap: 7px; flex-shrink: 0; }
+.ev-ws-qr { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: auto; }
 .ev-ws-qr-img {
-  width: 88px; height: 88px; object-fit: cover;
-  border-radius: 8px; border: 2px solid rgba(232,168,64,0.4);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  width: 148px; height: 148px; object-fit: cover; display: block;
+  border-radius: 10px; border: 3px solid rgba(60,30,4,0.18);
+  box-shadow: 0 4px 16px rgba(60,30,4,0.2);
 }
 .ev-ws-qr-label {
   font-family: var(--font-inter); font-size: 0.5rem; font-weight: 800;
-  letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,168,64,0.65);
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(60,30,4,0.45);
 }
 
-/* Right: poster as integrated background — stages section visible through amber overlay */
-.ev-ws-img-panel { position: relative; overflow: hidden; }
-.ev-ws-img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; display: block; }
-.ev-ws-img-fade {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to right, #261806 0%, rgba(38,24,6,0.55) 28%, rgba(38,24,6,0.15) 100%),
-    linear-gradient(to bottom, rgba(38,24,6,0.3) 0%, transparent 30%, transparent 70%, rgba(38,24,6,0.5) 100%);
-  mix-blend-mode: multiply;
+/* ── Center: poster as book cover ── */
+.ev-ws-center { position: relative; overflow: hidden; background: #F0E8D8; }
+.ev-ws-center-img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: 50% 38%; display: block;
 }
+/* Spine shadows inward on both edges */
+.ev-ws-center::before {
+  content: ''; position: absolute; inset-block: 0; left: 0; width: 36px; z-index: 1;
+  background: linear-gradient(to right, rgba(60,30,4,0.28), transparent);
+  pointer-events: none;
+}
+.ev-ws-center::after {
+  content: ''; position: absolute; inset-block: 0; right: 0; width: 36px; z-index: 1;
+  background: linear-gradient(to left, rgba(60,30,4,0.28), transparent);
+  pointer-events: none;
+}
+
+/* ── Right page: event details ── */
+.ev-ws-right {
+  background: #F0E4C4;
+  padding: 44px 48px;
+  display: flex; flex-direction: column; position: relative;
+}
+/* Book shadow — left edge of right page */
+.ev-ws-right::before {
+  content: ''; position: absolute; inset-block: 0; left: 0; width: 44px;
+  background: linear-gradient(to right, rgba(60,30,4,0.18), transparent);
+  pointer-events: none;
+}
+.ev-ws-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.ev-badge-ws-type { background: rgba(192,96,16,0.16); color: #7A3808; border: 1px solid rgba(192,96,16,0.35); }
+.ev-badge-ws-paid { background: rgba(90,90,48,0.14); color: #3A3A18; border: 1px solid rgba(90,90,48,0.3); }
+.ev-badge-ws-loc  { background: rgba(90,90,48,0.1); color: #4A4A28; border: 1px solid rgba(90,90,48,0.22); }
+.ev-ws-schedule {
+  font-family: var(--font-inter); font-size: 0.66rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; color: #C07030; margin-bottom: 12px;
+}
+.ev-ws-title {
+  font-family: var(--font-outfit); font-size: clamp(1.4rem, 1.8vw, 2.1rem);
+  font-weight: 900; color: #2A1402; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.ev-ws-desc {
+  font-family: var(--font-outfit); font-size: 0.86rem;
+  color: rgba(42,20,2,0.58); line-height: 1.65; margin-bottom: 0;
+}
+.ev-ws-footer {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(42,20,2,0.12);
+}
+.ev-ws-footer-logo {
+  width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(60,30,4,0.18);
+}
+.ev-ws-footer-org { display: flex; flex-direction: column; gap: 2px; }
+.ev-ws-presents {
+  font-family: var(--font-inter); font-size: 0.46rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(42,20,2,0.38);
+}
+.ev-ws-org-name { font-family: var(--font-lora); font-size: 0.85rem; font-weight: 700; color: #2A1402; }
+.ev-ws-location {
+  display: flex; align-items: flex-start; gap: 5px;
+  font-family: var(--font-outfit); font-size: 0.74rem; color: rgba(42,20,2,0.48);
+}
+.ev-ws-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(192,96,16,0.6); }
 
 /* ─── Coming Soon ────────────────────────────────────────── */
 .ev-card-soon { position: relative; min-height: 480px; display: flex; align-items: stretch; overflow: hidden; isolation: isolate; }
@@ -886,8 +936,12 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
   .ev-card-img-overlay { background: linear-gradient(to bottom, transparent 60%, #1C2E18 100%); }
   .ev-kapihan-overlay { background: linear-gradient(to bottom, transparent 60%, #1C2E18 100%); }
   .ev-card-workshop { grid-template-columns: 1fr; }
-  .ev-ws-img-panel { min-height: 260px; }
-  .ev-ws-panel { padding: 36px 32px; }
+  .ev-ws-left { flex-direction: row; flex-wrap: wrap; justify-content: space-between; padding: 24px 28px; gap: 16px; }
+  .ev-ws-left::after { display: none; }
+  .ev-ws-qr { margin-top: 0; }
+  .ev-ws-center { min-height: 260px; }
+  .ev-ws-right { padding: 32px 28px; }
+  .ev-ws-right::before { display: none; }
   .ev-bag-content { padding: 28px 28px; }
   .ev-bag-headline { font-size: clamp(1.8rem, 5vw, 2.4rem); }
   .ev-soon-content { grid-template-columns: 1fr; }
