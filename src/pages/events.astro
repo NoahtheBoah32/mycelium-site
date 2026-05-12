@@ -182,79 +182,59 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 
         return (
           <div class="ev-card ev-card-bag" data-partner={d.partner || undefined}>
-            <div class="ev-bag-bg" aria-hidden="true">
-              <div class="ev-bag-blob ev-bag-blob-1"></div>
-              <div class="ev-bag-blob ev-bag-blob-2"></div>
-              <div class="ev-bag-blob ev-bag-blob-3"></div>
+            {/* Full-bleed editorial hero image */}
+            <div class="ev-bag-hero" aria-hidden="true">
+              <img src={d.image ?? '/images/events/bag-seed-bg.jpg'} alt="" class="ev-bag-hero-img" loading="lazy" />
+              <div class="ev-bag-hero-overlay"></div>
             </div>
-            <div class="ev-card-body ev-bag-body">
-              <div class="ev-card-badge-row">
-                {d.isOnline && <span class="ev-badge ev-badge-online">🌐 ONLINE</span>}
-                {d.isFree && <span class="ev-badge ev-badge-free">FREE ENTRY</span>}
-                <span class="ev-badge ev-badge-talk">TALK</span>
-              </div>
-              {d.schedule && <p class="ev-card-schedule ev-bag-schedule">{d.schedule}</p>}
-              <h2 class="ev-card-title ev-bag-title">{d.title}</h2>
 
-              <div class="ev-card-details ev-bag-details">
-                {d.time && (
-                  <div class="ev-detail">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                    <span>{d.time}</span>
-                  </div>
-                )}
-                {d.location && (
-                  <div class="ev-detail">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6h14" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="9.5" r="1" fill="currentColor"/></svg>
-                    <span>{d.location}</span>
+            {/* Content floated over image */}
+            <div class="ev-bag-content">
+
+              {/* Top row: badges left, organizer right */}
+              <div class="ev-bag-topbar">
+                <div class="ev-card-badge-row">
+                  {d.isOnline && <span class="ev-badge ev-badge-online">🌐 ONLINE</span>}
+                  {d.isFree && <span class="ev-badge ev-badge-free">FREE ENTRY</span>}
+                  <span class="ev-badge ev-badge-talk">TALK</span>
+                </div>
+                {d.organizer && (
+                  <div class="ev-bag-org-chip">
+                    {d.organizerLogo && <img src={d.organizerLogo} alt="" class="ev-bag-chip-logo" />}
+                    <span>{d.organizer}</span>
                   </div>
                 )}
               </div>
 
-              {d.speakerName && (
-                <div class="ev-speaker-block">
-                  <div class="ev-speaker-header">
-                    <div class="ev-speaker-avatar">{speakerInitial}</div>
-                    <div class="ev-speaker-meta">
-                      <span class="ev-speaker-name">{d.speakerName}</span>
-                      {d.speakerRole && <span class="ev-speaker-role">{d.speakerRole}</span>}
+              {/* Main title area */}
+              <div class="ev-bag-main">
+                {d.schedule && <p class="ev-bag-dateline">{d.schedule}</p>}
+                <h2 class="ev-bag-headline">{d.title}</h2>
+                {d.description && <p class="ev-bag-desc">{d.description}</p>}
+              </div>
+
+              {/* Bottom row: speaker + CTA */}
+              <div class="ev-bag-footer">
+                {d.speakerName && (
+                  <div class="ev-bag-speaker-chip">
+                    <div class="ev-bag-speaker-avatar">{speakerInitial}</div>
+                    <div class="ev-bag-speaker-info">
+                      <span class="ev-bag-speaker-name">{d.speakerName}</span>
+                      {d.speakerRole && <span class="ev-bag-speaker-role">{d.speakerRole}</span>}
                     </div>
                   </div>
-                  {d.speakerBio && (
-                    <details class="ev-bio-details">
-                      <summary class="ev-bio-toggle">About the Speaker</summary>
-                      <p class="ev-bio-text">{d.speakerBio}</p>
-                    </details>
+                )}
+                <div class="ev-bag-footer-right">
+                  {d.time && <span class="ev-bag-time">{d.time}</span>}
+                  {d.ctaUrl && (
+                    <a href={d.ctaUrl} class="ev-cta ev-cta-bag">
+                      {d.ctaLabel ?? 'Reserve Your Spot'}
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
                   )}
                 </div>
-              )}
+              </div>
 
-              {d.ctaUrl && (
-                <a href={d.ctaUrl} class="ev-cta ev-cta-bag">
-                  {d.ctaLabel ?? 'Reserve Your Spot'}
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-              )}
-            </div>
-
-            <div class="ev-bag-logo-panel">
-              {d.organizerLogo && (
-                <div class="ev-bag-logo-wrap">
-                  <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-bag-logo" />
-                </div>
-              )}
-              {d.organizer && (
-                <div class="ev-bag-org-info">
-                  <span class="ev-bag-presents">PRESENTED BY</span>
-                  <span class="ev-bag-org-name">{d.organizer}</span>
-                </div>
-              )}
-              {dateDay && (
-                <div class="ev-bag-date-block">
-                  <span class="ev-bag-date-num">{dateDay}</span>
-                  <span class="ev-bag-date-mo">{dateMo}</span>
-                </div>
-              )}
             </div>
           </div>
         );
@@ -363,7 +343,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 
 /* ─── Vines ──────────────────────────────────────────────── */
 .ev-vine { position: absolute; pointer-events: none; z-index: 1; }
-.ev-vine img { width: 100%; display: block; filter: invert(1); mix-blend-mode: screen; opacity: 0.45; }
+.ev-vine img { width: 100%; display: block; filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; opacity: 0.5; }
 .ev-vine-left { width: 1000px; top: 50%; left: -560px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
 .ev-vine-right { width: 1000px; top: 50%; right: -560px; transform: translateY(-50%) rotate(90deg); transform-origin: center center; }
 .ev-vine-top { width: 100%; top: 0; left: 0; transform: translateY(-74%); }
@@ -596,106 +576,105 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 .ev-img-tag-num { font-size: 1.4rem; line-height: 1; }
 .ev-img-tag-label { font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
 
-/* ─── Card: Baganihan Glass Talk ─────────────────────────── */
+/* ─── Card: Baganihan Talk — Editorial Poster ────────────── */
 .ev-card-bag {
   position: relative; isolation: isolate;
-  display: grid; grid-template-columns: 1fr 320px;
-  background: #0F0D08; overflow: hidden;
+  min-height: 540px;
+  display: flex; flex-direction: column;
+  background: #0A0A08;
 }
 
-.ev-bag-bg { position: absolute; inset: 0; pointer-events: none; }
-.ev-bag-blob { position: absolute; border-radius: 50%; filter: blur(72px); opacity: 0.55; }
-.ev-bag-blob-1 { width: 420px; height: 420px; background: radial-gradient(circle, #C47A52 0%, transparent 70%); top: -80px; left: -60px; }
-.ev-bag-blob-2 { width: 380px; height: 380px; background: radial-gradient(circle, #E8A84A 0%, transparent 70%); bottom: -100px; right: 200px; opacity: 0.4; }
-.ev-bag-blob-3 { width: 300px; height: 300px; background: radial-gradient(circle, #3D5C30 0%, transparent 70%); top: 40px; right: 60px; opacity: 0.5; }
+/* Full-bleed hero image */
+.ev-bag-hero { position: absolute; inset: 0; z-index: 0; }
+.ev-bag-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ev-bag-hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(4,4,2,0.97) 0%, rgba(4,4,2,0.72) 45%, rgba(4,4,2,0.3) 75%, rgba(4,4,2,0.55) 100%),
+    linear-gradient(to right, rgba(4,4,2,0.65) 0%, transparent 55%);
+}
 
-.ev-bag-body {
+/* Content layer */
+.ev-bag-content {
   position: relative; z-index: 1;
-  padding: 40px 44px; display: flex; flex-direction: column; gap: 0;
-  background: rgba(15,12,6,0.45);
-  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
-  border-right: 1px solid rgba(255,255,255,0.07);
+  display: flex; flex-direction: column; justify-content: space-between;
+  flex: 1; min-height: 540px;
+  padding: 36px 48px;
+  gap: 0;
 }
 
-.ev-badge-online { background: rgba(232,168,74,0.12); color: #E8A84A; border: 1px solid rgba(232,168,74,0.25); backdrop-filter: blur(8px); }
-.ev-badge-talk { background: rgba(196,122,82,0.12); color: #C47A52; border: 1px solid rgba(196,122,82,0.25); backdrop-filter: blur(8px); }
-
-.ev-bag-schedule { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; color: #E8A84A; text-transform: uppercase; margin-bottom: 10px; }
-
-.ev-bag-title { font-family: var(--font-lora); font-size: clamp(1.7rem, 2.5vw, 2.4rem); font-weight: 400; color: #F5EDD8; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; }
-.ev-bag-title em { font-style: italic; color: #F0C97A; }
-
-.ev-bag-details {
-  background: rgba(255,255,255,0.05);
+/* Top: badges + organizer chip */
+.ev-bag-topbar {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.ev-badge-online { background: rgba(232,168,74,0.14); color: #E8A84A; border: 1px solid rgba(232,168,74,0.3); backdrop-filter: blur(8px); }
+.ev-badge-talk { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px); }
+.ev-bag-org-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.07);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50px; padding: 6px 14px 6px 6px;
 }
-.ev-bag-details .ev-detail { color: rgba(255,255,255,0.72); }
-.ev-bag-details .ev-detail svg { color: #C47A52; }
+.ev-bag-chip-logo {
+  width: 24px; height: 24px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+}
+.ev-bag-org-chip span {
+  font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.7);
+}
 
-.ev-speaker-block {
-  margin-top: 14px; margin-bottom: 16px;
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.09);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-  border-radius: 12px; padding: 14px 16px;
+/* Main title block */
+.ev-bag-main { margin-top: auto; padding-top: 60px; }
+.ev-bag-dateline {
+  font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: #E8A84A; margin-bottom: 14px;
 }
-.ev-speaker-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.ev-speaker-avatar {
-  width: 44px; height: 44px; border-radius: 50%;
+.ev-bag-headline {
+  font-family: var(--font-outfit);
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  font-weight: 800; color: #fff;
+  line-height: 1.05; letter-spacing: -0.03em;
+  max-width: 680px; margin-bottom: 16px;
+}
+.ev-bag-desc {
+  font-family: var(--font-outfit); font-size: 0.9rem;
+  color: rgba(255,255,255,0.55); line-height: 1.65;
+  max-width: 520px; margin-bottom: 0;
+}
+
+/* Footer: speaker chip + CTA */
+.ev-bag-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-top: 32px;
+  padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);
+}
+.ev-bag-speaker-chip {
+  display: flex; align-items: center; gap: 12px;
+}
+.ev-bag-speaker-avatar {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
   background: linear-gradient(135deg, #C47A52, #E8A84A);
   color: #0F0D08; display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-lora); font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
-  box-shadow: 0 0 16px rgba(232,168,74,0.4);
+  font-family: var(--font-lora); font-size: 1.1rem; font-weight: 700;
+  box-shadow: 0 0 14px rgba(232,168,74,0.35);
 }
-.ev-speaker-meta { display: flex; flex-direction: column; gap: 2px; }
-.ev-speaker-name { font-family: var(--font-inter); font-size: 0.9rem; font-weight: 700; color: #F5EDD8; }
-.ev-speaker-role { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #E8A84A; }
+.ev-bag-speaker-info { display: flex; flex-direction: column; gap: 2px; }
+.ev-bag-speaker-name { font-family: var(--font-inter); font-size: 0.85rem; font-weight: 700; color: #F5EDD8; }
+.ev-bag-speaker-role { font-family: var(--font-inter); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #E8A84A; opacity: 0.8; }
 
-.ev-bio-details summary { list-style: none; }
-.ev-bio-details summary::-webkit-details-marker { display: none; }
-.ev-bio-toggle { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 600; color: #C47A52; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.04em; user-select: none; }
-.ev-bio-toggle::after { content: '+'; font-size: 1rem; line-height: 1; }
-details[open] .ev-bio-toggle::after { content: '−'; }
-.ev-bio-text { font-family: var(--font-outfit); font-size: 0.875rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-top: 10px; max-width: 460px; }
-
+.ev-bag-footer-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.ev-bag-time {
+  font-family: var(--font-inter); font-size: 0.72rem; font-weight: 600;
+  color: rgba(255,255,255,0.45); letter-spacing: 0.04em;
+}
 .ev-cta-bag {
   background: linear-gradient(135deg, #E8A84A, #F0C97A);
   color: #1A1200;
   box-shadow: 0 4px 20px rgba(232,168,74,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
-
-.ev-bag-logo-panel {
-  position: relative; z-index: 1;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
-  padding: 40px 28px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-  border-left: 1px solid rgba(255,255,255,0.1);
-  box-shadow: inset 1px 0 0 rgba(255,255,255,0.06);
-}
-.ev-bag-logo-wrap {
-  width: 152px; height: 152px; border-radius: 20px; overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
-  flex-shrink: 0;
-}
-.ev-bag-logo { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ev-bag-org-info { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
-.ev-bag-presents { font-family: var(--font-inter); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(232,168,74,0.65); }
-.ev-bag-org-name { font-family: var(--font-lora); font-size: 1rem; font-weight: 700; color: #F5EDD8; text-align: center; }
-.ev-bag-date-block {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  background: rgba(232,168,74,0.08);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(232,168,74,0.2);
-  box-shadow: inset 0 1px 0 rgba(232,168,74,0.15), 0 4px 16px rgba(0,0,0,0.2);
-  border-radius: 12px; padding: 14px 24px;
-}
-.ev-bag-date-num { font-family: var(--font-lora); font-size: 2.4rem; font-weight: 400; color: #E8A84A; line-height: 1; text-shadow: 0 0 20px rgba(232,168,74,0.5); }
-.ev-bag-date-mo { font-family: var(--font-inter); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,168,74,0.7); }
 
 /* ─── Coming Soon ────────────────────────────────────────── */
 .ev-card-soon { position: relative; min-height: 480px; display: flex; align-items: stretch; overflow: hidden; isolation: isolate; }
@@ -741,10 +720,8 @@ details[open] .ev-bio-toggle::after { content: '−'; }
   .ev-card-kapihan { grid-template-columns: 1fr; }
   .ev-card-img-wrap { height: 300px; }
   .ev-card-img-overlay { background: linear-gradient(to bottom, #1C2E18 0%, transparent 40%); }
-  .ev-card-bag { grid-template-columns: 1fr; }
-  .ev-bag-logo-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); flex-direction: row; justify-content: center; gap: 32px; padding: 28px 32px; }
-  .ev-bag-blob-1 { width: 300px; height: 300px; top: -40px; left: -40px; }
-  .ev-bag-blob-2 { width: 260px; height: 260px; bottom: -60px; right: 80px; }
+  .ev-bag-content { padding: 28px 28px; }
+  .ev-bag-headline { font-size: clamp(1.8rem, 5vw, 2.4rem); }
   .ev-soon-content { grid-template-columns: 1fr; }
   .ev-soon-ghost { display: none; }
   .ev-soon-glass { margin: 24px; padding: 40px 28px; }
