@@ -123,7 +123,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 
             {/* Right: image-only panel */}
             <div class="ev-pdc-img-panel" aria-hidden="true">
-              <img src="/images/wp/Crystal-Waters-Permaculture-Design-Course.png" alt="" class="ev-pdc-img" loading="lazy" />
+              <img src="/images/wp/Mapping-in-Permaculture.jpg" alt="" class="ev-pdc-img" loading="lazy" />
               <div class="ev-pdc-img-fade"></div>
               <div class="ev-pdc-img-date">
                 <span class="ev-pdc-img-date-num">{d.dateRange ?? dateDay}</span>
@@ -347,9 +347,8 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 .ev-section-overlay { display: none; }
 
 /* ─── Vines ──────────────────────────────────────────────── */
-.ev-vine { position: absolute; pointer-events: none; z-index: 1; }
-/* multiply blend on light bg: white in PNG disappears, dark vines show through */
-.ev-vine img { width: 100%; display: block; filter: hue-rotate(90deg) saturate(1.4) brightness(0.55); mix-blend-mode: multiply; opacity: 0.55; }
+/* vine.png has a non-transparent background — hiding on light section to avoid visible PNG edges */
+.ev-vine { display: none; }
 /* Fade edges so the PNG rectangle boundary disappears */
 .ev-vine-left img, .ev-vine-right img {
   mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, black 28%, black 72%, rgba(0,0,0,0.5) 88%, transparent 100%);
