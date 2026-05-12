@@ -73,19 +73,18 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 
         if (d.template === 'pdc') return (
           <div class="ev-card ev-card-pdc" data-partner={d.partner || undefined}>
-            <div class="ev-pdc-hero" aria-hidden="true">
-              <img src="/images/events/pdc-bg.jpg" alt="" class="ev-pdc-hero-img" loading="lazy" />
-              <div class="ev-pdc-hero-overlay"></div>
-            </div>
-            <div class="ev-pdc-left">
-              <div class="ev-card-badge-row">
+            {/* Left: solid content panel */}
+            <div class="ev-pdc-panel">
+              <div class="ev-pdc-badges">
                 <span class="ev-badge ev-badge-pdc-course">7-DAY COURSE</span>
                 {!d.isFree && <span class="ev-badge ev-badge-pdc-paid">PAID</span>}
-                {!d.isOnline && <span class="ev-badge ev-badge-pdc-loc">📍 IN PERSON</span>}
+                {!d.isOnline && <span class="ev-badge ev-badge-pdc-loc">IN PERSON</span>}
               </div>
-              <p class="ev-pdc-schedule">{d.schedule}</p>
+
+              {d.schedule && <p class="ev-pdc-schedule">{d.schedule}</p>}
               <h2 class="ev-pdc-title">{d.title}</h2>
               {d.description && <p class="ev-pdc-desc">{d.description}</p>}
+
               {d.highlights && d.highlights.length > 0 && (
                 <ul class="ev-pdc-highlights">
                   {d.highlights.map((h: string) => (
@@ -96,37 +95,40 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
                   ))}
                 </ul>
               )}
+
               {d.notes && <p class="ev-pdc-note">{d.notes}</p>}
-              {d.ctaUrl && (
-                <a href={d.ctaUrl} target="_blank" rel="noopener" class="ev-cta ev-cta-pdc">
-                  {d.ctaLabel ?? 'Register Now'}
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-              )}
+
+              <div class="ev-pdc-footer">
+                <div class="ev-pdc-footer-left">
+                  {d.organizerLogo && <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-pdc-footer-logo" />}
+                  <div class="ev-pdc-footer-org">
+                    <span class="ev-pdc-presents">PRESENTED BY</span>
+                    <span class="ev-pdc-org-name">{d.organizer}</span>
+                  </div>
+                  {d.location && (
+                    <div class="ev-pdc-location">
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+                      <span>{d.location}</span>
+                    </div>
+                  )}
+                </div>
+                {d.ctaUrl && (
+                  <a href={d.ctaUrl} target="_blank" rel="noopener" class="ev-cta ev-cta-pdc">
+                    {d.ctaLabel ?? 'Register Now'}
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                )}
+              </div>
             </div>
 
-            <div class="ev-pdc-right">
-              <div class="ev-pdc-date-block">
-                <span class="ev-pdc-date-range">{d.dateRange ?? dateDay}</span>
-                <span class="ev-pdc-date-mo">{dateMo}</span>
+            {/* Right: image-only panel */}
+            <div class="ev-pdc-img-panel" aria-hidden="true">
+              <img src="/images/events/pdc-bg.jpg" alt="" class="ev-pdc-img" loading="lazy" />
+              <div class="ev-pdc-img-fade"></div>
+              <div class="ev-pdc-img-date">
+                <span class="ev-pdc-img-date-num">{d.dateRange ?? dateDay}</span>
+                <span class="ev-pdc-img-date-mo">{dateMo}</span>
               </div>
-              {d.location && (
-                <div class="ev-pdc-location">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
-                  <span>{d.location}</span>
-                </div>
-              )}
-              {d.organizerLogo && (
-                <div class="ev-pdc-logo-wrap">
-                  <img src={d.organizerLogo} alt={d.organizer ?? ''} class="ev-pdc-logo" />
-                </div>
-              )}
-              {d.organizer && (
-                <div class="ev-pdc-org">
-                  <span class="ev-pdc-presents">PRESENTED BY</span>
-                  <span class="ev-pdc-org-name">{d.organizer}</span>
-                </div>
-              )}
             </div>
           </div>
         );
@@ -195,19 +197,13 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
             {/* Content floated over image */}
             <div class="ev-bag-content">
 
-              {/* Top row: badges left, organizer right */}
+              {/* Top row: badges only */}
               <div class="ev-bag-topbar">
                 <div class="ev-card-badge-row">
                   {d.isOnline && <span class="ev-badge ev-badge-online">🌐 ONLINE</span>}
                   {d.isFree && <span class="ev-badge ev-badge-free">FREE ENTRY</span>}
                   <span class="ev-badge ev-badge-talk">TALK</span>
                 </div>
-                {d.organizer && (
-                  <div class="ev-bag-org-chip">
-                    {d.organizerLogo && <img src={d.organizerLogo} alt="" class="ev-bag-chip-logo" />}
-                    <span>{d.organizer}</span>
-                  </div>
-                )}
               </div>
 
               {/* Main title area */}
@@ -366,7 +362,16 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 
 /* ─── Vines ──────────────────────────────────────────────── */
 .ev-vine { position: absolute; pointer-events: none; z-index: 1; }
-.ev-vine img { width: 100%; display: block; filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; opacity: 0.5; }
+.ev-vine img { width: 100%; display: block; filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; opacity: 0.45; }
+/* Fade edges so the PNG rectangle boundary disappears — mask in local (pre-rotation) y-space */
+.ev-vine-left img, .ev-vine-right img {
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, black 28%, black 72%, rgba(0,0,0,0.5) 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, black 28%, black 72%, rgba(0,0,0,0.5) 88%, transparent 100%);
+}
+.ev-vine-top img {
+  mask-image: linear-gradient(to top, black 0%, black 35%, rgba(0,0,0,0.4) 65%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to top, black 0%, black 35%, rgba(0,0,0,0.4) 65%, transparent 90%);
+}
 .ev-vine-left { width: 1000px; top: 50%; left: -560px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
 .ev-vine-right { width: 1000px; top: 50%; right: -560px; transform: translateY(-50%) rotate(90deg); transform-origin: center center; }
 .ev-vine-top { width: 100%; top: 0; left: 0; transform: translateY(-74%); }
@@ -440,135 +445,124 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 /* ─── Card Shell ─────────────────────────────────────────── */
 .ev-card { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.38); }
 
-/* ─── Card: PDC Course ───────────────────────────────────── */
+/* ─── Card: PDC Course — Light Glass Split ───────────────── */
 .ev-card-pdc {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  min-height: 480px;
-  background: #1A1208;
-  position: relative;
+  grid-template-columns: 1fr 42%;
+  min-height: 520px;
   overflow: hidden;
+  background: linear-gradient(135deg, #D8E8E0 0%, #E8F0EC 40%, #D4E2EC 100%);
 }
 
-/* Full-bleed landscape image */
-.ev-pdc-hero { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.ev-pdc-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.ev-pdc-hero-overlay {
-  position: absolute; inset: 0;
-  background: rgba(18,10,4,0.42);
-}
-
-.ev-pdc-left {
-  position: relative; z-index: 1;
+/* Left: frosted glass panel over cool light background */
+.ev-pdc-panel {
+  background: rgba(255,255,255,0.58);
+  backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
   padding: 48px 52px;
-  display: flex; flex-direction: column; gap: 0;
-  background: rgba(251,240,230,0.22);
-  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
-  border-right: 1px solid rgba(255,255,255,0.18);
-  box-shadow: inset 1px 0 0 rgba(255,255,255,0.08);
+  display: flex; flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.7);
+  box-shadow: inset -1px 0 0 rgba(200,220,210,0.4);
 }
 
-.ev-badge-pdc-course { background: rgba(197,106,88,0.12); color: #C56A58; border: 1px solid rgba(197,106,88,0.3); }
-.ev-badge-pdc-paid   { background: rgba(107,127,74,0.1);  color: #5A6E3A; border: 1px solid rgba(107,127,74,0.28); }
-.ev-badge-pdc-loc    { background: rgba(245,168,48,0.1);  color: #9A6A10; border: 1px solid rgba(245,168,48,0.25); }
+.ev-pdc-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.ev-badge-pdc-course { background: rgba(60,110,45,0.12); color: #3A7228; border: 1px solid rgba(60,110,45,0.28); }
+.ev-badge-pdc-paid   { background: rgba(120,80,40,0.1);  color: #7A5028; border: 1px solid rgba(120,80,40,0.22); }
+.ev-badge-pdc-loc    { background: rgba(40,60,80,0.07);  color: rgba(40,60,80,0.65); border: 1px solid rgba(40,60,80,0.18); }
 
 .ev-pdc-schedule {
-  font-family: var(--font-inter);
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: #C56A58; margin-bottom: 10px; margin-top: 20px;
+  font-family: var(--font-inter); font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.22em; text-transform: uppercase; color: #3D7A28; margin-bottom: 12px;
 }
-
 .ev-pdc-title {
   font-family: var(--font-outfit);
-  font-size: clamp(2rem, 3.2vw, 2.9rem);
-  font-weight: 800; color: #2A1A0E;
+  font-size: clamp(2rem, 2.8vw, 3rem);
+  font-weight: 900; color: #162210;
   line-height: 1.05; letter-spacing: -0.03em;
   margin-bottom: 14px;
 }
-
 .ev-pdc-desc {
-  font-family: var(--font-lora);
-  font-size: 1rem; color: #6B4A34;
-  line-height: 1.7; margin-bottom: 24px; max-width: 480px;
+  font-family: var(--font-outfit); font-size: 0.9rem;
+  color: rgba(22,34,16,0.62); line-height: 1.68;
+  max-width: 460px; margin-bottom: 24px;
 }
 
 .ev-pdc-highlights {
-  list-style: none; padding: 0; margin: 0 0 24px;
-  display: flex; flex-direction: column; gap: 10px;
+  list-style: none; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 8px 24px; margin-bottom: 20px;
 }
 .ev-pdc-highlight-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  font-family: var(--font-outfit); font-size: 0.95rem; color: #3A2210; line-height: 1.4;
+  display: flex; align-items: flex-start; gap: 8px;
+  font-family: var(--font-outfit); font-size: 0.85rem;
+  color: rgba(22,34,16,0.7); line-height: 1.4;
 }
-.ev-pdc-check { color: #6B7F4A; font-size: 0.7rem; flex-shrink: 0; margin-top: 3px; opacity: 0.85; }
+.ev-pdc-check { color: #4A8A30; font-size: 0.6rem; flex-shrink: 0; margin-top: 4px; }
 
 .ev-pdc-note {
-  font-family: var(--font-inter);
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
-  color: #C56A58; text-transform: uppercase;
-  margin-bottom: 28px;
-  padding: 10px 16px;
-  background: rgba(197,106,88,0.08);
-  border-left: 3px solid #C56A58;
+  font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.06em; color: #8B5A28; text-transform: uppercase;
+  margin-bottom: 20px; padding: 10px 14px;
+  background: rgba(120,80,40,0.08); border-left: 2px solid rgba(120,80,40,0.45);
   border-radius: 0 6px 6px 0;
 }
 
-.ev-cta-pdc { background: #C56A58; color: #FBF0E6; box-shadow: 0 4px 20px rgba(197,106,88,0.35); }
-.ev-cta-pdc:hover { background: #AD5644; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(197,106,88,0.45); }
-
-.ev-pdc-right {
-  position: relative; z-index: 1;
-  background: rgba(185,78,62,0.62);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 20px; padding: 40px 28px;
-  border-left: 1px solid rgba(255,255,255,0.12);
+.ev-pdc-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; margin-top: auto;
+  padding-top: 22px; border-top: 1px solid rgba(22,34,16,0.1);
 }
-
-.ev-pdc-date-block {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 16px; padding: 20px 32px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+.ev-pdc-footer-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ev-pdc-footer-logo {
+  width: 46px; height: 46px; border-radius: 9px; object-fit: cover; flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 3px 10px rgba(0,0,0,0.15);
 }
-.ev-pdc-date-range {
-  font-family: var(--font-lora);
-  font-size: 3.2rem; font-weight: 700; color: #fff;
-  line-height: 1; letter-spacing: -0.03em;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.15);
-}
-.ev-pdc-date-mo {
-  font-family: var(--font-inter);
-  font-size: 0.65rem; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.8);
-}
-
-.ev-pdc-location {
-  display: flex; align-items: flex-start; gap: 6px;
-  font-family: var(--font-outfit); font-size: 0.78rem;
-  color: rgba(255,255,255,0.85); line-height: 1.5; text-align: center;
-  max-width: 200px;
-}
-.ev-pdc-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(255,255,255,0.7); }
-
-.ev-pdc-logo-wrap {
-  width: 110px; height: 110px; border-radius: 14px; overflow: hidden;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.2);
-}
-.ev-pdc-logo { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.ev-pdc-org { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.ev-pdc-footer-org { display: flex; flex-direction: column; gap: 2px; }
 .ev-pdc-presents {
-  font-family: var(--font-inter); font-size: 0.55rem;
-  font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
+  font-family: var(--font-inter); font-size: 0.48rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(22,34,16,0.4);
 }
 .ev-pdc-org-name {
-  font-family: var(--font-lora); font-size: 0.9rem;
-  font-weight: 700; color: #fff; text-align: center;
+  font-family: var(--font-lora); font-size: 0.85rem; font-weight: 700;
+  color: rgba(22,34,16,0.85);
+}
+.ev-pdc-location {
+  display: flex; align-items: flex-start; gap: 5px;
+  font-family: var(--font-outfit); font-size: 0.76rem;
+  color: rgba(22,34,16,0.45); line-height: 1.4;
+}
+.ev-pdc-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(60,130,40,0.7); }
+
+.ev-cta-pdc { background: #3A7228; color: #F0F8EE; box-shadow: 0 4px 16px rgba(58,114,40,0.3); }
+.ev-cta-pdc:hover { background: #488A34; transform: translateY(-1px); box-shadow: 0 6px 22px rgba(58,114,40,0.42); }
+
+/* Right: pure image panel */
+.ev-pdc-img-panel {
+  position: relative; overflow: hidden;
+}
+.ev-pdc-img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+/* Left-edge blend into glass panel */
+.ev-pdc-img-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(216,232,224,0.65) 0%, rgba(216,232,224,0.15) 25%, transparent 50%);
+}
+/* Date watermark in bottom-right */
+.ev-pdc-img-date {
+  position: absolute; bottom: 28px; right: 28px;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
+  text-align: right;
+}
+.ev-pdc-img-date-num {
+  font-family: var(--font-lora); font-size: 3rem; font-weight: 700;
+  color: #fff; line-height: 1; letter-spacing: -0.04em;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+}
+.ev-pdc-img-date-mo {
+  font-family: var(--font-inter); font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.55);
 }
 
 /* ─── Card: Perma-Kapihan ────────────────────────────────── */
@@ -779,7 +773,11 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 1000px) {
   .ev-card-pdc { grid-template-columns: 1fr; }
-  .ev-pdc-right { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 32px 28px; }
+  .ev-pdc-img-panel { min-height: 280px; }
+  .ev-pdc-img-fade { background: linear-gradient(to bottom, rgba(216,232,224,0.7) 0%, rgba(216,232,224,0.2) 30%, transparent 55%); }
+  .ev-pdc-panel { padding: 36px 32px; }
+  .ev-pdc-title { font-size: clamp(1.8rem, 5vw, 2.6rem); }
+  .ev-pdc-highlights { grid-template-columns: 1fr; }
   .ev-card-kapihan { grid-template-columns: 1fr; }
   .ev-card-img-wrap { height: 300px; }
   .ev-card-img-overlay { background: linear-gradient(to bottom, #1C2E18 0%, transparent 40%); }

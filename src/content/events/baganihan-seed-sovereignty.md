@@ -12,9 +12,9 @@ description: ""
 ctaLabel: "Reserve Your Spot"
 ctaUrl: "#"
 sortOrder: 1
-speakerName: "K Lee Hizola"
-speakerRole: "Featured Speaker"
-speakerBio: "K Lee Hizola is a seed-saving practitioner and food sovereignty advocate based in the Philippines. With years of hands-on experience working alongside farming communities, he bridges traditional seed-keeping practices with contemporary food systems thinking — making the case for seeds as living commons rather than commodities."
+speakerName: "Lee Hizola"
+speakerRole: "Certified Permaculture Designer & Seed Sovereignty Advocate"
+speakerBio: "A graduate of the Rocky Mountain Seed Alliance Seed School Teacher Training (2018), Lee has spent years working across Southeast and South Asia's grassroots seed networks — from indigenous communities in militarized zones to UN-level policy spaces advocating for seed commons and farmer rights. Founder of ethic (Earth, Technology, Human Inspired Collaborations), a Global South initiative working at the intersection of ecological intelligence, technology governance, and community sovereignty. An engineer, poet, artist, and musician — Lee teaches not just the science of seeds, but their cultural memory and the politics of who gets to hold them."
 organizer: "Baganihan Collective"
 organizerLogo: "/images/baganihan-logo.jpg"
 partner: baganihan
