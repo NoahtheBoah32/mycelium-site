@@ -21,4 +21,5 @@ ctaUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdkjwNBwBw8063vgKpebogAQGd-D4g
 sortOrder: 2
 organizer: "Philippine Permaculture Association"
 organizerLogo: "/images/wp/about-img-10.webp"
+partner: ppa
 ---

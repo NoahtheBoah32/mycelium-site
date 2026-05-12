@@ -22,19 +22,10 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
   <!-- Events Section -->
   <section class="ev-section">
 
-    <!-- Top vine -->
-    <div class="ev-vine ev-vine-top" aria-hidden="true">
-      <img src="/images/vine.png" alt="" />
-    </div>
-
-    <!-- Left vine -->
-    <div class="ev-vine ev-vine-left" aria-hidden="true">
-      <img src="/images/vine.png" alt="" />
-    </div>
-
-    <!-- Right vine -->
-    <div class="ev-vine ev-vine-right" aria-hidden="true">
-      <img src="/images/vine.png" alt="" />
+    <!-- Generated atmospheric background -->
+    <div class="ev-section-bg" aria-hidden="true">
+      <img src="/images/events-bg.jpg" alt="" class="ev-section-bg-img" loading="lazy" />
+      <div class="ev-section-overlay"></div>
     </div>
 
     <div class="ev-section-inner">
@@ -43,6 +34,22 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         <span class="ev-label-line"></span>
         <span class="ev-label-text">FIND AN EVENT</span>
         <span class="ev-label-line"></span>
+      </div>
+
+      <!-- Partner filter tabs -->
+      <div class="ev-filters" role="group" aria-label="Filter events by partner">
+        <button class="ev-filter-btn active" data-filter="all">
+          <span class="ev-filter-dot"></span>
+          All Events
+        </button>
+        <button class="ev-filter-btn" data-filter="ppa">
+          <img src="/images/wp/about-img-10.webp" alt="" class="ev-filter-logo" />
+          Philippine Permaculture Association
+        </button>
+        <button class="ev-filter-btn" data-filter="baganihan">
+          <img src="/images/baganihan-logo.jpg" alt="" class="ev-filter-logo" />
+          Baganihan Collective
+        </button>
       </div>
 
       {events.map(ev => {
@@ -54,7 +61,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         const speakerInitial = d.speakerName?.charAt(0) ?? '?';
 
         if (d.template === 'pdc') return (
-          <div class="ev-card ev-card-pdc">
+          <div class="ev-card ev-card-pdc" data-partner={d.partner || undefined}>
             <div class="ev-pdc-left">
               <div class="ev-card-badge-row">
                 <span class="ev-badge ev-badge-pdc-course">7-DAY COURSE</span>
@@ -110,7 +117,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         );
 
         if (d.template === 'kapihan') return (
-          <div class="ev-card ev-card-kapihan">
+          <div class="ev-card ev-card-kapihan" data-partner={d.partner || undefined}>
             <div class="ev-card-body">
               <div class="ev-card-badge-row">
                 {d.isRecurring && <span class="ev-badge ev-badge-recurring">↺ RECURRING</span>}
@@ -163,7 +170,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         );
 
         return (
-          <div class="ev-card ev-card-bag">
+          <div class="ev-card ev-card-bag" data-partner={d.partner || undefined}>
             <div class="ev-bag-bg" aria-hidden="true">
               <div class="ev-bag-blob ev-bag-blob-1"></div>
               <div class="ev-bag-blob ev-bag-blob-2"></div>
@@ -300,22 +307,117 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 .ev-sub-accent { color: #C8A01A; }
 
 /* ─── Events Section ─────────────────────────────────────── */
-.ev-section { background: #ffffff; padding: 40px 40px 56px; position: relative; overflow: hidden; }
+.ev-section {
+  background: #0A1408;
+  padding: 60px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dot grid texture */
+.ev-section::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* Atmospheric gradient blobs */
+.ev-section::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 700px 500px at -8% 15%, rgba(45,90,25,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 500px 400px at 108% 85%, rgba(30,65,15,0.16) 0%, transparent 65%);
+}
+
+/* Generated background image */
+.ev-section-bg {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+}
+.ev-section-bg-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: blur(28px) brightness(0.14) saturate(0.65);
+  transform: scale(1.06);
+  display: block;
+}
+.ev-section-overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 90% 50% at 5% 0%, rgba(28,55,16,0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 95% 100%, rgba(18,42,10,0.35) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(10,20,8,0.55) 0%, rgba(10,20,8,0.25) 50%, rgba(10,20,8,0.65) 100%);
+}
+
 .ev-section-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
 
-/* ─── Vines ──────────────────────────────────────────────── */
-.ev-vine { position: absolute; pointer-events: none; z-index: 0; }
-.ev-vine img { width: 100%; mix-blend-mode: multiply; opacity: 0.88; display: block; }
-.ev-vine-left { width: 1000px; top: 50%; left: -560px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
-.ev-vine-right { width: 1000px; top: 50%; right: -560px; transform: translateY(-50%) rotate(90deg); transform-origin: center center; }
-.ev-vine-top { width: 100%; top: 0; left: 0; transform: translateY(-74%); }
-
 .ev-label-row { display: flex; align-items: center; gap: 16px; margin-bottom: 4px; }
-.ev-label-line { flex: 1; height: 1px; background: #C8B89A; }
-.ev-label-text { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8a7a5a; white-space: nowrap; }
+.ev-label-line { flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+.ev-label-text { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.28); white-space: nowrap; }
+
+/* ─── Partner Filter Tabs ────────────────────────────────── */
+.ev-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.ev-filter-btn {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--font-inter);
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 20px; border-radius: 50px;
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.42);
+  cursor: pointer; transition: all 0.22s ease;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+.ev-filter-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.82);
+  border-color: rgba(255,255,255,0.18);
+}
+.ev-filter-btn.active {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.28);
+  color: #fff;
+  box-shadow: 0 0 24px rgba(255,255,255,0.06), 0 2px 10px rgba(0,0,0,0.35);
+}
+.ev-filter-btn[data-filter="ppa"].active {
+  background: rgba(107,127,74,0.2);
+  border-color: rgba(140,170,90,0.42);
+  color: #c8e09a;
+  box-shadow: 0 0 24px rgba(107,127,74,0.2), 0 2px 10px rgba(0,0,0,0.35);
+}
+.ev-filter-btn[data-filter="baganihan"].active {
+  background: rgba(232,168,74,0.14);
+  border-color: rgba(232,168,74,0.38);
+  color: #f0c97a;
+  box-shadow: 0 0 24px rgba(232,168,74,0.14), 0 2px 10px rgba(0,0,0,0.35);
+}
+.ev-filter-logo {
+  width: 20px; height: 20px; border-radius: 50%;
+  object-fit: cover; flex-shrink: 0;
+  filter: brightness(0.65) saturate(0.5);
+  transition: filter 0.22s ease;
+}
+.ev-filter-btn.active .ev-filter-logo,
+.ev-filter-btn:hover .ev-filter-logo { filter: brightness(1) saturate(1); }
+.ev-filter-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.4); flex-shrink: 0;
+  transition: background 0.22s ease;
+}
+.ev-filter-btn.active .ev-filter-dot { background: #fff; box-shadow: 0 0 6px rgba(255,255,255,0.6); }
+
+/* ─── Card transition for filtering ─────────────────────── */
+.ev-card[data-partner] { transition: opacity 0.2s ease, transform 0.2s ease; }
 
 /* ─── Card Shell ─────────────────────────────────────────── */
-.ev-card { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.12); }
+.ev-card { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.38); }
 
 /* ─── Card: PDC Course ───────────────────────────────────── */
 .ev-card-pdc {
@@ -328,8 +430,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
 }
 .ev-card-pdc::before {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background:
     radial-gradient(ellipse 600px 400px at -10% 120%, rgba(197,106,88,0.18) 0%, transparent 70%),
     radial-gradient(ellipse 400px 300px at 110% -10%, rgba(107,127,74,0.15) 0%, transparent 70%);
@@ -375,9 +476,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
   display: flex; align-items: flex-start; gap: 10px;
   font-family: var(--font-outfit); font-size: 0.95rem; color: #3A2210; line-height: 1.4;
 }
-.ev-pdc-check {
-  color: #6B7F4A; font-size: 0.7rem; flex-shrink: 0; margin-top: 3px; opacity: 0.85;
-}
+.ev-pdc-check { color: #6B7F4A; font-size: 0.7rem; flex-shrink: 0; margin-top: 3px; opacity: 0.85; }
 
 .ev-pdc-note {
   font-family: var(--font-inter);
@@ -390,14 +489,8 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
   border-radius: 0 6px 6px 0;
 }
 
-.ev-cta-pdc {
-  background: #C56A58; color: #FBF0E6;
-  box-shadow: 0 4px 20px rgba(197,106,88,0.35);
-}
-.ev-cta-pdc:hover {
-  background: #AD5644; transform: translateY(-1px);
-  box-shadow: 0 6px 28px rgba(197,106,88,0.45);
-}
+.ev-cta-pdc { background: #C56A58; color: #FBF0E6; box-shadow: 0 4px 20px rgba(197,106,88,0.35); }
+.ev-cta-pdc:hover { background: #AD5644; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(197,106,88,0.45); }
 
 .ev-pdc-right {
   position: relative; z-index: 1;
@@ -638,6 +731,10 @@ details[open] .ev-bio-toggle::after { content: '−'; }
   .ev-soon-ghost { display: none; }
   .ev-soon-glass { margin: 24px; padding: 40px 28px; }
 }
+@media (max-width: 700px) {
+  .ev-filters { gap: 8px; }
+  .ev-filter-btn { font-size: 0.62rem; padding: 9px 14px; }
+}
 @media (max-width: 600px) {
   .ev-inner { padding: 0 20px; }
   .ev-hero { padding: 56px 20px 48px; }
@@ -646,3 +743,32 @@ details[open] .ev-bio-toggle::after { content: '−'; }
   .ev-bag-body { padding: 28px 24px; }
 }
 </style>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.ev-filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.ev-card[data-partner]');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = (btn as HTMLElement).dataset.filter ?? 'all';
+
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.partner === filter;
+        if (match) {
+          card.style.display = '';
+          // Force reflow then animate in
+          void card.offsetHeight;
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(8px)';
+          setTimeout(() => { card.style.display = 'none'; }, 200);
+        }
+      });
+    });
+  });
+</script>

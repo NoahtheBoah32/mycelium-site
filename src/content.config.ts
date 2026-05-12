@@ -29,6 +29,7 @@ const events = defineCollection({
     // PDC template
     dateRange: z.string().optional(),
     highlights: z.array(z.string()).optional(),
+    partner: z.enum(['ppa', 'baganihan']).optional(),
   }),
 });
 

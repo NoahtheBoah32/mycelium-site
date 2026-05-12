@@ -13,4 +13,5 @@ ctaLabel: "Register Here"
 ctaUrl: "https://mycelium-learn.com/events/"
 image: "/images/wp/event-Perma-Kapihan-sa-Eco-house.webp"
 sortOrder: 99
+partner: ppa
 ---
