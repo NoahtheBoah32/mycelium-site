@@ -5,7 +5,7 @@ const events = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
   schema: z.object({
     title: z.string(),
-    template: z.enum(['kapihan', 'bag', 'pdc']),
+    template: z.enum(['kapihan', 'bag', 'pdc', 'workshop']),
     schedule: z.string().optional(),
     date: z.coerce.date().optional(),
     time: z.string().optional(),
