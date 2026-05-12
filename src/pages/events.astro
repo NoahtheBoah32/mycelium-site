@@ -28,6 +28,17 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
       <div class="ev-section-overlay"></div>
     </div>
 
+    <!-- Vines -->
+    <div class="ev-vine ev-vine-top" aria-hidden="true">
+      <img src="/images/vine.png" alt="" />
+    </div>
+    <div class="ev-vine ev-vine-left" aria-hidden="true">
+      <img src="/images/vine.png" alt="" />
+    </div>
+    <div class="ev-vine ev-vine-right" aria-hidden="true">
+      <img src="/images/vine.png" alt="" />
+    </div>
+
     <div class="ev-section-inner">
 
       <div class="ev-label-row">
@@ -350,7 +361,14 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
     linear-gradient(180deg, rgba(10,20,8,0.55) 0%, rgba(10,20,8,0.25) 50%, rgba(10,20,8,0.65) 100%);
 }
 
-.ev-section-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
+/* ─── Vines ──────────────────────────────────────────────── */
+.ev-vine { position: absolute; pointer-events: none; z-index: 1; }
+.ev-vine img { width: 100%; display: block; filter: invert(1); mix-blend-mode: screen; opacity: 0.45; }
+.ev-vine-left { width: 1000px; top: 50%; left: -560px; transform: translateY(-50%) rotate(-90deg); transform-origin: center center; }
+.ev-vine-right { width: 1000px; top: 50%; right: -560px; transform: translateY(-50%) rotate(90deg); transform-origin: center center; }
+.ev-vine-top { width: 100%; top: 0; left: 0; transform: translateY(-74%); }
+
+.ev-section-inner { max-width: 1160px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 2; }
 
 .ev-label-row { display: flex; align-items: center; gap: 16px; margin-bottom: 4px; }
 .ev-label-line { flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
