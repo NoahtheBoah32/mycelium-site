@@ -33,4 +33,17 @@ const events = defineCollection({
   }),
 });
 
-export const collections = { events };
+const reels = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/reels' }),
+  schema: z.object({
+    platform: z.enum(['instagram', 'facebook']),
+    permalink: z.string(),
+    r2VideoUrl: z.string(),
+    r2ThumbUrl: z.string().optional(),
+    caption: z.string().optional(),
+    postedAt: z.coerce.date(),
+    hidden: z.boolean().default(false),
+  }),
+});
+
+export const collections = { events, reels };

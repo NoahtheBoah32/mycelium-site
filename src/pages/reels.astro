@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { getCollection } from 'astro:content';
+
+const allReels = await getCollection('reels', r => !r.data.hidden);
+const reels = allReels.sort((a, b) =>
+  new Date(b.data.postedAt).getTime() - new Date(a.data.postedAt).getTime()
+);
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+---
+
+<BaseLayout title="Reels - Mycelium">
+  <SiteNav />
+
+  <section class="rp-hero">
+    <div class="rp-inner">
+      <h1 class="rp-title">Reels</h1>
+      <p class="rp-sub">Short permaculture ideas, field visits, and quick tips</p>
+    </div>
+  </section>
+
+  <section class="rp-grid-section">
+    <div class="rp-inner">
+      <div class="rp-grid" id="rp-grid">
+        {reels.map((r, i) => (
+          <a
+            href={`/reel/${r.id}`}
+            class="rc"
+            data-index={i}
+            style={i >= 8 ? 'display:none' : ''}
+          >
+            <div class="rc-thumb">
+              {r.data.r2ThumbUrl
+                ? <img src={r.data.r2ThumbUrl} alt={r.data.caption || 'Reel'} loading="lazy" />
+                : <div class="rc-thumb-placeholder"></div>
+              }
+              <div class="rc-play-overlay">
+                <div class="rc-play-icon">
+                  <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="22" fill="rgba(0,0,0,0.45)"/>
+                    <polygon points="17,13 35,22 17,31" fill="white"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="rc-info">
+              <p class="rc-title">{r.data.caption || 'Reel'}</p>
+              <p class="rc-meta">Mycelium Learning · {formatDate(r.data.postedAt)}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {reels.length > 8 && (
+        <div class="rp-load-wrap" id="rp-load-wrap">
+          <button class="rp-load-more" id="rp-load-more">Load More</button>
+        </div>
+      )}
+
+      {reels.length === 0 && (
+        <p class="rp-empty">No reels yet — check back soon.</p>
+      )}
+    </div>
+  </section>
+
+  <SiteFooter />
+</BaseLayout>
+
+<script>
+  const BATCH = 8;
+  let shown = 8;
+  const grid = document.getElementById('rp-grid');
+  const loadWrap = document.getElementById('rp-load-wrap');
+  const loadBtn = document.getElementById('rp-load-more');
+
+  loadBtn?.addEventListener('click', () => {
+    const cards = Array.from(grid!.querySelectorAll<HTMLElement>('.rc'));
+    cards.slice(shown, shown + BATCH).forEach(c => c.style.display = '');
+    shown += BATCH;
+    if (shown >= cards.length) loadWrap!.style.display = 'none';
+  });
+</script>
+
+<style>
+.rp-hero { background: #F7F7F5; padding: 80px 40px 64px; }
+.rp-inner { max-width: 1180px; margin: 0 auto; }
+.rp-title { font-family: var(--font-outfit); font-size: clamp(2.2rem, 4vw, 3.75rem); font-weight: 700; color: #242424; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 16px; text-align: center; }
+.rp-sub { font-family: var(--font-outfit); font-size: 1.5rem; color: #666; line-height: 1.5; text-align: center; }
+
+.rp-grid-section { background: #f9f9f7; padding: 40px 40px 80px; }
+
+.rp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+.rc { display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: #fff; border: 1px solid #e8e8e8; text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.15s; }
+.rc:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
+
+.rc-thumb { position: relative; aspect-ratio: 9/16; overflow: hidden; background: #1a1a1a; flex-shrink: 0; }
+.rc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+.rc:hover .rc-thumb img { transform: scale(1.04); }
+.rc-thumb-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #2F4F2F 0%, #1a2e1a 100%); }
+
+.rc-play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0); transition: background 0.2s; }
+.rc:hover .rc-play-overlay { background: rgba(0,0,0,0.2); }
+.rc-play-icon { opacity: 0; transform: scale(0.85); transition: opacity 0.2s, transform 0.2s; }
+.rc:hover .rc-play-icon { opacity: 1; transform: scale(1); }
+
+.rc-info { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 5px; }
+.rc-title { font-family: var(--font-inter); font-size: 0.83rem; font-weight: 600; color: #242424; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.rc-meta { font-family: var(--font-inter); font-size: 0.73rem; color: #888; }
+
+.rp-load-wrap { text-align: center; margin-top: 40px; }
+.rp-load-more { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; background: #5A3A1C; color: #fff; padding: 10px 32px; border-radius: 50px; border: none; cursor: pointer; transition: background 0.2s; }
+.rp-load-more:hover { background: #947153; }
+
+.rp-empty { font-family: var(--font-inter); font-size: 1rem; color: #888; text-align: center; padding: 80px 0; }
+
+@media (max-width: 1100px) { .rp-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px)  { .rp-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) {
+  .rp-hero { padding: 40px 20px 28px; }
+  .rp-grid-section { padding: 28px 20px 60px; }
+  .rp-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+</style>

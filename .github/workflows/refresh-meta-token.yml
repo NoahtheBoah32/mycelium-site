@@ -1,0 +1,33 @@
+name: Refresh Meta Token
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # 1st of every month at midnight UTC
+  workflow_dispatch:      # manual trigger anytime
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install gh CLI
+        run: |
+          type -p curl >/dev/null || apt-get install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          apt update && apt install gh -y
+
+      - name: Refresh token
+        env:
+          META_LONG_LIVED_TOKEN: ${{ secrets.META_LONG_LIVED_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: node scripts/refresh-token.mjs

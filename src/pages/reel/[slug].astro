@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const reels = await getCollection('reels', r => !r.data.hidden);
+  const sorted = reels.sort((a, b) =>
+    new Date(b.data.postedAt).getTime() - new Date(a.data.postedAt).getTime()
+  );
+  return sorted.map((reel, i) => ({
+    params: { slug: reel.id },
+    props: {
+      reel,
+      prev: sorted[i - 1] ?? null,
+      next: sorted[i + 1] ?? null,
+    },
+  }));
+}
+
+const { reel, prev, next } = Astro.props;
+const d = reel.data;
+
+const postedDate = d.postedAt.toLocaleDateString('en-PH', {
+  month: 'long', day: 'numeric', year: 'numeric',
+});
+---
+
+<BaseLayout title={(d.caption?.slice(0, 60) ?? 'Reel') + ' - Mycelium'}>
+  <SiteNav />
+
+  <div class="rd-page">
+    <div class="rd-shell">
+
+      <!-- Back -->
+      <a href="/reels" class="rd-back">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        All Reels
+      </a>
+
+      <!-- Player row: prev | video + actions | next -->
+      <div class="rd-row">
+
+        <!-- Prev -->
+        <a href={prev ? `/reel/${prev.id}` : '#'} class:list={['rd-arrow', { 'rd-arrow--disabled': !prev }]} aria-label="Previous reel">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M13 4L7 10l6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <!-- Video + action buttons -->
+        <div class="rd-player-wrap">
+          <div class="rd-player">
+            <video
+              src={d.r2VideoUrl}
+              poster={d.r2ThumbUrl}
+              class="rd-video"
+              playsinline
+              loop
+              preload="metadata"
+              id="rd-video"
+            ></video>
+            <button class="rd-play-btn" id="rd-play-btn" aria-label="Play / Pause">
+              <svg id="rd-play-icon" width="28" height="28" viewBox="0 0 28 28">
+                <polygon points="8,4 24,14 8,24" fill="white"/>
+              </svg>
+            </button>
+            <div class="rd-progress" id="rd-progress">
+              <div class="rd-progress-fill" id="rd-progress-fill"></div>
+            </div>
+          </div>
+
+          <!-- Action buttons right of video -->
+          <div class="rd-actions">
+            <button class="rd-action-btn" id="rd-like-btn" title="Like">
+              <div class="rd-action-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 21C12 21 3 14.5 3 8.5a5 5 0 0110 0 5 5 0 0110 0C21 14.5 12 21 12 21z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </button>
+            <a href={d.permalink} target="_blank" rel="noopener" class="rd-action-btn" title="Share">
+              <div class="rd-action-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Next -->
+        <a href={next ? `/reel/${next.id}` : '#'} class:list={['rd-arrow', { 'rd-arrow--disabled': !next }]} aria-label="Next reel">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+      </div>
+
+      <!-- Caption + date -->
+      {d.caption && (
+        <p class="rd-caption">{d.caption}</p>
+      )}
+      <p class="rd-date">{postedDate}</p>
+
+    </div>
+  </div>
+
+  <SiteFooter />
+</BaseLayout>
+
+<script>
+  const video = document.getElementById('rd-video') as HTMLVideoElement;
+  const playBtn = document.getElementById('rd-play-btn')!;
+  const playIcon = document.getElementById('rd-play-icon')!;
+  const fill = document.getElementById('rd-progress-fill')!;
+  const likeBtn = document.getElementById('rd-like-btn')!;
+
+  playBtn.addEventListener('click', () => {
+    if (video.paused) { video.play(); } else { video.pause(); }
+  });
+
+  video.addEventListener('play', () => {
+    playIcon.innerHTML = '<rect x="5" y="3" width="5" height="19" rx="1.5" fill="white"/><rect x="15" y="3" width="5" height="19" rx="1.5" fill="white"/>';
+    playBtn.style.opacity = '0';
+  });
+  video.addEventListener('pause', () => {
+    playIcon.innerHTML = '<polygon points="8,4 24,14 8,24" fill="white"/>';
+    playBtn.style.opacity = '1';
+  });
+  video.addEventListener('click', () => {
+    if (video.paused) { video.play(); } else { video.pause(); }
+  });
+  video.addEventListener('timeupdate', () => {
+    if (!video.duration) return;
+    fill.style.width = (video.currentTime / video.duration * 100) + '%';
+  });
+
+  likeBtn.addEventListener('click', () => {
+    likeBtn.classList.toggle('liked');
+    const path = likeBtn.querySelector('path')!;
+    path.setAttribute('fill', likeBtn.classList.contains('liked') ? 'currentColor' : 'none');
+  });
+
+  document.addEventListener('keydown', e => {
+    const prevLink = document.querySelector<HTMLAnchorElement>('.rd-arrow:first-of-type');
+    const nextLink = document.querySelector<HTMLAnchorElement>('.rd-arrow:last-of-type');
+    if (e.key === 'ArrowLeft' && prevLink && !prevLink.classList.contains('rd-arrow--disabled')) {
+      window.location.href = prevLink.href;
+    }
+    if (e.key === 'ArrowRight' && nextLink && !nextLink.classList.contains('rd-arrow--disabled')) {
+      window.location.href = nextLink.href;
+    }
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (video.paused) { video.play(); } else { video.pause(); }
+    }
+  });
+</script>
+
+<style>
+.rd-page { background: #0D0D0B; min-height: 100vh; padding: 40px 40px 80px; }
+.rd-shell { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+
+.rd-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-inter); font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 32px; align-self: flex-start; transition: color 0.15s; }
+.rd-back:hover { color: rgba(255,255,255,0.9); }
+.rd-back svg { opacity: 0.6; }
+
+.rd-row { display: flex; align-items: center; gap: 16px; width: 100%; justify-content: center; }
+
+.rd-arrow { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background 0.15s, color 0.15s; flex-shrink: 0; }
+.rd-arrow:hover:not(.rd-arrow--disabled) { background: rgba(255,255,255,0.16); color: #fff; }
+.rd-arrow--disabled { opacity: 0.2; pointer-events: none; }
+
+.rd-player-wrap { display: flex; align-items: center; gap: 0; }
+
+.rd-player { position: relative; width: 320px; aspect-ratio: 9/16; background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 80px rgba(0,0,0,0.7); flex-shrink: 0; cursor: pointer; }
+.rd-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.rd-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 60px; height: 60px; border-radius: 50%; background: rgba(0,0,0,0.45); backdrop-filter: blur(6px); border: 1.5px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, opacity 0.2s; }
+.rd-play-btn:hover { background: rgba(0,0,0,0.65); }
+.rd-play-btn svg { margin-left: 3px; }
+
+.rd-progress { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.2); }
+.rd-progress-fill { height: 100%; background: #61CE70; border-radius: 2px; width: 0; transition: width 0.25s linear; }
+
+.rd-actions { display: flex; flex-direction: column; align-items: center; gap: 20px; padding-left: 14px; }
+.rd-action-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.6); transition: color 0.15s; }
+.rd-action-btn:hover { color: #fff; }
+.rd-action-btn.liked { color: #61CE70; }
+.rd-action-icon { width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+.rd-action-btn:hover .rd-action-icon { background: rgba(255,255,255,0.16); }
+.rd-action-btn.liked .rd-action-icon { background: rgba(97,206,112,0.15); border-color: rgba(97,206,112,0.3); }
+
+.rd-caption { font-family: var(--font-inter); font-size: 0.95rem; color: rgba(255,255,255,0.85); line-height: 1.6; text-align: center; margin-top: 28px; max-width: 420px; }
+.rd-date { font-family: var(--font-inter); font-size: 0.75rem; color: rgba(255,255,255,0.35); text-align: center; margin-top: 8px; }
+
+@media (max-width: 600px) {
+  .rd-page { padding: 24px 16px 60px; }
+  .rd-player { width: 260px; }
+  .rd-actions { gap: 14px; padding-left: 10px; }
+  .rd-action-icon { width: 38px; height: 38px; }
+}
+</style>
