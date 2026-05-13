@@ -49,7 +49,7 @@ const reelData = reels.map(r => ({
       <div class="vp-filters" id="vp-filters">
         <button class="vp-filter active" data-filter="all">All</button>
         <button class="vp-filter" data-filter="podcast">Podcast</button>
-        <button class="vp-filter vp-filter-reels" data-filter="reels" id="reels-tab">Reels</button>
+        <button class="vp-filter vp-filter-reels" data-filter="reels" id="reels-tab">Roots & Reels</button>
       </div>
 
       <!-- ─── VIDEO GRID ──────────────────────────────────── -->
@@ -106,10 +106,13 @@ const reelData = reels.map(r => ({
             aria-label={r.data.caption || 'Play reel'}
           >
             <div class="rc-thumb">
-              {r.data.r2ThumbUrl
-                ? <img src={r.data.r2ThumbUrl} alt="" loading="lazy" />
-                : <div class="rc-thumb-placeholder"></div>
-              }
+              <video
+                src={r.data.r2VideoUrl}
+                poster={r.data.r2ThumbUrl || undefined}
+                preload="metadata"
+                muted
+                playsinline
+              />
               <div class="rc-play-overlay">
                 <div class="rc-play-icon">
                   <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -256,7 +259,7 @@ const reelData = reels.map(r => ({
     loadWrap.style.display = 'none';
     searchWrap.style.display = 'none';
     vrGrid.classList.add('visible');
-    heroTitle.textContent = 'Reels';
+    heroTitle.textContent = 'Roots & Reels';
     heroSub.textContent = 'Short permaculture ideas, field visits, and quick tips';
     // show load more if needed
     const rcCards = Array.from(vrGrid.querySelectorAll('.rc'));
@@ -463,8 +466,8 @@ const reelData = reels.map(r => ({
 .rc { display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: #fff; border: 1px solid #e8e8e8; cursor: pointer; text-align: left; padding: 0; transition: box-shadow 0.2s, transform 0.15s; }
 .rc:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
 .rc-thumb { position: relative; aspect-ratio: 9/16; overflow: hidden; background: #1a1a1a; flex-shrink: 0; }
-.rc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-.rc:hover .rc-thumb img { transform: scale(1.04); }
+.rc-thumb img, .rc-thumb video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; pointer-events: none; }
+.rc:hover .rc-thumb img, .rc:hover .rc-thumb video { transform: scale(1.04); }
 .rc-thumb-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #2F4F2F 0%, #1a2e1a 100%); }
 .rc-play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0); transition: background 0.2s; }
 .rc:hover .rc-play-overlay { background: rgba(0,0,0,0.22); }

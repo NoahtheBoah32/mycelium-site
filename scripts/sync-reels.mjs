@@ -10,12 +10,44 @@
 
 import fs from 'fs';
 import https from 'https';
+import os from 'os';
 import path from 'path';
+import { execSync } from 'child_process';
 import { mirrorToR2 } from './mirror-to-r2.mjs';
 
 const CONTENT_DIR = './src/content/reels';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
+
+async function extractThumbnail(videoUrl, thumbKey) {
+  const tmpVideo = path.join(os.tmpdir(), `${path.basename(thumbKey, '.jpg')}.mp4`);
+  const tmpThumb = path.join(os.tmpdir(), path.basename(thumbKey));
+  try {
+    // Download just the first few seconds of the video
+    execSync(`curl -s -L --max-time 60 -o "${tmpVideo}" "${videoUrl}"`, { stdio: 'pipe' });
+    // Extract frame at 1 second (more likely to be a visible frame than 0s)
+    execSync(`ffmpeg -y -ss 1 -i "${tmpVideo}" -vframes 1 -q:v 2 "${tmpThumb}"`, { stdio: 'pipe' });
+    // Upload thumb to R2 using S3 client directly (file:// not supported by mirrorToR2)
+    const { S3Client, PutObjectCommand } = await import('@aws-sdk/client-s3');
+    const client = new S3Client({
+      region: 'auto',
+      endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY },
+    });
+    await client.send(new PutObjectCommand({
+      Bucket: process.env.R2_BUCKET, Key: thumbKey,
+      Body: fs.readFileSync(tmpThumb), ContentType: 'image/jpeg',
+      CacheControl: 'public, max-age=31536000, immutable',
+    }));
+    return `https://pub-9798291bac7b4e0b84c1d6e37549845c.r2.dev/${thumbKey}`;
+  } catch (err) {
+    console.warn(`  ffmpeg thumbnail failed: ${err.message}`);
+    return null;
+  } finally {
+    try { fs.unlinkSync(tmpVideo); } catch {}
+    try { fs.unlinkSync(tmpThumb); } catch {}
+  }
+}
 
 function apiFetch(url) {
   return new Promise((resolve, reject) => {
@@ -104,7 +136,12 @@ async function main() {
     let r2VideoUrl, r2ThumbUrl;
     try {
       if (reel.media_url) r2VideoUrl = await mirrorToR2(reel.media_url, videoKey);
-      if (reel.thumbnail_url) r2ThumbUrl = await mirrorToR2(reel.thumbnail_url, thumbKey);
+      if (reel.thumbnail_url) {
+        r2ThumbUrl = await mirrorToR2(reel.thumbnail_url, thumbKey);
+      } else if (r2VideoUrl) {
+        console.log(`  No thumbnail_url from IG — extracting via ffmpeg`);
+        r2ThumbUrl = await extractThumbnail(reel.media_url, thumbKey);
+      }
     } catch (err) {
       console.error(`  Mirror failed for ${reel.id}:`, err.message);
       continue;
