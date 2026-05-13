@@ -8,9 +8,11 @@
  */
 
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import http from 'http';
 import https from 'https';
+import { execSync } from 'child_process';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 const CONTENT_DIR = './src/content/reels';
@@ -65,6 +67,20 @@ async function uploadToR2(key, buffer) {
   return `${R2_PUBLIC}/${key}`;
 }
 
+async function ffmpegThumb(videoUrl, thumbKey) {
+  const tmpVideo = path.join(os.tmpdir(), path.basename(thumbKey, '.jpg') + '.mp4');
+  const tmpThumb = path.join(os.tmpdir(), path.basename(thumbKey));
+  try {
+    execSync(`curl -s -L --max-time 120 -o "${tmpVideo}" "${videoUrl}"`, { stdio: 'pipe' });
+    execSync(`ffmpeg -y -ss 3 -i "${tmpVideo}" -vframes 1 -q:v 2 "${tmpThumb}"`, { stdio: 'pipe' });
+    const buffer = fs.readFileSync(tmpThumb);
+    return { buffer, url: await uploadToR2(thumbKey, buffer) };
+  } finally {
+    try { fs.unlinkSync(tmpVideo); } catch {}
+    try { fs.unlinkSync(tmpThumb); } catch {}
+  }
+}
+
 async function main() {
   if (!TOKEN) { console.error('META_LONG_LIVED_TOKEN not set'); process.exit(1); }
 
@@ -82,37 +98,41 @@ async function main() {
     process.stdout.write(`${file}: `);
 
     try {
-      // Fetch current thumbnail_url from IG
+      // Fetch current thumbnail_url + media_url from IG
       const data = await apiFetch(
-        `https://graph.instagram.com/v22.0/${igId}?fields=thumbnail_url&access_token=${TOKEN}`
+        `https://graph.instagram.com/v22.0/${igId}?fields=thumbnail_url,media_url&access_token=${TOKEN}`
       );
 
-      if (!data.thumbnail_url) {
-        console.log('no thumbnail_url from IG, skipping');
+      let r2Url;
+
+      if (data.thumbnail_url) {
+        const buffer = await fetchBuffer(data.thumbnail_url);
+        if (buffer.length >= 5000) {
+          // Good thumbnail from IG
+          r2Url = await uploadToR2(thumbKey, buffer);
+          console.log(`re-uploaded from IG (${buffer.length}B)`);
+        } else {
+          // IG returned a black/tiny frame — extract via ffmpeg at 3s
+          console.log(`IG thumb too small (${buffer.length}B), extracting via ffmpeg...`);
+          const result = await ffmpegThumb(data.media_url, thumbKey);
+          r2Url = result.url;
+          console.log(`extracted via ffmpeg (${result.buffer.length}B)`);
+        }
+      } else if (data.media_url) {
+        console.log(`no thumbnail_url — extracting via ffmpeg...`);
+        const result = await ffmpegThumb(data.media_url, thumbKey);
+        r2Url = result.url;
+        console.log(`extracted via ffmpeg (${result.buffer.length}B)`);
+      } else {
+        console.log('no thumbnail_url or media_url from IG, skipping');
         skipped++;
         continue;
       }
-
-      // Download thumbnail
-      const buffer = await fetchBuffer(data.thumbnail_url);
-      if (buffer.length < 1000) {
-        console.log(`suspicious size (${buffer.length}B), skipping`);
-        skipped++;
-        continue;
-      }
-
-      // Upload to R2 (overwrites existing)
-      const r2Url = await uploadToR2(thumbKey, buffer);
 
       // Update the .md file's r2ThumbUrl if it changed
       let content = fs.readFileSync(filePath, 'utf8');
       const newContent = content.replace(/r2ThumbUrl:.*/, `r2ThumbUrl: ${r2Url}`);
-      if (newContent !== content) {
-        fs.writeFileSync(filePath, newContent, 'utf8');
-        console.log(`updated (${buffer.length}B)`);
-      } else {
-        console.log(`re-uploaded (${buffer.length}B)`);
-      }
+      if (newContent !== content) fs.writeFileSync(filePath, newContent, 'utf8');
       updated++;
 
     } catch (err) {
