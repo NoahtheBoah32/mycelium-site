@@ -189,12 +189,14 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         if (d.template === 'workshop') return (
           <div class="ev-card ev-card-workshop" data-partner={d.partner || undefined}>
 
-            {/* Color Flora gradient bg + poster as subtle texture */}
-            <img src={d.image ?? '/images/events/design-thinking-bg.jpg'} aria-hidden="true" class="ev-ws-poster-bg" />
+            {/* Full botanical background */}
+            <img src="/images/events/workshop-botanical-bg.jpg" aria-hidden="true" class="ev-ws-botanical-bg" />
+            <div class="ev-ws-botanical-overlay" aria-hidden="true"></div>
 
+            {/* 3-column: [date+QR] [poster] [details] */}
             <div class="ev-ws-content">
 
-              {/* Left glass panel: date + QR */}
+              {/* Left glass: date + time + QR */}
               <div class="ev-ws-left">
                 <div class="ev-ws-left-datebox">
                   <span class="ev-ws-left-label">DATE</span>
@@ -211,7 +213,12 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
                 </div>
               </div>
 
-              {/* Right glass panel: event details */}
+              {/* Center: visible poster */}
+              <div class="ev-ws-poster-col">
+                <img src="/images/events/design-thinking-bg.jpg" alt="Design Thinking Bootcamp poster" class="ev-ws-poster" />
+              </div>
+
+              {/* Right glass: event details */}
               <div class="ev-ws-right">
                 <div class="ev-ws-badges">
                   <span class="ev-badge ev-badge-ws-type">WORKSHOP</span>
@@ -771,111 +778,133 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
 }
 .ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
 
-/* ─── Card: Workshop — glassmorphism over Color Flora bg ──── */
+/* ─── Card: Workshop — botanical bg + 3-col glass ───────── */
 .ev-card-workshop {
   position: relative; isolation: isolate;
-  min-height: 460px; border-radius: 16px; overflow: hidden;
-  /* Color Flora gradient: dark olive → warm amber → olive */
-  background: linear-gradient(140deg, #2B2E12 0%, #6B3A0A 52%, #3A3C18 100%);
+  min-height: 480px; border-radius: 16px; overflow: hidden;
+  background: #1A1C0A;
 }
 
-/* Poster as ghost texture in bg */
-.ev-ws-poster-bg {
+/* Full-bleed botanical photo */
+.ev-ws-botanical-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 38%;
-  opacity: 0.12; display: block; pointer-events: none;
-  mix-blend-mode: luminosity;
+  object-fit: cover; object-position: center 55%;
+  display: block; pointer-events: none;
 }
 
-/* Content grid floats over bg */
+/* Dark scrim so glass panels read cleanly */
+.ev-ws-botanical-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10,9,3,0.62);
+  pointer-events: none;
+}
+
+/* 3-col content grid */
 .ev-ws-content {
   position: relative; z-index: 1;
-  display: grid; grid-template-columns: 196px 1fr;
-  min-height: 460px; padding: 24px; gap: 18px; align-items: stretch;
+  display: grid; grid-template-columns: 180px 248px 1fr;
+  min-height: 480px; padding: 24px; gap: 20px; align-items: stretch;
 }
 
-/* ── Left glass: date + QR ── */
+/* ── Left glass: date + time + QR ── */
 .ev-ws-left {
-  background: rgba(43,46,18,0.55);
-  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(240,194,48,0.22);
-  border-radius: 12px; padding: 28px 20px;
-  display: flex; flex-direction: column; align-items: center; gap: 20px;
-  box-shadow: inset 0 1px 0 rgba(240,194,48,0.12), 0 8px 32px rgba(0,0,0,0.25);
+  background: rgba(30,32,10,0.62);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(240,194,48,0.25);
+  border-radius: 14px; padding: 28px 18px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  box-shadow: inset 0 1px 0 rgba(240,194,48,0.14), 0 8px 32px rgba(0,0,0,0.35);
 }
 .ev-ws-left-datebox { text-align: center; }
 .ev-ws-left-timebox { text-align: center; }
 .ev-ws-left-label {
-  display: block; font-family: var(--font-inter); font-size: 0.5rem; font-weight: 800;
-  letter-spacing: 0.26em; text-transform: uppercase; color: rgba(240,194,48,0.5); margin-bottom: 4px;
+  display: block; font-family: var(--font-inter); font-size: 0.48rem; font-weight: 800;
+  letter-spacing: 0.28em; text-transform: uppercase; color: rgba(240,194,48,0.52); margin-bottom: 4px;
 }
 .ev-ws-left-day {
-  display: block; font-family: var(--font-lora); font-size: 3.8rem; font-weight: 700;
+  display: block; font-family: var(--font-lora); font-size: 3.6rem; font-weight: 700;
   color: #F0C230; line-height: 1; letter-spacing: -0.04em;
 }
 .ev-ws-left-mo {
-  display: block; font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700;
-  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,194,48,0.7); margin-top: 3px;
+  display: block; font-family: var(--font-inter); font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,194,48,0.72); margin-top: 3px;
 }
 .ev-ws-left-time {
-  display: block; font-family: var(--font-outfit); font-size: 0.8rem; font-weight: 600;
-  color: rgba(255,255,255,0.65); line-height: 1.4;
+  display: block; font-family: var(--font-outfit); font-size: 0.78rem; font-weight: 600;
+  color: rgba(255,255,255,0.62); line-height: 1.4;
 }
 .ev-ws-qr { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: auto; }
 .ev-ws-qr-img {
   width: 144px; height: 144px; object-fit: cover; display: block;
-  border-radius: 10px; border: 2px solid rgba(240,194,48,0.35);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 4px rgba(240,194,48,0.08);
+  border-radius: 10px; border: 2px solid rgba(240,194,48,0.4);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 4px rgba(240,194,48,0.1);
 }
 .ev-ws-qr-label {
-  font-family: var(--font-inter); font-size: 0.48rem; font-weight: 800;
-  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,194,48,0.5);
+  font-family: var(--font-inter); font-size: 0.46rem; font-weight: 800;
+  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,194,48,0.52);
+}
+
+/* ── Center: poster visible and framed ── */
+.ev-ws-poster-col {
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px 0;
+}
+.ev-ws-poster {
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: center;
+  display: block; border-radius: 8px;
+  box-shadow:
+    0 0 0 3px rgba(240,194,48,0.22),
+    0 12px 48px rgba(0,0,0,0.65),
+    0 4px 16px rgba(0,0,0,0.4);
+  transform: rotate(-0.8deg);
+  transform-origin: center center;
 }
 
 /* ── Right glass: event details ── */
 .ev-ws-right {
-  background: rgba(15,12,4,0.5);
-  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(240,194,48,0.14);
-  border-radius: 12px; padding: 32px 36px;
+  background: rgba(10,8,2,0.58);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(240,194,48,0.16);
+  border-radius: 14px; padding: 32px 34px;
   display: flex; flex-direction: column;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 8px 32px rgba(0,0,0,0.25);
 }
 .ev-ws-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-.ev-badge-ws-type { background: rgba(240,194,48,0.14); color: #E8B830; border: 1px solid rgba(240,194,48,0.3); }
-.ev-badge-ws-paid { background: rgba(200,120,48,0.14); color: #C87838; border: 1px solid rgba(200,120,48,0.3); }
-.ev-badge-ws-loc  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.14); }
+.ev-badge-ws-type { background: rgba(240,194,48,0.15); color: #E8B830; border: 1px solid rgba(240,194,48,0.32); }
+.ev-badge-ws-paid { background: rgba(200,120,48,0.15); color: #C87838; border: 1px solid rgba(200,120,48,0.32); }
+.ev-badge-ws-loc  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.52); border: 1px solid rgba(255,255,255,0.14); }
 .ev-ws-schedule {
   font-family: var(--font-inter); font-size: 0.65rem; font-weight: 800;
   letter-spacing: 0.18em; text-transform: uppercase; color: #C87838; margin-bottom: 12px;
 }
 .ev-ws-title {
-  font-family: var(--font-outfit); font-size: clamp(1.4rem, 1.9vw, 2.2rem);
+  font-family: var(--font-outfit); font-size: clamp(1.35rem, 1.85vw, 2.1rem);
   font-weight: 900; color: #F8EDD8; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 12px;
 }
 .ev-ws-desc {
-  font-family: var(--font-outfit); font-size: 0.86rem;
+  font-family: var(--font-outfit); font-size: 0.85rem;
   color: rgba(248,237,216,0.52); line-height: 1.65; margin-bottom: 0;
 }
 .ev-ws-footer {
   display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(240,194,48,0.12);
+  margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(240,194,48,0.13);
 }
 .ev-ws-footer-logo {
   width: 38px; height: 38px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(240,194,48,0.25), 0 3px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 1px rgba(240,194,48,0.28), 0 3px 10px rgba(0,0,0,0.45);
 }
 .ev-ws-footer-org { display: flex; flex-direction: column; gap: 2px; }
 .ev-ws-presents {
   font-family: var(--font-inter); font-size: 0.46rem; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,194,48,0.45);
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,194,48,0.48);
 }
 .ev-ws-org-name { font-family: var(--font-lora); font-size: 0.85rem; font-weight: 700; color: rgba(248,237,216,0.88); }
 .ev-ws-location {
   display: flex; align-items: flex-start; gap: 5px;
   font-family: var(--font-outfit); font-size: 0.74rem; color: rgba(248,237,216,0.4);
 }
-.ev-ws-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(200,120,48,0.7); }
+.ev-ws-location svg { flex-shrink: 0; margin-top: 2px; color: rgba(200,120,48,0.72); }
 
 /* ─── Coming Soon ────────────────────────────────────────── */
 .ev-card-soon { position: relative; min-height: 480px; display: flex; align-items: stretch; overflow: hidden; isolation: isolate; }
@@ -929,6 +958,7 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
   .ev-ws-content { grid-template-columns: 1fr; min-height: unset; }
   .ev-ws-left { flex-direction: row; flex-wrap: wrap; justify-content: space-between; padding: 20px 24px; gap: 16px; }
   .ev-ws-qr { margin-top: 0; }
+  .ev-ws-poster-col { height: 320px; }
   .ev-ws-right { padding: 24px 28px; }
   .ev-bag-content { padding: 28px 28px; }
   .ev-bag-headline { font-size: clamp(1.8rem, 5vw, 2.4rem); }
