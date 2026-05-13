@@ -51,7 +51,7 @@ export async function mirrorToR2(sourceUrl, key) {
   try {
     await client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }));
     console.log(`  ↩ already in R2: ${key}`);
-    return `https://r.mycelium-learn.com/${key}`;
+    return `https://pub-9798291bac7b4e0b84c1d6e37549845c.r2.dev/${key}`;
   } catch {
     // not found — proceed
   }
@@ -66,7 +66,7 @@ export async function mirrorToR2(sourceUrl, key) {
     CacheControl: 'public, max-age=31536000, immutable',
   }));
 
-  return `https://r.mycelium-learn.com/${key}`;
+  return `https://pub-9798291bac7b4e0b84c1d6e37549845c.r2.dev/${key}`;
 }
 
 // Standalone test: node scripts/mirror-to-r2.mjs <url> <key>
