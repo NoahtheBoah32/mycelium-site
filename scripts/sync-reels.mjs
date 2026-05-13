@@ -17,7 +17,7 @@ import { execSync } from 'child_process';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { mirrorToR2 } from './mirror-to-r2.mjs';
 
-const R2_PUBLIC = 'https://pub-9798291bac7b4e0b84c1d6e37549845c.r2.dev';
+const R2_PUBLIC = 'https://mycelium-r2.joaquinriego32.workers.dev';
 
 function fetchBuffer(url) {
   return new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ async function extractThumbnail(videoUrl, thumbKey) {
       Body: fs.readFileSync(tmpThumb), ContentType: 'image/jpeg',
       CacheControl: 'public, max-age=31536000, immutable',
     }));
-    return `https://pub-9798291bac7b4e0b84c1d6e37549845c.r2.dev/${thumbKey}`;
+    return `https://mycelium-r2.joaquinriego32.workers.dev/${thumbKey}`;
   } catch (err) {
     console.warn(`  ffmpeg thumbnail failed: ${err.message}`);
     return null;

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mycelium — Videos + Reels Mockup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --font-outfit: 'Outfit', sans-serif;
+      --font-inter: 'Inter', sans-serif;
+      --font-lora: 'Lora', serif;
+      --green: #61CE70;
+      --dark-green: #2F4F2F;
+      --reels-bg: #0A0900;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-inter); background: #f9f9f7; }
+    a { text-decoration: none; color: inherit; }
+    button { border: none; cursor: pointer; font-family: inherit; }
+    img { display: block; }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    .site-nav { position: sticky; top: 0; z-index: 9999; background: #1E1501; }
+    .sn-inner {
+      max-width: 1260px; margin: 0 auto; padding: 0 40px;
+      height: 64px; display: flex; align-items: center;
+      justify-content: space-between; gap: 32px;
+    }
+    .sn-logo {
+      font-family: var(--font-lora); font-size: 1.3rem; font-weight: 700;
+      color: #e8d98e; white-space: nowrap;
+    }
+    .sn-logo small { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 400; color: rgba(255,255,255,0.4); margin-left: 5px; }
+    .sn-links { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; }
+    .sn-link {
+      font-family: var(--font-inter); font-size: 0.92rem; font-weight: 500;
+      padding: 10px 14px; border-radius: 4px; color: rgba(255,255,255,0.75);
+      transition: color 0.15s, background 0.15s; white-space: nowrap;
+    }
+    .sn-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .sn-link.active-videos { color: #fff; font-weight: 600; }
+    .sn-link.active-reels { color: var(--green); font-weight: 600; }
+    .sn-link#nav-reels { color: rgba(97,206,112,0.75); }
+    .sn-link#nav-reels:hover { color: var(--green); background: rgba(97,206,112,0.08); }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .vp-hero { padding: 80px 40px 64px; background: #F7F7F5; }
+    .vp-inner { max-width: 1180px; margin: 0 auto; }
+    .vp-title {
+      font-family: var(--font-outfit); font-size: clamp(2.2rem, 4vw, 3.75rem);
+      font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+      margin-bottom: 16px; text-align: center; color: #242424;
+    }
+    .vp-sub { font-family: var(--font-outfit); font-size: 1.5rem; line-height: 1.5; text-align: center; color: #666; }
+
+    /* ─── GRID SECTION ────────────────────────────────────── */
+    .vp-grid-section { padding: 40px 40px 80px; background: #f9f9f7; }
+
+    /* Search */
+    .vp-search-wrap { position: relative; margin-bottom: 20px; }
+    .vp-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+    .vp-search {
+      width: 100%; font-family: var(--font-outfit); font-size: 0.95rem; color: #333;
+      padding: 11px 16px 11px 42px; border: 1px solid #ddd; border-radius: 8px;
+      background: #fff; outline: none; transition: border-color 0.15s;
+    }
+    .vp-search:focus { border-color: var(--dark-green); }
+    .vp-search::placeholder { color: #aaa; }
+
+    /* Filter pills */
+    .vp-filters { display: flex; gap: 8px; margin-bottom: 32px; justify-content: center; }
+    .vp-filter {
+      font-family: var(--font-inter); font-size: 0.8rem; font-weight: 600;
+      padding: 6px 18px; border-radius: 50px; border: 1px solid #ddd;
+      background: #fff; color: #555; transition: all 0.18s;
+    }
+    .vp-filter.active { background: var(--dark-green); color: #fff; border-color: var(--dark-green); }
+    .vp-filter:hover:not(.active) { border-color: var(--dark-green); color: var(--dark-green); }
+    /* Reels tab pill */
+    .vp-filter[data-filter="reels"] { border-color: rgba(47,79,47,0.35); color: var(--dark-green); }
+    .vp-filter[data-filter="reels"].active { background: var(--dark-green); color: #fff; border-color: var(--dark-green); }
+    .vp-filter[data-filter="reels"]:hover:not(.active) { border-color: var(--dark-green); color: var(--dark-green); }
+
+    /* ─── VIDEO GRID (exact copy) ─────────────────────────── */
+    .vp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .vc {
+      border-radius: 10px; overflow: hidden; background: #fff;
+      border: 1px solid #e8e8e8; display: flex; flex-direction: column;
+      cursor: pointer; transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .vc:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .vc-thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #1a1a1a; }
+    .vc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .vc:hover .vc-thumb img { transform: scale(1.04); }
+    .vc-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .vc-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 5px; }
+    .vc-title {
+      font-family: var(--font-inter); font-size: 0.85rem; font-weight: 600;
+      color: #242424; line-height: 1.4;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .vc-author { font-family: var(--font-inter); font-size: 0.75rem; color: #888; }
+    .vc-hover-actions {
+      display: flex; gap: 8px; margin-top: 10px;
+      opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.2s;
+    }
+    .vc:hover .vc-hover-actions { opacity: 1; transform: translateY(0); }
+    .vc-btn-outline {
+      flex: 1; font-family: var(--font-inter); font-size: 0.82rem; font-weight: 500;
+      padding: 8px 10px; border: 0.8px solid #242424; border-radius: 6px;
+      background: transparent; color: #242424; text-align: center; transition: all 0.15s;
+    }
+    .vc-btn-outline:hover { background: #242424; color: #fff; }
+    .vc-btn-solid {
+      flex: 1; font-family: var(--font-inter); font-size: 0.82rem; font-weight: 500;
+      padding: 8px 10px; border-radius: 6px; background: var(--dark-green); color: #fff;
+      text-align: center; border: 1px solid var(--dark-green); transition: background 0.15s;
+    }
+    .vc-btn-solid:hover { background: #3d6b3d; }
+
+    /* Load more */
+    .vp-load-wrap { text-align: center; margin-top: 40px; }
+    .vp-load-more {
+      font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500;
+      background: #5A3A1C; color: #fff; padding: 10px 32px;
+      border-radius: 50px; transition: background 0.2s;
+    }
+    .vp-load-more:hover { background: #947153; }
+
+    /* ─── REELS GRID (YouTube Shorts style) ──────────────── */
+    .vr-grid {
+      display: none;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .vr-grid.visible { display: grid; }
+
+    /* Reel card — matches video card style, title below, vertical 9:16 thumb */
+    .rc {
+      cursor: pointer; border-radius: 10px; overflow: hidden;
+      background: #fff; border: 1px solid #e8e8e8;
+      display: flex; flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .rc:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .rc:hover .rc-thumb img { transform: scale(1.04); }
+
+    .rc-thumb {
+      position: relative; aspect-ratio: 9/16; overflow: hidden;
+      background: #1a1a1a;
+    }
+    .rc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+
+    /* Duration chip — bottom right, exactly like YouTube */
+    .rc-duration {
+      position: absolute; bottom: 8px; right: 8px;
+      font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700;
+      color: #fff; background: rgba(0,0,0,0.75); padding: 2px 6px; border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Play overlay on hover */
+    .rc-play-overlay {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0); transition: background 0.2s;
+    }
+    .rc:hover .rc-play-overlay { background: rgba(0,0,0,0.22); }
+    .rc-play-icon { opacity: 0; transform: scale(0.8); transition: opacity 0.2s, transform 0.2s; }
+    .rc:hover .rc-play-icon { opacity: 1; transform: scale(1); }
+
+    /* Title and meta BELOW the thumbnail */
+    .rc-info { padding: 14px 16px 6px; display: flex; flex-direction: column; gap: 5px; }
+    .rc-title {
+      font-family: var(--font-inter); font-size: 0.85rem; font-weight: 600;
+      color: #242424; line-height: 1.4;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .rc-meta {
+      font-family: var(--font-inter); font-size: 0.75rem; color: #888;
+    }
+
+    /* ─── REEL PLAYER MODAL (YouTube Shorts style) ───────── */
+    .reel-modal {
+      display: none; position: fixed; inset: 0; z-index: 99999;
+      background: rgba(5,5,3,0.96);
+      align-items: center; justify-content: center;
+    }
+    .reel-modal.open { display: flex; }
+
+    /* Back button top-left */
+    .reel-back {
+      position: fixed; top: 20px; left: 24px;
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-inter); font-size: 0.82rem; font-weight: 600;
+      color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.08);
+      border: none; border-radius: 50px; padding: 8px 16px;
+      cursor: pointer; transition: color 0.15s, background 0.15s;
+    }
+    .reel-back:hover { color: #fff; background: rgba(255,255,255,0.14); }
+
+    /* Center layout: arrow | [player + actions] | arrow */
+    .reel-layout {
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    /* Prev/next arrows */
+    .reel-arrow {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.15s; flex-shrink: 0;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .reel-arrow:hover { background: rgba(255,255,255,0.2); }
+    .reel-arrow svg { width: 20px; height: 20px; }
+
+    /* Player + actions wrapper */
+    .reel-player-wrap { display: flex; align-items: center; gap: 0; }
+
+    /* The 9:16 video container */
+    .reel-player {
+      width: 360px; height: 640px;
+      border-radius: 16px; overflow: hidden;
+      position: relative; background: #000;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.7);
+      flex-shrink: 0;
+    }
+    .reel-player-img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Big play button centered on video */
+    .reel-player-play {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(0,0,0,0.45); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s;
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+    .reel-player-play:hover { background: rgba(0,0,0,0.65); }
+    .reel-player-play svg { margin-left: 3px; }
+
+    /* Progress bar */
+    .reel-progress {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: rgba(255,255,255,0.2);
+    }
+    .reel-progress-fill { height: 100%; background: var(--green); border-radius: 2px; width: 35%; }
+
+    /* Caption overlay at bottom of video */
+    .reel-video-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 48px 16px 18px;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    }
+    .reel-video-caption-text {
+      font-family: var(--font-inter); font-size: 0.82rem; font-weight: 500;
+      color: rgba(255,255,255,0.92); line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .reel-video-date {
+      font-family: var(--font-inter); font-size: 0.68rem;
+      color: rgba(255,255,255,0.42); margin-top: 4px;
+    }
+
+    /* Action buttons — right side of video, vertical stack, YouTube style */
+    .reel-actions {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 24px; padding: 0 0 0 16px;
+    }
+    .reel-action-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      cursor: pointer; background: none; border: none;
+      color: rgba(255,255,255,0.7); transition: color 0.15s;
+    }
+    .reel-action-btn:hover { color: #fff; }
+    .reel-action-btn.liked { color: var(--green); }
+    .reel-action-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .reel-action-btn:hover .reel-action-icon { background: rgba(255,255,255,0.18); }
+    .reel-action-btn.liked .reel-action-icon { background: rgba(97,206,112,0.15); border-color: rgba(97,206,112,0.3); }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    .site-footer {
+      background: #1E1501; color: rgba(255,255,255,0.35);
+      font-family: var(--font-inter); font-size: 0.78rem;
+      text-align: center; padding: 28px 40px;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 1200px) { .vr-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 1024px) { .vp-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px)  { .vr-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  {
+      .vp-hero { padding: 40px 20px 28px; }
+      .vp-grid-section { padding: 28px 20px 60px; }
+      .vp-grid { grid-template-columns: 1fr; }
+      .vr-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .reel-player { width: 280px; height: 498px; }
+      .reel-actions { gap: 16px; }
+      .reel-action-icon { width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────────────── -->
+<nav class="site-nav">
+  <div class="sn-inner">
+    <a href="#" class="sn-logo">Mycelium <small>Learning</small></a>
+    <div class="sn-links">
+      <a href="#" class="sn-link">Home</a>
+      <a href="#" class="sn-link">About</a>
+      <a href="#" class="sn-link active-videos" id="nav-videos">Videos</a>
+      <a href="#" class="sn-link" id="nav-reels">Reels</a>
+      <a href="#" class="sn-link">Resources</a>
+      <a href="#" class="sn-link">Events</a>
+      <a href="#" class="sn-link">Courses</a>
+      <a href="#" class="sn-link">Newsletter</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ────────────────────────────────────────────── -->
+<section class="vp-hero" id="hero">
+  <div class="vp-inner">
+    <h1 class="vp-title" id="hero-title">Learn Through Permaculture Videos</h1>
+    <p class="vp-sub" id="hero-sub">Explore practical tips, techniques, and inspiration for your permaculture journey</p>
+  </div>
+</section>
+
+<!-- ─── GRID SECTION ─────────────────────────────────────── -->
+<section class="vp-grid-section mode-videos" id="grid-section">
+  <div class="vp-inner">
+
+    <!-- Search (videos only) -->
+    <div id="search-wrap" class="vp-search-wrap">
+      <svg class="vp-search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <circle cx="7.5" cy="7.5" r="5.5" stroke="#888" stroke-width="1.5"/>
+        <line x1="11.5" y1="11.5" x2="16" y2="16" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input class="vp-search" type="text" placeholder="Search videos, topics, creators..." />
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="vp-filters">
+      <button class="vp-filter active" data-filter="all" onclick="switchTab('videos', this)">All</button>
+      <button class="vp-filter" data-filter="podcast" onclick="switchTab('videos', this)">Podcast</button>
+      <button class="vp-filter" data-filter="reels" id="reels-tab" onclick="switchTab('reels', this)">Reels</button>
+    </div>
+
+    <!-- ─── VIDEO GRID ────────────────────────────────────── -->
+    <div class="vp-grid" id="videos-grid">
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p1/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">Permaculture Design Basics — Everything You Need to Know</h3><p class="vc-author">By Geoff Lawton</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p2/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">How I Designed My Permaculture Food Forest — Step-by-Step</h3><p class="vc-author">By Andrew Millison</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p3/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">Soil Science for Permaculture — Building Living Soil</h3><p class="vc-author">By Elaine Ingham</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p4/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">How to Make a Rainwater Harvesting System for a Small Property</h3><p class="vc-author">By Brad Lancaster</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p5/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">Before You Create Permaculture Swales — Watch This First</h3><p class="vc-author">By Geoff Lawton</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p6/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">Mulching a Fruit Tree — The Complete Method for Healthy Trees</h3><p class="vc-author">By Mycelium Learning</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p7/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">Understanding Zones and Sectors in Permaculture Design</h3><p class="vc-author">By Andrew Millison</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p8/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">Working With Natural Patterns — Reading the Landscape</h3><p class="vc-author">By Toby Hemenway</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+      <div class="vc">
+        <div class="vc-thumb"><img src="https://picsum.photos/seed/p9/400/225" alt="" loading="lazy"/><div class="vc-play"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/><polygon points="14,11 28,18 14,25" fill="white"/></svg></div></div>
+        <div class="vc-body"><h3 class="vc-title">A Comprehensive Guide to Permaculture Guilds</h3><p class="vc-author">By Mycelium Learning</p><div class="vc-hover-actions"><a href="#" class="vc-btn-outline">Learn More</a><a href="#" class="vc-btn-solid">Watch Now</a></div></div>
+      </div>
+    </div>
+
+    <!-- ─── REELS GRID ─────────────────────────────────────── -->
+    <div class="vr-grid" id="reels-grid">
+
+      <div class="rc" onclick="openReel(0)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r1/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">0:28</span>
+          <div class="rc-play-overlay">
+            <div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div>
+          </div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">Why composting is the foundation of any permaculture garden</p>
+          <p class="rc-meta">Mycelium Learning · May 10</p>
+        </div>
+      </div>
+
+      <div class="rc" onclick="openReel(1)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r2/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">0:45</span>
+          <div class="rc-play-overlay"><div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div></div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">3 companion planting combos that actually work for Philippine gardens</p>
+          <p class="rc-meta">Mycelium Learning · May 8</p>
+        </div>
+      </div>
+
+      <div class="rc" onclick="openReel(2)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r3/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">0:32</span>
+          <div class="rc-play-overlay"><div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div></div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">What is a food forest? 30-second explainer</p>
+          <p class="rc-meta">Mycelium Learning · May 5</p>
+        </div>
+      </div>
+
+      <div class="rc" onclick="openReel(3)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r4/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">0:58</span>
+          <div class="rc-play-overlay"><div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div></div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">Community food hub in Mindanao — this is what collaborative farming looks like</p>
+          <p class="rc-meta">Mycelium Learning · May 2</p>
+        </div>
+      </div>
+
+      <div class="rc" onclick="openReel(4)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r5/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">1:02</span>
+          <div class="rc-play-overlay"><div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div></div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">Annual vs perennial plants — why perennials win for long-term food security</p>
+          <p class="rc-meta">Mycelium Learning · Apr 28</p>
+        </div>
+      </div>
+
+      <div class="rc" onclick="openReel(5)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r6/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">0:22</span>
+          <div class="rc-play-overlay"><div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div></div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">Seed sovereignty is not just about seeds — it's about who controls the food system</p>
+          <p class="rc-meta">Mycelium Learning · Apr 24</p>
+        </div>
+      </div>
+
+      <div class="rc" onclick="openReel(6)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r7/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">0:41</span>
+          <div class="rc-play-overlay"><div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div></div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">How to read your landscape before you design anything</p>
+          <p class="rc-meta">Mycelium Learning · Apr 20</p>
+        </div>
+      </div>
+
+      <div class="rc" onclick="openReel(7)">
+        <div class="rc-thumb">
+          <img src="https://picsum.photos/seed/r8/400/711" alt="" loading="lazy"/>
+          <span class="rc-duration">0:37</span>
+          <div class="rc-play-overlay"><div class="rc-play-icon"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/><polygon points="19,14 37,24 19,34" fill="white"/></svg></div></div>
+        </div>
+        <div class="rc-info">
+          <p class="rc-title">Baganihan PDC recap — 7 days that changed how these designers think about land</p>
+          <p class="rc-meta">Mycelium Learning · Apr 15</p>
+        </div>
+      </div>
+
+    </div><!-- /reels-grid -->
+
+    <div class="vp-load-wrap" id="load-wrap">
+      <button class="vp-load-more">Load More</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── REEL PLAYER MODAL ─────────────────────────────────── -->
+<div class="reel-modal" id="reel-modal" onclick="closeReelIfOutside(event)">
+
+  <button class="reel-back" onclick="closeReel()">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Reels
+  </button>
+
+  <div class="reel-layout">
+    <!-- Prev -->
+    <button class="reel-arrow" onclick="navigateReel(-1)" title="Previous (←)">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M13 4L7 10l6 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <!-- Player + action buttons -->
+    <div class="reel-player-wrap">
+      <!-- 9:16 video -->
+      <div class="reel-player">
+        <img id="reel-player-img" src="" alt="" class="reel-player-img" />
+        <div class="reel-video-caption">
+          <p id="reel-player-caption" class="reel-video-caption-text"></p>
+          <p id="reel-player-date" class="reel-video-date"></p>
+        </div>
+        <button class="reel-player-play" onclick="togglePlay(this)">
+          <svg id="reel-play-icon" width="26" height="26" viewBox="0 0 26 26"><polygon points="7,3 23,13 7,23" fill="white"/></svg>
+        </button>
+        <div class="reel-progress"><div class="reel-progress-fill" id="reel-progress-fill"></div></div>
+      </div>
+
+      <!-- Action buttons RIGHT side — YouTube Shorts style -->
+      <div class="reel-actions">
+        <button class="reel-action-btn" id="like-btn" onclick="toggleLike(this)" title="Like">
+          <div class="reel-action-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 3 14.5 3 8.5a5 5 0 0110 0 5 5 0 0110 0C21 14.5 12 21 12 21z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <button class="reel-action-btn" title="Comment">
+          <div class="reel-action-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+        <button class="reel-action-btn" title="Share">
+          <div class="reel-action-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Next -->
+    <button class="reel-arrow" onclick="navigateReel(1)" title="Next (→)">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<footer class="site-footer">© 2026 Mycelium Learning</footer>
+
+<script>
+  const reelData = [
+    { img:'https://picsum.photos/seed/r1/400/711', caption:'Why composting is the foundation of any permaculture garden 🌱', date:'May 10, 2026' },
+    { img:'https://picsum.photos/seed/r2/400/711', caption:'3 companion planting combos that actually work for Philippine gardens 🇵🇭', date:'May 8, 2026' },
+    { img:'https://picsum.photos/seed/r3/400/711', caption:'What is a food forest? Quick 30-second explainer 🌳', date:'May 5, 2026' },
+    { img:'https://picsum.photos/seed/r4/400/711', caption:'Community food hub in Mindanao — this is what collaborative farming looks like 💚', date:'May 2, 2026' },
+    { img:'https://picsum.photos/seed/r5/400/711', caption:'Annual vs perennial plants — why perennials win for long-term food security', date:'Apr 28, 2026' },
+    { img:'https://picsum.photos/seed/r6/400/711', caption:'Seed sovereignty is not just about seeds. It\'s about who controls the food system 🌾', date:'Apr 24, 2026' },
+    { img:'https://picsum.photos/seed/r7/400/711', caption:'How to read your landscape before you design anything ✏️', date:'Apr 20, 2026' },
+    { img:'https://picsum.photos/seed/r8/400/711', caption:'Baganihan PDC recap — 7 days that changed how these designers think about land 🏡', date:'Apr 15, 2026' },
+  ];
+  let currentReel = 0;
+  let isPlaying = false;
+
+  function switchTab(mode, btn) {
+    const videosGrid = document.getElementById('videos-grid');
+    const reelsGrid  = document.getElementById('reels-grid');
+    const navVideos  = document.getElementById('nav-videos');
+    const navReels   = document.getElementById('nav-reels');
+    const heroTitle  = document.getElementById('hero-title');
+    const heroSub    = document.getElementById('hero-sub');
+    const allBtns    = document.querySelectorAll('.vp-filter');
+
+    allBtns.forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    if (mode === 'reels') {
+      videosGrid.style.display = 'none';
+      reelsGrid.classList.add('visible');
+      navVideos.classList.remove('active-videos');
+      navReels.classList.add('active-reels');
+      heroTitle.textContent = 'Reels';
+      heroSub.textContent   = 'Short permaculture ideas, field visits, and quick tips';
+    } else {
+      reelsGrid.classList.remove('visible');
+      videosGrid.style.display = '';
+      navReels.classList.remove('active-reels');
+      navVideos.classList.add('active-videos');
+      heroTitle.textContent = 'Learn Through Permaculture Videos';
+      heroSub.textContent   = 'Explore practical tips, techniques, and inspiration for your permaculture journey';
+    }
+  }
+
+  document.getElementById('nav-reels').addEventListener('click', e => {
+    e.preventDefault();
+    switchTab('reels', document.getElementById('reels-tab'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('nav-videos').addEventListener('click', e => {
+    e.preventDefault();
+    switchTab('videos', document.querySelector('[data-filter="all"]'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  function openReel(index) {
+    currentReel = index;
+    renderReel();
+    document.getElementById('reel-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    isPlaying = false;
+  }
+  function closeReel() {
+    document.getElementById('reel-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeReelIfOutside(e) {
+    if (e.target === document.getElementById('reel-modal')) closeReel();
+  }
+  function navigateReel(dir) {
+    currentReel = (currentReel + dir + reelData.length) % reelData.length;
+    isPlaying = false;
+    renderReel();
+    // reset like
+    document.getElementById('like-btn').classList.remove('liked');
+  }
+  function renderReel() {
+    const r = reelData[currentReel];
+    document.getElementById('reel-player-img').src = r.img;
+    document.getElementById('reel-player-caption').textContent = r.caption;
+    document.getElementById('reel-player-date').textContent = r.date;
+    document.getElementById('reel-progress-fill').style.width = (15 + Math.random() * 65) + '%';
+    // reset play button
+    document.getElementById('reel-play-icon').innerHTML = '<polygon points="7,3 23,13 7,23" fill="white"/>';
+  }
+  function togglePlay(btn) {
+    isPlaying = !isPlaying;
+    const icon = document.getElementById('reel-play-icon');
+    icon.innerHTML = isPlaying
+      ? '<rect x="5" y="3" width="5" height="18" rx="1.5" fill="white"/><rect x="14" y="3" width="5" height="18" rx="1.5" fill="white"/>'
+      : '<polygon points="7,3 23,13 7,23" fill="white"/>';
+  }
+  function toggleLike(btn) {
+    btn.classList.toggle('liked');
+    const path = btn.querySelector('path');
+    if (btn.classList.contains('liked')) {
+      path.setAttribute('fill', 'currentColor');
+    } else {
+      path.setAttribute('fill', 'none');
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('reel-modal').classList.contains('open')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigateReel(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigateReel(-1);
+    if (e.key === 'Escape') closeReel();
+    if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+  });
+</script>
+
+</body>
+</html>

@@ -16,7 +16,7 @@ import { execSync } from 'child_process';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 const CONTENT_DIR = './src/content/reels';
-const R2_PUBLIC   = 'https://pub-9798291bac7b4e0b84c1d6e37549845c.r2.dev';
+const R2_PUBLIC   = 'https://mycelium-r2.joaquinriego32.workers.dev';
 const TOKEN       = process.env.META_LONG_LIVED_TOKEN;
 
 function apiFetch(url) {
