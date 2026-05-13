@@ -49,7 +49,7 @@ const reelData = reels.map(r => ({
       <div class="vp-filters" id="vp-filters">
         <button class="vp-filter active" data-filter="all">All</button>
         <button class="vp-filter" data-filter="podcast">Podcast</button>
-        <button class="vp-filter vp-filter-reels" data-filter="reels" id="reels-tab">Roots & Reels</button>
+        <button class="vp-filter vp-filter-reels" data-filter="reels" id="reels-tab">Reel Talks on Permaculture</button>
       </div>
 
       <!-- ─── VIDEO GRID ──────────────────────────────────── -->
@@ -259,7 +259,7 @@ const reelData = reels.map(r => ({
     loadWrap.style.display = 'none';
     searchWrap.style.display = 'none';
     vrGrid.classList.add('visible');
-    heroTitle.textContent = 'Roots & Reels';
+    heroTitle.textContent = 'Reel Talks on Permaculture';
     heroSub.textContent = 'Short permaculture ideas, field visits, and quick tips';
     // show load more if needed
     const rcCards = Array.from(vrGrid.querySelectorAll('.rc'));
