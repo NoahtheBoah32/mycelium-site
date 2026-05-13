@@ -812,35 +812,36 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(240,194,48,0.25);
   border-radius: 14px; padding: 28px 18px;
-  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: space-between;
   box-shadow: inset 0 1px 0 rgba(240,194,48,0.14), 0 8px 32px rgba(0,0,0,0.35);
 }
 .ev-ws-left-datebox { text-align: center; }
 .ev-ws-left-timebox { text-align: center; }
 .ev-ws-left-label {
-  display: block; font-family: var(--font-inter); font-size: 0.48rem; font-weight: 800;
-  letter-spacing: 0.28em; text-transform: uppercase; color: rgba(240,194,48,0.52); margin-bottom: 4px;
+  display: block; font-family: var(--font-inter); font-size: 0.55rem; font-weight: 800;
+  letter-spacing: 0.26em; text-transform: uppercase; color: rgba(240,194,48,0.55); margin-bottom: 5px;
 }
 .ev-ws-left-day {
-  display: block; font-family: var(--font-lora); font-size: 3.6rem; font-weight: 700;
+  display: block; font-family: var(--font-lora); font-size: 4rem; font-weight: 700;
   color: #F0C230; line-height: 1; letter-spacing: -0.04em;
 }
 .ev-ws-left-mo {
-  display: block; font-family: var(--font-inter); font-size: 0.58rem; font-weight: 700;
-  letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,194,48,0.72); margin-top: 3px;
+  display: block; font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,194,48,0.75); margin-top: 4px;
 }
 .ev-ws-left-time {
-  display: block; font-family: var(--font-outfit); font-size: 0.78rem; font-weight: 600;
-  color: rgba(255,255,255,0.62); line-height: 1.4;
+  display: block; font-family: var(--font-outfit); font-size: 0.88rem; font-weight: 600;
+  color: rgba(255,255,255,0.7); line-height: 1.4;
 }
-.ev-ws-qr { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: auto; }
+.ev-ws-qr { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
 .ev-ws-qr-img {
   width: 144px; height: 144px; object-fit: cover; display: block;
   border-radius: 10px; border: 2px solid rgba(240,194,48,0.4);
   box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 4px rgba(240,194,48,0.1);
 }
 .ev-ws-qr-label {
-  font-family: var(--font-inter); font-size: 0.46rem; font-weight: 800;
+  font-family: var(--font-inter); font-size: 0.5rem; font-weight: 800;
   letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,194,48,0.52);
 }
 
@@ -875,16 +876,16 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
 .ev-badge-ws-paid { background: rgba(200,120,48,0.15); color: #C87838; border: 1px solid rgba(200,120,48,0.32); }
 .ev-badge-ws-loc  { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.52); border: 1px solid rgba(255,255,255,0.14); }
 .ev-ws-schedule {
-  font-family: var(--font-inter); font-size: 0.65rem; font-weight: 800;
-  letter-spacing: 0.18em; text-transform: uppercase; color: #C87838; margin-bottom: 12px;
+  font-family: var(--font-inter); font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.16em; text-transform: uppercase; color: #C87838; margin-bottom: 14px;
 }
 .ev-ws-title {
-  font-family: var(--font-outfit); font-size: clamp(1.35rem, 1.85vw, 2.1rem);
-  font-weight: 900; color: #F8EDD8; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 12px;
+  font-family: var(--font-outfit); font-size: clamp(1.7rem, 2.2vw, 2.6rem);
+  font-weight: 900; color: #F8EDD8; line-height: 1.06; letter-spacing: -0.025em; margin-bottom: 16px;
 }
 .ev-ws-desc {
-  font-family: var(--font-outfit); font-size: 0.85rem;
-  color: rgba(248,237,216,0.52); line-height: 1.65; margin-bottom: 0;
+  font-family: var(--font-outfit); font-size: 0.95rem;
+  color: rgba(248,237,216,0.65); line-height: 1.65; margin-bottom: 0;
 }
 .ev-ws-footer {
   display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
