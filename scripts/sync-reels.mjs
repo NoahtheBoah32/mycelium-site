@@ -10,10 +10,43 @@
 
 import fs from 'fs';
 import https from 'https';
+import http from 'http';
 import os from 'os';
 import path from 'path';
 import { execSync } from 'child_process';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { mirrorToR2 } from './mirror-to-r2.mjs';
+
+const R2_PUBLIC = 'https://pub-9798291bac7b4e0b84c1d6e37549845c.r2.dev';
+
+function fetchBuffer(url) {
+  return new Promise((resolve, reject) => {
+    const follow = (u) => {
+      const mod = u.startsWith('https') ? https : http;
+      mod.get(u, res => {
+        if (res.statusCode === 301 || res.statusCode === 302) return follow(res.headers.location);
+        const chunks = [];
+        res.on('data', c => chunks.push(c));
+        res.on('end', () => resolve(Buffer.concat(chunks)));
+        res.on('error', reject);
+      }).on('error', reject);
+    };
+    follow(url);
+  });
+}
+
+async function mirrorBufferToR2(buffer, key) {
+  const client = new S3Client({
+    region: 'auto',
+    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY },
+  });
+  await client.send(new PutObjectCommand({
+    Bucket: process.env.R2_BUCKET, Key: key, Body: buffer,
+    ContentType: 'image/jpeg', CacheControl: 'public, max-age=31536000, immutable',
+  }));
+  return `${R2_PUBLIC}/${key}`;
+}
 
 const CONTENT_DIR = './src/content/reels';
 
@@ -137,7 +170,13 @@ async function main() {
     try {
       if (reel.media_url) r2VideoUrl = await mirrorToR2(reel.media_url, videoKey);
       if (reel.thumbnail_url) {
-        r2ThumbUrl = await mirrorToR2(reel.thumbnail_url, thumbKey);
+        const thumbBuf = await fetchBuffer(reel.thumbnail_url);
+        if (thumbBuf.length >= 5000) {
+          r2ThumbUrl = await mirrorBufferToR2(thumbBuf, thumbKey);
+        } else {
+          console.log(`  IG thumbnail too small (${thumbBuf.length}B) — extracting via ffmpeg`);
+          r2ThumbUrl = await extractThumbnail(reel.media_url, thumbKey);
+        }
       } else if (r2VideoUrl) {
         console.log(`  No thumbnail_url from IG — extracting via ffmpeg`);
         r2ThumbUrl = await extractThumbnail(reel.media_url, thumbKey);
