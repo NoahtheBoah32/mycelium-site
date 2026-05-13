@@ -208,7 +208,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
                   <span class="ev-ws-left-time">{d.time}</span>
                 </div>
                 <div class="ev-ws-qr">
-                  <img src="/images/events/design-thinking-qr.jpg" alt="Scan to register" class="ev-ws-qr-img" />
+                  <img src="/images/events/design-thinking-qr.png" alt="Scan to register" class="ev-ws-qr-img" />
                   <span class="ev-ws-qr-label">SCAN TO REGISTER</span>
                 </div>
               </div>
@@ -836,10 +836,7 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
 }
 .ev-ws-qr { display: flex; flex-direction: column; align-items: center; gap: 8px; align-self: stretch; }
 .ev-ws-qr-img {
-  width: 144px; height: 144px; object-fit: cover; display: block;
-  border-radius: 4px;
-  filter: invert(1);
-  mix-blend-mode: screen;
+  width: 144px; height: 144px; object-fit: contain; display: block;
 }
 .ev-ws-qr-label {
   font-family: var(--font-inter); font-size: 0.5rem; font-weight: 800;
