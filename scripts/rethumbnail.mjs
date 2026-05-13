@@ -9,6 +9,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import http from 'http';
 import https from 'https';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
@@ -32,8 +33,8 @@ function apiFetch(url) {
 function fetchBuffer(url) {
   return new Promise((resolve, reject) => {
     const follow = (u) => {
-      const mod = u.startsWith('https') ? https : (await import('http')).default;
-      https.get(u, res => {
+      const mod = u.startsWith('https') ? https : http;
+      mod.get(u, res => {
         if (res.statusCode === 301 || res.statusCode === 302) return follow(res.headers.location);
         const chunks = [];
         res.on('data', c => chunks.push(c));
