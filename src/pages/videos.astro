@@ -108,7 +108,8 @@ const reelData = reels.map(r => ({
             <div class="rc-thumb">
               <video
                 src={r.data.r2VideoUrl}
-                preload="metadata"
+                poster={r.data.r2ThumbUrl || undefined}
+                preload="none"
                 muted
                 playsinline
               />
@@ -212,13 +213,6 @@ const reelData = reels.map(r => ({
   const BATCH = 9;
   let shown = 9;
   let currentFilter = 'all';
-  // Seek card thumbnails to 3s so actual content shows instead of black intro frames
-  document.querySelectorAll('.rc-thumb video').forEach(v => {
-    const seek = () => { v.currentTime = Math.min(3, (v.duration || 10) * 0.15); };
-    if (v.readyState >= 1) seek();
-    else v.addEventListener('loadedmetadata', seek, { once: true });
-  });
-
   let searchQuery = '';
   let reelMode = false;
 
