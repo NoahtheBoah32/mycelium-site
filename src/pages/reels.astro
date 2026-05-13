@@ -12,10 +12,19 @@ const reels = allReels.sort((a, b) =>
 function formatDate(d: Date) {
   return d.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
 }
+
+const reelData = reels.map(r => ({
+  id: r.id,
+  videoUrl: r.data.r2VideoUrl,
+  thumbUrl: r.data.r2ThumbUrl || '',
+  caption: r.data.caption || '',
+  date: formatDate(r.data.postedAt),
+  permalink: r.data.permalink,
+}));
 ---
 
-<BaseLayout title="Reels - Mycelium">
-  <SiteNav />
+<BaseLayout title="Reels — Mycelium">
+  <SiteNav activeLink="reels" />
 
   <section class="rp-hero">
     <div class="rp-inner">
@@ -26,104 +35,412 @@ function formatDate(d: Date) {
 
   <section class="rp-grid-section">
     <div class="rp-inner">
-      <div class="rp-grid" id="rp-grid">
-        {reels.map((r, i) => (
-          <a
-            href={`/reel/${r.id}`}
-            class="rc"
-            data-index={i}
-            style={i >= 8 ? 'display:none' : ''}
-          >
-            <div class="rc-thumb">
-              {r.data.r2ThumbUrl
-                ? <img src={r.data.r2ThumbUrl} alt={r.data.caption || 'Reel'} loading="lazy" />
-                : <div class="rc-thumb-placeholder"></div>
-              }
-              <div class="rc-play-overlay">
-                <div class="rc-play-icon">
-                  <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                    <circle cx="22" cy="22" r="22" fill="rgba(0,0,0,0.45)"/>
-                    <polygon points="17,13 35,22 17,31" fill="white"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div class="rc-info">
-              <p class="rc-title">{r.data.caption || 'Reel'}</p>
-              <p class="rc-meta">Mycelium Learning · {formatDate(r.data.postedAt)}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-
-      {reels.length > 8 && (
-        <div class="rp-load-wrap" id="rp-load-wrap">
-          <button class="rp-load-more" id="rp-load-more">Load More</button>
-        </div>
-      )}
-
-      {reels.length === 0 && (
+      {reels.length === 0 ? (
         <p class="rp-empty">No reels yet — check back soon.</p>
+      ) : (
+        <>
+          <div class="rp-grid" id="rp-grid">
+            {reels.map((r, i) => (
+              <button
+                class="rc"
+                data-index={String(i)}
+                style={i >= 8 ? 'display:none' : ''}
+                aria-label={r.data.caption || 'Play reel'}
+              >
+                <div class="rc-thumb">
+                  {r.data.r2ThumbUrl
+                    ? <img src={r.data.r2ThumbUrl} alt="" loading="lazy" />
+                    : <div class="rc-thumb-placeholder"></div>
+                  }
+                  <div class="rc-play-overlay">
+                    <div class="rc-play-icon">
+                      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/>
+                        <polygon points="19,14 37,24 19,34" fill="white"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="rc-info">
+                  <p class="rc-title">{r.data.caption || 'Reel'}</p>
+                  <p class="rc-meta">Mycelium Learning · {formatDate(r.data.postedAt)}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {reels.length > 8 && (
+            <div class="rp-load-wrap" id="rp-load-wrap">
+              <button class="rp-load-more" id="rp-load-more">Load More</button>
+            </div>
+          )}
+        </>
       )}
     </div>
   </section>
 
+  <!-- ─── REEL MODAL ─────────────────────────────────────── -->
+  <div class="reel-modal" id="reel-modal" aria-modal="true" role="dialog">
+
+    <button class="reel-back" id="reel-back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Reels
+    </button>
+
+    <div class="reel-layout">
+      <button class="reel-arrow" id="reel-prev" aria-label="Previous reel">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M13 4L7 10l6 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="reel-player-wrap">
+        <div class="reel-player" id="reel-player">
+          <video
+            id="reel-video"
+            playsinline
+            preload="metadata"
+            loop
+          ></video>
+
+          <div class="reel-video-caption" id="reel-caption-overlay">
+            <p class="reel-video-caption-text" id="reel-caption-text"></p>
+            <p class="reel-video-date" id="reel-caption-date"></p>
+          </div>
+
+          <button class="reel-play-btn" id="reel-play-btn" aria-label="Play / Pause">
+            <svg id="reel-play-icon" width="26" height="26" viewBox="0 0 26 26">
+              <polygon points="7,3 23,13 7,23" fill="white"/>
+            </svg>
+          </button>
+
+          <div class="reel-progress">
+            <div class="reel-progress-fill" id="reel-progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="reel-actions">
+          <a id="reel-ig-link" href="#" target="_blank" rel="noopener" class="reel-action-btn" title="View on Instagram">
+            <div class="reel-action-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <span>Instagram</span>
+          </a>
+          <button class="reel-action-btn" id="reel-share-btn" title="Share">
+            <div class="reel-action-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span>Share</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="reel-arrow" id="reel-next" aria-label="Next reel">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+  </div>
+
   <SiteFooter />
 </BaseLayout>
 
-<script>
-  const BATCH = 8;
-  let shown = 8;
-  const grid = document.getElementById('rp-grid');
-  const loadWrap = document.getElementById('rp-load-wrap');
-  const loadBtn = document.getElementById('rp-load-more');
+<script define:vars={{ reelData }}>
+  let current = 0;
+  let isPlaying = false;
 
-  loadBtn?.addEventListener('click', () => {
-    const cards = Array.from(grid!.querySelectorAll<HTMLElement>('.rc'));
-    cards.slice(shown, shown + BATCH).forEach(c => c.style.display = '');
-    shown += BATCH;
-    if (shown >= cards.length) loadWrap!.style.display = 'none';
+  const modal   = document.getElementById('reel-modal');
+  const video   = document.getElementById('reel-video');
+  const playBtn = document.getElementById('reel-play-btn');
+  const playIcon= document.getElementById('reel-play-icon');
+  const progFill= document.getElementById('reel-progress-fill');
+  const capText = document.getElementById('reel-caption-text');
+  const capDate = document.getElementById('reel-caption-date');
+  const igLink  = document.getElementById('reel-ig-link');
+
+  // ─── grid click ──────────────────────────────────────────
+  document.getElementById('rp-grid').addEventListener('click', e => {
+    const card = e.target.closest('.rc');
+    if (!card) return;
+    openReel(parseInt(card.dataset.index, 10));
+  });
+
+  // ─── load more ───────────────────────────────────────────
+  let shown = 8;
+  document.getElementById('rp-load-more')?.addEventListener('click', () => {
+    const cards = Array.from(document.querySelectorAll('#rp-grid .rc'));
+    cards.slice(shown, shown + 8).forEach(c => c.style.display = '');
+    shown += 8;
+    if (shown >= cards.length) document.getElementById('rp-load-wrap').style.display = 'none';
+  });
+
+  // ─── open / close ────────────────────────────────────────
+  function openReel(index) {
+    current = index;
+    loadReel();
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReel() {
+    video.pause();
+    video.src = '';
+    isPlaying = false;
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('reel-back').addEventListener('click', closeReel);
+  modal.addEventListener('click', e => { if (e.target === modal) closeReel(); });
+
+  // ─── load reel ───────────────────────────────────────────
+  function loadReel() {
+    const r = reelData[current];
+    video.src = r.videoUrl;
+    video.load();
+    video.play().then(() => {
+      isPlaying = true;
+      setPlayIcon(true);
+    }).catch(() => {
+      isPlaying = false;
+      setPlayIcon(false);
+    });
+    capText.textContent = r.caption;
+    capDate.textContent = r.date;
+    igLink.href = r.permalink || '#';
+    progFill.style.width = '0%';
+  }
+
+  // ─── play / pause ────────────────────────────────────────
+  playBtn.addEventListener('click', () => {
+    if (video.paused) {
+      video.play();
+      isPlaying = true;
+    } else {
+      video.pause();
+      isPlaying = false;
+    }
+    setPlayIcon(isPlaying);
+  });
+
+  video.addEventListener('click', () => playBtn.click());
+
+  function setPlayIcon(playing) {
+    playIcon.innerHTML = playing
+      ? '<rect x="5" y="3" width="5" height="18" rx="1.5" fill="white"/><rect x="14" y="3" width="5" height="18" rx="1.5" fill="white"/>'
+      : '<polygon points="7,3 23,13 7,23" fill="white"/>';
+  }
+
+  // ─── progress bar ────────────────────────────────────────
+  video.addEventListener('timeupdate', () => {
+    if (!video.duration) return;
+    progFill.style.width = (video.currentTime / video.duration * 100) + '%';
+  });
+
+  // ─── navigation ──────────────────────────────────────────
+  function navigate(dir) {
+    current = (current + dir + reelData.length) % reelData.length;
+    loadReel();
+  }
+
+  document.getElementById('reel-prev').addEventListener('click', () => navigate(-1));
+  document.getElementById('reel-next').addEventListener('click', () => navigate(1));
+
+  document.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+    if (e.key === 'Escape') closeReel();
+    if (e.key === ' ') { e.preventDefault(); playBtn.click(); }
+  });
+
+  // ─── share ───────────────────────────────────────────────
+  document.getElementById('reel-share-btn').addEventListener('click', () => {
+    const r = reelData[current];
+    if (navigator.share) {
+      navigator.share({ url: r.permalink });
+    } else {
+      navigator.clipboard.writeText(r.permalink);
+    }
   });
 </script>
 
 <style>
+/* ─── hero ─────────────────────────────────────────────── */
 .rp-hero { background: #F7F7F5; padding: 80px 40px 64px; }
 .rp-inner { max-width: 1180px; margin: 0 auto; }
-.rp-title { font-family: var(--font-outfit); font-size: clamp(2.2rem, 4vw, 3.75rem); font-weight: 700; color: #242424; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 16px; text-align: center; }
+.rp-title {
+  font-family: var(--font-outfit); font-size: clamp(2.2rem, 4vw, 3.75rem);
+  font-weight: 700; color: #242424; letter-spacing: -0.01em;
+  line-height: 1.2; margin-bottom: 16px; text-align: center;
+}
 .rp-sub { font-family: var(--font-outfit); font-size: 1.5rem; color: #666; line-height: 1.5; text-align: center; }
 
+/* ─── grid ─────────────────────────────────────────────── */
 .rp-grid-section { background: #f9f9f7; padding: 40px 40px 80px; }
+.rp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 
-.rp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-
-.rc { display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: #fff; border: 1px solid #e8e8e8; text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.15s; }
+/* ─── card ─────────────────────────────────────────────── */
+.rc {
+  display: flex; flex-direction: column;
+  border-radius: 10px; overflow: hidden;
+  background: #fff; border: 1px solid #e8e8e8;
+  cursor: pointer; text-align: left;
+  transition: box-shadow 0.2s, transform 0.15s;
+  padding: 0;
+}
 .rc:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
 
-.rc-thumb { position: relative; aspect-ratio: 9/16; overflow: hidden; background: #1a1a1a; flex-shrink: 0; }
+.rc-thumb {
+  position: relative; aspect-ratio: 9/16;
+  overflow: hidden; background: #1a1a1a; flex-shrink: 0;
+}
 .rc-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
 .rc:hover .rc-thumb img { transform: scale(1.04); }
-.rc-thumb-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #2F4F2F 0%, #1a2e1a 100%); }
+.rc-thumb-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #2F4F2F 0%, #1a2e1a 100%);
+}
 
-.rc-play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0); transition: background 0.2s; }
-.rc:hover .rc-play-overlay { background: rgba(0,0,0,0.2); }
-.rc-play-icon { opacity: 0; transform: scale(0.85); transition: opacity 0.2s, transform 0.2s; }
+.rc-play-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0); transition: background 0.2s;
+}
+.rc:hover .rc-play-overlay { background: rgba(0,0,0,0.22); }
+.rc-play-icon { opacity: 0; transform: scale(0.8); transition: opacity 0.2s, transform 0.2s; }
 .rc:hover .rc-play-icon { opacity: 1; transform: scale(1); }
 
 .rc-info { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 5px; }
-.rc-title { font-family: var(--font-inter); font-size: 0.83rem; font-weight: 600; color: #242424; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.rc-title {
+  font-family: var(--font-inter); font-size: 0.83rem; font-weight: 600;
+  color: #242424; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 .rc-meta { font-family: var(--font-inter); font-size: 0.73rem; color: #888; }
 
+/* ─── load more ────────────────────────────────────────── */
 .rp-load-wrap { text-align: center; margin-top: 40px; }
-.rp-load-more { font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500; background: #5A3A1C; color: #fff; padding: 10px 32px; border-radius: 50px; border: none; cursor: pointer; transition: background 0.2s; }
+.rp-load-more {
+  font-family: var(--font-inter); font-size: 0.875rem; font-weight: 500;
+  background: #5A3A1C; color: #fff; padding: 10px 32px;
+  border-radius: 50px; border: none; cursor: pointer; transition: background 0.2s;
+}
 .rp-load-more:hover { background: #947153; }
-
 .rp-empty { font-family: var(--font-inter); font-size: 1rem; color: #888; text-align: center; padding: 80px 0; }
 
-@media (max-width: 1100px) { .rp-grid { grid-template-columns: repeat(3, 1fr); } }
+/* ─── modal ─────────────────────────────────────────────── */
+.reel-modal {
+  display: none; position: fixed; inset: 0; z-index: 99999;
+  background: rgba(5,5,3,0.96);
+  align-items: center; justify-content: center;
+}
+.reel-modal.open { display: flex; }
+
+.reel-back {
+  position: fixed; top: 20px; left: 24px;
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-inter); font-size: 0.82rem; font-weight: 600;
+  color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.08);
+  border: none; border-radius: 50px; padding: 8px 16px;
+  cursor: pointer; transition: color 0.15s, background 0.15s; z-index: 1;
+}
+.reel-back:hover { color: #fff; background: rgba(255,255,255,0.14); }
+
+.reel-layout { display: flex; align-items: center; gap: 16px; }
+
+.reel-arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.15s; flex-shrink: 0;
+}
+.reel-arrow:hover { background: rgba(255,255,255,0.2); }
+.reel-arrow svg { width: 20px; height: 20px; }
+
+.reel-player-wrap { display: flex; align-items: center; gap: 0; }
+
+.reel-player {
+  width: 360px; height: 640px; border-radius: 16px; overflow: hidden;
+  position: relative; background: #000;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7); flex-shrink: 0;
+}
+
+#reel-video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+.reel-video-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 48px 16px 18px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  pointer-events: none;
+}
+.reel-video-caption-text {
+  font-family: var(--font-inter); font-size: 0.82rem; font-weight: 500;
+  color: rgba(255,255,255,0.92); line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.reel-video-date {
+  font-family: var(--font-inter); font-size: 0.68rem;
+  color: rgba(255,255,255,0.42); margin-top: 4px;
+}
+
+.reel-play-btn {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.2s; border: 1.5px solid rgba(255,255,255,0.3);
+  opacity: 0; transition: opacity 0.2s;
+}
+.reel-player:hover .reel-play-btn { opacity: 1; }
+.reel-play-btn svg { margin-left: 3px; }
+
+.reel-progress {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: rgba(255,255,255,0.2);
+}
+.reel-progress-fill {
+  height: 100%; background: #61CE70; border-radius: 2px;
+  width: 0%; transition: width 0.25s linear;
+}
+
+/* ─── action buttons ───────────────────────────────────── */
+.reel-actions {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 24px; padding: 0 0 0 16px;
+}
+.reel-action-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  cursor: pointer; background: none; border: none; text-decoration: none;
+  color: rgba(255,255,255,0.7); transition: color 0.15s; font-family: var(--font-inter);
+  font-size: 0.68rem;
+}
+.reel-action-btn:hover { color: #fff; }
+.reel-action-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.reel-action-btn:hover .reel-action-icon { background: rgba(255,255,255,0.18); }
+
+/* ─── responsive ────────────────────────────────────────── */
+@media (max-width: 1200px) { .rp-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px)  { .rp-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) {
   .rp-hero { padding: 40px 20px 28px; }
   .rp-grid-section { padding: 28px 20px 60px; }
-  .rp-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .rp-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .reel-player { width: 280px; height: 498px; }
+  .reel-actions { display: none; }
+  .reel-arrow { width: 36px; height: 36px; }
 }
 </style>
