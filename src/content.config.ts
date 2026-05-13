@@ -36,7 +36,7 @@ const events = defineCollection({
 const reels = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/reels' }),
   schema: z.object({
-    platform: z.enum(['instagram', 'facebook']),
+    platform: z.enum(['instagram']),
     permalink: z.string(),
     r2VideoUrl: z.string(),
     r2ThumbUrl: z.string().optional(),
