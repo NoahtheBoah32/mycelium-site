@@ -10,7 +10,7 @@ isFree: true
 isRecurring: false
 description: ""
 ctaLabel: "Reserve Your Spot"
-ctaUrl: "#"
+ctaUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdAcxp5lCA0EEaG80pjNPnRJ-9ODbNMI7sGS2ru0F3rr-j4Ww/viewform"
 sortOrder: 1
 speakerName: "Lee Hizola"
 speakerRole: "Certified Permaculture Designer & Seed Sovereignty Advocate"
