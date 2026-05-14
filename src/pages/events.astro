@@ -207,6 +207,12 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
                   <span class="ev-ws-left-label">TIME</span>
                   <span class="ev-ws-left-time">{d.time}</span>
                 </div>
+                {d.capacity && (
+                  <div class="ev-ws-left-timebox">
+                    <span class="ev-ws-left-label">SLOTS</span>
+                    <span class="ev-ws-left-time">{d.capacity}</span>
+                  </div>
+                )}
                 <div class="ev-ws-qr">
                   <img src="/images/events/design-thinking-qr.png" alt="Scan to register" class="ev-ws-qr-img" />
                   <span class="ev-ws-qr-label">SCAN TO REGISTER</span>

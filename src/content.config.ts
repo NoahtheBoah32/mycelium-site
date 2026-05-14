@@ -23,6 +23,8 @@ const events = defineCollection({
     speakerName: z.string().optional(),
     speakerRole: z.string().optional(),
     speakerBio: z.string().optional(),
+    // Workshop details
+    capacity: z.string().optional(),
     // Organizer
     organizer: z.string().optional(),
     organizerLogo: z.string().optional(),
