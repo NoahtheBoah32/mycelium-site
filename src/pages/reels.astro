@@ -52,11 +52,13 @@ const reelData = reels.map(r => ({
                     ? <img src={r.data.r2ThumbUrl} alt="" loading="lazy" />
                     : <div class="rc-thumb-placeholder"></div>
                   }
-                  <div class="rc-play">
-                    <svg width="44" height="44" viewBox="0 0 36 36" fill="none">
-                      <circle cx="18" cy="18" r="18" fill="rgba(0,0,0,0.6)"/>
-                      <polygon points="14,11 28,18 14,25" fill="white"/>
-                    </svg>
+                  <div class="rc-play-overlay">
+                    <div class="rc-play-icon">
+                      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.45)"/>
+                        <polygon points="19,14 37,24 19,34" fill="white"/>
+                      </svg>
+                    </div>
                   </div>
                 </div>
                 <div class="rc-info">
@@ -306,7 +308,14 @@ const reelData = reels.map(r => ({
   background: linear-gradient(135deg, #2F4F2F 0%, #1a2e1a 100%);
 }
 
-.rc-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.rc-play-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0); transition: background 0.2s;
+}
+.rc:hover .rc-play-overlay { background: rgba(0,0,0,0.22); }
+.rc-play-icon { opacity: 1; transition: transform 0.2s; }
+.rc:hover .rc-play-icon { transform: scale(1.1); }
 
 .rc-info { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 5px; }
 .rc-title {
