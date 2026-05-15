@@ -314,8 +314,8 @@ const reelData = reels.map(r => ({
   background: rgba(0,0,0,0); transition: background 0.2s;
 }
 .rc:hover .rc-play-overlay { background: rgba(0,0,0,0.22); }
-.rc-play-icon { opacity: 0; transform: scale(0.8); transition: opacity 0.2s, transform 0.2s; }
-.rc:hover .rc-play-icon { opacity: 1; transform: scale(1); }
+.rc-play-icon { opacity: 1; transition: transform 0.2s; }
+.rc:hover .rc-play-icon { transform: scale(1.1); }
 
 .rc-info { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 5px; }
 .rc-title {
