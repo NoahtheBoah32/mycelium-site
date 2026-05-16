@@ -1,5 +1,5 @@
 ---
-title: "Designing for Resilience: Bridging Permaculture & Design Thinking"
+title: "Design Thinking Bootcamp"
 template: workshop
 schedule: "Saturday, May 30, 2026 · 1:00 PM – 5:00 PM"
 date: 2026-05-30
