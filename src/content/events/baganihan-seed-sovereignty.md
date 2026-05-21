@@ -1,7 +1,7 @@
 ---
 title: "A Talk on the Importance and Need for Seed Sovereignty"
 template: bag
-schedule: "Friday, May 23, 2026 · 8:00 PM PHT"
+schedule: "Saturday, May 23, 2026 · 8:00 PM PHT"
 date: 2026-05-23
 time: "8:00 PM · Philippine Standard Time"
 location: "Online — link sent upon registration"
