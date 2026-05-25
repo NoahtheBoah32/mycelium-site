@@ -13,7 +13,7 @@ ctaLabel: "Reserve Your Spot"
 ctaUrl: "#"
 sortOrder: 1
 speakerName: "Eleonor V. Atencio"
-speakerRole: "IP Education Advocate & President, TANAYDRADDEVI"
+speakerRole: "IP Education Advocate & President, Tanay Dumagat/Remontado Ancestral Domain Development Inc."
 speakerBio: "Eleonor V. Atencio is a member of the Dumagat/Remontado ICCs/IPs of Brgy. Cuyambay, Tanay, Rizal. A public-school teacher and IPED Coordinator, she manages the School of Living Traditions of the Dumagat/Remontado known as Tukduan. She is currently President of Tanay Dumagat/Remontado Ancestral Domain Development Inc. (TANAYDRADDEVI) and is completing her Masters in Arts of Education Major in Indigenous Study."
 organizer: "Baganihan Collective"
 organizerLogo: "/images/baganihan-logo.jpg"
