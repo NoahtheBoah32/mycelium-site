@@ -10,7 +10,7 @@ isFree: true
 isRecurring: false
 description: ""
 ctaLabel: "Reserve Your Spot"
-ctaUrl: "#"
+ctaUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdOgwuAEt--qxSCiQP94ha8_r-cVBSM8HBINupINsj7IlmHkw/viewform"
 sortOrder: 1
 speakerName: "Eleonor V. Atencio"
 speakerRole: "IP Education Advocate & President, Tanay Dumagat/Remontado Ancestral Domain Development Inc."
