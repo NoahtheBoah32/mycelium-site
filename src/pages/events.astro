@@ -253,6 +253,66 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
           </div>
         );
 
+        if (d.template === 'hov') return (
+          <div class="ev-card ev-card-hov" data-partner={d.partner || undefined}>
+            <div class="ev-hov-hero" aria-hidden="true">
+              <img src={d.image ?? '/images/events/hovermath-bg.jpg'} alt="" class="ev-hov-hero-img" loading="lazy" />
+              <div class="ev-hov-hero-overlay"></div>
+            </div>
+            <svg class="ev-hov-circle-deco" viewBox="0 0 1160 580" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="1050" cy="80" r="280" stroke="#C8A050" stroke-width="0.6" stroke-opacity="0.2"/>
+              <circle cx="1050" cy="80" r="195" stroke="#C8A050" stroke-width="0.35" stroke-opacity="0.1"/>
+              <circle cx="100" cy="510" r="220" stroke="#ffffff" stroke-width="0.4" stroke-opacity="0.07"/>
+            </svg>
+            <div class="ev-hov-content">
+              <div class="ev-hov-topbar">
+                <p class="ev-hov-fibonacci">1 · 1 · 2 · 3 · 5 · 8 · 13 · 21 · 34</p>
+                <div class="ev-card-badge-row">
+                  {d.isOnline && <span class="ev-badge ev-badge-online">🌐 ONLINE</span>}
+                  {d.isFree && <span class="ev-badge ev-badge-free">FREE ENTRY</span>}
+                  <span class="ev-badge ev-badge-talk">TALK</span>
+                </div>
+              </div>
+              <div class="ev-hov-main">
+                <h2 class="ev-hov-hover">HOVER</h2>
+                <p class="ev-hov-math">MATH</p>
+                <div class="ev-hov-rule"></div>
+                <p class="ev-hov-subtitle">The Mathematics of Nature</p>
+                <p class="ev-hov-topics">Pattern Thinking · Ecology · Permaculture · Systems</p>
+              </div>
+              {d.speakerName && (
+                <div class="ev-hov-speaker">
+                  <span class="ev-hov-speaker-name">{d.speakerName}</span>
+                  {d.speakerRole && <span class="ev-hov-speaker-role">{d.speakerRole}</span>}
+                </div>
+              )}
+              <div class="ev-hov-footer">
+                <div class="ev-hov-footer-left">
+                  {d.organizer && (
+                    <div class="ev-hov-org">
+                      {d.organizerLogo && <img src={d.organizerLogo} alt={d.organizer} class="ev-hov-org-logo" />}
+                      <div>
+                        <p class="ev-hov-org-label">PRESENTED BY</p>
+                        <p class="ev-hov-org-name">{d.organizer}</p>
+                      </div>
+                    </div>
+                  )}
+                  {d.schedule && <p class="ev-hov-dateline">{d.schedule}</p>}
+                  {d.time && <p class="ev-hov-time">{d.time}</p>}
+                </div>
+                <div class="ev-hov-footer-right">
+                  {d.ctaUrl && (
+                    <a href={d.ctaUrl} class="ev-cta ev-cta-hov">
+                      {d.ctaLabel ?? 'Reserve Your Spot'}
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
         return (
           <div class="ev-card ev-card-bag" data-partner={d.partner || undefined}>
             {/* Full-bleed editorial hero image */}
@@ -783,6 +843,87 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
   box-shadow: 0 4px 20px rgba(232,168,74,0.3), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .ev-cta-bag:hover { background: linear-gradient(135deg, #F0C97A, #F8DD98); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(232,168,74,0.45); }
+
+/* ─── Card: Hovermath — Centered poster layout ───────────── */
+.ev-card-hov {
+  position: relative; isolation: isolate;
+  min-height: 580px;
+  display: flex; flex-direction: column;
+  background: #050403;
+}
+.ev-hov-hero { position: absolute; inset: 0; z-index: 0; }
+.ev-hov-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ev-hov-hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.18) 35%, rgba(0,0,0,0.45) 65%, rgba(0,0,0,0.94) 100%);
+}
+.ev-hov-circle-deco {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  width: 100%; height: 100%;
+}
+.ev-hov-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between;
+  text-align: center;
+  min-height: 580px;
+  padding: 36px 52px 40px;
+  gap: 0;
+}
+.ev-hov-topbar { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+.ev-hov-fibonacci {
+  font-family: var(--font-inter); font-size: 0.68rem; font-weight: 400;
+  letter-spacing: 0.45em; color: #C8A050; opacity: 0.45;
+}
+.ev-hov-main { display: flex; flex-direction: column; align-items: center; padding: 20px 0 16px; }
+.ev-hov-hover {
+  font-family: var(--font-lora);
+  font-size: clamp(3.8rem, 7.5vw, 6.8rem);
+  font-weight: 700; color: #FFFFFF;
+  line-height: 0.92; letter-spacing: -0.04em; margin: 0;
+}
+.ev-hov-math {
+  font-family: var(--font-inter);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 900; color: #C8A050;
+  line-height: 0.88; letter-spacing: -0.02em; margin: 0;
+}
+.ev-hov-rule {
+  width: 100px; height: 1px;
+  background: linear-gradient(to right, transparent, #C8A050, transparent);
+  margin: 16px auto 14px;
+}
+.ev-hov-subtitle {
+  font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.72); margin-bottom: 6px;
+}
+.ev-hov-topics {
+  font-family: var(--font-outfit); font-size: 0.82rem;
+  color: rgba(200,160,80,0.65); letter-spacing: 0.05em;
+}
+.ev-hov-speaker { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 0; }
+.ev-hov-speaker-name { font-family: var(--font-lora); font-size: 1.1rem; font-weight: 700; color: #F5EDD8; }
+.ev-hov-speaker-role {
+  font-family: var(--font-inter); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #C8A050; opacity: 0.75;
+}
+.ev-hov-footer {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  width: 100%; gap: 16px; flex-wrap: wrap; margin-top: auto;
+}
+.ev-hov-footer-left { display: flex; flex-direction: column; gap: 7px; align-items: flex-start; }
+.ev-hov-footer-right { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.ev-hov-org { display: flex; align-items: center; gap: 10px; }
+.ev-hov-org-logo { width: 34px; height: 34px; border-radius: 7px; object-fit: cover; box-shadow: 0 0 0 1px rgba(200,160,80,0.3); }
+.ev-hov-org-label { font-family: var(--font-inter); font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,160,80,0.55); margin: 0; }
+.ev-hov-org-name { font-family: var(--font-lora); font-size: 0.88rem; font-weight: 700; color: rgba(245,237,216,0.8); margin: 0; }
+.ev-hov-dateline { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C8A050; margin: 0; }
+.ev-hov-time { font-family: var(--font-inter); font-size: 0.65rem; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; margin: 0; }
+.ev-cta-hov { background: #C8A050; color: #0A0800; box-shadow: 0 4px 20px rgba(200,160,80,0.35); }
+.ev-cta-hov:hover { background: #DDB860; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(200,160,80,0.5); }
 
 /* ─── Card: Workshop — botanical bg + 3-col glass ───────── */
 .ev-card-workshop {

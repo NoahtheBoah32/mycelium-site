@@ -1,6 +1,6 @@
 ---
 title: "Hovermath: The Mathematics of Nature"
-template: bag
+template: hov
 schedule: "Saturday, June 13, 2026 · 10:00 AM – 12:00 NN PHT"
 date: 2026-06-13
 time: "10:00 AM – 12:00 NN · Philippine Standard Time"
