@@ -10,7 +10,7 @@ isFree: true
 isRecurring: false
 description: "What if mathematics is not just formulas and computation — but the ability to perceive patterns, relationships, cycles, and living systems? This talk explores math as it appears in nature itself: forests, rivers, fungal networks, ecosystems, weather, and human communities."
 ctaLabel: "Reserve Your Spot"
-ctaUrl: ""
+ctaUrl: "https://docs.google.com/forms/d/e/1FAIpQLScSpz4iNF2u1N9qlNSeEFmKr_OqdoojmkrW1sSapVEQyB3omg/viewform"
 sortOrder: 1
 speakerName: "Bennet Story Taaler"
 speakerRole: "Speaker & Systems Thinker"
