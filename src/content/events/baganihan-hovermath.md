@@ -12,9 +12,9 @@ description: "What if mathematics is not just formulas and computation — but t
 ctaLabel: "Reserve Your Spot"
 ctaUrl: "https://docs.google.com/forms/d/e/1FAIpQLScSpz4iNF2u1N9qlNSeEFmKr_OqdoojmkrW1sSapVEQyB3omg/viewform"
 sortOrder: 1
-speakerName: "Bennet Story Taaler"
-speakerRole: "Speaker & Systems Thinker"
-speakerBio: "Bennet Story Taaler explores mathematics as ecological intelligence — the art of seeing connections, flows, balance, emergence, and patterns across scales. Drawing from systems thinking and permaculture, he invites participants to rediscover mathematics as it appears in nature itself."
+speakerName: "Bennet De Leon Amoroso"
+speakerRole: "Founder, Hovermath · BS Electrical Engineering, Mapua University"
+speakerBio: "Bennet De Leon Amoroso is the founder and developer of Hovermath: a Filipino Strategic Learning System in Higher Mathematics (2020–present). A BS Electrical Engineer from Mapua University and Feati University, he has been a private mentor in Mathematics, Physics, and Writing Skills since 1985, and has trained contestants for International Mathematics Olympiads. He has worked with indigenous communities as Area Coordinator for the Aetas of Subic, Zambales, and has served as a retreat director and youth leadership trainer for over 20 schools annually since 2005."
 organizer: "Baganihan Collective"
 organizerLogo: "/images/baganihan-logo.jpg"
 partner: baganihan
