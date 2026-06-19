@@ -8,50 +8,66 @@ import SiteNav from '../components/SiteNav.astro';
 
   <div id="cg-gate">
 
-    <!-- Photo background -->
-    <div class="cg-photo"></div>
-
-    <!-- Animated color blobs -->
-    <div class="cg-blobs" aria-hidden="true">
-      <div class="cg-blob cg-blob-1"></div>
-      <div class="cg-blob cg-blob-2"></div>
-      <div class="cg-blob cg-blob-3"></div>
+    <!-- World halves -->
+    <div class="cg-world cg-world--left" id="worldLeft">
+      <div class="cg-bg-photo"></div>
+      <div class="cg-float-words" id="floatLeft"></div>
+    </div>
+    <div class="cg-world cg-world--right" id="worldRight">
+      <div class="cg-bg-photo-dark"></div>
+      <div class="cg-float-words" id="floatRight"></div>
     </div>
 
-    <!-- Vignette -->
-    <div class="cg-vignette"></div>
+    <!-- Cut line -->
+    <div class="cg-cut-line" id="cutLine"><div class="cg-cut-glow"></div></div>
 
-    <!-- Main card -->
-    <div class="cg-card" id="cg-card">
-      <div class="cg-badge">Community Sensemaking</div>
+    <!-- Blobs -->
+    <div class="cg-blob cg-blob--emerald"></div>
+    <div class="cg-blob cg-blob--gold"></div>
+    <div class="cg-blob cg-blob--teal"></div>
 
-      <h1 class="cg-title">
-        <span class="cg-word cg-word-1">Common</span>
-        <span class="cg-word cg-word-2">Ground</span>
-      </h1>
+    <!-- Center content -->
+    <div class="cg-center" id="cgCenter">
 
-      <p class="cg-sub">A space for the Mycelium community to share perspectives, surface shared values, and understand where we see things differently.</p>
-
-      <div class="cg-divider"></div>
-
-      <div class="cg-bottom">
-        <div class="cg-coming">
-          <span class="cg-dot"></span>
-          Coming soon
-        </div>
-        <p class="cg-note">We're calibrating the map before we open the floor.</p>
+      <div class="cg-badge-wrap">
+        <span class="cg-badge">
+          <span class="cg-badge-dot"></span>
+          Community Sensemaking
+        </span>
       </div>
+
+      <div class="cg-title-wrap" id="cgTitle">
+        <h1 class="cg-title cg-title--light" aria-hidden="true">Common Ground</h1>
+        <h1 class="cg-title cg-title--dark"  aria-hidden="true">Common Ground</h1>
+        <h1 class="cg-title cg-title--sr">Common Ground</h1>
+      </div>
+
+      <div class="cg-card-outer">
+        <div class="cg-card-inner">
+          <div style="display:inline-flex;align-items:center;gap:0.55rem;">
+            <div class="cs-dot"></div>
+            <div class="cs-wrap" id="csWrap" aria-label="Coming Soon"></div>
+          </div>
+          <div class="cg-desc-wrap" id="cgDesc"
+            aria-label="A space for the Mycelium community to share perspectives, surface shared values, and understand where we see things differently.">
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
 
 </BaseLayout>
 
-<!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
 <script>
-  // ── Dev unlock ──────────────────────────────────────────────────
+(function () {
+
+  /* ── Dev unlock (5 clicks within 3s) ── */
+  if (localStorage.getItem('cg_dev') === '1') launchApp();
+
   function launchApp() {
     const gate = document.getElementById('cg-gate');
     const iframe = document.createElement('iframe');
@@ -59,222 +75,371 @@ import SiteNav from '../components/SiteNav.astro';
     iframe.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;border:none;z-index:9999;background:#1a1208;';
     document.body.appendChild(iframe);
     iframe.addEventListener('load', () => {
-      if (gate) {
-        gsap.to(gate, { opacity: 0, duration: 0.5, onComplete: () => gate.style.display = 'none' });
-      }
+      const g = document.getElementById('cg-gate');
+      if (g) (window as any).gsap?.to(g, { opacity: 0, duration: 0.5, onComplete: () => g.style.display = 'none' });
     });
   }
 
-  if (localStorage.getItem('cg_dev') === '1') launchApp();
-
-  let clicks = 0, resetTimer: ReturnType<typeof setTimeout> | null = null;
-  document.getElementById('cg-card')?.addEventListener('click', () => {
-    clicks++;
-    if (resetTimer) clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => { clicks = 0; }, 3000);
-    if (clicks >= 5) {
-      clicks = 0;
+  let clicks: number[] = [];
+  document.getElementById('cg-gate')?.addEventListener('click', () => {
+    const now = Date.now();
+    clicks = clicks.filter(t => now - t < 3000);
+    clicks.push(now);
+    if (clicks.length >= 5) {
+      clicks = [];
       localStorage.setItem('cg_dev', '1');
       launchApp();
     }
   });
 
-  // ── Entrance animation ───────────────────────────────────────────
-  window.addEventListener('load', () => {
-    const gsap = (window as any).gsap;
-    if (!gsap) return;
+  /* ── Build Coming Soon 3D chars ── */
+  const csWrap = document.getElementById('csWrap');
+  if (!csWrap) return;
 
-    // Continuous blob drift
-    gsap.to('.cg-blob-1', { x: 60, y: -40, duration: 7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.cg-blob-2', { x: -70, y: 50, duration: 9, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 1.5 });
-    gsap.to('.cg-blob-3', { x: 50, y: 30, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 3 });
-
-    // Entrance timeline
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    tl.from('.cg-photo', { opacity: 0, duration: 1.0 })
-      .from('.cg-blob', { scale: 0, opacity: 0, duration: 1.2, stagger: 0.15 }, '-=0.6')
-      .from('#cg-card', { y: 50, opacity: 0, duration: 0.85, scale: 0.96 }, '-=0.5')
-      .from('.cg-badge', { y: 16, opacity: 0, duration: 0.55 }, '-=0.3')
-      .from('.cg-word-1', { x: -50, opacity: 0, duration: 0.7, filter: 'blur(6px)' }, '-=0.25')
-      .from('.cg-word-2', { x: 50, opacity: 0, duration: 0.7, filter: 'blur(6px)' }, '-=0.6')
-      .from('.cg-sub', { y: 18, opacity: 0, duration: 0.6 }, '-=0.1')
-      .from('.cg-divider', { scaleX: 0, duration: 0.5, transformOrigin: 'center' }, '-=0.2')
-      .from('.cg-coming', { y: 16, opacity: 0, scale: 0.88, duration: 0.55, ease: 'back.out(2)' }, '-=0.1')
-      .from('.cg-note', { opacity: 0, duration: 0.5 }, '-=0.05');
+  const allChars: HTMLElement[] = [];
+  ['Coming', 'Soon'].forEach((word, wi) => {
+    const wordEl = document.createElement('span');
+    wordEl.className = 'cs-word';
+    word.split('').forEach(ch => {
+      const span = document.createElement('span');
+      span.className = 'cs-char';
+      span.textContent = ch;
+      wordEl.appendChild(span);
+      allChars.push(span);
+    });
+    csWrap.appendChild(wordEl);
+    if (wi === 0) {
+      const sp = document.createElement('span');
+      sp.className = 'cs-space';
+      csWrap.appendChild(sp);
+    }
   });
+
+  /* ── Build description 3D chars ── */
+  const DESC = "A space for the Mycelium community to share perspectives, surface shared values, and understand where we see things differently.";
+  const descEl = document.getElementById('cgDesc');
+  if (!descEl) return;
+  const words = DESC.split(' ');
+  words.forEach((word, wi) => {
+    const wordWrap = document.createElement('span');
+    wordWrap.style.cssText = 'display:inline-block;white-space:nowrap;';
+    word.split('').forEach(ch => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = ch;
+      wordWrap.appendChild(span);
+    });
+    descEl.appendChild(wordWrap);
+    if (wi < words.length - 1) {
+      const sp = document.createElement('span');
+      sp.className = 'char space';
+      sp.textContent = ' ';
+      descEl.appendChild(sp);
+    }
+  });
+
+  /* ── Wait for GSAP then run ── */
+  function waitGSAP(cb: () => void) {
+    if ((window as any).gsap) { cb(); return; }
+    const t = setInterval(() => { if ((window as any).gsap) { clearInterval(t); cb(); } }, 50);
+  }
+
+  waitGSAP(() => {
+    const gsap = (window as any).gsap;
+
+    /* ── 3D hover: Coming Soon ── */
+    let activeCS: HTMLElement | null = null;
+    function extrudeCS(el: HTMLElement) {
+      gsap.to(el, { rotateX: -22, scaleY: 1.28, scaleX: 1.08, z: 28, color: '#C8A24A', textShadow: '0 2px 0 #9a7220, 0 4px 0 #7a5510, 0 6px 0 #5a3e08, 0 8px 16px rgba(200,162,74,0.45)', duration: 0.18, ease: 'power2.out', overwrite: true });
+    }
+    function retractCS(el: HTMLElement) {
+      gsap.to(el, { rotateX: 0, scaleY: 1, scaleX: 1, z: 0, color: '#4ade80', textShadow: 'none', duration: 0.28, ease: 'power2.inOut', overwrite: true });
+    }
+    allChars.forEach(char => {
+      char.addEventListener('mouseenter', () => {
+        if (activeCS && activeCS !== char) retractCS(activeCS);
+        extrudeCS(char); activeCS = char;
+      });
+    });
+    csWrap?.addEventListener('mouseleave', () => { if (activeCS) retractCS(activeCS); activeCS = null; });
+
+    /* ── 3D hover: description ── */
+    let activeDesc: HTMLElement | null = null;
+    function extrudeDesc(el: HTMLElement) {
+      gsap.to(el, { rotateX: -28, scaleY: 1.38, scaleX: 1.1, z: 22, color: '#F6EFE1', textShadow: '0 2px 0 rgba(200,162,74,0.7), 0 4px 0 rgba(200,162,74,0.45), 0 6px 0 rgba(200,162,74,0.2), 0 8px 14px rgba(200,162,74,0.35)', duration: 0.15, ease: 'power2.out', overwrite: true });
+    }
+    function retractDesc(el: HTMLElement) {
+      gsap.to(el, { rotateX: 0, scaleY: 1, scaleX: 1, z: 0, color: 'rgba(246,239,225,0.8)', textShadow: 'none', duration: 0.24, ease: 'power2.inOut', overwrite: true });
+    }
+    document.querySelectorAll<HTMLElement>('.cg-desc-wrap .char:not(.space)').forEach(char => {
+      char.addEventListener('mouseenter', () => {
+        if (activeDesc && activeDesc !== char) retractDesc(activeDesc);
+        extrudeDesc(char); activeDesc = char;
+      });
+    });
+    descEl?.addEventListener('mouseleave', () => { if (activeDesc) retractDesc(activeDesc); activeDesc = null; });
+
+    /* ── Floating words ── */
+    const leftWords  = ['soil','roots','harvest','seeds','water','growth','earth','shade'];
+    const rightWords = ['align','consensus','voices','gather','map','signal','cluster','shared'];
+    function spawnWord(container: HTMLElement, words: string[]) {
+      const el = document.createElement('span');
+      el.className = 'cg-word';
+      el.textContent = words[Math.floor(Math.random() * words.length)];
+      el.style.left = (8 + Math.random() * 84) + '%';
+      el.style.bottom = '-2rem';
+      container.appendChild(el);
+      const dur = 9 + Math.random() * 7;
+      gsap.to(el, {
+        y: -(window.innerHeight * 0.88), x: (Math.random() - 0.5) * 50, opacity: 0.4,
+        duration: dur * 0.22, ease: 'power1.out',
+        onComplete: () => gsap.to(el, { y: -(window.innerHeight + 100), opacity: 0, duration: dur * 0.78, ease: 'none', onComplete: () => el.remove() })
+      });
+    }
+    function startWords(id: string, words: string[], interval: number) {
+      const c = document.getElementById(id) as HTMLElement | null;
+      if (!c) return;
+      setTimeout(() => spawnWord(c, words), 900);
+      setTimeout(() => spawnWord(c, words), 2100);
+      setInterval(() => spawnWord(c, words), interval);
+    }
+
+    /* ── Entrance ── */
+    gsap.set(['#cutLine','#worldLeft','#worldRight','#cgTitle','.cg-badge-wrap','.cg-card-outer','.cg-blob'], { opacity: 0 });
+    gsap.set('#cutLine', { scaleY: 0, transformOrigin: 'top center' });
+    gsap.set('#worldLeft', { x: '-6%' });
+    gsap.set('#worldRight', { x: '6%' });
+    gsap.set('#cgTitle', { y: 28, filter: 'blur(12px)' });
+    gsap.set('.cg-card-outer', { y: 36, filter: 'blur(8px)' });
+    gsap.set('.cg-badge-wrap', { y: 14 });
+    gsap.set('.cg-blob', { scale: 0.5 });
+
+    const tl = gsap.timeline({ defaults: { ease: 'cubic-bezier(0.22,1,0.36,1)' } });
+    tl.to('#cutLine',       { scaleY: 1, opacity: 1, duration: 0.85 })
+      .to('#worldLeft',     { x: '0%', opacity: 1, duration: 1.1 }, '-=0.5')
+      .to('#worldRight',    { x: '0%', opacity: 1, duration: 1.1 }, '<')
+      .to('.cg-blob',       { opacity: 1, scale: 1, duration: 1.5, stagger: 0.15 }, '-=0.7')
+      .to('#cgTitle',       { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.0 }, '-=1.2')
+      .to('.cg-badge-wrap', { y: 0, opacity: 1, duration: 0.7 }, '-=0.9')
+      .to('.cg-card-outer', { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.9 }, '-=0.6')
+      .to('.cs-char',       { opacity: 1, duration: 0.5, stagger: 0.04, ease: 'power2.out' }, '-=0.4')
+      .to('.char', {
+          opacity: 1, filter: 'blur(0px)', y: 0,
+          duration: 0.55, stagger: { each: 0.018, ease: 'power1.inOut' }, ease: 'power2.out'
+        }, '-=0.2')
+      .call(() => { startWords('floatLeft', leftWords, 2400); startWords('floatRight', rightWords, 2000); });
+
+    /* ── Ongoing ── */
+    gsap.to('.cg-cut-glow', { opacity: 0.3, duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    document.querySelectorAll<HTMLElement>('.cg-blob').forEach((b, i) => {
+      gsap.to(b, { x: (i%2===0?1:-1)*(16+i*9), y: (i%3===0?1:-1)*(20+i*7), duration: 9+i*2.5, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: i*0.7 });
+    });
+  });
+
+})();
 </script>
 
 <style>
-  @keyframes dotPulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); box-shadow: 0 0 6px rgba(97,206,112,0.6); }
-    50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 14px rgba(97,206,112,1); }
+  @keyframes csDot {
+    0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.55); }
+    60%  { box-shadow: 0 0 0 7px rgba(74,222,128,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
   }
 
   #cg-gate {
     position: relative;
     min-height: calc(100vh - 64px);
+    width: 100%;
+    overflow: hidden;
+    background: #060e08;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 24px;
-    overflow: hidden;
-    background: #060e08;
+    isolation: isolate;
   }
 
-  /* Aerial forest photo */
-  .cg-photo {
-    position: absolute;
-    inset: 0;
-    background: url('/images/cg-bg.jpg') center / cover no-repeat;
-    opacity: 0.55;
+  .cg-world { position: absolute; inset: 0; z-index: 1; }
+  .cg-world--left  { clip-path: polygon(0 0, 62% 0, 38% 100%, 0 100%); }
+  .cg-world--right { clip-path: polygon(62% 0, 100% 0, 100% 100%, 38% 100%); }
+
+  .cg-bg-photo {
+    position: absolute; inset: 0;
+    background: url('/images/cg-bg.jpg') center center / cover no-repeat;
+    filter: saturate(1.3) brightness(0.85);
+  }
+  .cg-bg-photo-dark {
+    position: absolute; inset: 0;
+    background: url('/images/cg-bg5.jpg') center center / cover no-repeat;
+    filter: saturate(1.15) brightness(0.72);
   }
 
-  /* Animated color blobs */
-  .cg-blobs {
+  .cg-cut-line { position: absolute; inset: 0; z-index: 8; pointer-events: none; overflow: hidden; }
+  .cg-cut-line::before {
+    content: '';
     position: absolute;
-    inset: 0;
+    left: 50%; top: 0;
+    width: 2px; height: 100%;
+    transform: translateX(-50%) skewX(-13.5deg);
+    transform-origin: center top;
+    background: linear-gradient(180deg, transparent 0%, rgba(200,162,74,0.9) 15%, rgba(160,220,180,0.95) 50%, rgba(200,162,74,0.9) 85%, transparent 100%);
+  }
+  .cg-cut-glow {
+    position: absolute;
+    left: 50%; top: 0;
+    width: 140px; height: 100%;
+    transform: translateX(-50%) skewX(-13.5deg);
+    transform-origin: center top;
+    background: linear-gradient(180deg, transparent 0%, rgba(200,162,74,0.1) 20%, rgba(74,222,128,0.14) 50%, rgba(200,162,74,0.1) 80%, transparent 100%);
+    filter: blur(28px);
+  }
+
+  .cg-blob { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(90px); z-index: 2; mix-blend-mode: screen; }
+  .cg-blob--emerald { width: 500px; height: 500px; background: radial-gradient(circle, rgba(16,185,129,0.26) 0%, transparent 70%); top: -100px; left: 4%; }
+  .cg-blob--gold    { width: 380px; height: 380px; background: radial-gradient(circle, rgba(200,162,74,0.3) 0%, transparent 70%); bottom: 8%; right: 8%; }
+  .cg-blob--teal    { width: 300px; height: 300px; background: radial-gradient(circle, rgba(20,184,166,0.2) 0%, transparent 70%); top: 50%; left: 50%; }
+
+  .cg-float-words { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 3; }
+  .cg-word {
+    position: absolute;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(0.65rem, 1vw, 0.85rem);
+    letter-spacing: 0.05em;
+    color: rgba(246,239,225,0.45);
+    opacity: 0;
+    white-space: nowrap;
     pointer-events: none;
-    overflow: hidden;
   }
-  .cg-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    mix-blend-mode: screen;
-    will-change: transform;
-  }
-  .cg-blob-1 {
-    width: 420px; height: 420px;
-    background: radial-gradient(circle, rgba(61,138,78,0.75) 0%, transparent 70%);
-    top: -80px; left: 5%;
-  }
-  .cg-blob-2 {
-    width: 380px; height: 380px;
-    background: radial-gradient(circle, rgba(200,162,74,0.65) 0%, transparent 70%);
-    bottom: -60px; right: 8%;
-  }
-  .cg-blob-3 {
-    width: 340px; height: 340px;
-    background: radial-gradient(circle, rgba(13,122,111,0.6) 0%, transparent 70%);
-    top: 30%; right: 15%;
-  }
+  #floatRight .cg-word { color: rgba(200,162,74,0.45); }
 
-  /* Edge vignette */
-  .cg-vignette {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 110% 110% at 50% 50%, transparent 30%, rgba(4,10,6,0.85) 100%);
-    pointer-events: none;
-  }
-
-  /* Glass card */
-  .cg-card {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 580px;
-    padding: 56px 52px 50px;
+  .cg-center {
+    position: relative; z-index: 20;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 1.5rem;
+    padding: 0 2rem;
+    max-width: 780px; width: 100%;
     text-align: center;
-    background: rgba(5, 18, 10, 0.48);
+  }
+
+  .cg-badge-wrap { display: flex; justify-content: center; }
+  .cg-badge {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.28rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(200,162,74,0.1);
+    border: 1px solid rgba(200,162,74,0.28);
+    font-family: var(--font-inter);
+    font-size: 0.6rem; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #C8A24A;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .cg-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #C8A24A; flex-shrink: 0; }
+
+  .cg-title-wrap { position: relative; display: block; line-height: 1; }
+  .cg-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3.8rem, 9.5vw, 9rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 0.92;
+    margin: 0; padding: 0;
+    white-space: nowrap;
+  }
+  .cg-title--light { color: #F6EFE1; clip-path: polygon(0 0, 52% 0, 52% 100%, 0 100%); position: relative; display: block; }
+  .cg-title--dark  { color: #C8A24A; clip-path: polygon(52% 0, 100% 0, 100% 100%, 52% 100%); position: absolute; top: 0; left: 0; right: 0; }
+  .cg-title--sr    { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+  .cg-card-outer {
+    width: 100%;
+    padding: 1.5px;
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, rgba(200,162,74,0.28) 0%, rgba(255,255,255,0.05) 45%, rgba(74,222,128,0.18) 100%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 28px 70px rgba(0,0,0,0.5), 0 0 50px rgba(200,162,74,0.06), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .cg-card-inner {
+    background: rgba(5,14,7,0.7);
     backdrop-filter: blur(32px);
     -webkit-backdrop-filter: blur(32px);
-    border-radius: 24px;
-    border: 1px solid rgba(97, 206, 112, 0.2);
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.05) inset,
-      0 40px 100px rgba(0,0,0,0.55),
-      0 0 80px rgba(61,138,78,0.12),
-      0 0 200px rgba(200,162,74,0.06);
-    cursor: default;
+    border-radius: calc(1.5rem - 1.5px);
+    padding: 2.25rem 2.75rem 2rem;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.06);
+    display: flex; flex-direction: column;
+    align-items: center; gap: 1.4rem;
   }
 
-  .cg-badge {
+  /* Coming Soon 3D */
+  .cs-wrap {
+    perspective: 500px;
+    perspective-origin: 50% 50%;
+    display: inline-flex;
+    align-items: baseline;
+    cursor: default;
+    user-select: none;
+  }
+  .cs-word { display: inline-flex; align-items: baseline; }
+  .cs-space { width: 0.45em; display: inline-block; }
+  .cs-char {
     display: inline-block;
     font-family: var(--font-inter);
-    font-size: 0.67rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #61CE70;
-    margin-bottom: 22px;
-    opacity: 0.9;
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #4ade80;
+    transform-style: preserve-3d;
+    transform-origin: center bottom;
+    opacity: 0;
+    will-change: transform, color, text-shadow;
   }
-
-  .cg-title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: var(--font-serif);
-    font-size: clamp(3.4rem, 8vw, 5.5rem);
-    font-weight: 300;
-    line-height: 0.98;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
-  }
-  .cg-word-1 {
-    color: #F6EFE1;
-  }
-  .cg-word-2 {
-    color: #C8A24A;
-    font-style: italic;
-  }
-
-  .cg-sub {
-    font-family: var(--font-inter);
-    font-size: 0.93rem;
-    line-height: 1.75;
-    color: rgba(220, 212, 196, 0.65);
-    margin-bottom: 34px;
-  }
-
-  .cg-divider {
-    width: 56px;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(97,206,112,0.5), rgba(200,162,74,0.5), transparent);
-    margin: 0 auto 32px;
-  }
-
-  .cg-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .cg-coming {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    font-family: var(--font-inter);
-    font-size: 0.71rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(246, 239, 225, 0.92);
-    background: rgba(61, 138, 78, 0.14);
-    border: 1px solid rgba(97, 206, 112, 0.28);
-    padding: 10px 24px;
-    border-radius: 50px;
-  }
-  .cg-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #61CE70;
-    animation: dotPulse 2.2s ease-in-out infinite;
+  .cs-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74,222,128,0.5);
+    animation: csDot 2s cubic-bezier(0.455,0.03,0.515,0.955) infinite;
     flex-shrink: 0;
   }
 
-  .cg-note {
-    font-family: var(--font-inter);
-    font-size: 0.77rem;
-    color: rgba(210, 200, 185, 0.3);
-    letter-spacing: 0.02em;
-    margin: 0;
+  /* Description 3D chars */
+  .cg-desc-wrap {
+    max-width: 520px;
+    line-height: 1.72;
+    perspective: 600px;
+    perspective-origin: 50% 50%;
   }
+  .cg-desc-wrap .char {
+    display: inline-block;
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 2.1vw, 1.2rem);
+    font-weight: 300; font-style: italic;
+    color: rgba(246,239,225,0.8);
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform-style: preserve-3d;
+    transform-origin: center bottom;
+    cursor: default;
+    will-change: transform, opacity, color;
+  }
+  .cg-desc-wrap .char.space { width: 0.3em; }
 
-  @media (max-width: 600px) {
-    .cg-card { padding: 40px 28px 36px; }
+  @media (max-width: 768px) {
+    .cg-world--left  { clip-path: polygon(0 0, 100% 0, 100% 55%, 0 55%); }
+    .cg-world--right { clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); }
+    .cg-cut-line::before {
+      width: 100%; height: 2px;
+      top: 55%; left: 0;
+      transform: none;
+      background: linear-gradient(90deg, transparent, rgba(200,162,74,0.9) 30%, rgba(160,220,180,0.95) 55%, rgba(200,162,74,0.9) 80%, transparent);
+    }
+    .cg-cut-glow {
+      width: 100%; height: 100px;
+      top: calc(55% - 50px); left: 0;
+      transform: none;
+      background: linear-gradient(180deg, transparent, rgba(200,162,74,0.12) 40%, rgba(74,222,128,0.14) 60%, transparent);
+    }
+    .cg-title { font-size: clamp(2.8rem, 13vw, 5rem); white-space: normal; word-break: break-word; }
+    .cg-card-inner { padding: 1.75rem 1.5rem 1.5rem; }
+    .cg-blob--emerald { width: 280px; height: 280px; }
+    .cg-blob--gold    { width: 220px; height: 220px; }
+    .cg-blob--teal    { width: 180px; height: 180px; }
   }
 </style>
