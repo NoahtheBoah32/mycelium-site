@@ -8,6 +8,7 @@ const links = [
   { href: "/courses", label: "Courses" },
   { href: "/newsletter", label: "Newsletter" },
   { href: "/feedback", label: "Feedback" },
+  { href: "/common-ground", label: "Common Ground", gold: true },
 ];
 const currentPath = Astro.url.pathname;
 const { overlay = false } = Astro.props;
@@ -30,7 +31,7 @@ const { overlay = false } = Astro.props;
       {links.map(link => (
         <a
           href={link.href}
-          class:list={["sn-link", { active: currentPath === link.href || (link.href !== "/" && currentPath.startsWith(link.href)) }]}
+          class:list={["sn-link", { active: currentPath === link.href || (link.href !== "/" && currentPath.startsWith(link.href)), "sn-gold": link.gold }]}
         >
           {link.label}
         </a>
@@ -63,6 +64,8 @@ const { overlay = false } = Astro.props;
   .sn-link { color: rgba(255,255,255,0.85); }
   .sn-link:hover { color: #fff !important; background: rgba(255,255,255,0.08) !important; }
   .sn-link.active { color: #61CE70 !important; font-weight: 600; }
+  .sn-link.sn-gold { color: #C8A24A !important; font-weight: 600; }
+  .sn-link.sn-gold:hover { color: #e0b85c !important; background: rgba(200,162,74,0.1) !important; }
   .sn-inner {
     max-width: var(--max-width);
     margin: 0 auto;

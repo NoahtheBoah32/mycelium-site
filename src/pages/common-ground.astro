@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<BaseLayout title="Common Ground — Mycelium" description="Community sensemaking for the Mycelium permaculture community. See where we align — and where we're still growing.">
+  <SiteNav />
+
+  <div id="cg-gate">
+    <div class="cg-inner">
+      <div class="cg-badge">Community Sensemaking · The Polis Method</div>
+      <h1 class="cg-title">Common Ground</h1>
+      <p class="cg-sub">A space for the Mycelium community to share perspectives, surface shared values, and understand where we see things differently — without anyone having to talk over anyone else.</p>
+      <div class="cg-coming">Coming soon</div>
+      <p class="cg-note">We're calibrating the map before we open the floor.</p>
+    </div>
+  </div>
+
+  <SiteFooter />
+</BaseLayout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('preview');
+
+  if (key === 'mycelium') {
+    localStorage.setItem('cg_dev', '1');
+    window.location.replace('/common-ground-app.html');
+  } else if (localStorage.getItem('cg_dev') === '1') {
+    window.location.replace('/common-ground-app.html');
+  }
+</script>
+
+<style>
+  #cg-gate {
+    min-height: calc(100vh - 64px);
+    background: #1E1501;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+  }
+  .cg-inner {
+    max-width: 620px;
+    text-align: center;
+  }
+  .cg-badge {
+    font-family: var(--font-inter);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C8A24A;
+    margin-bottom: 24px;
+  }
+  .cg-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400;
+    color: #F6EFE1;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .cg-sub {
+    font-family: var(--font-inter);
+    font-size: 1rem;
+    color: rgba(210, 200, 185, 0.7);
+    line-height: 1.7;
+    margin-bottom: 52px;
+  }
+  .cg-coming {
+    display: inline-block;
+    font-family: var(--font-inter);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1E1501;
+    background: #C8A24A;
+    padding: 10px 28px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+  .cg-note {
+    font-family: var(--font-inter);
+    font-size: 0.82rem;
+    color: rgba(210, 200, 185, 0.4);
+    letter-spacing: 0.02em;
+  }
+</style>
