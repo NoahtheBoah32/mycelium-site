@@ -169,7 +169,7 @@ import SiteNav from '../components/SiteNav.astro';
       gsap.to(el, { rotateX: -28, scaleY: 1.38, scaleX: 1.1, z: 22, color: '#F6EFE1', textShadow: '0 2px 0 rgba(200,162,74,0.7), 0 4px 0 rgba(200,162,74,0.45), 0 6px 0 rgba(200,162,74,0.2), 0 8px 14px rgba(200,162,74,0.35)', duration: 0.15, ease: 'power2.out', overwrite: true });
     }
     function retractDesc(el: HTMLElement) {
-      gsap.to(el, { rotateX: 0, scaleY: 1, scaleX: 1, z: 0, color: 'rgba(246,239,225,0.8)', textShadow: 'none', duration: 0.24, ease: 'power2.inOut', overwrite: true });
+      gsap.to(el, { rotateX: 0, scaleY: 1, scaleX: 1, z: 0, color: 'rgba(246,239,225,1)', textShadow: '0 0 18px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1)', duration: 0.24, ease: 'power2.inOut', overwrite: true });
     }
     document.querySelectorAll<HTMLElement>('.cg-desc-wrap .char:not(.space)').forEach(char => {
       char.addEventListener('mouseenter', () => {
@@ -330,7 +330,7 @@ import SiteNav from '../components/SiteNav.astro';
     transform: translate(-50%, -50%);
     width: max(1000px, 140%);
     height: max(700px, 180%);
-    background: radial-gradient(ellipse at 50% 44%, rgba(3,7,4,0.88) 0%, rgba(3,7,4,0.62) 38%, rgba(3,7,4,0.28) 60%, transparent 75%);
+    background: radial-gradient(ellipse at 50% 50%, rgba(3,7,4,0.92) 0%, rgba(3,7,4,0.70) 35%, rgba(3,7,4,0.35) 58%, transparent 75%);
     pointer-events: none;
     z-index: -1;
   }
