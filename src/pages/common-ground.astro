@@ -110,6 +110,7 @@ import SiteNav from '../components/SiteNav.astro';
     if (wi === 0) {
       const sp = document.createElement('span');
       sp.className = 'cs-space';
+      sp.textContent = ' ';
       csWrap.appendChild(sp);
     }
   });
@@ -327,9 +328,9 @@ import SiteNav from '../components/SiteNav.astro';
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: max(920px, 130%);
-    height: max(580px, 150%);
-    background: radial-gradient(ellipse at center, rgba(3,7,4,0.82) 0%, rgba(3,7,4,0.52) 42%, transparent 70%);
+    width: max(1000px, 140%);
+    height: max(700px, 180%);
+    background: radial-gradient(ellipse at 50% 44%, rgba(3,7,4,0.88) 0%, rgba(3,7,4,0.62) 38%, rgba(3,7,4,0.28) 60%, transparent 75%);
     pointer-events: none;
     z-index: -1;
   }
@@ -411,10 +412,10 @@ import SiteNav from '../components/SiteNav.astro';
   .cg-desc-wrap .char {
     display: inline-block;
     font-family: var(--font-serif);
-    font-size: clamp(1rem, 1.9vw, 1.2rem);
-    font-weight: 300; font-style: italic;
-    color: rgba(246,239,225,0.95);
-    text-shadow: 0 1px 8px rgba(0,0,0,0.95), 0 2px 20px rgba(0,0,0,0.8);
+    font-size: clamp(1.05rem, 1.9vw, 1.25rem);
+    font-weight: 400; font-style: italic;
+    color: rgba(246,239,225,1);
+    text-shadow: 0 0 18px rgba(0,0,0,1), 0 1px 4px rgba(0,0,0,1), 0 3px 12px rgba(0,0,0,0.9);
     letter-spacing: 0.015em;
     opacity: 0;
     transform-style: preserve-3d;
