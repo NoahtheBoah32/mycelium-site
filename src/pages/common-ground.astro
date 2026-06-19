@@ -42,16 +42,15 @@ import SiteNav from '../components/SiteNav.astro';
         <h1 class="cg-title cg-title--sr">Common Ground</h1>
       </div>
 
-      <div class="cg-card-outer">
-        <div class="cg-card-inner">
-          <div style="display:inline-flex;align-items:center;gap:0.55rem;">
-            <div class="cs-dot"></div>
-            <div class="cs-wrap" id="csWrap" aria-label="Coming Soon"></div>
-          </div>
-          <div class="cg-desc-wrap" id="cgDesc"
-            aria-label="A space for the Mycelium community to share perspectives, surface shared values, and understand where we see things differently.">
-          </div>
-        </div>
+      <!-- Coming Soon pill — no card box, floats freely -->
+      <div class="cg-coming-row">
+        <div class="cs-dot"></div>
+        <div class="cs-wrap" id="csWrap" aria-label="Coming Soon"></div>
+      </div>
+
+      <!-- Description — floats freely, 3D hover on chars -->
+      <div class="cg-desc-wrap" id="cgDesc"
+        aria-label="A space for the Mycelium community to share perspectives, surface shared values, and understand where we see things differently.">
       </div>
 
     </div>
@@ -205,24 +204,26 @@ import SiteNav from '../components/SiteNav.astro';
     }
 
     /* ── Entrance ── */
-    gsap.set(['#cutLine','#worldLeft','#worldRight','#cgTitle','.cg-badge-wrap','.cg-card-outer','.cg-blob'], { opacity: 0 });
+    gsap.set(['#cutLine','#worldLeft','#worldRight','#cgTitle','.cg-badge-wrap','.cg-coming-row','.cg-desc-wrap','.cg-blob'], { opacity: 0 });
     gsap.set('#cutLine', { scaleY: 0, transformOrigin: 'top center' });
     gsap.set('#worldLeft', { x: '-6%' });
     gsap.set('#worldRight', { x: '6%' });
     gsap.set('#cgTitle', { y: 28, filter: 'blur(12px)' });
-    gsap.set('.cg-card-outer', { y: 36, filter: 'blur(8px)' });
+    gsap.set('.cg-coming-row', { y: 16 });
+    gsap.set('.cg-desc-wrap', { y: 20 });
     gsap.set('.cg-badge-wrap', { y: 14 });
     gsap.set('.cg-blob', { scale: 0.5 });
 
     const tl = gsap.timeline({ defaults: { ease: 'cubic-bezier(0.22,1,0.36,1)' } });
-    tl.to('#cutLine',       { scaleY: 1, opacity: 1, duration: 0.85 })
-      .to('#worldLeft',     { x: '0%', opacity: 1, duration: 1.1 }, '-=0.5')
-      .to('#worldRight',    { x: '0%', opacity: 1, duration: 1.1 }, '<')
-      .to('.cg-blob',       { opacity: 1, scale: 1, duration: 1.5, stagger: 0.15 }, '-=0.7')
-      .to('#cgTitle',       { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.0 }, '-=1.2')
-      .to('.cg-badge-wrap', { y: 0, opacity: 1, duration: 0.7 }, '-=0.9')
-      .to('.cg-card-outer', { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.9 }, '-=0.6')
-      .to('.cs-char',       { opacity: 1, duration: 0.5, stagger: 0.04, ease: 'power2.out' }, '-=0.4')
+    tl.to('#cutLine',         { scaleY: 1, opacity: 1, duration: 0.85 })
+      .to('#worldLeft',       { x: '0%', opacity: 1, duration: 1.1 }, '-=0.5')
+      .to('#worldRight',      { x: '0%', opacity: 1, duration: 1.1 }, '<')
+      .to('.cg-blob',         { opacity: 1, scale: 1, duration: 1.5, stagger: 0.15 }, '-=0.7')
+      .to('#cgTitle',         { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.0 }, '-=1.2')
+      .to('.cg-badge-wrap',   { y: 0, opacity: 1, duration: 0.7 }, '-=0.9')
+      .to('.cg-coming-row',   { y: 0, opacity: 1, duration: 0.6 }, '-=0.5')
+      .to('.cs-char',         { opacity: 1, duration: 0.5, stagger: 0.04, ease: 'power2.out' }, '-=0.4')
+      .to('.cg-desc-wrap',    { y: 0, opacity: 1, duration: 0.7 }, '-=0.2')
       .to('.char', {
           opacity: 1, filter: 'blur(0px)', y: 0,
           duration: 0.55, stagger: { each: 0.018, ease: 'power1.inOut' }, ease: 'power2.out'
@@ -351,22 +352,11 @@ import SiteNav from '../components/SiteNav.astro';
   .cg-title--dark  { color: #C8A24A; clip-path: polygon(52% 0, 100% 0, 100% 100%, 52% 100%); position: absolute; top: 0; left: 0; right: 0; }
   .cg-title--sr    { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 
-  .cg-card-outer {
-    width: 100%;
-    padding: 1.5px;
-    border-radius: 1.5rem;
-    background: linear-gradient(135deg, rgba(200,162,74,0.28) 0%, rgba(255,255,255,0.05) 45%, rgba(74,222,128,0.18) 100%);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 28px 70px rgba(0,0,0,0.5), 0 0 50px rgba(200,162,74,0.06), inset 0 1px 0 rgba(255,255,255,0.1);
-  }
-  .cg-card-inner {
-    background: rgba(5,14,7,0.7);
-    backdrop-filter: blur(32px);
-    -webkit-backdrop-filter: blur(32px);
-    border-radius: calc(1.5rem - 1.5px);
-    padding: 2.25rem 2.75rem 2rem;
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.06);
-    display: flex; flex-direction: column;
-    align-items: center; gap: 1.4rem;
+  /* Coming Soon row — floats freely, no box */
+  .cg-coming-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
   }
 
   /* Coming Soon 3D */
@@ -379,7 +369,7 @@ import SiteNav from '../components/SiteNav.astro';
     user-select: none;
   }
   .cs-word { display: inline-flex; align-items: baseline; }
-  .cs-space { width: 0.45em; display: inline-block; }
+  .cs-space { display: inline-block; width: 0.5em; }
   .cs-char {
     display: inline-block;
     font-family: var(--font-inter);
@@ -399,19 +389,20 @@ import SiteNav from '../components/SiteNav.astro';
     flex-shrink: 0;
   }
 
-  /* Description 3D chars */
+  /* Description 3D chars — no box, floats over background */
   .cg-desc-wrap {
-    max-width: 520px;
-    line-height: 1.72;
+    max-width: 560px;
+    line-height: 1.8;
     perspective: 600px;
     perspective-origin: 50% 50%;
   }
   .cg-desc-wrap .char {
     display: inline-block;
     font-family: var(--font-serif);
-    font-size: clamp(1rem, 2.1vw, 1.2rem);
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
     font-weight: 300; font-style: italic;
-    color: rgba(246,239,225,0.8);
+    color: rgba(246,239,225,0.88);
+    text-shadow: 0 1px 12px rgba(0,0,0,0.6);
     letter-spacing: 0.01em;
     opacity: 0;
     transform-style: preserve-3d;
@@ -437,7 +428,6 @@ import SiteNav from '../components/SiteNav.astro';
       background: linear-gradient(180deg, transparent, rgba(200,162,74,0.12) 40%, rgba(74,222,128,0.14) 60%, transparent);
     }
     .cg-title { font-size: clamp(2.8rem, 13vw, 5rem); white-space: normal; word-break: break-word; }
-    .cg-card-inner { padding: 1.75rem 1.5rem 1.5rem; }
     .cg-blob--emerald { width: 280px; height: 280px; }
     .cg-blob--gold    { width: 220px; height: 220px; }
     .cg-blob--teal    { width: 180px; height: 180px; }
