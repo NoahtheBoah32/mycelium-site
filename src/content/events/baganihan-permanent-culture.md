@@ -16,5 +16,5 @@ speakerBio: "Hubert Posadas is a Permaculture Aid Specialist and Risk and Commun
 organizer: "Baganihan Collective"
 organizerLogo: "/images/baganihan-logo.jpg"
 partner: baganihan
-image: "/images/events/bag-seed-bg.jpg"
+image: "/images/events/disruption-bg.jpg"
 ---
