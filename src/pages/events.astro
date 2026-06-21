@@ -61,6 +61,10 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
           <img src="/images/baganihan-logo.jpg" alt="" class="ev-filter-logo" />
           Baganihan Collective
         </button>
+        <button class="ev-filter-btn ev-filter-btn--archive" data-filter="archived">
+          <span class="ev-filter-archive-icon">◷</span>
+          Archived
+        </button>
       </div>
 
       {events.map(ev => {
@@ -70,9 +74,10 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
           ? `${d.date.toLocaleString('en-US', { month: 'short' }).toUpperCase()} ${d.date.getFullYear()}`
           : '';
         const speakerInitial = d.speakerName?.charAt(0) ?? '?';
+        const isArchived = d.archived === true;
 
         if (d.template === 'pdc') return (
-          <div class="ev-card ev-card-pdc" data-partner={d.partner || undefined}>
+          <div class="ev-card ev-card-pdc" data-partner={d.partner || undefined} data-archived={isArchived ? 'true' : undefined}>
             {/* Left: solid content panel */}
             <div class="ev-pdc-panel">
               <div class="ev-pdc-badges">
@@ -134,7 +139,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         );
 
         if (d.template === 'kapihan') return (
-          <div class="ev-card ev-card-kapihan" data-partner={d.partner || undefined}>
+          <div class="ev-card ev-card-kapihan" data-partner={d.partner || undefined} data-archived={isArchived ? 'true' : undefined}>
             {d.image && (
               <div class="ev-card-img-wrap ev-kapihan-img">
                 <img src={d.image} alt={d.title} loading="lazy" />
@@ -187,7 +192,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         );
 
         if (d.template === 'workshop') return (
-          <div class="ev-card ev-card-workshop" data-partner={d.partner || undefined}>
+          <div class="ev-card ev-card-workshop" data-partner={d.partner || undefined} data-archived={isArchived ? 'true' : undefined}>
 
             {/* Full botanical background */}
             <img src="/images/events/workshop-botanical-bg.jpg" aria-hidden="true" class="ev-ws-botanical-bg" />
@@ -254,7 +259,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         );
 
         if (d.template === 'hov') return (
-          <div class="ev-card ev-card-hov" data-partner={d.partner || undefined}>
+          <div class="ev-card ev-card-hov" data-partner={d.partner || undefined} data-archived={isArchived ? 'true' : undefined}>
             <div class="ev-hov-hero" aria-hidden="true">
               <img src={d.image ?? '/images/events/hovermath-bg.jpg'} alt="" class="ev-hov-hero-img" loading="lazy" />
               <div class="ev-hov-hero-overlay"></div>
@@ -318,7 +323,7 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
         );
 
         return (
-          <div class="ev-card ev-card-bag" data-partner={d.partner || undefined}>
+          <div class="ev-card ev-card-bag" data-partner={d.partner || undefined} data-archived={isArchived ? 'true' : undefined}>
             {/* Full-bleed editorial hero image */}
             <div class="ev-bag-hero" aria-hidden="true">
               <img src={d.image ?? '/images/events/bag-seed-bg.jpg'} alt="" class="ev-bag-hero-img" loading="lazy" />
@@ -556,6 +561,27 @@ const events = allEvents.sort((a, b) => (a.data.sortOrder ?? 0) - (b.data.sortOr
   transition: background 0.22s ease;
 }
 .ev-filter-btn.active .ev-filter-dot { background: #fff; }
+
+/* ─── Archived filter button ─────────────────────────────── */
+.ev-filter-btn--archive { border-style: dashed; }
+.ev-filter-btn--archive.active {
+  background: #2a2a2a;
+  border-color: #555;
+  color: #ccc;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.ev-filter-archive-icon { font-size: 0.9rem; opacity: 0.7; }
+
+/* ─── Archived cards — grayscale ────────────────────────── */
+.ev-card[data-archived="true"] {
+  filter: grayscale(1) brightness(0.85);
+  opacity: 0.88;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+.ev-card[data-archived="true"]:hover {
+  filter: grayscale(0.6) brightness(0.92);
+  opacity: 1;
+}
 
 /* ─── Card transition for filtering ─────────────────────── */
 .ev-card[data-partner] { transition: opacity 0.2s ease, transform 0.2s ease; }
@@ -1150,8 +1176,15 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
 </style>
 
 <script>
-  const btns = document.querySelectorAll<HTMLButtonElement>('.ev-filter-btn');
+  const btns  = document.querySelectorAll<HTMLButtonElement>('.ev-filter-btn');
   const cards = document.querySelectorAll<HTMLElement>('.ev-card[data-partner]');
+
+  // Hide archived cards on load (default filter is "all")
+  cards.forEach(card => {
+    if (card.dataset.archived === 'true') {
+      card.style.display = 'none';
+    }
+  });
 
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1161,10 +1194,19 @@ details[open] .ev-bag-bio-toggle::after { content: '−'; }
       btn.classList.add('active');
 
       cards.forEach(card => {
-        const match = filter === 'all' || card.dataset.partner === filter;
+        const isArchived = card.dataset.archived === 'true';
+        let match: boolean;
+
+        if (filter === 'archived') {
+          match = isArchived;
+        } else if (filter === 'all') {
+          match = !isArchived;
+        } else {
+          match = !isArchived && card.dataset.partner === filter;
+        }
+
         if (match) {
           card.style.display = '';
-          // Force reflow then animate in
           void card.offsetHeight;
           card.style.opacity = '1';
           card.style.transform = 'translateY(0)';

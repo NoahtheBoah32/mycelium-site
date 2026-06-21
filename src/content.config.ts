@@ -32,6 +32,7 @@ const events = defineCollection({
     dateRange: z.string().optional(),
     highlights: z.array(z.string()).optional(),
     partner: z.enum(['ppa', 'baganihan']).optional(),
+    archived: z.boolean().default(false),
   }),
 });
 
