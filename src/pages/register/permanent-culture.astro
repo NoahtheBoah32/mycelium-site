@@ -136,7 +136,7 @@
     </div>
     <div class="card-body">
       <div id="form-state" class="state visible">
-        <form id="reg-form" onsubmit="handleSubmit(event)">
+        <form id="reg-form">
           <div class="form-group">
             <label for="name">Full Name</label>
             <input type="text" id="name" name="name" placeholder="Juan dela Cruz" required autocomplete="name" />
@@ -172,7 +172,7 @@
 </div>
 
 <script>
-async function handleSubmit(e) {
+document.getElementById('reg-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   const name       = document.getElementById('name').value.trim();
   const email      = document.getElementById('email').value.trim();
@@ -205,7 +205,7 @@ async function handleSubmit(e) {
     errEl.textContent = 'Something went wrong. Please try again or email us at myceliumlearning@gmail.com.';
     errEl.style.display = 'block';
   }
-}
+});
 </script>
 </body>
 </html>
