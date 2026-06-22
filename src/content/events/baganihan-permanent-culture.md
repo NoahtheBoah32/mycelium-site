@@ -17,6 +17,6 @@ organizer: "Baganihan Collective"
 organizerLogo: "/images/baganihan-logo.jpg"
 partner: baganihan
 image: "/images/events/disruption-bg.jpg"
-ctaUrl: "https://script.google.com/macros/s/AKfycbxYvo9VCI-aA4ugTA_t_PPNJyEBA-atRRfN9Rr2EZzLAJoj-XR-rkUoU7bZ3_LUiiMb/exec"
+ctaUrl: "https://script.google.com/macros/s/AKfycbw5KDnzDFUbauRR7B4KwuDIadFcixrikISGv-SNBinMOuBqwQrzDe3MtyoDPgJWLUY/exec"
 ctaLabel: "Register Free"
 ---
