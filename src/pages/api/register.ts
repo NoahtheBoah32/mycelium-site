@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 export const prerender = false;
 
@@ -15,7 +15,13 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
     }
 
-    const resend = new Resend(import.meta.env.RESEND_API_KEY);
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'myceliumlearning@gmail.com',
+        pass: import.meta.env.GMAIL_APP_PASSWORD,
+      },
+    });
 
     const html = `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#0d1a0d;font-family:Georgia,serif;">
 <div style="max-width:540px;margin:0 auto;padding:40px 24px;">
@@ -37,8 +43,8 @@ export const POST: APIRoute = async ({ request }) => {
   <p style="text-align:center;margin-top:28px;font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.25);">mycelium-learn.com &nbsp;·&nbsp; Questions? Reply to this email.</p>
 </div></body></html>`;
 
-    await resend.emails.send({
-      from: 'Mycelium Learning <onboarding@resend.dev>',
+    await transporter.sendMail({
+      from: 'Mycelium Learning <myceliumlearning@gmail.com>',
       to: email,
       subject: `You're registered — ${EVENT_TITLE}`,
       html,
