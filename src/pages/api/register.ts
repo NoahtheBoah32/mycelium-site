@@ -50,6 +50,13 @@ export const POST: APIRoute = async ({ request }) => {
       html,
     });
 
+    await transporter.sendMail({
+      from: 'Mycelium Learning <myceliumlearning@gmail.com>',
+      to: 'myceliumlearning@gmail.com',
+      subject: `New registration: ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\nNewsletter: ${newsletter ? 'Yes' : 'No'}`,
+    });
+
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
