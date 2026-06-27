@@ -12,19 +12,6 @@ const photos = [
   { src: '/images/events/kabuohan/group-lawn.jpg', alt: 'Full group in the garden at Rizal Art House' },
 ];
 
-const outline = [
-  { num: 1, title: 'Arrival into Awareness', time: '30–45 min', desc: 'Welcome circle. Everyone shares one living thing they noticed on the way. Then footwear off, soil underfoot, air smelled, bark touched. One question asked: "What do you notice?" No explanations. Just presence.' },
-  { num: 2, title: 'Meeting the Place', time: '30–45 min', desc: 'Parent-child teams explore the grounds. Find: something growing well, something struggling, an insect, a moist area, a dry area, something beautiful, something surprising. Gather and share. Permaculture principle introduced: observe before you intervene.' },
-  { num: 3, title: 'Family Garden Design Play', time: '45–60 min', desc: 'Using sticks, leaves, stones, seeds, and cardboard, families design a miniature food forest. The challenge: a garden where people thrive, plants thrive, insects thrive, and soil thrives. Families present. Facilitators draw out: diversity, water, shelter, cooperation, cycles.' },
-  { num: 4, title: 'Building a Hugelkultur Bed', time: '60–90 min', desc: 'Everyone works together: digging, arranging wood, adding organic matter, covering with soil, watering, planting. Participation over perfection. No lengthy explanations during the work. Learning happens through contact with materials.' },
-  { num: 5, title: 'Reflection on the Garden', time: '15–20 min', desc: 'Gather around the completed bed. What did we use to build this? Which of these did humans invent? Introduce decomposition as transformation. The bed is already full of hidden communities: fungi, bacteria, earthworms, roots.' },
-  { num: 6, title: 'Transition to Pottery', time: '20 min', desc: 'Bridge the two halves of the day. Story of an ancient child discovering clay as a way to carry water and store food. Key insight: humans did not invent clay. Humans entered into relationship with clay.' },
-  { num: 7, title: 'Clay Exploration', time: '15 min', desc: 'Each pair receives clay. Hold it, smell it, squeeze it. How is this similar to soil? How is it different? No right answers. Experience before instruction.' },
-  { num: 8, title: 'Primitive Pottery', time: '60–90 min', desc: 'Families shape pinch pots, coil pots, seed bowls, small vessels, animal figures. Facilitators support rather than direct. Parents and children create together. Discuss how pottery supported water storage, cooking, seed saving, community life.' },
-  { num: 9, title: 'The Hidden Communities', time: '20–30 min', desc: 'Gather around the garden and pottery. Inside the hugelkultur bed: fungi, bacteria, insects, earthworms, roots working together. Inside our bodies: the same. Healthy soil supports healthy plants. Healthy plants support healthy people. Humans participate within nature, not outside it.' },
-  { num: 10, title: 'Community Gallery', time: '20 min', desc: 'Display pottery pieces, garden designs, and observations from the day. Participants walk and appreciate each other\'s work. No judging. No competition. No prizes. Just looking.' },
-  { num: 11, title: 'Closing Reflection', time: '30 min', desc: 'Circle gathering. Children asked: what surprised you, what did you enjoy, what did you discover. Parents asked: what did you learn from your child today? Final question: "When you arrived this morning, where did you think nature was? After today, where is it?"' },
-];
 ---
 
 <BaseLayout title="Kabuohan Workshop — Mycelium" description="A full-day permaculture gardening and primitive pottery workshop for homeschool families at Rizal Art House, hosted by Baganihan Collective.">
@@ -80,13 +67,13 @@ const outline = [
 
         <p>It started with a question: "What living thing did you notice on your way here?" Parents and children answered equally. Then everyone took off their shoes. They walked the soil, smelled the air, touched leaves and bark. Hubert did not explain anything. Just: "What do you notice?" In permaculture, this has a name. Observe and interact. The garden speaks first. You listen before you act.</p>
 
-        <p>Parent-child teams spread across the grounds with a simple task: find something growing well, something struggling, an insect, a moist area, a dry area, something beautiful, something surprising. They gathered, shared, and asked why. What patterns are you seeing? The first permaculture principle Hubert introduced was not on a slide. It was the garden itself.</p>
+        <p>Parent-child teams spread across the grounds with a simple task: find something growing well, something struggling, an insect, a moist area, a dry area, something beautiful, something surprising. They gathered, shared, and asked why. What patterns are you seeing?</p>
 
         <p>Then the families designed their own food forests. Sticks, stones, leaves, seeds, cardboard. One rule: design a place where people thrive, plants thrive, insects thrive, and soil thrives. Not one. All of them. That is permaculture design thinking held in a child's hands. Integrate rather than segregate. Every element in relationship with every other.</p>
 
         <p>In the afternoon they built a real hugelkultur bed together. Wood layered with organic matter, covered with soil, watered, planted. Hubert asked what they had used. Soil, water, wood, leaves. Then: "Which of these did humans invent?" None. Gardening, he said, is collaboration with nature. The wood inside the bed would decompose. The decomposition would feed the soil. The soil would feed the plants. Decomposition is transformation. The bed was already full of hidden communities: fungi, bacteria, insects, earthworms, and roots, all working together unseen.</p>
 
-        <p>The afternoon moved to clay. Same earth, different form. The children held it, smelled it, squeezed it. Humans did not invent clay. Humans entered into relationship with clay. Families shaped pinch pots, seed bowls, animal figures. The day closed with a community gallery. No grades. No prizes. Just looking at what everyone had made.</p>
+        <p>The afternoon moved to clay. Same earth, different form. The children held it, smelled it, squeezed it. Humans did not invent clay. Humans entered into relationship with clay. Families shaped pinch pots, seed bowls, animal figures.</p>
 
         <p>The closing circle asked one final question: "After today, where do you think nature is?"</p>
 
@@ -112,29 +99,6 @@ const outline = [
         </ul>
 
         <p class="kw-kaginhawaan"><em>Kaginhawaan.</em> Ease. Well-being. Right relationship with the living world. The workshop did not explain it. It let you feel it.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="kw-outline-section">
-    <div class="kw-inner">
-      <div class="kw-outline-header">
-        <h2 class="kw-gallery-heading">Course Outline</h2>
-        <p class="kw-outline-sub">Designed by Hubert Posadas. Reproducible for educators and community groups.</p>
-      </div>
-      <div class="kw-outline-list">
-        {outline.map(part => (
-          <div class="kw-outline-item">
-            <div class="kw-outline-num">{String(part.num).padStart(2, '0')}</div>
-            <div class="kw-outline-content">
-              <div class="kw-outline-row">
-                <span class="kw-outline-title">{part.title}</span>
-                <span class="kw-outline-time">{part.time}</span>
-              </div>
-              <p class="kw-outline-desc">{part.desc}</p>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   </section>
@@ -218,17 +182,6 @@ const outline = [
 .kw-principles li::before { content: '·'; position: absolute; left: 0; color: var(--color-primary); font-size: 1.1em; }
 .kw-kaginhawaan { font-family: var(--font-lora); font-size: 0.85rem; line-height: 1.65; color: #555; border-top: 1px solid #ddd; padding-top: 16px; margin-top: 4px; }
 
-.kw-outline-section { background: #f9f9f7; padding: 64px 0; border-top: 1px solid #eee; }
-.kw-outline-header { margin-bottom: 32px; }
-.kw-outline-sub { font-family: var(--font-lora); font-size: 0.9rem; font-style: italic; color: #777; margin-top: 6px; }
-.kw-outline-list { border-top: 1px solid #e0e0e0; }
-.kw-outline-item { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid #e0e0e0; align-items: start; }
-.kw-outline-num { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; color: var(--color-primary); letter-spacing: 1px; padding-top: 2px; }
-.kw-outline-content { display: flex; flex-direction: column; gap: 6px; }
-.kw-outline-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.kw-outline-title { font-family: var(--font-inter); font-size: 0.88rem; font-weight: 700; color: #242424; }
-.kw-outline-time { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 600; color: #aaa; white-space: nowrap; }
-.kw-outline-desc { font-family: var(--font-lora); font-size: 0.85rem; line-height: 1.65; color: #555; margin: 0; }
 
 .kw-gallery-section { background: #f9f9f7; padding: 56px 0; }
 .kw-gallery-heading { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500; color: #242424; margin-bottom: 28px; }
