@@ -4,6 +4,7 @@ import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 const articles = [
+  { cat: "Community Event", title: "Kabuohan Workshop", desc: "A full-day parent-child learning journey in permaculture gardening and primitive pottery, hosted by Baganihan Collective at Pacita Organic Garden.", img: "/images/events/kabuohan/group-lawn.jpg", learn: "/events/kabuohan-workshop", view: null, internal: true, cta: "View Recap" },
   { cat: "Getting Started", title: "What is Permaculture? — Article", desc: "Permaculture gets thrown around a lot, but rarely explained well. It is not just organic gardening. It is a design system that applies to backyards, communities, and entire ways of living.", img: "/images/wp/RESIZED-PERMACULTURE-FOR-BEGGINERS.png", learn: "https://homefortheharvest.com/permaculture-for-beginners/", view: "https://homefortheharvest.com/permaculture-for-beginners/" },
   { cat: "Beginner", title: "First Steps !! — Article", desc: "Understanding permaculture and knowing what to do with that knowledge is equally important. How to read your space, what to prioritize first, and what you can realistically start in a week.", img: "/images/wp/HOW-TO-START-A-PERMACULTURE-GARDEN.png", learn: "https://www.masterclass.com/articles/how-to-start-a-permaculture-garden", view: "https://www.masterclass.com/articles/how-to-start-a-permaculture-garden" },
   { cat: "Beginner", title: "Design Principles !!! — Article", desc: "These are the thinking tools behind every permaculture decision. Systems Thinking — how to read your space, what to prioritize.", img: "/images/wp/DESIGN-PRINCIPLES.png", learn: "https://permacultureprinciples.com/permaculture-principles/", view: "https://permacultureprinciples.com/permaculture-principles/" },
@@ -37,8 +38,13 @@ const articles = [
               <h3 class="rc-title">{a.title}</h3>
               <p class="rc-desc">{a.desc}</p>
               <div class="rc-actions">
-                <a href={a.learn} target="_blank" rel="noopener" class="btn-learn">Learn More</a>
-                {a.view && <a href={a.view} target="_blank" rel="noopener" class="btn-view">View Resource</a>}
+                {a.internal
+                  ? <a href={a.learn} class="btn-view">{a.cta || 'Learn More'}</a>
+                  : <>
+                      <a href={a.learn} target="_blank" rel="noopener" class="btn-learn">Learn More</a>
+                      {a.view && <a href={a.view} target="_blank" rel="noopener" class="btn-view">View Resource</a>}
+                    </>
+                }
               </div>
             </div>
           </div>

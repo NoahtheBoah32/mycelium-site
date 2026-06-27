@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+const photos = [
+  { src: '/images/events/kabuohan/circle-laugh.jpg', alt: 'Families gathering in a welcome circle on the lawn' },
+  { src: '/images/events/kabuohan/arrival.jpg', alt: 'Participants arriving at Pacita Organic Garden' },
+  { src: '/images/events/kabuohan/garden-walk.jpg', alt: 'Parent-child teams walking through the garden beds' },
+  { src: '/images/events/kabuohan/beds-closeup.jpg', alt: 'Children and parents examining plants up close' },
+  { src: '/images/events/kabuohan/learning-circle.jpg', alt: 'Families gathered around the hugelkultur bed' },
+  { src: '/images/events/kabuohan/group-lawn.jpg', alt: 'Full group in the garden at Pacita Organic Garden' },
+];
+---
+
+<BaseLayout title="Kabuohan Workshop — Mycelium" description="A full-day permaculture gardening and primitive pottery workshop for homeschool families, hosted by Baganihan Collective at Pacita Organic Garden.">
+  <SiteNav />
+
+  <div class="kw-back-bar">
+    <div class="kw-inner">
+      <a href="/resources" class="kw-back">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Resources
+      </a>
+    </div>
+  </div>
+
+  <div class="kw-hero">
+    <img src="/images/events/kabuohan/group-lawn.jpg" alt="Kabuohan Workshop at Pacita Organic Garden" class="kw-hero-img" />
+    <div class="kw-hero-overlay"></div>
+    <div class="kw-hero-text">
+      <span class="kw-eyebrow">Community Event · June 25, 2026</span>
+      <h1 class="kw-title">Kabuohan Workshop</h1>
+      <p class="kw-subtitle">Permaculture Gardening and Primitive Pottery for Homeschool Families</p>
+    </div>
+  </div>
+
+  <section class="kw-meta-bar">
+    <div class="kw-inner kw-meta-row">
+      <div class="kw-meta-item">
+        <span class="kw-meta-label">Hosted by</span>
+        <span class="kw-meta-value">Baganihan Collective</span>
+      </div>
+      <div class="kw-meta-divider"></div>
+      <div class="kw-meta-item">
+        <span class="kw-meta-label">Venue</span>
+        <span class="kw-meta-value">Pacita Organic Garden</span>
+      </div>
+      <div class="kw-meta-divider"></div>
+      <div class="kw-meta-item">
+        <span class="kw-meta-label">Facilitator</span>
+        <span class="kw-meta-value">Hubert Posadas</span>
+      </div>
+      <div class="kw-meta-divider"></div>
+      <div class="kw-meta-item">
+        <span class="kw-meta-label">Format</span>
+        <span class="kw-meta-value">Parent-Child Learning Journey</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="kw-body-section">
+    <div class="kw-inner kw-body-grid">
+      <div class="kw-writeup">
+        <p class="kw-lead">On June 25, 2026, Baganihan Collective gathered homeschool families at Pacita Organic Garden for a full-day learning experience rooted in the Kabuohan pedagogy — experience before explanation, observation before instruction, participation before theory.</p>
+        <p>Parents and children arrived as co-learners. The day opened with a sensory welcome circle in the garden, where families walked barefoot, touched leaves and bark, and noticed the living world around them before any formal teaching began.</p>
+        <p>Together, they explored the garden beds, designed their own family food forests using sticks, leaves, and stones, and then built a small hugelkultur bed from wood, organic matter, and soil — learning decomposition and ecological relationships through direct participation, not lecture.</p>
+        <p>The afternoon shifted to clay. Families worked with raw earth to shape pinch pots, seed bowls, and small vessels — drawing the thread between the soil that feeds us and the material that holds what we harvest. The day closed with a community gallery and a reflection circle around the garden.</p>
+      </div>
+
+      <div class="kw-pedagogy">
+        <h2 class="kw-section-label">The Kabuohan Approach</h2>
+        <ul class="kw-principles">
+          <li>Experience before explanation</li>
+          <li>Observation before instruction</li>
+          <li>Participation before theory</li>
+          <li>Relationship before information</li>
+          <li>Reflection before conclusion</li>
+        </ul>
+        <p class="kw-kaginhawaan"><em>Kaginhawaan</em> — ease, well-being, right relationship with the living world — was woven throughout the day as a felt experience, not a definition.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="kw-gallery-section">
+    <div class="kw-inner">
+      <h2 class="kw-gallery-heading">From the Garden</h2>
+      <div class="kw-gallery">
+        {photos.map(p => (
+          <div class="kw-photo">
+            <img src={p.src} alt={p.alt} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="kw-video-section">
+    <div class="kw-inner">
+      <h2 class="kw-gallery-heading">In Motion</h2>
+      <div class="kw-video-wrap">
+        <video controls playsinline preload="metadata" class="kw-video">
+          <source src="/images/events/kabuohan/kabuohan-event.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="kw-quote-section">
+    <div class="kw-inner">
+      <blockquote class="kw-quote">
+        "We are not separate from the living world. We are participants in it. The same Earth that grows food also becomes clay, forests, homes, and eventually us. To care for the Earth is to care for ourselves and one another."
+      </blockquote>
+      <p class="kw-quote-credit">— Closing reflection, Kabuohan Workshop</p>
+    </div>
+  </section>
+
+  <section class="kw-credit-section">
+    <div class="kw-inner">
+      <p class="kw-credit-text">Workshop by <strong>Baganihan Collective</strong> · Held at <strong>Pacita Organic Garden</strong> · Photos by Ro.S.E.</p>
+    </div>
+  </section>
+
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+.kw-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+.kw-back-bar { padding: 14px 0; border-bottom: 1px solid #eee; background: #fff; }
+.kw-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-inter); font-size: 0.8rem; font-weight: 600; color: #666; transition: color 0.15s; }
+.kw-back:hover { color: var(--color-primary); }
+
+.kw-hero { position: relative; height: 480px; overflow: hidden; }
+.kw-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.kw-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%); }
+.kw-hero-text { position: absolute; bottom: 40px; left: 0; right: 0; padding: 0 40px; max-width: 1100px; margin: 0 auto; }
+.kw-eyebrow { display: block; font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
+.kw-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 500; color: #fff; line-height: 1.1; margin-bottom: 10px; }
+.kw-subtitle { font-family: var(--font-lora); font-size: 1rem; font-style: italic; color: rgba(255,255,255,0.65); max-width: 540px; }
+
+.kw-meta-bar { background: var(--color-primary); padding: 20px 0; }
+.kw-meta-row { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+.kw-meta-item { display: flex; flex-direction: column; gap: 3px; padding: 8px 28px 8px 0; }
+.kw-meta-label { font-family: var(--font-inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+.kw-meta-value { font-family: var(--font-inter); font-size: 0.85rem; font-weight: 600; color: #fff; }
+.kw-meta-divider { width: 1px; height: 32px; background: rgba(255,255,255,0.15); margin-right: 28px; flex-shrink: 0; }
+
+.kw-body-section { padding: 64px 0; background: #fff; }
+.kw-body-grid { display: grid; grid-template-columns: 1fr 340px; gap: 60px; align-items: start; }
+.kw-writeup { display: flex; flex-direction: column; gap: 18px; }
+.kw-lead { font-family: var(--font-lora); font-size: 1.1rem; line-height: 1.75; color: #242424; }
+.kw-writeup p { font-family: var(--font-lora); font-size: 0.95rem; line-height: 1.8; color: #444; }
+
+.kw-pedagogy { background: var(--color-light-section); border-radius: 12px; padding: 28px; border-left: 3px solid var(--color-primary); }
+.kw-section-label { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--color-primary); margin-bottom: 16px; }
+.kw-principles { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.kw-principles li { font-family: var(--font-lora); font-size: 0.9rem; color: #333; padding-left: 16px; position: relative; }
+.kw-principles li::before { content: '—'; position: absolute; left: 0; color: var(--color-primary); }
+.kw-kaginhawaan { font-family: var(--font-lora); font-size: 0.85rem; line-height: 1.65; color: #555; border-top: 1px solid #ddd; padding-top: 16px; margin-top: 4px; }
+
+.kw-gallery-section { background: #f9f9f7; padding: 56px 0; }
+.kw-gallery-heading { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 500; color: #242424; margin-bottom: 28px; }
+.kw-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.kw-photo { aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; background: #e8e8e8; }
+.kw-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+.kw-photo:hover img { transform: scale(1.04); }
+
+.kw-video-section { background: #fff; padding: 56px 0; }
+.kw-video-wrap { border-radius: 12px; overflow: hidden; background: #000; max-width: 720px; }
+.kw-video { width: 100%; display: block; }
+
+.kw-quote-section { background: var(--color-primary); padding: 64px 0; }
+.kw-quote { font-family: var(--font-serif); font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 400; font-style: italic; color: #fff; line-height: 1.55; max-width: 780px; margin: 0 auto 20px; text-align: center; }
+.kw-quote-credit { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: center; }
+
+.kw-credit-section { background: #f9f9f7; padding: 20px 0; border-top: 1px solid #eee; }
+.kw-credit-text { font-family: var(--font-inter); font-size: 0.78rem; color: #999; text-align: center; }
+.kw-credit-text strong { color: #555; }
+
+@media (max-width: 900px) {
+  .kw-body-grid { grid-template-columns: 1fr; gap: 36px; }
+  .kw-gallery { grid-template-columns: repeat(2, 1fr); }
+  .kw-meta-row { gap: 0; }
+}
+@media (max-width: 600px) {
+  .kw-inner { padding: 0 20px; }
+  .kw-hero { height: 340px; }
+  .kw-hero-text { bottom: 24px; padding: 0 20px; }
+  .kw-gallery { grid-template-columns: 1fr; }
+  .kw-meta-divider { display: none; }
+  .kw-meta-item { padding: 6px 0; width: 50%; }
+}
+</style>
