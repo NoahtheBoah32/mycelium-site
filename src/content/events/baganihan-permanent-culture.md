@@ -19,4 +19,5 @@ partner: baganihan
 image: "/images/events/disruption-bg.jpg"
 ctaUrl: "/register/permanent-culture"
 ctaLabel: "Register Free"
+archived: true
 ---
