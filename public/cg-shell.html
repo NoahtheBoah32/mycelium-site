@@ -7,317 +7,313 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-/* ── Reset ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#1a1208;--bg2:#221808;--bg3:#2c2010;
-  --amber:#C4872A;--amber-lt:#D9A24A;--amber-dim:rgba(196,135,42,0.15);
-  --green:#4a7c59;--blue:#5b7fa6;
-  --text:#e8dcc8;--text-dim:rgba(232,220,200,0.55);--text-faint:rgba(232,220,200,0.28);
-  --border:rgba(255,255,255,0.07);--border-hover:rgba(255,255,255,0.14);
-  --card:rgba(255,255,255,0.03);--card-hover:rgba(255,255,255,0.055);
-  --radius:10px;--radius-sm:6px;
+  --amber:#C4872A;--amber-lt:#D9A24A;
+  --cream:#faf9f5;--cream2:#F5EFE0;
+  --dark:#2c2110;--dark2:#1c1508;
+  --steward:#5f7d4f;--cultivator:#c0703e;--weaver:#8a5a78;
   --font-sans:'DM Sans',system-ui,sans-serif;
   --font-serif:'Playfair Display',Georgia,serif;
+  --r:12px;
 }
-html{height:100%}
-body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:14px;line-height:1.5}
+html{scroll-behavior:smooth}
+body{background:var(--dark2);font-family:var(--font-sans);font-size:16px;line-height:1.6;color:#e8dcc8;overflow-x:hidden}
 button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
-input,textarea,select{font-family:var(--font-sans);font-size:14px}
-a{color:var(--amber);text-decoration:none}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+input,textarea,select{font-family:var(--font-sans)}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:2px}
 
-/* ── Auth Screen — Light Mode ── */
-#auth-screen{
-  position:fixed;inset:0;z-index:1000;
-  background:#F5EFE0;
-  display:flex;flex-direction:column;
-  overflow-y:auto;
-}
-.auth-nav{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 32px;flex-shrink:0;
-}
-.auth-nav-logo{
-  font-size:11px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;
-  color:#5C3D0A;
-}
+/* ── AUTH SCREEN ── */
+#auth-screen{position:fixed;inset:0;z-index:1000;background:#F5EFE0;display:flex;flex-direction:column;overflow-y:auto}
+.auth-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;flex-shrink:0}
+.auth-nav-logo{font-size:11px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:#5C3D0A}
 .auth-nav-right{display:flex;align-items:center;gap:8px;font-size:14px;color:rgba(44,25,5,0.5)}
-.auth-nav-link{
-  font-size:14px;font-weight:600;color:#5C3D0A;
-  background:none;border:none;cursor:pointer;padding:0;
-  text-decoration:underline;text-underline-offset:2px;
-}
-.auth-stage{
-  flex-shrink:0;min-height:calc(100vh - 56px);
-  display:flex;align-items:center;justify-content:center;
-  padding:24px 16px 48px;
-}
-.auth-card{
-  width:100%;max-width:500px;
-  background:#FFFDF8;border:1px solid rgba(92,61,10,0.12);
-  border-radius:20px;padding:48px 44px;
-  box-shadow:0 4px 32px rgba(92,61,10,0.08);
-}
-.auth-pill{
-  display:inline-block;
-  font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  color:#5C3D0A;border:1px solid rgba(92,61,10,0.25);
-  border-radius:20px;padding:5px 14px;margin-bottom:22px;
-}
-.auth-heading{
-  font-family:var(--font-serif);font-size:36px;font-weight:700;
-  color:#1C1005;line-height:1.2;margin-bottom:10px;
-}
+.auth-nav-link{font-size:14px;font-weight:600;color:#5C3D0A;background:none;border:none;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
+.auth-stage{flex-shrink:0;min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:24px 16px 48px}
+.auth-card{width:100%;max-width:500px;background:#FFFDF8;border:1px solid rgba(92,61,10,0.12);border-radius:20px;padding:48px 44px;box-shadow:0 4px 32px rgba(92,61,10,0.08)}
+.auth-pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#5C3D0A;border:1px solid rgba(92,61,10,0.25);border-radius:20px;padding:5px 14px;margin-bottom:22px}
+.auth-heading{font-family:var(--font-serif);font-size:36px;font-weight:700;color:#1C1005;line-height:1.2;margin-bottom:10px}
 .auth-heading em{font-style:italic;color:var(--amber)}
 .auth-sub{font-size:15px;color:rgba(44,25,5,0.55);margin-bottom:28px;line-height:1.6}
 .auth-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid rgba(92,61,10,0.12)}
-.auth-tab{
-  padding:10px 20px 12px;font-size:15px;font-weight:600;
-  color:rgba(44,25,5,0.4);cursor:pointer;background:none;border:none;
-  border-bottom:2px solid transparent;margin-bottom:-1px;
-  transition:color 0.15s,border-color 0.15s;
-}
+.auth-tab{padding:10px 20px 12px;font-size:15px;font-weight:600;color:rgba(44,25,5,0.4);cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.15s,border-color 0.15s}
 .auth-tab.active{color:#5C3D0A;border-bottom-color:var(--amber)}
 .field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
 .field label{font-size:12px;font-weight:700;letter-spacing:0.8px;color:rgba(44,25,5,0.6);text-transform:uppercase}
-.field input,.field select,.field textarea{
-  background:#FBF8F1;border:1px solid rgba(92,61,10,0.18);
-  border-radius:8px;padding:13px 14px;
-  color:#1C1005;outline:none;font-size:16px;
-  transition:border-color 0.15s,box-shadow 0.15s;
-}
+.field input,.field select,.field textarea{background:#FBF8F1;border:1px solid rgba(92,61,10,0.18);border-radius:8px;padding:13px 14px;color:#1C1005;outline:none;font-size:16px;transition:border-color 0.15s,box-shadow 0.15s}
 .field input::placeholder{color:rgba(44,25,5,0.3)}
-.field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--amber);box-shadow:0 0 0 3px rgba(196,135,42,0.12);
-}
+.field input:focus,.field select:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(196,135,42,0.12)}
 .field select option{background:#FBF8F1;color:#1C1005}
 .pw-wrap{position:relative;display:flex;align-items:center}
 .pw-wrap input{flex:1;padding-right:48px}
 .pw-toggle{position:absolute;right:14px;background:none;border:none;cursor:pointer;padding:0;color:rgba(44,25,5,0.4);line-height:1;transition:color 0.15s}
 .pw-toggle:hover{color:rgba(44,25,5,0.7)}
 .pw-toggle svg{width:20px;height:20px;display:block}
-.btn-primary{
-  width:100%;padding:15px;
-  background:#1C1005;color:#F5EFE0;
-  border-radius:8px;font-weight:700;font-size:16px;letter-spacing:0.4px;
-  transition:background 0.15s;margin-top:8px;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-}
+.btn-primary{width:100%;padding:15px;background:#1C1005;color:#F5EFE0;border-radius:8px;font-weight:700;font-size:16px;letter-spacing:0.4px;transition:background 0.15s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-primary:hover{background:#2c1a08}
-.auth-err{
-  background:rgba(220,60,60,0.07);border:1px solid rgba(220,60,60,0.25);
-  border-radius:8px;padding:10px 12px;color:#c0392b;
-  font-size:12px;margin-bottom:12px;display:none;
-}
+.auth-err{background:rgba(220,60,60,0.07);border:1px solid rgba(220,60,60,0.25);border-radius:8px;padding:10px 12px;color:#c0392b;font-size:13px;margin-bottom:12px;display:none}
 .auth-err.show{display:block}
+@media(max-width:600px){.auth-card{padding:32px 24px}.auth-heading{font-size:28px}}
 
-/* ── App Shell ── */
-#app{display:none;flex-direction:column;height:100vh}
-#app.visible{display:flex}
-#app-header{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;z-index:100}
-.hdr-logo{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber-lt)}
-.hdr-logo span{color:var(--text-faint)}
-.hdr-right{display:flex;align-items:center;gap:12px}
-.hdr-user{display:flex;align-items:center;gap:8px;cursor:pointer;padding:4px 8px;border-radius:var(--radius-sm);transition:background 0.15s}
-.hdr-user:hover{background:var(--card-hover)}
-.avatar-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1a1208;flex-shrink:0}
-.hdr-username{font-size:13px;font-weight:500;color:var(--text)}
-.hdr-badge{font-size:10px;font-weight:700;letter-spacing:0.5px;color:#e55;padding:1px 5px;border-radius:3px;background:rgba(229,85,85,0.15);border:1px solid rgba(229,85,85,0.3)}
-.btn-logout{font-size:12px;color:var(--text-dim);padding:4px 8px;border-radius:var(--radius-sm);transition:color 0.15s}
-.btn-logout:hover{color:var(--text)}
-.hdr-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--amber-dim);border:1px solid rgba(196,135,42,0.3);border-radius:var(--radius-sm);color:var(--amber-lt);font-size:12px;font-weight:600;transition:background 0.15s}
-.hdr-btn:hover{background:rgba(196,135,42,0.25)}
+/* ── APP SHELL ── */
+#app{display:none}
+#app.visible{display:block}
 
-/* ── Main Layout ── */
-#app-body{display:flex;flex:1;overflow:hidden}
-#map-panel{width:380px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;background:var(--bg)}
-#right-panel{flex:1;display:flex;flex-direction:column;overflow:hidden}
+/* NAV */
+#cg-nav{position:sticky;top:0;z-index:200;background:rgba(28,21,8,0.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:52px}
+.nav-logo{font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber-lt)}
+.nav-logo span{color:rgba(232,220,200,0.3)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-user{font-size:13px;font-weight:600;padding:4px 10px;border-radius:6px;color:rgba(232,220,200,0.7);transition:color 0.15s}
+.nav-user:hover{color:#e8dcc8}
+.nav-dot{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;margin-right:2px;flex-shrink:0}
+.btn-signout{font-size:12px;color:rgba(232,220,200,0.38);padding:4px 10px;border-radius:6px;transition:color 0.15s}
+.btn-signout:hover{color:rgba(232,220,200,0.7)}
 
-/* ── Map Panel ── */
-.map-heading{padding:20px 20px 0;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-dim)}
-#cg-svg{width:100%;padding:0 16px}
-.map-no-pos{padding:12px 20px;background:var(--amber-dim);border:1px solid rgba(196,135,42,0.2);border-radius:var(--radius-sm);margin:0 16px 16px;font-size:12px;color:var(--amber-lt);line-height:1.5}
-.map-legend{padding:0 20px 20px;display:flex;flex-direction:column;gap:8px}
-.legend-item{display:flex;align-items:flex-start;gap:10px}
-.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.legend-info{}
-.legend-label{font-size:11px;font-weight:600;color:var(--text)}
-.legend-desc{font-size:11px;color:var(--text-dim);line-height:1.4}
-.map-userlist{border-top:1px solid var(--border);padding:16px 20px}
-.map-userlist-heading{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px}
-.map-user-item{display:flex;align-items:center;gap:10px;padding:6px 0}
-.map-user-name{font-size:12px;font-weight:500;color:var(--text)}
-.map-user-ethic{font-size:10px;color:var(--text-dim);margin-top:1px}
+/* HERO */
+#cg-hero{position:relative;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;overflow:hidden;background:var(--dark)}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.6;pointer-events:none}
+.hero-inner{position:relative;z-index:2;max-width:760px}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(214,172,98,0.7);margin-bottom:20px}
+.hero-heading{font-family:var(--font-serif);font-size:clamp(36px,6vw,64px);font-weight:700;color:#f0e8d4;line-height:1.15;margin-bottom:20px}
+.hero-heading em{font-style:italic;color:var(--amber-lt)}
+.hero-body{font-size:17px;color:rgba(232,220,200,0.6);line-height:1.7;max-width:560px;margin:0 auto 36px}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-primary{padding:13px 28px;background:rgba(214,172,98,0.15);border:1px solid rgba(214,172,98,0.4);color:var(--amber-lt);font-weight:600;font-size:14px;border-radius:8px;transition:background 0.2s,border-color 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.cta-primary:hover{background:rgba(214,172,98,0.25);border-color:rgba(214,172,98,0.6)}
+.cta-ghost{padding:13px 28px;border:1px solid rgba(255,255,255,0.12);color:rgba(232,220,200,0.55);font-size:14px;font-weight:600;border-radius:8px;transition:border-color 0.2s,color 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.cta-ghost:hover{border-color:rgba(255,255,255,0.25);color:rgba(232,220,200,0.8)}
 
-/* ── Right Panel Tabs ── */
-#tabs-bar{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 20px;flex-shrink:0}
-.tab-btn{padding:12px 14px 13px;font-size:12px;font-weight:600;color:var(--text-dim);cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.15s,border-color 0.15s;letter-spacing:0.3px}
-.tab-btn.active{color:var(--amber-lt);border-bottom-color:var(--amber)}
-.tab-btn.admin-tab{color:rgba(229,85,85,0.6)}
-.tab-btn.admin-tab.active{color:#e55;border-bottom-color:#e55}
-.tab-pane{display:none;flex:1;overflow-y:auto;padding:0}
-.tab-pane.active{display:flex;flex-direction:column}
+/* STATS BAR */
+#stats-bar{background:#221808;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:18px 24px;display:flex;align-items:center;justify-content:center;gap:0}
+.stat-item{text-align:center;padding:0 36px}
+.stat-item+.stat-item{border-left:1px solid rgba(255,255,255,0.08)}
+.stat-num{font-family:var(--font-serif);font-size:28px;font-weight:700;color:rgba(214,172,98,0.9);display:block}
+.stat-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,220,200,0.35);margin-top:2px}
 
-/* ── Questions Tab ── */
-#tab-questions{padding:0}
-.q-progress-bar-wrap{padding:20px 20px 0}
-.q-progress-label{font-size:11px;color:var(--text-dim);margin-bottom:6px}
-.q-progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
-.q-progress-fill{height:100%;background:var(--amber);border-radius:2px;transition:width 0.4s}
-.q-card{margin:16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
-.q-card-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--amber-lt);margin-bottom:10px}
-.q-card-body{font-family:var(--font-serif);font-size:17px;line-height:1.55;color:var(--text);margin-bottom:20px}
-.q-principles{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.q-principle-tag{font-size:10px;padding:3px 8px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);color:var(--text-dim)}
-.q-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.q-btn{padding:10px 4px;border-radius:var(--radius-sm);border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-weight:600;text-align:center;cursor:pointer;background:var(--bg3);transition:background 0.15s,color 0.15s,border-color 0.15s;line-height:1.3}
-.q-btn:hover{background:var(--amber-dim);border-color:rgba(196,135,42,0.4);color:var(--amber-lt)}
-.q-btn.selected{background:var(--amber);border-color:var(--amber);color:#1a1208}
-.q-all-done{padding:32px 16px;text-align:center}
-.q-all-done-icon{font-size:32px;margin-bottom:12px}
-.q-all-done-text{font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:20px}
-.q-answered-list{border-top:1px solid var(--border);padding:16px}
-.q-answered-heading{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px}
-.q-answered-item{padding:12px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr auto}
-.q-answered-body{font-size:13px;color:var(--text);line-height:1.4;padding-right:16px}
-.q-answered-val{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap;align-self:start}
-.val-strong-agree{background:rgba(74,124,89,0.2);color:#7ab87a}
-.val-agree{background:rgba(74,124,89,0.12);color:#6aad6a}
-.val-neutral{background:var(--bg3);color:var(--text-dim)}
-.val-disagree{background:rgba(180,90,60,0.12);color:#c97a6a}
-.val-strong-disagree{background:rgba(180,60,60,0.15);color:#c06a6a}
-.q-propose-wrap{padding:16px;border-top:1px solid var(--border);margin-top:auto}
-.btn-ghost{padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-size:12px;font-weight:600;transition:border-color 0.15s,color 0.15s;display:inline-flex;align-items:center;gap:6px}
-.btn-ghost:hover{border-color:var(--border-hover);color:var(--text)}
+/* HOW IT WORKS */
+#how-section{background:var(--cream);padding:80px 24px}
+#how-section .sec-eyebrow{color:rgba(92,61,10,0.5)}
+#how-section .sec-heading{color:#1C1005}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:48px auto 0}
+.step-card{padding:32px 28px;background:#fff;border:1px solid rgba(92,61,10,0.08);border-radius:var(--r)}
+.step-num{font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(92,61,10,0.35);text-transform:uppercase;margin-bottom:12px}
+.step-name{font-family:var(--font-serif);font-size:20px;font-weight:700;color:#1C1005;margin-bottom:8px}
+.step-desc{font-size:14px;color:rgba(44,25,5,0.55);line-height:1.65}
+@media(max-width:700px){.steps-grid{grid-template-columns:1fr}}
 
-/* ── Forum Tab ── */
-#tab-forum{padding:0}
-.forum-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.forum-filters{display:flex;gap:6px;flex-wrap:wrap}
-.filter-pill{padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--text-dim);font-size:11px;font-weight:600;cursor:pointer;background:none;transition:background 0.15s,color 0.15s,border-color 0.15s}
-.filter-pill.active{background:var(--amber-dim);border-color:rgba(196,135,42,0.35);color:var(--amber-lt)}
-.posts-list{flex:1;overflow-y:auto}
-.post-card{padding:18px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s}
-.post-card:hover{background:var(--card-hover)}
-.post-card.pinned{border-left:2px solid var(--amber)}
-.post-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.post-avatar{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#1a1208;flex-shrink:0}
-.post-author{font-size:12px;font-weight:600;color:var(--text)}
-.post-mod-badge{font-size:9px;font-weight:700;color:#e55;letter-spacing:0.5px}
-.post-type-tag{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:3px}
-.tag-announcement{background:rgba(196,135,42,0.2);color:var(--amber-lt)}
-.tag-discussion{background:rgba(74,124,89,0.15);color:#7ab87a}
-.tag-resource{background:rgba(91,127,166,0.15);color:#8db5d4}
-.tag-pending{background:rgba(200,200,200,0.1);color:var(--text-dim)}
-.post-time{font-size:11px;color:var(--text-faint);margin-left:auto}
-.post-title{font-family:var(--font-serif);font-size:16px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:6px}
-.post-welcome-title{font-size:18px;font-style:italic}
-.post-excerpt{font-size:12px;color:var(--text-dim);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.post-footer{display:flex;align-items:center;gap:12px;margin-top:8px}
-.post-group-label{font-size:10px;color:var(--text-faint)}
-.btn-edit-small{font-size:10px;color:var(--text-faint);padding:2px 6px;border-radius:3px;border:1px solid transparent;transition:border-color 0.15s,color 0.15s}
-.btn-edit-small:hover{border-color:var(--border);color:var(--text-dim)}
+/* SECTION COMMON */
+.sec-eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;text-align:center}
+.sec-heading{font-family:var(--font-serif);font-size:clamp(28px,4vw,40px);font-weight:700;text-align:center;line-height:1.2}
+.sec-heading em{font-style:italic;color:var(--amber-lt)}
+.sec-container{max-width:1100px;margin:0 auto;padding:0 24px}
 
-/* ── Admin Tab ── */
-#tab-admin{padding:16px 20px}
-.admin-heading{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#e55;margin-bottom:16px}
-.admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center}
-.stat-num{font-size:24px;font-weight:700;color:var(--text)}
-.stat-label{font-size:10px;color:var(--text-dim);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
-.admin-section-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px}
-.pending-q-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px}
-.pending-q-body{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:10px}
-.pending-q-by{font-size:11px;color:var(--text-dim);margin-bottom:12px}
-.pending-q-actions{display:flex;gap:8px}
-.btn-approve{padding:6px 14px;background:rgba(74,124,89,0.2);border:1px solid rgba(74,124,89,0.4);border-radius:var(--radius-sm);color:#7ab87a;font-size:12px;font-weight:600;transition:background 0.15s}
-.btn-approve:hover{background:rgba(74,124,89,0.35)}
-.btn-reject{padding:6px 14px;background:rgba(180,60,60,0.12);border:1px solid rgba(180,60,60,0.3);border-radius:var(--radius-sm);color:#c06a6a;font-size:12px;font-weight:600;transition:background 0.15s}
-.btn-reject:hover{background:rgba(180,60,60,0.22)}
-.admin-empty{font-size:13px;color:var(--text-dim);padding:12px 0}
+/* VOTE SECTION */
+#vote-section{background:var(--cream);padding:80px 24px;border-top:1px solid rgba(92,61,10,0.07)}
+.vote-layout{display:grid;grid-template-columns:1fr 320px;gap:32px;max-width:1000px;margin:48px auto 0;align-items:start}
+@media(max-width:860px){.vote-layout{grid-template-columns:1fr}}
 
-/* ── Modals ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.hidden{display:none}
-.modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
-.modal-box.wide{max-width:680px}
-.modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
-.modal-title{font-family:var(--font-serif);font-size:20px;color:var(--text)}
-.modal-title.welcome{font-style:italic;font-size:24px}
-.modal-close{width:28px;height:28px;border-radius:6px;color:var(--text-dim);font-size:18px;display:flex;align-items:center;justify-content:center;transition:background 0.15s;flex-shrink:0}
-.modal-close:hover{background:var(--card-hover);color:var(--text)}
-.modal-body{padding:20px 24px;overflow-y:auto;flex:1}
-.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;flex-shrink:0}
+/* Vote card */
+.vote-card{background:#fff;border:1px solid rgba(92,61,10,0.1);border-radius:var(--r);padding:36px;box-shadow:0 2px 24px rgba(92,61,10,0.06);transition:transform 0.33s cubic-bezier(.2,.8,.2,1),opacity 0.33s}
+.vote-card.slide-out-agree{transform:translateX(200px) rotate(6deg);opacity:0}
+.vote-card.slide-out-disagree{transform:translateX(-200px) rotate(-6deg);opacity:0}
+.vote-card.slide-out-pass{transform:translateY(60px) scale(0.96);opacity:0}
+.vote-card.entering{transition:none;transform:none;opacity:0}
+.vote-card.entered{transform:none;opacity:1}
+.vote-author-row{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.vote-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.vote-author-info{}
+.vote-who{font-size:14px;font-weight:600;color:#1C1005}
+.vote-role{font-size:12px;color:rgba(44,25,5,0.45)}
+.vote-counter{font-size:11px;font-weight:700;letter-spacing:1.5px;color:rgba(44,25,5,0.3);text-transform:uppercase;margin-left:auto}
+.vote-text{font-family:var(--font-serif);font-size:clamp(18px,2.5vw,22px);color:#1C1005;line-height:1.55;margin-bottom:32px}
+.vote-progress-bar{height:3px;background:rgba(92,61,10,0.1);border-radius:2px;margin-bottom:28px;overflow:hidden}
+.vote-progress-fill{height:100%;background:var(--amber);border-radius:2px;transition:width 0.4s}
+.vote-buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.vote-btn{padding:13px 8px;border-radius:9px;font-weight:700;font-size:14px;letter-spacing:0.3px;transition:background 0.15s,border-color 0.15s,transform 0.1s,color 0.15s;border:1.5px solid;display:flex;align-items:center;justify-content:center;gap:6px}
+.vote-btn:active{transform:scale(0.97)}
+.vote-btn-disagree{border-color:rgba(192,112,62,0.3);color:#b55c2a;background:rgba(192,112,62,0.06)}
+.vote-btn-disagree:hover{background:rgba(192,112,62,0.15);border-color:rgba(192,112,62,0.5)}
+.vote-btn-pass{border-color:rgba(92,61,10,0.2);color:rgba(44,25,5,0.5);background:rgba(92,61,10,0.04)}
+.vote-btn-pass:hover{background:rgba(92,61,10,0.1);border-color:rgba(92,61,10,0.35)}
+.vote-btn-agree{border-color:rgba(95,125,79,0.3);color:#3d6630;background:rgba(95,125,79,0.06)}
+.vote-btn-agree:hover{background:rgba(95,125,79,0.15);border-color:rgba(95,125,79,0.5)}
 
-/* Post view modal */
-.post-view-meta{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.post-view-body{font-size:14px;color:var(--text);line-height:1.75;white-space:pre-wrap;font-family:var(--font-sans)}
-.post-edited-note{font-size:11px;color:var(--text-faint);margin-top:12px;font-style:italic}
-.comments-section{border-top:1px solid var(--border);margin-top:24px;padding-top:20px}
-.comments-heading{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
-.comment-item{padding:12px 0;border-bottom:1px solid var(--border)}
-.comment-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.comment-author{font-size:12px;font-weight:600;color:var(--text)}
-.comment-time{font-size:11px;color:var(--text-faint)}
-.comment-body{font-size:13px;color:var(--text-dim);line-height:1.55}
-.comment-form{margin-top:16px}
-.comment-actions{display:flex;gap:8px;margin-top:8px;justify-content:flex-end}
+/* Done state */
+.vote-done{text-align:center;padding:48px 24px}
+.vote-done-icon{font-size:40px;margin-bottom:16px}
+.vote-done-title{font-family:var(--font-serif);font-size:26px;color:#1C1005;margin-bottom:10px}
+.vote-done-sub{font-size:15px;color:rgba(44,25,5,0.55);margin-bottom:24px;line-height:1.6}
+.btn-view-map{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:#1C1005;color:#F5EFE0;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none}
 
-/* Principle checkboxes */
-.principle-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px}
-.principle-check{display:flex;align-items:flex-start;gap:8px;padding:8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:border-color 0.15s,background 0.15s}
-.principle-check:hover{border-color:var(--border-hover);background:var(--card)}
-.principle-check input{width:14px;height:14px;margin-top:2px;accent-color:var(--amber);flex-shrink:0}
-.principle-check-label{font-size:11px;color:var(--text-dim);line-height:1.4}
-.principle-check-num{font-size:10px;font-weight:700;color:var(--amber-lt)}
+/* Result reveal */
+.result-reveal{margin-top:20px;padding:24px;background:#faf9f5;border:1px solid rgba(92,61,10,0.1);border-radius:var(--r)}
+.result-choice-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.result-stmt{font-size:13px;color:rgba(44,25,5,0.55);margin-bottom:16px;line-height:1.5;font-style:italic}
+.result-bars-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(44,25,5,0.4);margin-bottom:10px}
+.result-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.result-bar-label{font-size:12px;color:rgba(44,25,5,0.5);width:60px;flex-shrink:0}
+.result-bar-track{flex:1;height:6px;background:rgba(92,61,10,0.1);border-radius:3px;overflow:hidden}
+.result-bar-fill{height:100%;border-radius:3px;transition:width 0.6s cubic-bezier(.2,.8,.2,1)}
+.result-bar-pct{font-size:12px;font-weight:700;color:rgba(44,25,5,0.6);width:28px;text-align:right}
+.result-group-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(44,25,5,0.4);margin:16px 0 10px}
+.result-group-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.result-group-name{font-size:12px;width:80px;flex-shrink:0;font-weight:600}
+.result-group-track{flex:1;height:8px;background:rgba(92,61,10,0.08);border-radius:4px;overflow:hidden}
+.result-group-fill{height:100%;border-radius:4px;transition:width 0.6s 0.15s cubic-bezier(.2,.8,.2,1)}
+.result-group-pct{font-size:12px;font-weight:700;width:28px;text-align:right}
+.result-read{font-size:12px;font-weight:700;margin-top:12px}
 
-/* Profile view */
-.profile-location{font-size:12px;color:var(--text-dim);margin-bottom:8px}
-.profile-bio{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px}
-.profile-practice{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim)}
-.profile-pos{margin-top:12px;padding:12px;background:var(--bg3);border-radius:var(--radius-sm);font-size:12px;color:var(--text-dim)}
-.profile-pos strong{color:var(--text)}
+/* Position sidebar */
+.pos-sidebar{background:#fff;border:1px solid rgba(92,61,10,0.1);border-radius:var(--r);padding:28px;position:sticky;top:72px}
+.pos-heading{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(44,25,5,0.4);margin-bottom:20px}
+.pos-progress-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.pos-progress-text{font-size:13px;color:rgba(44,25,5,0.55)}
+.pos-progress-frac{font-size:13px;font-weight:700;color:#1C1005}
+.pos-progress-track{height:4px;background:rgba(92,61,10,0.1);border-radius:2px;overflow:hidden;margin-bottom:20px}
+.pos-progress-fill{height:100%;background:var(--amber);border-radius:2px;transition:width 0.4s}
+.pos-hint{font-size:13px;color:rgba(44,25,5,0.45);line-height:1.6;padding:14px;background:#faf9f5;border-radius:8px}
+.pos-cluster-name{font-family:var(--font-serif);font-size:20px;color:#1C1005;margin-bottom:4px}
+.pos-cluster-tag{font-size:12px;color:rgba(44,25,5,0.45);margin-bottom:16px;font-style:italic}
+.pos-affinity-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(44,25,5,0.35);margin-bottom:10px}
+.pos-aff-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.pos-aff-name{font-size:12px;font-weight:600;width:80px;flex-shrink:0}
+.pos-aff-track{flex:1;height:6px;background:rgba(92,61,10,0.1);border-radius:3px;overflow:hidden}
+.pos-aff-fill{height:100%;border-radius:3px;transition:width 0.5s cubic-bezier(.2,.8,.2,1)}
+.pos-aff-pct{font-size:12px;font-weight:700;width:28px;text-align:right;color:rgba(44,25,5,0.6)}
 
-/* Edit form inside modal */
-.edit-indicator{font-size:11px;color:var(--amber-lt);margin-bottom:4px}
-.edit-warn{font-size:11px;color:rgba(229,85,85,0.8);margin-bottom:4px}
-.modal-textarea{width:100%;min-height:120px;resize:vertical;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);outline:none;line-height:1.6}
-.modal-textarea:focus{border-color:var(--amber)}
-.modal-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);outline:none}
-.modal-input:focus{border-color:var(--amber)}
-.modal-select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);outline:none}
-.modal-select:focus{border-color:var(--amber)}
-.modal-select option{background:var(--bg3)}
-.form-row{margin-bottom:16px}
-.form-label{display:block;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px}
-.form-hint{font-size:11px;color:var(--text-faint);margin-top:4px}
-.banned-warning{background:rgba(220,60,60,0.1);border:1px solid rgba(220,60,60,0.25);border-radius:var(--radius-sm);padding:10px 12px;color:#ff8a80;font-size:12px;margin-top:8px;display:none}
-.banned-warning.show{display:block}
-.char-count{font-size:10px;color:var(--text-faint);text-align:right;margin-top:3px}
+/* MAP SECTION */
+#map-section{background:var(--dark);padding:80px 0 0}
+#map-section .sec-eyebrow{color:rgba(214,172,98,0.55)}
+#map-section .sec-heading{color:#f0e8d4;padding:0 24px}
+#map-canvas-wrap{position:relative;margin-top:40px;width:100%;height:480px;cursor:default}
+#map-canvas{width:100%;height:100%;display:block}
+.map-cluster-legend{display:flex;align-items:center;justify-content:center;gap:24px;padding:20px 24px 32px;flex-wrap:wrap}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.legend-item-row{display:flex;align-items:center;gap:7px}
+.legend-item-name{font-size:13px;font-weight:600;color:rgba(232,220,200,0.7)}
+.map-hover-tip{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);font-size:12px;color:rgba(232,220,200,0.35);pointer-events:none;white-space:nowrap}
 
-/* Toast */
-#toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;font-size:13px;color:var(--text);box-shadow:0 4px 20px rgba(0,0,0,0.4);z-index:9000;transform:translateY(20px);opacity:0;transition:transform 0.25s,opacity 0.25s;pointer-events:none}
-#toast.show{transform:translateY(0);opacity:1}
+/* Cluster panel */
+#cluster-panel{position:fixed;inset:0;z-index:500;pointer-events:none}
+#cluster-panel.open{pointer-events:auto}
+#cluster-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.3s}
+#cluster-panel.open #cluster-overlay{background:rgba(0,0,0,0.55)}
+#cluster-drawer{position:absolute;right:0;top:0;bottom:0;width:360px;background:#faf9f5;transform:translateX(100%);transition:transform 0.3s cubic-bezier(.2,.8,.2,1);overflow-y:auto;display:flex;flex-direction:column}
+#cluster-panel.open #cluster-drawer{transform:translateX(0)}
+.drawer-header{height:200px;position:relative;flex-shrink:0;background:var(--dark)}
+.drawer-header-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,21,8,0.9) 0%,transparent 60%)}
+.drawer-cluster-name{position:absolute;bottom:20px;left:24px;right:24px}
+.drawer-cluster-name h2{font-family:var(--font-serif);font-size:28px;color:#f0e8d4}
+.drawer-cluster-name p{font-size:13px;color:rgba(232,220,200,0.6);margin-top:4px;font-style:italic}
+.drawer-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);color:#f0e8d4;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+.drawer-close:hover{background:rgba(255,255,255,0.25)}
+.drawer-body{padding:28px;flex:1}
+.drawer-lead{font-size:15px;color:#2a1a08;line-height:1.7;margin-bottom:20px}
+.drawer-beliefs-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(44,25,5,0.4);margin-bottom:10px}
+.drawer-belief{display:flex;gap:10px;margin-bottom:8px;font-size:13px;color:rgba(44,25,5,0.65);line-height:1.55}
+.drawer-belief::before{content:'—';color:var(--amber);flex-shrink:0;margin-top:1px}
+.drawer-differs{margin-top:16px;padding:14px;background:rgba(92,61,10,0.06);border-radius:8px;font-size:13px;color:rgba(44,25,5,0.55);line-height:1.55;border-left:3px solid rgba(92,61,10,0.2)}
+@media(max-width:600px){#cluster-drawer{width:100%}}
 
-/* Empty states */
-.empty-state{padding:40px 20px;text-align:center;color:var(--text-dim);font-size:13px;line-height:1.6}
-.empty-state-icon{font-size:28px;margin-bottom:10px;opacity:0.5}
+/* RESULTS SECTION */
+#results-section{background:var(--cream);padding:80px 24px;border-top:1px solid rgba(92,61,10,0.07)}
+#results-section .sec-eyebrow{color:rgba(92,61,10,0.45)}
+#results-section .sec-heading{color:#1C1005}
+.results-locked{text-align:center;padding:40px;background:#fff;border:1px solid rgba(92,61,10,0.1);border-radius:var(--r);max-width:600px;margin:32px auto 0;color:rgba(44,25,5,0.5);font-size:15px;line-height:1.7}
+.results-locked a{color:var(--amber);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1000px;margin:40px auto 0}
+@media(max-width:760px){.results-grid{grid-template-columns:1fr}}
+.results-col-title{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.results-col-title span{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
+.r-stmt-card{background:#fff;border:1px solid rgba(92,61,10,0.08);border-radius:var(--r);padding:20px;margin-bottom:12px}
+.r-stmt-text{font-size:14px;color:#2a1a08;line-height:1.55;margin-bottom:14px}
+.r-group-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.r-group-name{font-size:11px;font-weight:600;width:80px;flex-shrink:0}
+.r-group-track{flex:1;height:6px;background:rgba(92,61,10,0.08);border-radius:3px;overflow:hidden}
+.r-group-fill{height:100%;border-radius:3px}
+.r-group-pct{font-size:11px;font-weight:700;width:24px;text-align:right;color:rgba(44,25,5,0.5)}
 
-@media(max-width:700px){
-  #map-panel{display:none}
-  .auth-nav{padding:14px 20px}
-  .auth-card{padding:36px 28px}
-  .auth-heading{font-size:30px}
-}
+/* FORUM SECTION */
+#forum-section{background:#f5f3ee;padding:80px 24px;border-top:1px solid rgba(92,61,10,0.07)}
+#forum-section .sec-eyebrow{color:rgba(92,61,10,0.45)}
+#forum-section .sec-heading{color:#1C1005}
+.forum-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:1000px;margin:40px auto 0}
+@media(max-width:760px){.forum-grid{grid-template-columns:1fr}}
+.forum-card{background:#fff;border:1px solid rgba(92,61,10,0.09);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:14px}
+.forum-card-author{display:flex;align-items:center;gap:10px}
+.forum-card-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.forum-card-who{font-size:13px;font-weight:600;color:#1C1005}
+.forum-card-role{font-size:11px;color:rgba(44,25,5,0.4)}
+.forum-card-ago{font-size:11px;color:rgba(44,25,5,0.3);margin-left:auto}
+.forum-card-text{font-size:14px;color:#2a1a08;line-height:1.6}
+.forum-card-bars{display:flex;flex-direction:column;gap:4px}
+.forum-bar-row{display:flex;align-items:center;gap:8px}
+.forum-bar-label{font-size:11px;color:rgba(44,25,5,0.45);width:56px;flex-shrink:0}
+.forum-bar-track{flex:1;height:5px;background:rgba(92,61,10,0.08);border-radius:3px;overflow:hidden}
+.forum-bar-fill-agree{height:100%;background:var(--steward);border-radius:3px}
+.forum-bar-fill-pass{height:100%;background:rgba(92,61,10,0.2);border-radius:3px}
+.forum-bar-fill-disagree{height:100%;background:var(--cultivator);border-radius:3px}
+.forum-bar-pct{font-size:11px;font-weight:700;width:24px;text-align:right;color:rgba(44,25,5,0.5)}
+.forum-card-status{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.forum-card-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.forum-card-responses{font-size:12px;color:rgba(44,25,5,0.4)}
+.forum-card-actions{display:flex;gap:6px;margin-left:auto}
+.btn-forum{padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid rgba(92,61,10,0.15);color:rgba(44,25,5,0.55);background:none;transition:background 0.15s,color 0.15s}
+.btn-forum:hover{background:rgba(92,61,10,0.07);color:rgba(44,25,5,0.8)}
+.btn-forum-primary{background:rgba(92,61,10,0.07);border-color:rgba(92,61,10,0.2);color:#5C3D0A}
+.btn-forum-primary:hover{background:rgba(92,61,10,0.14)}
+.forum-propose{max-width:1000px;margin:28px auto 0;background:#fff;border:1px solid rgba(92,61,10,0.1);border-radius:var(--r);padding:24px}
+.forum-propose-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(44,25,5,0.4);margin-bottom:12px}
+.forum-propose-row{display:flex;gap:10px}
+.forum-propose-input{flex:1;padding:11px 14px;border:1px solid rgba(92,61,10,0.18);border-radius:8px;font-size:14px;color:#1C1005;background:#faf9f5;outline:none;transition:border-color 0.15s}
+.forum-propose-input:focus{border-color:var(--amber)}
+.btn-propose{padding:11px 20px;background:#1C1005;color:#F5EFE0;border-radius:8px;font-weight:700;font-size:13px;white-space:nowrap;transition:background 0.15s}
+.btn-propose:hover{background:#2c1a08}
+
+/* Thread panel */
+#thread-panel{position:fixed;inset:0;z-index:500;pointer-events:none}
+#thread-panel.open{pointer-events:auto}
+#thread-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.3s}
+#thread-panel.open #thread-overlay{background:rgba(0,0,0,0.45)}
+#thread-drawer{position:absolute;right:0;top:0;bottom:0;width:400px;background:#faf9f5;transform:translateX(100%);transition:transform 0.3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+#thread-panel.open #thread-drawer{transform:translateX(0)}
+.thread-header{padding:20px 24px;border-bottom:1px solid rgba(92,61,10,0.1);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-shrink:0}
+.thread-question{font-family:var(--font-serif);font-size:17px;color:#1C1005;line-height:1.45;flex:1}
+.thread-close{width:28px;height:28px;border-radius:50%;border:1px solid rgba(92,61,10,0.15);color:rgba(44,25,5,0.5);font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.15s}
+.thread-close:hover{background:rgba(92,61,10,0.07)}
+.thread-messages{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+.thread-msg{padding:12px 14px;border-radius:10px;background:#fff;border:1px solid rgba(92,61,10,0.08)}
+.thread-msg.mine{background:rgba(92,61,10,0.06)}
+.thread-msg-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.thread-msg-avatar{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0}
+.thread-msg-who{font-size:12px;font-weight:600;color:#1C1005}
+.thread-msg-role{font-size:11px;color:rgba(44,25,5,0.4)}
+.thread-msg-ago{font-size:11px;color:rgba(44,25,5,0.3);margin-left:auto}
+.thread-msg-text{font-size:13px;color:rgba(44,25,5,0.75);line-height:1.6}
+.thread-input-row{padding:16px 24px;border-top:1px solid rgba(92,61,10,0.1);display:flex;gap:8px;flex-shrink:0}
+.thread-input{flex:1;padding:10px 12px;border:1px solid rgba(92,61,10,0.18);border-radius:8px;font-size:14px;color:#1C1005;background:#fff;outline:none}
+.thread-input:focus{border-color:var(--amber)}
+.btn-thread-send{padding:10px 16px;background:#1C1005;color:#F5EFE0;border-radius:8px;font-weight:600;font-size:13px;transition:background 0.15s}
+.btn-thread-send:hover{background:#2c1a08}
+@media(max-width:600px){#thread-drawer{width:100%}}
+
+/* FOOTER */
+#cg-footer{background:var(--dark2);padding:48px 24px;border-top:1px solid rgba(255,255,255,0.05)}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(214,172,98,0.5)}
+.footer-copy{font-size:12px;color:rgba(232,220,200,0.2)}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1C1005;color:#F5EFE0;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 22px;font-size:13px;z-index:9000;opacity:0;transition:transform 0.25s,opacity 0.25s;pointer-events:none;white-space:nowrap}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 </style>
 </head>
 <body>
 
-<!-- ======= AUTH SCREEN ======= -->
+<!-- ═══ AUTH SCREEN ═══ -->
 <div id="auth-screen">
-
-  <!-- Top nav -->
   <nav class="auth-nav">
     <div class="auth-nav-logo">:: Mycelium</div>
     <div class="auth-nav-right">
@@ -325,28 +321,21 @@ a{color:var(--amber);text-decoration:none}
       <button class="auth-nav-link" id="auth-nav-link" onclick="switchAuthTab('signup')">Join →</button>
     </div>
   </nav>
-
-  <!-- Card -->
   <div class="auth-stage">
     <div class="auth-card">
       <div class="auth-pill">Common Ground</div>
       <h1 class="auth-heading" id="auth-main-heading">Your <em>roots</em> are waiting.</h1>
       <p class="auth-sub" id="auth-main-sub">Sign in to see where you stand — your answers, your position on the map, and the conversations you left off.</p>
-
       <div class="auth-tabs">
         <button class="auth-tab active" id="tab-signin-btn" onclick="switchAuthTab('signin')">Sign In</button>
         <button class="auth-tab" id="tab-signup-btn" onclick="switchAuthTab('signup')">Sign Up</button>
       </div>
       <div id="auth-err" class="auth-err"></div>
-
-      <!-- Sign In -->
       <div id="auth-signin">
         <div class="field"><label>Email</label><input type="email" id="si-email" autocomplete="email" placeholder="you@example.com"></div>
         <div class="field"><label>Password</label><div class="pw-wrap"><input type="password" id="si-pass" autocomplete="current-password" placeholder="Your password"><button type="button" class="pw-toggle" onclick="togglePw('si-pass',this)" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
         <button class="btn-primary" onclick="doSignIn()">Sign in →</button>
       </div>
-
-      <!-- Sign Up -->
       <div id="auth-signup" style="display:none">
         <div class="field"><label>Email</label><input type="email" id="su-email" autocomplete="email" placeholder="you@example.com"></div>
         <div class="field"><label>Password</label><div class="pw-wrap"><input type="password" id="su-pass" autocomplete="new-password" placeholder="Choose a password"><button type="button" class="pw-toggle" onclick="togglePw('su-pass',this)" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
@@ -366,1290 +355,1046 @@ a{color:var(--amber);text-decoration:none}
       </div>
     </div>
   </div>
-
 </div>
 
-<!-- ======= MAIN APP ======= -->
+<!-- ═══ APP ═══ -->
 <div id="app">
 
-  <!-- Header -->
-  <header id="app-header">
-    <div class="hdr-logo">:: MYCELIUM <span>/ Common Ground</span></div>
-    <div class="hdr-right">
-      <button class="hdr-btn" onclick="openNewPost()">+ New Post</button>
-      <div class="hdr-user" onclick="openProfile()">
-        <div class="avatar-dot" id="hdr-avatar"></div>
-        <span class="hdr-username" id="hdr-username"></span>
-        <span class="hdr-badge" id="hdr-mod-badge" style="display:none">MOD</span>
-      </div>
-      <button class="btn-logout" onclick="doSignOut()">Sign out</button>
+  <!-- Nav -->
+  <nav id="cg-nav">
+    <div class="nav-logo">:: MYCELIUM <span>/ Common Ground</span></div>
+    <div class="nav-right">
+      <span class="nav-user"><span class="nav-dot" id="nav-dot"></span><span id="nav-username"></span></span>
+      <button class="btn-signout" onclick="doSignOut()">Sign out</button>
     </div>
-  </header>
+  </nav>
 
-  <!-- Body -->
-  <div id="app-body">
-
-    <!-- Map Panel -->
-    <div id="map-panel">
-      <div class="map-heading">THE MAP</div>
-      <svg id="cg-svg" viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" style="display:block"></svg>
-      <div id="map-no-pos" class="map-no-pos" style="display:none">
-        Answer questions in the Questions tab to place yourself on the map.
-      </div>
-      <div class="map-legend">
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#4a7c59"></div>
-          <div class="legend-info"><div class="legend-label">Earth Care</div><div class="legend-desc">Soil, water, growing, ecology, land stewardship.</div></div>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#C4872A"></div>
-          <div class="legend-info"><div class="legend-label">People Care</div><div class="legend-desc">Community practice, education, sharing knowledge, mutual aid.</div></div>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#5b7fa6"></div>
-          <div class="legend-info"><div class="legend-label">Fair Share</div><div class="legend-desc">Design thinking, systems, surplus, resource cycles.</div></div>
-        </div>
-      </div>
-      <div class="map-userlist">
-        <div class="map-userlist-heading">ON THE MAP</div>
-        <div id="map-userlist-body"></div>
+  <!-- Hero -->
+  <section id="cg-hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Common Ground</div>
+      <h1 class="hero-heading">See where we align —<br><em>and where we're still growing.</em></h1>
+      <p class="hero-body">Answer eight statements about the Mycelium platform. The algorithm maps where your views cluster with others — and where real differences live.</p>
+      <div class="hero-ctas">
+        <a class="cta-primary" href="#vote">Respond to a statement →</a>
+        <a class="cta-ghost" href="#map">Explore the map →</a>
       </div>
     </div>
+  </section>
 
-    <!-- Right Panel -->
-    <div id="right-panel">
-      <div id="tabs-bar">
-        <button class="tab-btn active" onclick="switchTab('questions')">Questions</button>
-        <button class="tab-btn" onclick="switchTab('forum')">Community</button>
-        <button class="tab-btn admin-tab" id="admin-tab-btn" style="display:none" onclick="switchTab('admin')">Admin</button>
-      </div>
-
-      <!-- Questions Tab -->
-      <div class="tab-pane active" id="tab-questions"></div>
-
-      <!-- Forum Tab -->
-      <div class="tab-pane" id="tab-forum">
-        <div class="forum-header">
-          <div class="forum-filters">
-            <button class="filter-pill active" onclick="setGroupFilter(null,this)">All</button>
-            <button class="filter-pill" onclick="setGroupFilter('earth-care',this)">Earth Care</button>
-            <button class="filter-pill" onclick="setGroupFilter('people-care',this)">People Care</button>
-            <button class="filter-pill" onclick="setGroupFilter('fair-share',this)">Fair Share</button>
-          </div>
-        </div>
-        <div class="posts-list" id="posts-list"></div>
-      </div>
-
-      <!-- Admin Tab -->
-      <div class="tab-pane" id="tab-admin"></div>
-    </div>
+  <!-- Stats -->
+  <div id="stats-bar">
+    <div class="stat-item"><span class="stat-num" id="stat-total">85</span><span class="stat-label">Voices Mapped</span></div>
+    <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Statements</span></div>
+    <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Opinion Clusters</span></div>
   </div>
-</div>
 
-<!-- ======= MODALS ======= -->
-
-<!-- New Post Modal -->
-<div class="modal-overlay hidden" id="modal-new-post">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title">New Post</div>
-      <button class="modal-close" onclick="closeModal('modal-new-post')">x</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <label class="form-label">Post Type</label>
-        <select class="modal-select" id="np-type">
-          <option value="discussion">Discussion</option>
-          <option value="resource">Resource / Link</option>
-          <option value="announcement" id="np-type-announcement" style="display:none">Announcement (Admin only)</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Community Group</label>
-        <select class="modal-select" id="np-group">
-          <option value="">No specific group</option>
-          <option value="earth-care">Earth Care Circle</option>
-          <option value="people-care">People Care Circle</option>
-          <option value="fair-share">Fair Share Circle</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Title</label>
-        <input type="text" class="modal-input" id="np-title" maxlength="120" placeholder="What's this about?">
-      </div>
-      <div class="form-row">
-        <label class="form-label">Body</label>
-        <textarea class="modal-textarea" id="np-body" rows="6" placeholder="Share your thoughts, a link, an observation..."></textarea>
-        <div class="banned-warning" id="np-banned-warn"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('modal-new-post')">Cancel</button>
-      <button class="btn-primary" style="width:auto;padding:8px 20px" onclick="submitPost()">Post</button>
-    </div>
-  </div>
-</div>
-
-<!-- View Post Modal -->
-<div class="modal-overlay hidden" id="modal-post-view">
-  <div class="modal-box wide">
-    <div class="modal-header">
-      <div class="modal-title" id="pv-title-display"></div>
-      <button class="modal-close" onclick="closeModal('modal-post-view')">x</button>
-    </div>
-    <div class="modal-body">
-      <div class="post-view-meta" id="pv-meta"></div>
-      <div class="post-view-body" id="pv-body"></div>
-      <div class="post-edited-note" id="pv-edited"></div>
-      <div class="comments-section">
-        <div class="comments-heading">Comments</div>
-        <div id="pv-comments"></div>
-        <div class="comment-form">
-          <textarea class="modal-textarea" id="pv-comment-input" rows="3" placeholder="Add a comment..."></textarea>
-          <div class="comment-actions">
-            <button class="btn-primary" style="width:auto;padding:7px 18px;font-size:12px" onclick="submitComment()">Comment</button>
-          </div>
+  <!-- How it works -->
+  <section id="how-section">
+    <div class="sec-container">
+      <div class="sec-eyebrow">How it works</div>
+      <h2 class="sec-heading">Three steps from statement<br>to <em>clarity.</em></h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">Step 01</div>
+          <div class="step-name">Share your perspective</div>
+          <div class="step-desc">Respond to eight statements about the platform. Agree, pass, or disagree — there are no right answers, only your honest read.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">Step 02</div>
+          <div class="step-name">The algorithm listens</div>
+          <div class="step-desc">A Polis-style model maps your responses against the community's pattern using PCA and k-means — finding real clusters, not assumed ones.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">Step 03</div>
+          <div class="step-name">A map starts a conversation</div>
+          <div class="step-desc">See where groups align and where genuine disagreement lives. Results stay hidden until after you vote — so the map can't anchor your response.</div>
         </div>
       </div>
     </div>
-    <div class="modal-footer" id="pv-footer"></div>
+  </section>
+
+  <!-- Vote -->
+  <section id="vote-section">
+    <div class="sec-container">
+      <div class="sec-eyebrow" style="color:rgba(92,61,10,0.45)">Your turn</div>
+      <h2 class="sec-heading" style="color:#1C1005">Respond to the<br><em style="color:var(--amber)">statements.</em></h2>
+      <div class="vote-layout">
+        <div>
+          <div id="vote-area"></div>
+          <div id="result-reveal" style="display:none"></div>
+        </div>
+        <div id="pos-sidebar" class="pos-sidebar">
+          <div class="pos-heading">Your Position</div>
+          <div id="pos-body"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section id="map-section">
+    <div class="sec-eyebrow">Opinion Landscape</div>
+    <h2 class="sec-heading">Where everyone<br><em>lands.</em></h2>
+    <div id="map-canvas-wrap">
+      <canvas id="map-canvas"></canvas>
+      <div class="map-hover-tip" id="map-hover-tip">Hover a cluster to explore — click to learn more</div>
+    </div>
+    <div class="map-cluster-legend" id="map-legend"></div>
+  </section>
+
+  <!-- Results -->
+  <section id="results-section">
+    <div class="sec-container">
+      <div class="sec-eyebrow">The Breakdown</div>
+      <h2 class="sec-heading">Where groups <em>agree</em><br>and where they don't.</h2>
+      <div id="results-body"></div>
+    </div>
+  </section>
+
+  <!-- Forum -->
+  <section id="forum-section">
+    <div class="sec-container">
+      <div class="sec-eyebrow">Open Discussion</div>
+      <h2 class="sec-heading">Questions the<br>community is <em>weighing.</em></h2>
+      <div class="forum-grid" id="forum-grid"></div>
+      <div class="forum-propose">
+        <div class="forum-propose-label">Pitch a question</div>
+        <div class="forum-propose-row">
+          <input class="forum-propose-input" id="propose-input" type="text" placeholder="Write a statement for the community to weigh in on…" maxlength="200">
+          <button class="btn-propose" onclick="pitchQuestion()">Submit →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="cg-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">:: Mycelium</div>
+      <div class="footer-copy">Common Ground · Mycelium Learning · Philippines</div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Cluster panel -->
+<div id="cluster-panel">
+  <div id="cluster-overlay" onclick="closeClusterPanel()"></div>
+  <div id="cluster-drawer">
+    <div class="drawer-header" id="drawer-header">
+      <div class="drawer-header-gradient"></div>
+      <div class="drawer-cluster-name">
+        <h2 id="drawer-name"></h2>
+        <p id="drawer-tagline"></p>
+      </div>
+      <button class="drawer-close" onclick="closeClusterPanel()">×</button>
+    </div>
+    <div class="drawer-body">
+      <p class="drawer-lead" id="drawer-lead"></p>
+      <div class="drawer-beliefs-label">What they believe</div>
+      <div id="drawer-beliefs"></div>
+      <div class="drawer-differs" id="drawer-differs"></div>
+    </div>
   </div>
 </div>
 
-<!-- Edit Post Modal -->
-<div class="modal-overlay hidden" id="modal-edit-post">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title">Edit Post</div>
-      <button class="modal-close" onclick="closeModal('modal-edit-post')">x</button>
+<!-- Thread panel -->
+<div id="thread-panel">
+  <div id="thread-overlay" onclick="closeThread()"></div>
+  <div id="thread-drawer">
+    <div class="thread-header">
+      <div class="thread-question" id="thread-question"></div>
+      <button class="thread-close" onclick="closeThread()">×</button>
     </div>
-    <div class="modal-body">
-      <div class="edit-indicator" id="ep-window-note"></div>
-      <div class="form-row">
-        <label class="form-label">Title</label>
-        <input type="text" class="modal-input" id="ep-title" maxlength="120">
-      </div>
-      <div class="form-row">
-        <label class="form-label">Body</label>
-        <textarea class="modal-textarea" id="ep-body" rows="7"></textarea>
-        <div class="banned-warning" id="ep-banned-warn"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('modal-edit-post')">Cancel</button>
-      <button class="btn-primary" style="width:auto;padding:8px 20px" onclick="saveEditPost()">Save Changes</button>
+    <div class="thread-messages" id="thread-messages"></div>
+    <div class="thread-input-row">
+      <input class="thread-input" id="thread-input" type="text" placeholder="Add to the discussion…" maxlength="300">
+      <button class="btn-thread-send" onclick="sendThreadMsg()">Send</button>
     </div>
   </div>
 </div>
 
-<!-- Propose Question Modal -->
-<div class="modal-overlay hidden" id="modal-propose-q">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title">Propose a Question</div>
-      <button class="modal-close" onclick="closeModal('modal-propose-q')">x</button>
-    </div>
-    <div class="modal-body">
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:18px">Questions go to the moderator for approval before going live. They should be open, honest, and grounded in permaculture practice. No leading questions, no agendas.</p>
-      <div class="form-row">
-        <label class="form-label">Statement</label>
-        <textarea class="modal-textarea" id="pq-body" rows="4" placeholder="Write a statement people can agree or disagree with..."></textarea>
-        <div class="char-count" id="pq-count">0 / 200</div>
-        <div class="banned-warning" id="pq-banned-warn"></div>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Which Principles Does This Touch?</label>
-        <div class="principle-grid" id="pq-principles"></div>
-        <div class="form-hint">Select at least one. These determine how your answer shapes your map position.</div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('modal-propose-q')">Cancel</button>
-      <button class="btn-primary" style="width:auto;padding:8px 20px" onclick="submitProposedQ()">Submit for Review</button>
-    </div>
-  </div>
-</div>
-
-<!-- Profile Modal -->
-<div class="modal-overlay hidden" id="modal-profile">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title" id="prof-title">Your Profile</div>
-      <button class="modal-close" onclick="closeModal('modal-profile')">x</button>
-    </div>
-    <div class="modal-body" id="prof-body"></div>
-    <div class="modal-footer" id="prof-footer"></div>
-  </div>
-</div>
-
-<!-- Toast -->
 <div id="toast"></div>
 
 <script>
-// ========== SUPABASE ==========
+// ══════════════════════════════════════════
+//  SUPABASE
+// ══════════════════════════════════════════
 const SUPABASE_URL = 'https://fnqhncbxoxbvuryccvam.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZucWhuY2J4b3hidnVyeWNjdmFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5NDk5NTMsImV4cCI6MjA5ODUyNTk1M30.DQV-cd0O1Eo1wkSlkhWJGo7Gy8sZvHVJ_nv44igGPR0';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const ADMIN_EMAIL = 'joaquinriego32@gmail.com';
 
-// ========== CONFIG ==========
-const CONFIG = {
-  adminEmail: 'joaquinriego32@gmail.com',
-  editWindowMs: 24 * 60 * 60 * 1000,
-};
-
-// ========== CONSTANTS ==========
-const PRINCIPLES = [
-  { id:1,  name:'Observe and Interact',                   short:'Observe & Interact',           ethic:'EC' },
-  { id:2,  name:'Catch and Store Energy',                 short:'Catch & Store Energy',         ethic:'EC' },
-  { id:3,  name:'Obtain a Yield',                         short:'Obtain a Yield',               ethic:'PC' },
-  { id:4,  name:'Apply Self-Regulation & Accept Feedback',short:'Self-Regulation & Feedback',   ethic:'PC' },
-  { id:5,  name:'Use & Value Renewable Resources',        short:'Use Renewables',               ethic:'EC' },
-  { id:6,  name:'Produce No Waste',                       short:'Produce No Waste',             ethic:'EC' },
-  { id:7,  name:'Design from Patterns to Details',        short:'Patterns to Details',          ethic:'FS' },
-  { id:8,  name:'Integrate Rather Than Segregate',        short:'Integrate, Not Segregate',     ethic:'PC' },
-  { id:9,  name:'Use Slow and Small Solutions',           short:'Slow & Small Solutions',       ethic:'FS' },
-  { id:10, name:'Use and Value Diversity',                short:'Use & Value Diversity',        ethic:'PC' },
-  { id:11, name:'Use Edges and Value the Marginal',       short:'Edges & Marginal',             ethic:'FS' },
-  { id:12, name:'Creatively Use & Respond to Change',     short:'Respond to Change',            ethic:'FS' },
+// ══════════════════════════════════════════
+//  STATIC DATA
+// ══════════════════════════════════════════
+const STMTS = [
+  {id:'s1',text:"Mycelium should prioritise featuring techniques with proven, measurable yields over experimental ones.",who:"Maya Reyes",role:"Facilitator",color:"#8a5a78"},
+  {id:'s2',text:"Indigenous and traditional land practices deserve as prominent a place in the content as modern permaculture design.",who:"Lakan Bituin",role:"Baganihan Collective",color:"#5f7d4f"},
+  {id:'s3',text:"Content should only be labelled 'permaculture' if the practice is genuinely regenerative.",who:"Dr. Elena Varga",role:"Philippine Permaculture Assoc.",color:"#5f7d4f"},
+  {id:'s4',text:"Commercial market-gardening and small-scale farming deserve a central place in permaculture content.",who:"Tomas Quibo",role:"Market Gardener",color:"#c0703e"},
+  {id:'s5',text:"Every guide and resource should stay free — even the most advanced material.",who:"Aria Santos",role:"Member",color:"#8a5a78"},
+  {id:'s6',text:"Featured how-to content should come only from certified or formally trained practitioners.",who:"Garbi Jover",role:"Educator",color:"#c0703e"},
+  {id:'s7',text:"Mycelium should feature every school of permaculture equally, without taking a position on which is 'right'.",who:"Noor Aquino",role:"Member",color:"#8a5a78"},
+  {id:'s8',text:"When the community is split on a topic, the platform should present every side rather than recommend one approach.",who:"Joaquin Riego",role:"Member",color:"#5f7d4f"},
 ];
 
-const ETHICS = {
-  EC: { name:'Earth Care',   color:'#4a7c59', principles:[1,2,5,6]    },
-  PC: { name:'People Care',  color:'#C4872A', principles:[3,4,8,10]   },
-  FS: { name:'Fair Share',   color:'#5b7fa6', principles:[7,9,11,12]  },
-};
-
-const GROUPS = [
-  { id:'earth-care',   name:'Earth Care Circle',  ethic:'EC' },
-  { id:'people-care',  name:'People Care Circle',  ethic:'PC' },
-  { id:'fair-share',   name:'Fair Share Circle',   ethic:'FS' },
+const CLUSTERS = [
+  {id:'stewards',name:'The Stewards',short:'Stewards',color:'#5f7d4f',centroid:[-0.62,-0.16],n:32,
+   tagline:'Land and lineage first.',
+   lead:"Permaculture is a relationship with land and ancestry before it's a method or a market. Feature what truly regenerates, and give traditional knowledge the prominence it has earned.",
+   beliefs:["Regeneration is the bar — if it isn't ecologically regenerative, it isn't permaculture.","Indigenous and traditional practice deserves equal billing with modern design.","When a topic is contested, show every side rather than crown one."],
+   differs:"Wary of a yields-first lens, or of folding every commercial method into what counts as permaculture."},
+  {id:'builders',name:'The Cultivators',short:'Cultivators',color:'#c0703e',centroid:[0.56,-0.34],n:27,
+   tagline:'It has to work in the field.',
+   lead:"Outcomes matter most: feature what demonstrably works, welcome proven methods, and keep quality high enough for the community to trust.",
+   beliefs:["Prioritise techniques with proven, measurable yields.","Commercial and small-scale farming belong at the center of the content.","Featured how-to content should come from trained, credentialed practitioners."],
+   differs:"Less convinced everything must stay free, or that every contested topic needs equal airtime."},
+  {id:'bridgers',name:'The Weavers',short:'Weavers',color:'#8a5a78',centroid:[0.02,0.52],n:26,
+   tagline:'Keep the doors open.',
+   lead:"The point is access. Keep it free, keep it welcoming, and feature every approach so newcomers can find their own way in.",
+   beliefs:["Every guide stays free — no paywalls, no gatekeeping.","Feature every school equally; don't crown one as 'right'.","Welcome beginners and experimental methods, not only credentialed experts."],
+   differs:"Split internally on regeneration-only definitions and on whether proven yields should outrank diversity."},
 ];
 
-const BANNED_KEYWORDS = [
-  'polycrisis','collapse','doomsday','apocalypse','catastrophe',
-  'civilizational','societal breakdown','extinction event','shtf',
-  'bunker','end of days','end times','teotwawki','prepper prep',
+const PROFILES = {
+  stewards:[0.08,0.95,0.93,0.12,0.82,0.42,0.28,0.95],
+  builders:[0.93,0.28,0.44,0.93,0.32,0.86,0.40,0.22],
+  bridgers:[0.26,0.80,0.38,0.46,0.96,0.14,0.95,0.62],
+};
+
+const FORUM_BASE = [
+  {id:'q1',text:"Should soil-less systems like hydroponics be classified as permaculture on the platform?",who:"Bea Calma",role:"Member",ago:"2d ago",color:"#c0703e",responses:61,agree:34,pass:14,disagree:52,status:"Seen differently",statusFg:"#a85a2c",statusBg:"rgba(192,112,62,0.13)"},
+  {id:'q2',text:"Translate core guides into Filipino and Bisaya before adding new English content.",who:"Lakan Bituin",role:"Baganihan Collective",ago:"5d ago",color:"#5f7d4f",responses:74,agree:81,pass:9,disagree:10,status:"Near consensus",statusFg:"#4c6840",statusBg:"rgba(95,125,79,0.14)"},
+  {id:'q3',text:"Partner orgs should be able to flag — not remove — content they dispute.",who:"Dr. Elena Varga",role:"Philippine Permaculture Assoc.",ago:"1d ago",color:"#8a5a78",responses:38,agree:58,pass:22,disagree:20,status:"Gathering responses",statusFg:"#8a6d2c",statusBg:"rgba(184,146,74,0.16)"},
+  {id:'q4',text:"Creators who sell paid courses elsewhere can still be featured for their free content.",who:"Tomas Quibo",role:"Market Gardener",ago:"3d ago",color:"#c0703e",responses:52,agree:47,pass:15,disagree:38,status:"Seen differently",statusFg:"#a85a2c",statusBg:"rgba(192,112,62,0.13)"},
+  {id:'q5',text:"Container gardens on a balcony should count as a real implementation, not just practice.",who:"Aria Santos",role:"Member",ago:"6h ago",color:"#5f7d4f",responses:19,agree:72,pass:18,disagree:10,status:"Gathering responses",statusFg:"#8a6d2c",statusBg:"rgba(184,146,74,0.16)"},
+  {id:'q6',text:"Permaculture content here should center food sovereignty, not just food security.",who:"Noor Aquino",role:"Member",ago:"4d ago",color:"#8a5a78",responses:66,agree:69,pass:17,disagree:14,status:"Mapped last week",statusFg:"#6e4862",statusBg:"rgba(138,90,120,0.14)"},
 ];
 
-const WELCOME_POST_ID = 'welcome-post';
-
-// ========== NORMALIZERS ==========
-// Map Supabase snake_case rows → camelCase for render functions
-const AVATAR_COLORS = ['#C4872A','#D9A24A','#4a7c59','#7ab87a','#5b7fa6','#8db5d4','#9b6b9b','#c98f4a','#6a8f6a','#a07850'];
-
-function normalizeProfile(p) {
-  if (!p) return null;
-  return { ...p, avatarColor: p.avatar_color, isAdmin: p.is_admin, createdAt: p.created_at };
-}
-function normalizeQuestion(q) {
-  if (!q) return null;
-  return { ...q, proposedBy: q.proposed_by, createdAt: q.created_at };
-}
-function normalizeAnswer(a) {
-  if (!a) return null;
-  return { ...a, userId: a.user_id, questionId: a.question_id, createdAt: a.created_at };
-}
-function normalizeComment(c) {
-  if (!c) return null;
-  return { ...c, userId: c.user_id, postId: c.post_id, createdAt: c.created_at, updatedAt: c.updated_at };
-}
-function normalizePost(p, comments) {
-  if (!p) return null;
-  const ao = p.author_override;
-  const mappedAO = ao ? {
-    username: ao.name || ao.username || 'Moderator',
-    isAdmin:  !!(ao.role === 'Moderator' || ao.isAdmin),
-    avatarColor: ao.color || '#C4872A',
-  } : null;
-  return {
-    ...p,
-    userId:        p.user_id,
-    groupId:       p.group_id,
-    authorOverride: mappedAO,
-    createdAt:     p.created_at,
-    updatedAt:     p.updated_at,
-    comments:      (comments || []).filter(c => c.post_id === p.id).map(normalizeComment),
-  };
-}
-
-// ========== APP STATE ==========
-let APP = {
-  currentUser:   null, // normalized profile
-  questions:     [],
-  answers:       [], // ALL answers (all users, for map rendering)
-  posts:         [],
-  profiles:      [],
-  activeTab:     'questions',
-  groupFilter:   null,
-  viewingPostId: null,
-  editingPostId: null,
+const CHAT_SEED = {
+  q1:[
+    {who:"Tomas Quibo",role:"Market Gardener",color:"#c0703e",ago:"2d",text:"If the yield feeds a barangay, why does the substrate matter? Outcomes over orthodoxy."},
+    {who:"Dr. Elena Varga",role:"Phil. Permaculture Assoc.",color:"#5f7d4f",ago:"2d",text:"Because permaculture is a soil-and-water ethic, not just a yield number. Hydroponics can be brilliant agriculture and still not be *this*."},
+    {who:"Noor Aquino",role:"Member",color:"#8a5a78",ago:"1d",text:"Could we list it as 'adjacent practice' rather than fight over the label? Keeps the door open without redefining the word."},
+  ],
+  q2:[
+    {who:"Lakan Bituin",role:"Baganihan Collective",color:"#5f7d4f",ago:"5d",text:"Most of our elders read Bisaya first. English-only guides quietly gatekeep the people who know the land best."},
+    {who:"Aria Santos",role:"Member",color:"#8a5a78",ago:"4d",text:"Strong agree. I'd even help translate — is there a glossary we'd standardise first?"},
+  ],
+  q3:[
+    {who:"Dr. Elena Varga",role:"Phil. Permaculture Assoc.",color:"#5f7d4f",ago:"1d",text:"Flagging, not removing, is the right instinct. Disagreement should be visible, not deleted."},
+    {who:"Maya Reyes",role:"Facilitator",color:"#8a5a78",ago:"23h",text:"Agreed — a flag could even link to the cluster map for that statement. Dissent becomes context, not censorship."},
+  ],
+  q4:[
+    {who:"Joaquin Riego",role:"Founder",color:"#5f7d4f",ago:"3d",text:"Free content is free content. We feature the work, not someone's whole business model."},
+    {who:"Bea Calma",role:"Member",color:"#c0703e",ago:"2d",text:"As long as the free guide isn't just a teaser funnel for the paid course. That'd erode trust fast."},
+  ],
+  q5:[
+    {who:"Aria Santos",role:"Member",color:"#8a5a78",ago:"6h",text:"My whole 'farm' is twelve containers on a 4th-floor balcony. It feeds my family. That's real to me."},
+    {who:"Tomas Quibo",role:"Market Gardener",color:"#c0703e",ago:"4h",text:"100%. Scale is a spectrum, not a gate. A balcony that closes a food loop counts."},
+  ],
+  q6:[
+    {who:"Noor Aquino",role:"Member",color:"#8a5a78",ago:"4d",text:"'Sovereignty' names who holds power over the food system. 'Security' just asks if bellies are full. Big difference."},
+    {who:"Dr. Elena Varga",role:"Phil. Permaculture Assoc.",color:"#5f7d4f",ago:"4d",text:"Agreed, and it aligns with featuring indigenous practice prominently. Same root principle."},
+  ],
 };
 
-// ========== DB — reads from APP cache ==========
-const DB = {
-  getUsers:       ()    => APP.profiles,
-  getUser:        (id)  => APP.profiles.find(u => u.id === id),
-  getQuestions:   ()    => APP.questions,
-  getQuestion:    (id)  => APP.questions.find(q => q.id === id),
-  getAnswers:     ()    => APP.answers,
-  getUserAnswers: (uid) => APP.answers.filter(a => a.userId === uid),
-  getPosts:       ()    => APP.posts,
-  getPost:        (id)  => APP.posts.find(p => p.id === id),
-};
+// ══════════════════════════════════════════
+//  POLIS ALGORITHM
+// ══════════════════════════════════════════
+function rng32(seed) {
+  return ()=>{ seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; };
+}
+function enc(v){ return v==='agree'?1:v==='disagree'?-1:0; }
+function dot(a,b){ let s=0; for(let i=0;i<a.length;i++) s+=a[i]*b[i]; return s; }
+function vnorm(v){ const n=Math.sqrt(dot(v,v))||1; return v.map(x=>x/n); }
 
-// ========== DATA LOADING ==========
-async function loadAllData() {
-  const [
-    { data: questions },
-    { data: answers },
-    { data: posts },
-    { data: profiles },
-    { data: comments },
-  ] = await Promise.all([
-    sb.from('questions').select('*').order('created_at'),
-    sb.from('answers').select('*'),
-    sb.from('posts').select('*').order('pinned', { ascending: false }).order('created_at', { ascending: false }),
-    sb.from('profiles').select('*'),
-    sb.from('comments').select('*').order('created_at'),
-  ]);
-
-  APP.questions = (questions || []).map(normalizeQuestion);
-  APP.answers   = (answers   || []).map(normalizeAnswer);
-  APP.posts     = (posts     || []).map(p => normalizePost(p, comments || []));
-  APP.profiles  = (profiles  || []).map(normalizeProfile);
+function topPCs(C,k){
+  const n=C.length,S=C[0].length;
+  const cov=Array.from({length:S},()=>new Array(S).fill(0));
+  for(let i=0;i<n;i++){ const row=C[i]; for(let a=0;a<S;a++){ const ra=row[a]; for(let b=0;b<S;b++) cov[a][b]+=ra*row[b]; } }
+  const dn=Math.max(1,n-1); for(let a=0;a<S;a++) for(let b=0;b<S;b++) cov[a][b]/=dn;
+  const rng=rng32(42); const work=cov.map(r=>r.slice()); const pcs=[];
+  for(let p=0;p<k;p++){
+    let v=vnorm(Array.from({length:S},()=>rng()-0.5)); let lambda=0;
+    for(let it=0;it<300;it++){
+      const nv=new Array(S).fill(0);
+      for(let a=0;a<S;a++){ let s=0; for(let b=0;b<S;b++) s+=work[a][b]*v[b]; nv[a]=s; }
+      lambda=Math.sqrt(dot(nv,nv)); if(lambda<1e-12) break;
+      const u=nv.map(x=>x/lambda); const conv=Math.abs(dot(u,v))>0.9999999; v=u; if(conv) break;
+    }
+    let mi=0; for(let a=1;a<S;a++) if(Math.abs(v[a])>Math.abs(v[mi])) mi=a; if(v[mi]<0) v=v.map(x=>-x);
+    pcs.push(v);
+    for(let a=0;a<S;a++) for(let b=0;b<S;b++) work[a][b]-=lambda*v[a]*v[b];
+  }
+  return pcs;
 }
 
-// ========== AUTH ==========
-async function doSignIn() {
-  const email = g('si-email').value.trim();
-  const pass  = g('si-pass').value;
+function kmeans(points,k){
+  const rng=rng32(7); const N=points.length;
+  let cents=[points[(rng()*N)|0].slice()];
+  while(cents.length<k){
+    const d2=points.map(p=>Math.min(...cents.map(c=>(c[0]-p[0])**2+(c[1]-p[1])**2)));
+    const sum=d2.reduce((a,b)=>a+b,0)||1; let r=rng()*sum,idx=0;
+    for(let i=0;i<N;i++){ r-=d2[i]; if(r<=0){idx=i;break;} }
+    cents.push(points[idx].slice());
+  }
+  let labels=new Array(N).fill(0);
+  for(let it=0;it<60;it++){
+    let changed=false;
+    for(let i=0;i<N;i++){ let bi=0,bd=Infinity; for(let c=0;c<k;c++){ const d=(cents[c][0]-points[i][0])**2+(cents[c][1]-points[i][1])**2; if(d<bd){bd=d;bi=c;} } if(labels[i]!==bi){labels[i]=bi;changed=true;} }
+    const sums=Array.from({length:k},()=>[0,0,0]);
+    for(let i=0;i<N;i++){ const l=labels[i]; sums[l][0]+=points[i][0]; sums[l][1]+=points[i][1]; sums[l][2]++; }
+    for(let c=0;c<k;c++) if(sums[c][2]>0) cents[c]=[sums[c][0]/sums[c][2],sums[c][1]/sums[c][2]];
+    if(!changed&&it>0) break;
+  }
+  return {labels,cents};
+}
+
+function pcts(counts){
+  const tot=counts.reduce((a,b)=>a+b,0)||1;
+  const raw=counts.map(c=>c/tot*100),fl=raw.map(Math.floor);
+  let rem=100-fl.reduce((a,b)=>a+b,0);
+  const order=raw.map((r,i)=>[r-fl[i],i]).sort((a,b)=>b[0]-a[0]);
+  const out=fl.slice(); for(let i=0;i<rem;i++) out[order[i%order.length][1]]++; return out;
+}
+
+let POLIS = null; // { participants, pca, groupPct, consensus, divides, threads, bridges }
+
+function buildPolis(){
+  const rng=rng32(20260611);
+  const participants=[];
+  CLUSTERS.forEach((c,ci)=>{
+    const pkey=['stewards','builders','bridgers'][ci];
+    for(let i=0;i<c.n;i++){
+      const votes={};
+      PROFILES[pkey].forEach((p,si)=>{ const r=rng(); votes[STMTS[si].id]=r<p?'agree':(r<p+(1-p)*0.82?'disagree':'pass'); });
+      participants.push({seedCi:ci,phase:rng()*Math.PI*2,r:2.6+rng()*2.0,votes});
+    }
+  });
+
+  const S=STMTS.length;
+  const M=participants.map(p=>STMTS.map(s=>enc(p.votes[s.id])));
+  const means=new Array(S).fill(0);
+  for(let j=0;j<S;j++){ let m=0; M.forEach(row=>m+=row[j]); means[j]=m/M.length; }
+  const C=M.map(row=>row.map((v,j)=>v-means[j]));
+  const pcs=topPCs(C,2);
+  let coords=C.map(row=>[dot(row,pcs[0]),dot(row,pcs[1])]);
+  const maxA=(idx)=>{ let m=1e-6; coords.forEach(c=>{ if(Math.abs(c[idx])>m) m=Math.abs(c[idx]); }); return m; };
+  const sx=0.9/maxA(0),sy=0.9/maxA(1);
+  coords=coords.map(c=>[c[0]*sx,c[1]*sy]);
+  participants.forEach((p,i)=>{ p.x=coords[i][0]; p.y=coords[i][1]; });
+
+  const {labels,cents}=kmeans(coords,CLUSTERS.length);
+  const K=CLUSTERS.length;
+  const meanVote=Array.from({length:K},()=>new Array(S).fill(0));
+  const cnt=new Array(K).fill(0);
+  participants.forEach((p,i)=>{ const l=labels[i]; cnt[l]++; for(let j=0;j<S;j++) meanVote[l][j]+=M[i][j]; });
+  for(let l=0;l<K;l++) for(let j=0;j<S;j++) meanVote[l][j]/=(cnt[l]||1);
+  const expected=CLUSTERS.map((c,i)=>PROFILES[['stewards','builders','bridgers'][i]].map(p=>2*p-1));
+  const scores=[];
+  for(let l=0;l<K;l++) for(let j=0;j<K;j++) scores.push([dot(meanVote[l],expected[j]),l,j]);
+  scores.sort((a,b)=>b[0]-a[0]);
+  const d2n=new Array(K).fill(-1);const uN=new Set(),uD=new Set();
+  scores.forEach(([,l,j])=>{ if(!uD.has(l)&&!uN.has(j)){d2n[l]=j;uD.add(l);uN.add(j);} });
+  participants.forEach((p,i)=>{ p.ci=d2n[labels[i]]; });
+  d2n.forEach((named,disc)=>{ CLUSTERS[named].centroid=[cents[disc][0],cents[disc][1]]; });
+
+  const groupPct={};
+  CLUSTERS.forEach((c,ci)=>{
+    groupPct[c.id]={};
+    const cp=participants.filter(p=>p.ci===ci);
+    STMTS.forEach(s=>{ const voted=cp.filter(p=>p.votes[s.id]!=='pass'); const a=cp.filter(p=>p.votes[s.id]==='agree').length; groupPct[c.id][s.id]=voted.length?Math.round(a/voted.length*100):0; });
+  });
+
+  const rows=STMTS.map(st=>{ const v=CLUSTERS.map(c=>groupPct[c.id][st.id]); return {st,v,min:Math.min(...v),spread:Math.max(...v)-Math.min(...v)}; });
+  const consensus=rows.slice().sort((a,b)=>b.min-a.min).slice(0,3);
+  const divides=rows.slice().sort((a,b)=>b.spread-a.spread).slice(0,3);
+
+  const rng2=rng32(99);
+  const d2=(a,b)=>(a.x-b.x)**2+(a.y-b.y)**2;
+  const threads=[];
+  participants.forEach((p,i)=>{
+    const same=[]; participants.forEach((q,j)=>{ if(j!==i&&q.ci===p.ci) same.push([d2(p,q),j]); });
+    same.sort((a,b)=>a[0]-b[0]);
+    for(let k=0;k<2&&k<same.length;k++){ const j=same[k][1]; if(i<j) threads.push([i,j]); }
+  });
+  const bridges=[];
+  for(let b=0;b<10;b++){ const i=(rng2()*participants.length)|0,j=(rng2()*participants.length)|0; if(participants[i].ci!==participants[j].ci) bridges.push([i,j]); }
+
+  POLIS={participants,pca:{means,pcs,sx,sy},groupPct,consensus,divides,threads,bridges};
+}
+
+function projectVotes(votes){
+  const {means,pcs,sx,sy}=POLIS.pca;
+  const row=STMTS.map((s,j)=>(votes[s.id]?enc(votes[s.id]):0)-means[j]);
+  return [dot(row,pcs[0])*sx,dot(row,pcs[1])*sy];
+}
+
+function computeYou(votes){
+  const ids=Object.keys(votes).filter(id=>votes[id]!=='pass'&&STMTS.find(x=>x.id===id));
+  if(!ids.length) return {pos:[0,-0.05],name:null,ci:null};
+  const pos=projectVotes(votes);
+  let best=0,bd=Infinity;
+  CLUSTERS.forEach((c,i)=>{ const d=(c.centroid[0]-pos[0])**2+(c.centroid[1]-pos[1])**2; if(d<bd){bd=d;best=i;} });
+  return {pos,name:ids.length>=3?CLUSTERS[best].name:null,ci:ids.length>=3?best:null};
+}
+
+// ══════════════════════════════════════════
+//  APP STATE
+// ══════════════════════════════════════════
+const APP = {
+  user: null,
+  votes: {},       // {s1:'agree', s2:'pass', ...}
+  stmts: [...STMTS],
+  stmtIndex: 0,
+  lastVoted: null, // {id, text, choice}
+  forum: FORUM_BASE.map(q=>({...q,thread:[...(CHAT_SEED[q.id]||[])]})),
+  openThreadId: null,
+  heroRaf: null,
+  mapRaf: null,
+  mapHoverCi: null,
+  mapCentroids: [],
+  mouse: {x:0,y:0},
+};
+
+// Helpers
+const g = id => document.getElementById(id);
+function toast(msg){ const el=g('toast'); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2800); }
+function initials(name){ return name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+function hexRGB(hex){ const n=parseInt(hex.slice(1),16); return `${(n>>16)&255},${(n>>8)&255},${n&255}`; }
+function hexA(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`; }
+
+// ══════════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════════
+function togglePw(inputId,btn){
+  const input=g(inputId); const showing=input.type==='text'; input.type=showing?'password':'text';
+  btn.innerHTML=showing
+    ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+    :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+}
+
+function switchAuthTab(tab){
   g('auth-err').classList.remove('show');
+  const signin=tab==='signin';
+  g('auth-signin').style.display=signin?'block':'none';
+  g('auth-signup').style.display=signin?'none':'block';
+  g('tab-signin-btn').classList.toggle('active',signin);
+  g('tab-signup-btn').classList.toggle('active',!signin);
+  g('auth-main-heading').innerHTML=signin?'Your <em>roots</em> are waiting.':'Plant your <em>flag.</em>';
+  g('auth-main-sub').textContent=signin?'Sign in to see where you stand — your answers, your position on the map, and the conversations you left off.':'Create your profile, answer a few questions, and find where you land on the permaculture map.';
+  g('auth-nav-label').textContent=signin?'New to Common Ground?':'Already have an account?';
+  g('auth-nav-link').textContent=signin?'Join →':'Sign in →';
+  g('auth-nav-link').onclick=()=>switchAuthTab(signin?'signup':'signin');
+}
 
-  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
-  if (error) { showAuthErr(error.message); return; }
+function showAuthErr(msg){ const el=g('auth-err'); el.textContent=msg; el.classList.add('show'); }
+
+async function doSignIn(){
+  const email=g('si-email').value.trim(), pass=g('si-pass').value;
+  g('auth-err').classList.remove('show');
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
+  if(error){showAuthErr(error.message);return;}
   await startSession(data.user);
 }
 
-async function doSignUp() {
-  const email    = g('su-email').value.trim();
-  const pass     = g('su-pass').value;
-  const username = g('su-username').value.trim();
-  const location = g('su-location').value.trim();
-  const practice = g('su-practice').value;
+async function doSignUp(){
+  const email=g('su-email').value.trim(), pass=g('su-pass').value;
+  const username=g('su-username').value.trim(), location=g('su-location').value.trim();
+  const practice=g('su-practice').value;
   g('auth-err').classList.remove('show');
-
-  if (!email || !pass || !username) { showAuthErr('Email, password, and username are required.'); return; }
-  if (pass.length < 6) { showAuthErr('Password must be at least 6 characters.'); return; }
-
-  const { data, error } = await sb.auth.signUp({ email, password: pass });
-  if (error) { showAuthErr(error.message); return; }
-
-  const isAdmin = email.toLowerCase().trim() === CONFIG.adminEmail.toLowerCase();
-  const avatarColor = AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)];
-
-  const { error: profErr } = await sb.from('profiles').insert({
-    id: data.user.id,
-    username: username.trim(),
-    bio: '',
-    location: location.trim(),
-    practice,
-    avatar_color: avatarColor,
-    is_admin: isAdmin,
-  });
-  if (profErr) {
-    // Delete the auth user we just created so they can try again cleanly
+  if(!email||!pass||!username){showAuthErr('Email, password, and username are required.');return;}
+  if(pass.length<6){showAuthErr('Password must be at least 6 characters.');return;}
+  const {data,error}=await sb.auth.signUp({email,password:pass});
+  if(error){showAuthErr(error.message);return;}
+  const colors=['#C4872A','#4a7c59','#5b7fa6','#8a5a78','#c0703e','#5f7d4f'];
+  const color=colors[Math.floor(Math.random()*colors.length)];
+  const isAdmin=email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
+  const {error:profErr}=await sb.from('profiles').insert({id:data.user.id,username:username.trim(),bio:'',location:location.trim(),practice,avatar_color:color,is_admin:isAdmin});
+  if(profErr){
     await sb.auth.signOut();
-    if (profErr.message.includes('profiles_username_key') || profErr.code === '23505') {
-      showAuthErr('That username is already taken. Please choose a different one.');
-    } else {
-      showAuthErr('Something went wrong creating your account. Please try again.');
-    }
+    if(profErr.message?.includes('profiles_username_key')||profErr.code==='23505'){showAuthErr('That username is already taken. Please choose a different one.');}
+    else{showAuthErr('Something went wrong creating your account. Please try again.');}
     return;
   }
-
   await startSession(data.user);
 }
 
-async function startSession(authUser) {
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', authUser.id).single();
-  if (!profile) { showAuthErr('Profile not found. Please contact the moderator.'); return; }
-  APP.currentUser = normalizeProfile(profile);
-  await loadAllData();
+async function startSession(authUser){
+  const {data:profile}=await sb.from('profiles').select('*').eq('id',authUser.id).single();
+  if(!profile){showAuthErr('Profile not found. Please contact the moderator.');return;}
+  APP.user={...profile,avatarColor:profile.avatar_color,isAdmin:profile.is_admin};
+  await loadVotes();
+  buildPolis();
   launchApp();
 }
 
-async function doSignOut() {
+async function doSignOut(){
   await sb.auth.signOut();
-  APP.currentUser = null;
-  APP.questions = []; APP.answers = []; APP.posts = []; APP.profiles = [];
+  if(APP.heroRaf) cancelAnimationFrame(APP.heroRaf);
+  if(APP.mapRaf) cancelAnimationFrame(APP.mapRaf);
+  APP.user=null; APP.votes={}; APP.stmts=[...STMTS]; APP.stmtIndex=0; APP.lastVoted=null;
   g('app').classList.remove('visible');
-  g('auth-screen').style.display = 'flex';
+  g('auth-screen').style.display='flex';
 }
 
-// ========== ALGORITHM ==========
-function computePosition(userId) {
-  const answers = DB.getUserAnswers(userId);
-  if (!answers.length) return null;
-  const approvedQs = DB.getQuestions().filter(q => q.status === 'approved');
+// ══════════════════════════════════════════
+//  VOTES (localStorage + Supabase best-effort)
+// ══════════════════════════════════════════
+function votesKey(){ return 'cg-votes-'+APP.user.id; }
 
-  // Score per principle: avg of answers to questions tagged with that principle
-  const pScores = {};
-  for (let p = 1; p <= 12; p++) {
-    const tagged = approvedQs.filter(q => q.principles.includes(p));
-    const answered = answers.filter(a => tagged.find(q => q.id === a.questionId));
-    if (!answered.length) continue;
-    pScores[p] = answered.reduce((s,a) => s+a.value, 0) / answered.length; // -2..2
-  }
-
-  // Ethics: average principle scores
-  function ethicScore(ids) {
-    const scores = ids.map(id => pScores[id]).filter(s => s !== undefined);
-    if (!scores.length) return 0; // zero weight
-    const avg = scores.reduce((s,v) => s+v, 0) / scores.length; // -2..2
-    return (avg + 2) / 4; // 0..1
-  }
-
-  let ec = ethicScore([1,2,5,6]);
-  let pc = ethicScore([3,4,8,10]);
-  let fs = ethicScore([7,9,11,12]);
-
-  // If all zero (no data for any ethic), return null
-  if (ec + pc + fs === 0) return null;
-
-  // Normalize to sum = 1 (barycentric weights)
-  const total = ec + pc + fs || 1;
-  ec /= total; pc /= total; fs /= total;
-
-  // Triangle: EC=top(0,1), PC=bottom-left(-0.866,-0.5), FS=bottom-right(0.866,-0.5)
-  const x = ec*0 + pc*(-0.866) + fs*0.866;
-  const y = ec*1  + pc*(-0.5)  + fs*(-0.5);
-
-  // Dominant ethic
-  const dominant = ec >= pc && ec >= fs ? 'EC' : pc >= fs ? 'PC' : 'FS';
-
-  return { x, y, ec, pc, fs, dominant };
-}
-
-// ========== MODERATION ==========
-function checkBanned(text) {
-  const lower = text.toLowerCase();
-  return BANNED_KEYWORDS.find(kw => lower.includes(kw)) || null;
-}
-
-function canEdit(post) {
-  if (!APP.currentUser) return false;
-  if (post.id === WELCOME_POST_ID) return APP.currentUser.isAdmin;
-  if (APP.currentUser.isAdmin) return true;
-  if (post.userId !== APP.currentUser.id) return false;
-  return Date.now() - new Date(post.createdAt).getTime() < CONFIG.editWindowMs;
-}
-
-function canDelete(post) {
-  if (!APP.currentUser) return false;
-  return APP.currentUser.isAdmin && post.id !== WELCOME_POST_ID;
-}
-
-// ========== UTILITIES ==========
-function g(id) { return document.getElementById(id); }
-function timeAgo(iso) {
-  const diff = Date.now() - new Date(iso).getTime();
-  const m = Math.floor(diff/60000);
-  if (m<1) return 'just now';
-  if (m<60) return m+'m ago';
-  const h = Math.floor(m/60);
-  if (h<24) return h+'h ago';
-  return Math.floor(h/24)+'d ago';
-}
-function valLabel(v) {
-  return {'-2':'Strongly Disagree','-1':'Disagree','0':'Neutral','1':'Agree','2':'Strongly Agree'}[v] || '';
-}
-function valClass(v) {
-  return {'2':'val-strong-agree','1':'val-agree','0':'val-neutral','-1':'val-disagree','-2':'val-strong-disagree'}[v] || '';
-}
-function userInitial(username) { return (username||'?')[0].toUpperCase(); }
-function avatarHTML(user, size) {
-  const s = size||20;
-  const color = (user && user.avatarColor) || '#666';
-  const init = user ? userInitial(user.username) : '?';
-  return `<div class="avatar-dot" style="width:${s}px;height:${s}px;background:${color};font-size:${Math.floor(s*0.38)}px;">${init}</div>`;
-}
-function toast(msg) {
-  const el = g('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2800);
-}
-function showAuthErr(msg) {
-  const el = g('auth-err');
-  el.textContent = msg;
-  el.classList.add('show');
-}
-
-// ========== AUTH UI ==========
-function togglePw(inputId, btn) {
-  const input = g(inputId);
-  const showing = input.type === 'text';
-  input.type = showing ? 'password' : 'text';
-  btn.innerHTML = showing
-    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
-    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
-}
-function switchAuthTab(tab) {
-  g('auth-err').classList.remove('show');
-  if (tab === 'signin') {
-    g('auth-signin').style.display = 'block';
-    g('auth-signup').style.display = 'none';
-    g('tab-signin-btn').classList.add('active');
-    g('tab-signup-btn').classList.remove('active');
-    g('auth-main-heading').innerHTML = 'Your <em>roots</em> are waiting.';
-    g('auth-main-sub').textContent = 'Sign in to see where you stand — your answers, your position on the map, and the conversations you left off.';
-    g('auth-nav-label').textContent = 'New to Common Ground?';
-    g('auth-nav-link').textContent = 'Join →';
-    g('auth-nav-link').onclick = () => switchAuthTab('signup');
-  } else {
-    g('auth-signin').style.display = 'none';
-    g('auth-signup').style.display = 'block';
-    g('tab-signin-btn').classList.remove('active');
-    g('tab-signup-btn').classList.add('active');
-    g('auth-main-heading').innerHTML = 'Plant your <em>flag.</em>';
-    g('auth-main-sub').textContent = 'Create your profile, answer a few questions, and find where you land on the permaculture map.';
-    g('auth-nav-label').textContent = 'Already have an account?';
-    g('auth-nav-link').textContent = 'Sign in →';
-    g('auth-nav-link').onclick = () => switchAuthTab('signin');
-  }
-}
-
-['si-email','si-pass'].forEach(id => {
-  document.addEventListener('DOMContentLoaded', () => {
-    const el = g(id);
-    if (el) el.addEventListener('keydown', e => { if(e.key==='Enter') doSignIn(); });
-  });
-});
-
-// ========== APP LAUNCH ==========
-function launchApp() {
-  const user = APP.currentUser;
-  g('auth-screen').style.display = 'none';
-  const app = g('app');
-  app.classList.add('visible');
-
-  // Header
-  const avatar = g('hdr-avatar');
-  avatar.style.background = user.avatarColor;
-  avatar.textContent = userInitial(user.username);
-  g('hdr-username').textContent = user.username;
-  if (user.isAdmin) {
-    g('hdr-mod-badge').style.display = 'inline';
-    g('admin-tab-btn').style.display = 'inline-block';
-    // Show announcement option
-    const opt = g('np-type-announcement');
-    if (opt) opt.style.display = 'block';
-  }
-
-  renderMap();
-  renderQuestions();
-  renderForum();
-  if (user.isAdmin) renderAdmin();
-}
-
-// ========== TAB SWITCHING ==========
-function switchTab(name) {
-  APP.activeTab = name;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    if (b.getAttribute('onclick') === `switchTab('${name}')`) b.classList.add('active');
-  });
-  g('tab-' + name).classList.add('active');
-}
-
-// ========== MAP RENDERING ==========
-function renderMap() {
-  const svg = g('cg-svg');
-  const W = 340, H = 300;
-  const cx = W/2, cy = 155, r = 110;
-
-  // Triangle corners (EC top, PC bottom-left, FS bottom-right)
-  const corners = {
-    EC: { x: cx, y: cy - r },
-    PC: { x: cx - r*0.866, y: cy + r*0.5 },
-    FS: { x: cx + r*0.866, y: cy + r*0.5 },
-  };
-
-  const toSVG = (nx, ny) => ({
-    x: cx + nx * r,
-    y: cy - ny * r,
-  });
-
-  // Build SVG
-  let s = '';
-  // Triangle
-  s += `<polygon points="${corners.EC.x},${corners.EC.y} ${corners.PC.x},${corners.PC.y} ${corners.FS.x},${corners.FS.y}" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>`;
-  // Subtle inner grid lines
-  const midEC = corners.EC, midPC = corners.PC, midFS = corners.FS;
-  const centX = (midEC.x+midPC.x+midFS.x)/3, centY = (midEC.y+midPC.y+midFS.y)/3;
-  ['EC','PC','FS'].forEach(e => {
-    const c = corners[e];
-    s += `<line x1="${c.x}" y1="${c.y}" x2="${centX}" y2="${centY}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`;
-  });
-  // Corner labels
-  s += `<text x="${corners.EC.x}" y="${corners.EC.y-12}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" font-weight="600" fill="#4a7c59">Earth Care</text>`;
-  s += `<text x="${corners.PC.x-6}" y="${corners.PC.y+16}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" font-weight="600" fill="#C4872A">People Care</text>`;
-  s += `<text x="${corners.FS.x+6}" y="${corners.FS.y+16}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="10" font-weight="600" fill="#5b7fa6">Fair Share</text>`;
-
-  // User dots
-  const users = DB.getUsers();
-  const positioned = [];
-  users.forEach(user => {
-    const pos = computePosition(user.id);
-    if (!pos) return;
-    const sv = toSVG(pos.x, pos.y);
-    // Jitter if same position
-    const jitter = positioned.some(p => Math.abs(p.x-sv.x)<8 && Math.abs(p.y-sv.y)<8);
-    const jx = jitter ? (Math.random()-0.5)*10 : 0;
-    const jy = jitter ? (Math.random()-0.5)*10 : 0;
-    const px = Math.max(20, Math.min(W-20, sv.x+jx));
-    const py = Math.max(20, Math.min(H-20, sv.y+jy));
-    positioned.push({ x: px, y: py });
-    const isMe = APP.currentUser && user.id === APP.currentUser.id;
-    const dotR = isMe ? 7 : 5;
-    const color = user.avatarColor;
-    s += `<circle cx="${px}" cy="${py}" r="${dotR}" fill="${color}" stroke="${isMe?'rgba(255,255,255,0.5)':'rgba(0,0,0,0.3)'}" stroke-width="${isMe?1.5:1}" opacity="0.9">
-      <title>${user.username} (${ETHICS[pos.dominant].name})</title>
-    </circle>`;
-    if (isMe) {
-      s += `<text x="${px}" y="${py+18}" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="rgba(232,220,200,0.6)">${user.username}</text>`;
+async function loadVotes(){
+  // Try localStorage first
+  try{ const stored=localStorage.getItem(votesKey()); if(stored) APP.votes=JSON.parse(stored); }catch(e){}
+  // Also try Supabase answers
+  try{
+    const {data}=await sb.from('answers').select('question_id,value').eq('user_id',APP.user.id);
+    if(data&&data.length){
+      data.forEach(a=>{
+        const choice=a.value===1?'agree':a.value===-1?'disagree':'pass';
+        if(!APP.votes[a.question_id]) APP.votes[a.question_id]=choice;
+      });
     }
-  });
+  }catch(e){}
+  // Set stmtIndex past already-voted statements
+  let i=0;
+  while(i<APP.stmts.length && APP.votes[APP.stmts[i].id]) i++;
+  APP.stmtIndex=i;
+}
 
-  svg.innerHTML = s;
+async function saveVote(stmtId,choice){
+  APP.votes[stmtId]=choice;
+  try{ localStorage.setItem(votesKey(),JSON.stringify(APP.votes)); }catch(e){}
+  const val=choice==='agree'?1:choice==='disagree'?-1:0;
+  try{
+    await sb.from('answers').upsert({user_id:APP.user.id,question_id:stmtId,value:val},{onConflict:'user_id,question_id'});
+  }catch(e){}
+}
 
-  // My position info
-  const myPos = APP.currentUser ? computePosition(APP.currentUser.id) : null;
-  g('map-no-pos').style.display = myPos ? 'none' : 'block';
+// ══════════════════════════════════════════
+//  LAUNCH
+// ══════════════════════════════════════════
+function launchApp(){
+  g('auth-screen').style.display='none';
+  g('app').classList.add('visible');
 
-  // User list
-  const listEl = g('map-userlist-body');
-  if (!positioned.length) {
-    listEl.innerHTML = '<div style="font-size:12px;color:var(--text-faint)">No one on the map yet.</div>';
+  // Nav
+  const dot=g('nav-dot');
+  dot.style.background=APP.user.avatar_color||'#C4872A';
+  dot.textContent=initials(APP.user.username);
+  g('nav-username').textContent=APP.user.username;
+
+  renderVoteArea();
+  renderPosSidebar();
+  renderResults();
+  renderForum();
+  buildMapLegend();
+  startHero();
+  startMap();
+  g('app').addEventListener('scroll',onAppScroll,{passive:true});
+}
+
+function onAppScroll(){
+  const app=g('app');
+  const nav=g('cg-nav');
+  nav.style.boxShadow=app.scrollTop>10?'0 2px 20px rgba(0,0,0,0.3)':'none';
+}
+
+// ══════════════════════════════════════════
+//  VOTE AREA
+// ══════════════════════════════════════════
+function doVote(choice){
+  const stmt=APP.stmts[APP.stmtIndex];
+  if(!stmt) return;
+
+  // Animate card out
+  const card=document.querySelector('.vote-card');
+  if(card){
+    card.classList.add('slide-out-'+choice);
+    setTimeout(()=>commitVote(stmt,choice),330);
+  } else {
+    commitVote(stmt,choice);
+  }
+}
+
+async function commitVote(stmt,choice){
+  await saveVote(stmt.id,choice);
+  APP.lastVoted={id:stmt.id,text:stmt.text,choice};
+  APP.stmtIndex++;
+  renderVoteArea();
+  renderPosSidebar();
+  renderResults();
+  renderLastVoted();
+}
+
+function renderVoteArea(){
+  const area=g('vote-area');
+  const stmt=APP.stmts[APP.stmtIndex];
+  const answered=Object.values(APP.votes).filter(v=>v!=='pass').length;
+  const total=APP.stmts.length;
+
+  if(!stmt){
+    area.innerHTML=`<div class="vote-done">
+      <div class="vote-done-icon">🌱</div>
+      <div class="vote-done-title">You've responded to all ${total} statements.</div>
+      <div class="vote-done-sub">Your position is now on the map. Explore where you landed — and where others see things differently.</div>
+      <a class="btn-view-map" href="#map">View the map →</a>
+    </div>`;
     return;
   }
-  const withPos = users.filter(u => computePosition(u.id));
-  listEl.innerHTML = withPos.map(u => {
-    const pos = computePosition(u.id);
-    const ethic = ETHICS[pos.dominant];
-    return `<div class="map-user-item">
-      ${avatarHTML(u, 22)}
-      <div>
-        <div class="map-user-name">${escHtml(u.username)}</div>
-        <div class="map-user-ethic" style="color:${ethic.color}">${ethic.name}</div>
+
+  const idx=APP.stmtIndex+1;
+  const pctDone=Math.round(Object.keys(APP.votes).length/total*100);
+  area.innerHTML=`
+    <div class="vote-card entering" id="vote-card">
+      <div class="vote-author-row">
+        <div class="vote-avatar" style="background:${stmt.color}">${initials(stmt.who)}</div>
+        <div class="vote-author-info">
+          <div class="vote-who">${stmt.who}</div>
+          <div class="vote-role">${stmt.role}</div>
+        </div>
+        <div class="vote-counter">${idx} / ${total}</div>
+      </div>
+      <div class="vote-progress-bar"><div class="vote-progress-fill" style="width:${pctDone}%"></div></div>
+      <div class="vote-text">"${stmt.text}"</div>
+      <div class="vote-buttons">
+        <button class="vote-btn vote-btn-disagree" onclick="doVote('disagree')">✗ Disagree</button>
+        <button class="vote-btn vote-btn-pass" onclick="doVote('pass')">Pass</button>
+        <button class="vote-btn vote-btn-agree" onclick="doVote('agree')">✓ Agree</button>
       </div>
     </div>`;
-  }).join('');
+  // Trigger enter animation
+  requestAnimationFrame(()=>{ requestAnimationFrame(()=>{ const c=g('vote-card'); if(c){c.classList.remove('entering');c.classList.add('entered');} }); });
 }
 
-// ========== QUESTIONS RENDERING ==========
-function renderQuestions() {
-  const el = g('tab-questions');
-  const user = APP.currentUser;
-  const approvedQs = DB.getQuestions().filter(q => q.status === 'approved');
-  const userAnswers = DB.getUserAnswers(user.id);
-  const answeredIds = new Set(userAnswers.map(a => a.questionId));
-  const unanswered = approvedQs.filter(q => !answeredIds.has(q.id));
-  const answered   = approvedQs.filter(q =>  answeredIds.has(q.id));
+function renderLastVoted(){
+  const rev=g('result-reveal');
+  const lv=APP.lastVoted;
+  if(!lv||!POLIS){rev.style.display='none';return;}
+  rev.style.display='block';
 
-  const pct = approvedQs.length ? Math.round((answered.length/approvedQs.length)*100) : 0;
+  const parts=POLIS.participants;
+  let ag=0,ps=0,di=0,tot=0;
+  parts.forEach(p=>{ const v=p.votes[lv.id]; if(!v) return; tot++; if(v==='agree')ag++; else if(v==='disagree')di++; else ps++; });
 
-  let html = `<div class="q-progress-bar-wrap">
-    <div class="q-progress-label">You've answered ${answered.length} of ${approvedQs.length} questions</div>
-    <div class="q-progress-track"><div class="q-progress-fill" style="width:${pct}%"></div></div>
+  const choiceColor=lv.choice==='agree'?'#3d6630':lv.choice==='disagree'?'#b55c2a':'#8a6d2c';
+  const choiceLabel=lv.choice==='agree'?'You agreed ✓':lv.choice==='disagree'?'You disagreed ✗':'You passed';
+
+  const pc=pcts([ag,ps,di]);
+  const groups=CLUSTERS.map((c,ci)=>{
+    const cp=parts.filter(p=>p.ci===ci);
+    const voted=cp.filter(p=>p.votes[lv.id]&&p.votes[lv.id]!=='pass');
+    const a=cp.filter(p=>p.votes[lv.id]==='agree').length;
+    return {name:c.short,color:c.color,pct:voted.length?Math.round(a/voted.length*100):0};
+  });
+  const spread=Math.max(...groups.map(g=>g.pct))-Math.min(...groups.map(g=>g.pct));
+  const readLabel=spread>=40?'Groups see this differently':spread>=18?'Leaning, with some dissent':'Near consensus across groups';
+  const readColor=spread>=40?'#c0703e':spread>=18?'#9a7d3a':'#5f7d4f';
+
+  rev.innerHTML=`<div class="result-reveal">
+    <div class="result-choice-label" style="color:${choiceColor}">${choiceLabel}</div>
+    <div class="result-stmt">${lv.text}</div>
+    <div class="result-bars-label">Community response</div>
+    ${[['Agree','#5f7d4f',pc[0]],['Pass','rgba(92,61,10,0.3)',pc[1]],['Disagree','#c0703e',pc[2]]].map(([l,c,p])=>`
+      <div class="result-bar-row">
+        <div class="result-bar-label">${l}</div>
+        <div class="result-bar-track"><div class="result-bar-fill" style="width:${p}%;background:${c}"></div></div>
+        <div class="result-bar-pct">${p}%</div>
+      </div>`).join('')}
+    <div class="result-group-label">By group — % who agree</div>
+    ${groups.map(g=>`
+      <div class="result-group-row">
+        <div class="result-group-name" style="color:${g.color}">${g.name}</div>
+        <div class="result-group-track"><div class="result-group-fill" style="width:${g.pct}%;background:${g.color}"></div></div>
+        <div class="result-group-pct" style="color:${g.color}">${g.pct}%</div>
+      </div>`).join('')}
+    <div class="result-read" style="color:${readColor}">${readLabel}</div>
   </div>`;
+}
 
-  if (unanswered.length > 0) {
-    const q = unanswered[0];
-    const pTags = q.principles.map(id => {
-      const p = PRINCIPLES.find(x => x.id === id);
-      return p ? `<span class="q-principle-tag">${p.short}</span>` : '';
-    }).join('');
-    html += `<div class="q-card" id="current-q-card">
-      <div class="q-card-tag">SENSEMAKING</div>
-      <div class="q-card-body">"${escHtml(q.body)}"</div>
-      <div class="q-principles">${pTags}</div>
-      <div class="q-scale">
-        <button class="q-btn" onclick="answerQ('${q.id}', -2)">Strongly<br>Disagree</button>
-        <button class="q-btn" onclick="answerQ('${q.id}', -1)">Disagree</button>
-        <button class="q-btn" onclick="answerQ('${q.id}', 0)">Neutral</button>
-        <button class="q-btn" onclick="answerQ('${q.id}', 1)">Agree</button>
-        <button class="q-btn" onclick="answerQ('${q.id}', 2)">Strongly<br>Agree</button>
-      </div>
-    </div>`;
+// ══════════════════════════════════════════
+//  POSITION SIDEBAR
+// ══════════════════════════════════════════
+function renderPosSidebar(){
+  const answered=Object.values(APP.votes).filter(v=>v!=='pass').length;
+  const total=APP.stmts.length;
+  const voted=Object.keys(APP.votes).length;
+  const pctDone=Math.round(voted/total*100);
+
+  const body=g('pos-body');
+  let html=`
+    <div class="pos-progress-row">
+      <span class="pos-progress-text">Answered</span>
+      <span class="pos-progress-frac">${voted} / ${total}</span>
+    </div>
+    <div class="pos-progress-track"><div class="pos-progress-fill" style="width:${pctDone}%"></div></div>`;
+
+  if(answered<3){
+    html+=`<div class="pos-hint">Answer ${3-answered} more statement${3-answered!==1?'s':''} to see your cluster placement.</div>`;
   } else {
-    html += `<div class="q-all-done">
-      <div class="q-all-done-icon">+</div>
-      <div class="q-all-done-text">You've answered all current questions.<br>Your map position is fully updated.</div>
-    </div>`;
-  }
+    const you=computeYou(APP.votes);
+    const ci=you.ci;
+    const c=ci!=null?CLUSTERS[ci]:null;
 
-  if (answered.length) {
-    html += `<div class="q-answered-list">
-      <div class="q-answered-heading">Your Answers</div>`;
-    answered.forEach(q => {
-      const ans = userAnswers.find(a => a.questionId === q.id);
-      const v = ans ? ans.value : 0;
-      html += `<div class="q-answered-item">
-        <div class="q-answered-body">${escHtml(q.body)}</div>
-        <div class="q-answered-val ${valClass(v)}">${valLabel(v)}</div>
+    if(c){
+      html+=`<div class="pos-cluster-name" style="color:${c.color}">${c.name}</div>
+        <div class="pos-cluster-tag">${c.tagline}</div>`;
+    }
+
+    html+=`<div class="pos-affinity-label">Live alignment</div>`;
+    const aIds=Object.keys(APP.votes).filter(id=>APP.votes[id]!=='pass'&&STMTS.find(x=>x.id===id));
+    CLUSTERS.forEach((cl,i)=>{
+      let pct=0;
+      if(aIds.length){
+        let sum=0;
+        aIds.forEach(id=>{ const si=STMTS.findIndex(x=>x.id===id); const p=PROFILES[['stewards','builders','bridgers'][i]][si]; sum+=APP.votes[id]==='agree'?p:(1-p); });
+        pct=Math.round(sum/aIds.length*100);
+      }
+      html+=`<div class="pos-aff-row">
+        <div class="pos-aff-name" style="color:${cl.color}">${cl.short}</div>
+        <div class="pos-aff-track"><div class="pos-aff-fill" style="width:${pct}%;background:${cl.color}"></div></div>
+        <div class="pos-aff-pct">${pct}%</div>
       </div>`;
     });
-    html += `</div>`;
   }
 
-  html += `<div class="q-propose-wrap">
-    <button class="btn-ghost" onclick="openProposeQ()">+ Propose a question</button>
-  </div>`;
-
-  el.innerHTML = html;
+  body.innerHTML=html;
 }
 
-async function answerQ(questionId, value) {
-  const { error } = await sb.from('answers').upsert(
-    { user_id: APP.currentUser.id, question_id: questionId, value },
-    { onConflict: 'user_id,question_id' }
-  );
-  if (error) { toast('Error saving answer.'); return; }
-  // Update local cache
-  const i = APP.answers.findIndex(a => a.userId === APP.currentUser.id && a.questionId === questionId);
-  const norm = normalizeAnswer({ user_id: APP.currentUser.id, question_id: questionId, value, created_at: new Date().toISOString() });
-  if (i >= 0) APP.answers[i] = norm; else APP.answers.push(norm);
-  renderQuestions();
-  renderMap();
-  toast('Answer saved. Map updated.');
-}
+// ══════════════════════════════════════════
+//  RESULTS
+// ══════════════════════════════════════════
+function renderResults(){
+  const body=g('results-body');
+  const answered=Object.values(APP.votes).filter(v=>v!=='pass').length;
 
-// ========== FORUM RENDERING ==========
-function setGroupFilter(groupId, btn) {
-  APP.groupFilter = groupId;
-  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  renderForum();
-}
-
-function renderForum() {
-  const listEl = g('posts-list');
-  if (!listEl) return;
-  let posts = DB.getPosts();
-  // Filter
-  if (APP.groupFilter) posts = posts.filter(p => p.groupId === APP.groupFilter);
-  // Sort: pinned first, then by date desc
-  posts = posts
-    .filter(p => p.status === 'live' || p.id === WELCOME_POST_ID || (APP.currentUser && APP.currentUser.isAdmin))
-    .sort((a,b) => {
-      if (a.pinned && !b.pinned) return -1;
-      if (!a.pinned && b.pinned) return 1;
-      return new Date(b.createdAt) - new Date(a.createdAt);
-    });
-
-  if (!posts.length) {
-    listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">...</div>No posts yet in this space.</div>';
-    return;
-  }
-
-  listEl.innerHTML = posts.map(post => postCardHTML(post)).join('');
-}
-
-function postCardHTML(post) {
-  const user = post.authorOverride || DB.getUser(post.userId);
-  const username = user ? user.username : 'Unknown';
-  const isAdmin = user ? user.isAdmin : false;
-  const avatarColor = user && !post.authorOverride ? user.avatarColor : '#C4872A';
-  const initial = userInitial(username);
-
-  const groupLabel = post.groupId ? GROUPS.find(g=>g.id===post.groupId)?.name : '';
-  const excerpt = post.body.replace(/\n/g,' ').substring(0,160) + (post.body.length>160?'...':'');
-  const isPending = post.status === 'pending';
-  const editBtn = canEdit(post) ? `<button class="btn-edit-small" onclick="event.stopPropagation();openEditPost('${post.id}')">Edit</button>` : '';
-
-  const typeClass = {'announcement':'tag-announcement','discussion':'tag-discussion','resource':'tag-resource'}[post.type] || 'tag-discussion';
-  const typeLabel = post.type;
-  const pendingBadge = isPending ? `<span class="post-type-tag tag-pending">Pending Review</span>` : '';
-
-  const titleDisplay = post.id === WELCOME_POST_ID ? `<em>!!</em>${escHtml(post.title)}<em>!!</em>` : escHtml(post.title);
-  const titleClass = post.id === WELCOME_POST_ID ? 'post-title post-welcome-title' : 'post-title';
-
-  return `<div class="post-card${post.pinned?' pinned':''}" onclick="viewPost('${post.id}')">
-    <div class="post-meta">
-      <div class="post-avatar" style="background:${avatarColor}">${initial}</div>
-      <span class="post-author">${escHtml(username)}</span>
-      ${isAdmin ? '<span class="post-mod-badge">Moderator</span>' : ''}
-      <span class="post-type-tag ${typeClass}">${typeLabel}</span>
-      ${pendingBadge}
-      <span class="post-time">${timeAgo(post.createdAt)}</span>
-    </div>
-    <div class="${titleClass}">${titleDisplay}</div>
-    <div class="post-excerpt">${escHtml(excerpt)}</div>
-    <div class="post-footer">
-      ${groupLabel ? `<span class="post-group-label">${escHtml(groupLabel)}</span>` : ''}
-      <span class="post-group-label">${(post.comments||[]).length} comment${(post.comments||[]).length!==1?'s':''}</span>
-      ${editBtn}
-    </div>
-  </div>`;
-}
-
-// ========== POST VIEW ==========
-function viewPost(postId) {
-  APP.viewingPostId = postId;
-  const post = DB.getPost(postId);
-  if (!post) return;
-  const user = post.authorOverride || DB.getUser(post.userId);
-  const username = user ? user.username : 'Unknown';
-  const isAdmin = user ? user.isAdmin : false;
-  const avatarColor = user && !post.authorOverride ? user.avatarColor : '#C4872A';
-  const typeClass = {'announcement':'tag-announcement','discussion':'tag-discussion','resource':'tag-resource'}[post.type] || 'tag-discussion';
-
-  const titleDisplay = post.id === WELCOME_POST_ID ? `<em>!!</em>${escHtml(post.title)}<em>!!</em>` : escHtml(post.title);
-  const titleClass = post.id === WELCOME_POST_ID ? 'modal-title welcome' : 'modal-title';
-
-  g('pv-title-display').className = titleClass;
-  g('pv-title-display').innerHTML = titleDisplay;
-  g('pv-meta').innerHTML = `
-    <div class="post-avatar" style="background:${avatarColor};width:22px;height:22px;font-size:9px">${userInitial(username)}</div>
-    <span class="post-author">${escHtml(username)}</span>
-    ${isAdmin ? '<span class="post-mod-badge">Moderator</span>' : ''}
-    <span class="post-type-tag ${typeClass}">${post.type}</span>
-    <span class="post-time">${timeAgo(post.createdAt)}</span>
-  `;
-  g('pv-body').textContent = post.body;
-  g('pv-edited').textContent = post.updatedAt ? `Edited ${timeAgo(post.updatedAt)}` : '';
-
-  // Comments
-  const comments = post.comments || [];
-  g('pv-comments').innerHTML = comments.length ? comments.map(c => {
-    const cu = DB.getUser(c.userId);
-    const cn = cu ? cu.username : 'Unknown';
-    const cc = cu ? cu.avatarColor : '#666';
-    return `<div class="comment-item">
-      <div class="comment-meta">
-        <div class="post-avatar" style="background:${cc};width:18px;height:18px;font-size:7px">${userInitial(cn)}</div>
-        <span class="comment-author">${escHtml(cn)}</span>
-        <span class="comment-time">${timeAgo(c.createdAt)}</span>
-      </div>
-      <div class="comment-body">${escHtml(c.body)}</div>
+  if(answered<3){
+    body.innerHTML=`<div class="results-locked">
+      Answer at least 3 statements to unlock the breakdown.<br>
+      <a onclick="document.querySelector('#vote-section').scrollIntoView({behavior:'smooth'})">Go to the voting section →</a>
     </div>`;
-  }).join('') : '<div style="font-size:12px;color:var(--text-faint);padding:8px 0">No comments yet.</div>';
-
-  g('pv-comment-input').value = '';
-
-  const footer = g('pv-footer');
-  footer.innerHTML = '';
-  if (canEdit(post)) {
-    const editBtn = document.createElement('button');
-    editBtn.className = 'btn-ghost';
-    editBtn.textContent = 'Edit Post';
-    editBtn.onclick = () => { closeModal('modal-post-view'); openEditPost(postId); };
-    footer.appendChild(editBtn);
-  }
-  if (canDelete(post)) {
-    const delBtn = document.createElement('button');
-    delBtn.className = 'btn-ghost';
-    delBtn.style.color = 'rgba(229,85,85,0.7)';
-    delBtn.textContent = 'Delete';
-    delBtn.onclick = async () => {
-      if (!confirm('Delete this post?')) return;
-      const { error } = await sb.from('posts').delete().eq('id', postId);
-      if (error) { toast('Error deleting post.'); return; }
-      APP.posts = APP.posts.filter(p => p.id !== postId);
-      closeModal('modal-post-view');
-      renderForum();
-      toast('Post deleted.');
-    };
-    footer.appendChild(delBtn);
-  }
-
-  openModal('modal-post-view');
-}
-
-async function submitComment() {
-  const postId = APP.viewingPostId;
-  const body = g('pv-comment-input').value.trim();
-  if (!body) return;
-  const { data: newComment, error } = await sb.from('comments').insert({
-    post_id: postId,
-    user_id: APP.currentUser.id,
-    body,
-    created_at: new Date().toISOString(),
-  }).select().single();
-  if (error) { toast('Error posting comment.'); return; }
-  const post = DB.getPost(postId);
-  if (post) {
-    if (!post.comments) post.comments = [];
-    post.comments.push(normalizeComment(newComment));
-  }
-  viewPost(postId);
-  renderForum();
-  toast('Comment added.');
-}
-
-// ========== NEW POST ==========
-function openNewPost() {
-  g('np-title').value = '';
-  g('np-body').value = '';
-  g('np-type').value = 'discussion';
-  g('np-group').value = '';
-  g('np-banned-warn').classList.remove('show');
-  openModal('modal-new-post');
-}
-
-async function submitPost() {
-  const title   = g('np-title').value.trim();
-  const body    = g('np-body').value.trim();
-  const type    = g('np-type').value;
-  const groupId = g('np-group').value || null;
-
-  if (!title) { toast('Please add a title.'); return; }
-  if (!body)  { toast('Please add some content.'); return; }
-  if (type === 'announcement' && !APP.currentUser.isAdmin) { toast('Only moderators can post announcements.'); return; }
-
-  const banned = checkBanned(title + ' ' + body);
-  const status = banned ? 'pending' : 'live';
-  if (banned) {
-    g('np-banned-warn').textContent = `Your post contains a flagged term ("${banned}") and will be reviewed before going live.`;
-    g('np-banned-warn').classList.add('show');
-    if (!confirm('This post will be held for review before going live. Submit anyway?')) return;
-  }
-
-  const now = new Date().toISOString();
-  const id = crypto.randomUUID ? crypto.randomUUID() : ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16));
-  const { data: newPost, error } = await sb.from('posts').insert({
-    id, user_id: APP.currentUser.id, title, body,
-    type, group_id: groupId, pinned: false, status, created_at: now,
-  }).select().single();
-
-  if (error) { toast('Error creating post.'); return; }
-  APP.posts.unshift(normalizePost(newPost, []));
-  closeModal('modal-new-post');
-  renderForum();
-  switchTab('forum');
-  toast(status === 'pending' ? 'Post submitted for review.' : 'Post published.');
-}
-
-// ========== EDIT POST ==========
-function openEditPost(postId) {
-  APP.editingPostId = postId;
-  const post = DB.getPost(postId);
-  if (!post || !canEdit(post)) return;
-
-  g('ep-title').value = post.title;
-  g('ep-body').value  = post.body;
-  g('ep-banned-warn').classList.remove('show');
-
-  const msLeft = CONFIG.editWindowMs - (Date.now() - new Date(post.createdAt).getTime());
-  const hrsLeft = Math.max(0, Math.floor(msLeft / 3600000));
-  const noteEl = g('ep-window-note');
-  if (!APP.currentUser.isAdmin) {
-    noteEl.textContent = `You can edit this post for ${hrsLeft > 0 ? `${hrsLeft}h more` : 'a short time still'}.`;
-  } else {
-    noteEl.textContent = 'Editing as moderator.';
-  }
-  openModal('modal-edit-post');
-}
-
-async function saveEditPost() {
-  const postId = APP.editingPostId;
-  const post = DB.getPost(postId);
-  if (!post || !canEdit(post)) return;
-
-  const title = g('ep-title').value.trim();
-  const body  = g('ep-body').value.trim();
-  if (!title || !body) { toast('Title and body are required.'); return; }
-
-  const banned = checkBanned(title + ' ' + body);
-  let status = post.status;
-  if (banned) {
-    g('ep-banned-warn').textContent = `Contains flagged term "${banned}". Edit will set post to pending review.`;
-    g('ep-banned-warn').classList.add('show');
-    if (!confirm('Save with flagged content (post goes back to pending review)?')) return;
-    status = 'pending';
-  }
-
-  const updatedAt = new Date().toISOString();
-  const { error } = await sb.from('posts').update({ title, body, status, updated_at: updatedAt }).eq('id', postId);
-  if (error) { toast('Error updating post.'); return; }
-
-  // Update cache
-  Object.assign(post, { title, body, status, updatedAt });
-  closeModal('modal-edit-post');
-  renderForum();
-  if (APP.viewingPostId === postId) viewPost(postId);
-  toast('Post updated.');
-}
-
-// ========== PROPOSE QUESTION ==========
-function openProposeQ() {
-  g('pq-body').value = '';
-  g('pq-count').textContent = '0 / 200';
-  g('pq-banned-warn').classList.remove('show');
-
-  // Build principle checkboxes
-  const grid = g('pq-principles');
-  grid.innerHTML = PRINCIPLES.map(p => `
-    <label class="principle-check">
-      <input type="checkbox" name="pq-p" value="${p.id}">
-      <span class="principle-check-label">
-        <span class="principle-check-num">${p.id}.</span> ${p.short}
-        <span style="color:${ETHICS[p.ethic].color};font-size:9px;margin-left:3px">${p.ethic}</span>
-      </span>
-    </label>
-  `).join('');
-
-  const textarea = g('pq-body');
-  textarea.oninput = () => {
-    g('pq-count').textContent = `${textarea.value.length} / 200`;
-    const banned = checkBanned(textarea.value);
-    if (banned) {
-      g('pq-banned-warn').textContent = `Contains flagged term "${banned}". This question will be auto-rejected.`;
-      g('pq-banned-warn').classList.add('show');
-    } else {
-      g('pq-banned-warn').classList.remove('show');
-    }
-  };
-
-  openModal('modal-propose-q');
-}
-
-async function submitProposedQ() {
-  const body = g('pq-body').value.trim();
-  if (!body || body.length < 10) { toast('Please write a fuller statement.'); return; }
-  if (body.length > 200) { toast('Keep it under 200 characters.'); return; }
-
-  const banned = checkBanned(body);
-  if (banned) {
-    toast(`Question rejected: contains flagged term "${banned}".`);
-    closeModal('modal-propose-q');
     return;
   }
 
-  const selected = [...document.querySelectorAll('input[name="pq-p"]:checked')].map(c => parseInt(c.value));
-  if (!selected.length) { toast('Select at least one principle.'); return; }
-
-  const { data: newQ, error } = await sb.from('questions').insert({
-    body, principles: selected, status: 'pending',
-    proposed_by: APP.currentUser.id,
-    created_at: new Date().toISOString(),
-  }).select().single();
-  if (error) { toast('Error submitting question.'); return; }
-  APP.questions.push(normalizeQuestion(newQ));
-  closeModal('modal-propose-q');
-  toast('Question submitted for review.');
-  if (APP.currentUser.isAdmin) renderAdmin();
-}
-
-// ========== ADMIN TAB ==========
-function renderAdmin() {
-  const el = g('tab-admin');
-  const users     = DB.getUsers();
-  const questions = DB.getQuestions();
-  const answers   = DB.getAnswers();
-  const posts     = DB.getPosts();
-
-  const pending = questions.filter(q => q.status === 'pending');
-  const pendingPosts = posts.filter(p => p.status === 'pending' && p.id !== WELCOME_POST_ID);
-
-  let html = `<div class="admin-heading">Moderator Panel</div>
-  <div class="admin-stats">
-    <div class="stat-card"><div class="stat-num">${users.length}</div><div class="stat-label">Members</div></div>
-    <div class="stat-card"><div class="stat-num">${questions.filter(q=>q.status==='approved').length}</div><div class="stat-label">Questions</div></div>
-    <div class="stat-card"><div class="stat-num">${posts.filter(p=>p.status==='live').length}</div><div class="stat-label">Posts</div></div>
-  </div>`;
-
-  html += `<div class="admin-section-label">Pending Questions (${pending.length})</div>`;
-  if (!pending.length) {
-    html += '<div class="admin-empty">No pending questions.</div>';
-  } else {
-    html += pending.map(q => {
-      const proposer = DB.getUser(q.proposedBy);
-      const pName = proposer ? proposer.username : 'Unknown';
-      const pTags = q.principles.map(id => PRINCIPLES.find(p=>p.id===id)?.short||'').join(', ');
-      return `<div class="pending-q-card">
-        <div class="pending-q-body">"${escHtml(q.body)}"</div>
-        <div class="pending-q-by">Proposed by ${escHtml(pName)} &middot; Principles: ${escHtml(pTags)}</div>
-        <div class="pending-q-actions">
-          <button class="btn-approve" onclick="approveQ('${q.id}')">Approve</button>
-          <button class="btn-reject"  onclick="rejectQ('${q.id}')">Reject</button>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  html += `<div class="admin-section-label" style="margin-top:24px">Pending Posts (${pendingPosts.length})</div>`;
-  if (!pendingPosts.length) {
-    html += '<div class="admin-empty">No pending posts.</div>';
-  } else {
-    html += pendingPosts.map(p => {
-      const author = DB.getUser(p.userId);
-      const aName = author ? author.username : 'Unknown';
-      return `<div class="pending-q-card">
-        <div class="pending-q-body"><strong>${escHtml(p.title)}</strong><br><span style="font-size:12px;color:var(--text-dim)">${escHtml(p.body.substring(0,100))}...</span></div>
-        <div class="pending-q-by">By ${escHtml(aName)}</div>
-        <div class="pending-q-actions">
-          <button class="btn-approve" onclick="approvePost('${p.id}')">Approve</button>
-          <button class="btn-reject"  onclick="rejectPost('${p.id}')">Reject</button>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  el.innerHTML = html;
-}
-
-async function approveQ(id) {
-  const { error } = await sb.from('questions').update({ status: 'approved' }).eq('id', id);
-  if (error) { toast('Error.'); return; }
-  const q = DB.getQuestion(id); if (q) q.status = 'approved';
-  renderAdmin(); renderQuestions(); toast('Question approved and live.');
-}
-async function rejectQ(id) {
-  const { error } = await sb.from('questions').update({ status: 'rejected' }).eq('id', id);
-  if (error) { toast('Error.'); return; }
-  const q = DB.getQuestion(id); if (q) q.status = 'rejected';
-  renderAdmin(); toast('Question rejected.');
-}
-async function approvePost(id) {
-  const { error } = await sb.from('posts').update({ status: 'live' }).eq('id', id);
-  if (error) { toast('Error.'); return; }
-  const p = DB.getPost(id); if (p) p.status = 'live';
-  renderAdmin(); renderForum(); toast('Post approved and live.');
-}
-async function rejectPost(id) {
-  const { error } = await sb.from('posts').update({ status: 'rejected' }).eq('id', id);
-  if (error) { toast('Error.'); return; }
-  const p = DB.getPost(id); if (p) p.status = 'rejected';
-  renderAdmin(); renderForum(); toast('Post rejected.');
-}
-
-// ========== PROFILE ==========
-function openProfile() {
-  const user = APP.currentUser;
-  const pos = computePosition(user.id);
-  const ethic = pos ? ETHICS[pos.dominant] : null;
-
-  g('prof-title').textContent = user.username;
-  const practiceLabels = { grower:'Grower', teacher:'Teacher / Educator', designer:'Permaculture Designer', learner:'Learner', other:'Other' };
-  let posHtml = pos
-    ? `<div class="profile-pos">Map position: <strong style="color:${ethic.color}">${ethic.name}</strong> oriented &mdash; EC ${Math.round(pos.ec*100)}% / PC ${Math.round(pos.pc*100)}% / FS ${Math.round(pos.fs*100)}%</div>`
-    : `<div class="profile-pos">Answer some questions to get a map position.</div>`;
-
-  g('prof-body').innerHTML = `
-    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-      <div class="avatar-dot" style="width:48px;height:48px;background:${user.avatarColor};font-size:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a1208;font-weight:700">${userInitial(user.username)}</div>
-      <div>
-        <div style="font-size:16px;font-weight:600;color:var(--text)">${escHtml(user.username)}</div>
-        ${user.isAdmin ? '<div class="post-mod-badge" style="display:inline-block;margin-top:4px">Moderator</div>' : ''}
-      </div>
+  const {consensus,divides}=POLIS;
+  body.innerHTML=`<div class="results-grid">
+    <div>
+      <div class="results-col-title"><span style="background:#5f7d4f"></span>Near Consensus</div>
+      ${consensus.map(r=>groupBarCard(r)).join('')}
     </div>
-    ${user.location ? `<div class="profile-location">${escHtml(user.location)}</div>` : ''}
-    ${user.bio ? `<div class="profile-bio">${escHtml(user.bio)}</div>` : ''}
-    <div class="profile-practice">${practiceLabels[user.practice]||user.practice}</div>
-    ${posHtml}
-  `;
-
-  g('prof-footer').innerHTML = `
-    <button class="btn-ghost" onclick="openEditProfile()">Edit Profile</button>
-    <button class="btn-ghost" onclick="closeModal('modal-profile')">Close</button>
-  `;
-  openModal('modal-profile');
+    <div>
+      <div class="results-col-title"><span style="background:#c0703e"></span>Groups See It Differently</div>
+      ${divides.map(r=>groupBarCard(r)).join('')}
+    </div>
+  </div>`;
 }
 
-function openEditProfile() {
-  const user = APP.currentUser;
-  g('prof-title').textContent = 'Edit Profile';
-  g('prof-body').innerHTML = `
-    <div class="form-row"><label class="form-label">Username</label>
-      <input type="text" class="modal-input" id="ep-username" value="${escAttr(user.username)}" maxlength="30"></div>
-    <div class="form-row"><label class="form-label">Location</label>
-      <input type="text" class="modal-input" id="ep-location" value="${escAttr(user.location||'')}" placeholder="Metro Manila, Oriental Mindoro..."></div>
-    <div class="form-row"><label class="form-label">Bio</label>
-      <textarea class="modal-textarea" id="ep-bio" rows="3" placeholder="A sentence or two about what you do...">${escHtml(user.bio||'')}</textarea></div>
-    <div class="form-row"><label class="form-label">Practice</label>
-      <select class="modal-select" id="ep-practice">
-        <option value="grower" ${user.practice==='grower'?'selected':''}>Grower</option>
-        <option value="teacher" ${user.practice==='teacher'?'selected':''}>Teacher / Educator</option>
-        <option value="designer" ${user.practice==='designer'?'selected':''}>Permaculture Designer</option>
-        <option value="learner" ${user.practice==='learner'?'selected':''}>Learner</option>
-        <option value="other" ${user.practice==='other'?'selected':''}>Other</option>
-      </select></div>
-  `;
-  g('prof-footer').innerHTML = `
-    <button class="btn-ghost" onclick="openProfile()">Cancel</button>
-    <button class="btn-primary" style="width:auto;padding:8px 20px" onclick="saveProfile()">Save</button>
-  `;
+function groupBarCard(r){
+  return `<div class="r-stmt-card">
+    <div class="r-stmt-text">"${r.st.text}"</div>
+    ${CLUSTERS.map((c,i)=>`<div class="r-group-row">
+      <div class="r-group-name" style="color:${c.color}">${c.short}</div>
+      <div class="r-group-track"><div class="r-group-fill" style="width:${r.v[i]}%;background:${c.color}"></div></div>
+      <div class="r-group-pct" style="color:${c.color}">${r.v[i]}%</div>
+    </div>`).join('')}
+  </div>`;
 }
 
-async function saveProfile() {
-  const user = APP.currentUser;
-  const newUsername = g('ep-username').value.trim();
-  if (!newUsername) { toast('Username cannot be empty.'); return; }
-  const taken = DB.getUsers().find(u => u.id !== user.id && u.username.toLowerCase() === newUsername.toLowerCase());
-  if (taken) { toast('That username is taken.'); return; }
+// ══════════════════════════════════════════
+//  FORUM
+// ══════════════════════════════════════════
+function renderForum(){
+  const grid=g('forum-grid');
+  grid.innerHTML=APP.forum.map(q=>`
+    <div class="forum-card">
+      <div class="forum-card-author">
+        <div class="forum-card-avatar" style="background:${q.color}">${initials(q.who)}</div>
+        <div>
+          <div class="forum-card-who">${q.who}</div>
+          <div class="forum-card-role">${q.role}</div>
+        </div>
+        <div class="forum-card-ago">${q.ago}</div>
+      </div>
+      <div class="forum-card-text">${q.text}</div>
+      <div class="forum-card-bars">
+        <div class="forum-bar-row"><div class="forum-bar-label">Agree</div><div class="forum-bar-track"><div class="forum-bar-fill-agree" style="width:${q.agree}%"></div></div><div class="forum-bar-pct">${q.agree}%</div></div>
+        <div class="forum-bar-row"><div class="forum-bar-label">Pass</div><div class="forum-bar-track"><div class="forum-bar-fill-pass" style="width:${q.pass}%"></div></div><div class="forum-bar-pct">${q.pass}%</div></div>
+        <div class="forum-bar-row"><div class="forum-bar-label">Disagree</div><div class="forum-bar-track"><div class="forum-bar-fill-disagree" style="width:${q.disagree}%"></div></div><div class="forum-bar-pct">${q.disagree}%</div></div>
+      </div>
+      <div class="forum-card-footer">
+        <div class="forum-card-status" style="color:${q.statusFg};background:${q.statusBg}">${q.status}</div>
+        <div class="forum-card-responses">${q.responses} responses</div>
+        <div class="forum-card-actions">
+          <button class="btn-forum btn-forum-primary" onclick="weighIn('${q.id}')">Weigh in</button>
+          <button class="btn-forum" onclick="openThread('${q.id}')">Discuss</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
 
-  const updates = {
-    username: newUsername,
-    location: g('ep-location').value.trim(),
-    bio: g('ep-bio').value.trim(),
-    practice: g('ep-practice').value,
+function weighIn(id){
+  const q=APP.forum.find(x=>x.id===id);
+  if(!q||q.queued) return;
+  q.queued=true;
+  APP.stmts.push({id:'f-'+q.id,text:q.text,who:q.who,role:q.role,color:q.color});
+  toast('Added to your voting queue — scroll up to respond.');
+  renderForum();
+}
+
+function pitchQuestion(){
+  const inp=g('propose-input');
+  const v=(inp.value||'').trim();
+  if(!v) return;
+  const id='u'+Date.now();
+  APP.stmts.push({id:'f-'+id,text:v,who:APP.user.username,role:'Member',color:'#C4872A'});
+  APP.forum.unshift({id,text:v,who:APP.user.username,role:'Member',ago:'just now',color:'#C4872A',responses:1,agree:100,pass:0,disagree:0,status:'Gathering responses',statusFg:'#8a6d2c',statusBg:'rgba(184,146,74,0.16)',queued:true,thread:[]});
+  inp.value='';
+  toast('Your question is in the voting queue.');
+  renderForum();
+}
+
+// THREAD
+function openThread(id){
+  APP.openThreadId=id;
+  const q=APP.forum.find(x=>x.id===id);
+  if(!q) return;
+  g('thread-question').textContent=q.text;
+  renderThreadMessages(q);
+  g('thread-panel').classList.add('open');
+}
+
+function renderThreadMessages(q){
+  const el=g('thread-messages');
+  el.innerHTML=(q.thread||[]).map(m=>`
+    <div class="thread-msg${m.mine?' mine':''}">
+      <div class="thread-msg-header">
+        <div class="thread-msg-avatar" style="background:${m.color}">${initials(m.who)}</div>
+        <div>
+          <div class="thread-msg-who">${m.who}</div>
+          <div class="thread-msg-role">${m.role}</div>
+        </div>
+        <div class="thread-msg-ago">${m.ago}</div>
+      </div>
+      <div class="thread-msg-text">${m.text}</div>
+    </div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+function sendThreadMsg(){
+  const inp=g('thread-input'); const v=(inp.value||'').trim(); if(!v) return;
+  const q=APP.forum.find(x=>x.id===APP.openThreadId); if(!q) return;
+  const ci=APP.votes&&Object.keys(APP.votes).filter(id=>APP.votes[id]!=='pass').length>=3?computeYou(APP.votes).ci:null;
+  const role=ci!=null?CLUSTERS[ci].name:'Member';
+  const color=ci!=null?CLUSTERS[ci].color:'#9c7b3a';
+  q.thread.push({who:APP.user.username,role,color,ago:'now',text:v,mine:true});
+  q.responses++;
+  inp.value='';
+  renderThreadMessages(q);
+}
+
+function closeThread(){
+  g('thread-panel').classList.remove('open');
+  APP.openThreadId=null;
+}
+
+// Enter key for thread
+document.addEventListener('DOMContentLoaded',()=>{
+  ['thread-input'].forEach(id=>{ const el=g(id); if(el) el.addEventListener('keydown',e=>{ if(e.key==='Enter') sendThreadMsg(); }); });
+  ['si-email','si-pass'].forEach(id=>{ const el=g(id); if(el) el.addEventListener('keydown',e=>{ if(e.key==='Enter') doSignIn(); }); });
+});
+
+// ══════════════════════════════════════════
+//  CLUSTER PANEL
+// ══════════════════════════════════════════
+function buildMapLegend(){
+  const leg=g('map-legend');
+  leg.innerHTML=CLUSTERS.map(c=>`<div class="legend-item-row"><div class="legend-dot" style="background:${c.color}"></div><div class="legend-item-name">${c.name}</div></div>`).join('');
+}
+
+function openClusterPanel(ci){
+  const c=CLUSTERS[ci];
+  g('drawer-header').style.background=c.color;
+  g('drawer-name').textContent=c.name;
+  g('drawer-tagline').textContent=c.tagline;
+  g('drawer-lead').textContent=c.lead;
+  g('drawer-beliefs').innerHTML=c.beliefs.map(b=>`<div class="drawer-belief">${b}</div>`).join('');
+  g('drawer-differs').textContent=c.differs;
+  g('cluster-panel').classList.add('open');
+}
+function closeClusterPanel(){ g('cluster-panel').classList.remove('open'); }
+
+// ══════════════════════════════════════════
+//  HERO CANVAS
+// ══════════════════════════════════════════
+function startHero(){
+  const cv=g('hero-canvas'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  let W,H,nodes,edges,signals;
+
+  const rng=rng32(1337);
+  const fit=()=>{ const r=cv.getBoundingClientRect(); const dpr=Math.min(2,devicePixelRatio||1); cv.width=Math.max(1,r.width*dpr); cv.height=Math.max(1,r.height*dpr); ctx.setTransform(dpr,0,0,dpr,0,0); W=r.width; H=r.height; };
+  fit(); new ResizeObserver(fit).observe(cv);
+
+  const build=()=>{
+    const N=28; nodes=[];
+    for(let i=0;i<N;i++) nodes.push({x:0.04+rng()*0.92,y:0.06+rng()*0.9,depth:rng(),r:1.5+rng()*2.4,phase:rng()*6.28,spore:rng()<0.36});
+    edges=[]; const seen=new Set();
+    nodes.forEach((p,i)=>{ const d=nodes.map((q,j)=>[(p.x-q.x)**2+(p.y-q.y)**2,j]).filter(e=>e[1]!==i).sort((a,b)=>a[0]-b[0]); for(let k=0;k<2;k++){ const j=d[k][1]; const key=i<j?i+'-'+j:j+'-'+i; if(seen.has(key))continue; seen.add(key); edges.push({a:i,b:j,bow:(rng()-0.5)*0.18,phase:rng()*6.28,grn:rng()<0.4}); } });
+    signals=[]; for(let s=0;s<7;s++) signals.push({e:(rng()*edges.length)|0,t:rng(),sp:0.5+rng()*0.9,col:rng()<0.5});
   };
-  const { error } = await sb.from('profiles').update(updates).eq('id', user.id);
-  if (error) { toast('Error saving profile.'); return; }
+  build();
 
-  Object.assign(user, updates);
-  // Update in profiles cache too
-  const pi = APP.profiles.findIndex(p => p.id === user.id);
-  if (pi >= 0) Object.assign(APP.profiles[pi], updates);
-
-  g('hdr-username').textContent = user.username;
-  openProfile();
-  renderMap();
-  toast('Profile updated.');
+  const draw=(t)=>{
+    if(!W||!H){APP.heroRaf=requestAnimationFrame(draw);return;}
+    ctx.clearRect(0,0,W,H);
+    const pos=nodes.map(p=>{ const off=8+p.depth*44; const bob=Math.sin(t/2200+p.phase)*4*(0.4+p.depth); return [p.x*W+APP.mouse.x*off,p.y*H+APP.mouse.y*off*0.8+bob]; });
+    edges.forEach(e=>{
+      const A=pos[e.a],B=pos[e.b];
+      const mx=(A[0]+B[0])/2,my=(A[1]+B[1])/2,dx=B[0]-A[0],dy=B[1]-A[1],len=Math.hypot(dx,dy)||1;
+      const nx=-dy/len,ny=dx/len,bow=e.bow*len+Math.sin(t/2600+e.phase)*6;
+      const cx=mx+nx*bow,cy=my+ny*bow;
+      const a=0.16+0.07*Math.sin(t/1800+e.phase);
+      ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.quadraticCurveTo(cx,cy,B[0],B[1]);
+      ctx.lineWidth=1.1; ctx.strokeStyle=e.grn?`rgba(150,180,110,${a})`:`rgba(214,172,98,${a+0.06})`; ctx.stroke();
+      e._c=[cx,cy];
+    });
+    signals.forEach(s=>{
+      s.t+=s.sp*0.0016; if(s.t>1)s.t-=1;
+      const e=edges[s.e]; if(!e)return;
+      const A=pos[e.a],B=pos[e.b],C=e._c||[(A[0]+B[0])/2,(A[1]+B[1])/2];
+      const tt=s.t,it=1-tt;
+      const x=it*it*A[0]+2*it*tt*C[0]+tt*tt*B[0],y=it*it*A[1]+2*it*tt*C[1]+tt*tt*B[1];
+      ctx.beginPath(); ctx.arc(x,y,1.8,0,6.2832);
+      ctx.fillStyle=s.col?'rgba(244,220,160,0.9)':'rgba(169,192,143,0.85)';
+      ctx.shadowColor=s.col?'#f1ce83':'#a9c08f'; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+    });
+    nodes.forEach((p,i)=>{
+      const P=pos[i];
+      if(p.spore){ const pulse=0.6+0.4*Math.sin(t/900+p.phase); ctx.beginPath(); ctx.arc(P[0],P[1],p.r*(1+0.22*pulse),0,6.2832); ctx.fillStyle=`rgba(244,220,160,${0.5+0.32*pulse})`; ctx.shadowColor='#f1ce83'; ctx.shadowBlur=12*pulse+4; ctx.fill(); ctx.shadowBlur=0; }
+      else{ ctx.beginPath(); ctx.arc(P[0],P[1],p.r*0.8,0,6.2832); ctx.fillStyle='rgba(169,192,143,0.5)'; ctx.fill(); }
+    });
+    APP.heroRaf=requestAnimationFrame(draw);
+  };
+  APP.heroRaf=requestAnimationFrame(draw);
 }
 
-// ========== MODAL HELPERS ==========
-function openModal(id)  { g(id).classList.remove('hidden'); }
-function closeModal(id) { g(id).classList.add('hidden'); }
+// ══════════════════════════════════════════
+//  MAP CANVAS
+// ══════════════════════════════════════════
+function startMap(){
+  if(APP.mapRaf){ cancelAnimationFrame(APP.mapRaf); APP.mapRaf=null; }
+  const cv=g('map-canvas'); if(!cv||!POLIS) return;
+  const ctx=cv.getContext('2d');
+  let W,H;
+  const fit=()=>{ const r=cv.getBoundingClientRect(); const dpr=Math.min(2,devicePixelRatio||1); cv.width=Math.max(1,r.width*dpr); cv.height=Math.max(1,r.height*dpr); ctx.setTransform(dpr,0,0,dpr,0,0); W=r.width; H=r.height; };
+  fit(); new ResizeObserver(fit).observe(cv);
 
-// Close on overlay click
-document.addEventListener('click', e => {
-  if (e.target.classList.contains('modal-overlay')) {
-    e.target.classList.add('hidden');
+  const proj=(nx,ny,depth)=>{ const rx=W*0.38,ry=H*0.38; const k=8+depth*8; return [W/2+nx*rx+APP.mouse.x*k, H/2+ny*ry+APP.mouse.y*k]; };
+  const P=POLIS.participants, TH=POLIS.threads, BR=POLIS.bridges, CL=CLUSTERS;
+
+  const you=()=>{ const votes=APP.votes; if(Object.keys(votes).length<3) return null; return computeYou(votes); };
+
+  const draw=(t)=>{
+    if(!W||!H){APP.mapRaf=requestAnimationFrame(draw);return;}
+    ctx.clearRect(0,0,W,H);
+    const pos=P.map(p=>{ const bob=Math.sin(t/1500+p.phase)*4; const xy=proj(p.x,p.y,p.ci); return [xy[0],xy[1]+bob]; });
+
+    ctx.lineWidth=1;
+    TH.forEach((e,i)=>{ const c=CL[P[e[0]].ci].color; ctx.strokeStyle=hexA(c,0.12+0.05*Math.sin(t/1000+i)); ctx.beginPath(); ctx.moveTo(pos[e[0]][0],pos[e[0]][1]); ctx.lineTo(pos[e[1]][0],pos[e[1]][1]); ctx.stroke(); });
+    ctx.lineWidth=1.3;
+    BR.forEach((e,bi)=>{ ctx.strokeStyle=hexA('#ecbf78',0.09+0.1*Math.sin(t/750+bi)); ctx.beginPath(); ctx.moveTo(pos[e[0]][0],pos[e[0]][1]); ctx.lineTo(pos[e[1]][0],pos[e[1]][1]); ctx.stroke(); });
+
+    APP.mapCentroids=CL.map((c,ci)=>{ const xy=proj(c.centroid[0],c.centroid[1],ci); return {x:xy[0],y:xy[1],ci}; });
+
+    P.forEach((p,i)=>{
+      const c=CL[p.ci].color,rgb=hexRGB(c);
+      const active=(APP.mapHoverCi===p.ci);
+      const dim=(APP.mapHoverCi!=null&&!active);
+      const a=dim?0.2:active?1:0.8;
+      const r=p.r*(active?1.4:1)*(1+0.07*Math.sin(t/900+p.phase));
+      const x=pos[i][0],y=pos[i][1];
+      // tendrils
+      const nT=3+(i%3);
+      for(let k=0;k<nT;k++){
+        const ang=p.phase+k*2.4+t/5200;
+        const len=r*(1.9+0.55*Math.sin(t/1100+p.phase+k));
+        const sx=x+Math.cos(ang)*r*0.85,sy=y+Math.sin(ang)*r*0.85;
+        const ex=x+Math.cos(ang)*len,ey=y+Math.sin(ang)*len;
+        const nx=-Math.sin(ang),ny=Math.cos(ang);
+        const bow=(((i*7+k*13)%5)-2)*1.3;
+        const mx=(sx+ex)/2+nx*bow,my=(sy+ey)/2+ny*bow;
+        ctx.beginPath(); ctx.moveTo(sx,sy); ctx.quadraticCurveTo(mx,my,ex,ey);
+        ctx.strokeStyle=`rgba(${rgb},${(a*0.28).toFixed(3)})`; ctx.lineWidth=1; ctx.stroke();
+        ctx.beginPath(); ctx.arc(ex,ey,0.8,0,6.2832); ctx.fillStyle=`rgba(${rgb},${(a*0.45).toFixed(3)})`; ctx.fill();
+      }
+      // halo
+      const gr=ctx.createRadialGradient(x,y,0,x,y,r*2.4);
+      gr.addColorStop(0,`rgba(255,250,238,${(a*0.88).toFixed(3)})`);
+      gr.addColorStop(0.34,`rgba(${rgb},${a.toFixed(3)})`);
+      gr.addColorStop(1,`rgba(${rgb},0)`);
+      ctx.beginPath(); ctx.arc(x,y,r*2.4,0,6.2832); ctx.fillStyle=gr; ctx.fill();
+      // core
+      ctx.beginPath(); ctx.arc(x,y,r*0.5,0,6.2832); ctx.fillStyle=`rgba(255,252,245,${a.toFixed(3)})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y,r*1.6,0,6.2832); ctx.strokeStyle=`rgba(${rgb},${(a*0.3).toFixed(3)})`; ctx.lineWidth=1; ctx.stroke();
+    });
+    ctx.shadowBlur=0;
+
+    // you dot
+    const yv=you();
+    if(yv&&yv.pos){
+      const xy=proj(yv.pos[0],yv.pos[1],1);
+      const pr=6+Math.sin(t/520)*1.5;
+      ctx.beginPath(); ctx.arc(xy[0],xy[1],pr+9,0,6.2832); ctx.strokeStyle='rgba(255,247,230,0.4)'; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(xy[0],xy[1],pr,0,6.2832); ctx.fillStyle='#fff3da'; ctx.shadowColor='#ffd98a'; ctx.shadowBlur=18; ctx.fill(); ctx.shadowBlur=0;
+    }
+
+    // cluster labels
+    APP.mapCentroids.forEach(({x,y,ci})=>{
+      const c=CL[ci]; const active=(APP.mapHoverCi===ci);
+      ctx.font=`${active?700:600} ${active?13:12}px 'DM Sans',sans-serif`;
+      ctx.fillStyle=active?c.color:`rgba(${hexRGB(c.color)},0.65)`;
+      ctx.textAlign='center';
+      ctx.fillText(c.short,x,y-24);
+    });
+    ctx.textAlign='left';
+
+    APP.mapRaf=requestAnimationFrame(draw);
+  };
+  APP.mapRaf=requestAnimationFrame(draw);
+
+  // Add interaction listeners only once
+  if(!cv._cgInited){
+    cv._cgInited=true;
+    cv.addEventListener('mousemove',e=>{
+      const r=cv.getBoundingClientRect();
+      const mx=e.clientX-r.left,my=e.clientY-r.top;
+      let best=null,bd=Infinity;
+      APP.mapCentroids.forEach(c=>{ const d=(c.x-mx)**2+(c.y-my)**2; if(d<bd){bd=d;best=c;} });
+      APP.mapHoverCi=(best&&bd<160*160)?best.ci:null;
+      cv.style.cursor=APP.mapHoverCi!=null?'pointer':'default';
+      const tip=g('map-hover-tip');
+      if(tip) tip.style.display=APP.mapHoverCi!=null?'none':'block';
+    });
+    cv.addEventListener('mouseleave',()=>{ APP.mapHoverCi=null; });
+    cv.addEventListener('click',e=>{
+      const r=cv.getBoundingClientRect();
+      const mx=e.clientX-r.left,my=e.clientY-r.top;
+    let best=null,bd=Infinity;
+    APP.mapCentroids.forEach(c=>{ const d=(c.x-mx)**2+(c.y-my)**2; if(d<bd){bd=d;best=c;} });
+    if(best&&bd<190*190) openClusterPanel(best.ci);
+    });
   }
+}
+
+// Mouse parallax
+window.addEventListener('mousemove',e=>{
+  APP.mouse.x=(e.clientX/innerWidth-0.5)*2;
+  APP.mouse.y=(e.clientY/innerHeight-0.5)*2;
 });
-// Close on Escape
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay:not(.hidden)').forEach(m => m.classList.add('hidden'));
-  }
-});
-
-// ========== SAFE HTML ==========
-function escHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function escAttr(str) { return escHtml(str); }
-
-// ========== INIT ==========
-async function init() {
-  // Resume existing session if any
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    await startSession(session.user);
-  }
-  // Enter key on auth inputs
-  ['si-email','si-pass'].forEach(id => {
-    const el = g(id);
-    if (el) el.addEventListener('keydown', e => { if (e.key === 'Enter') doSignIn(); });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
