@@ -848,31 +848,34 @@ async function doSignOut(){
 function votesKey(){ return 'cg-votes-'+APP.user.id; }
 
 async function loadVotes(){
-  // Try localStorage first
-  try{ const stored=localStorage.getItem(votesKey()); if(stored) APP.votes=JSON.parse(stored); }catch(e){}
-  // Also try Supabase answers
+  // Supabase is the source of truth
   try{
-    const {data}=await sb.from('answers').select('question_id,value').eq('user_id',APP.user.id);
-    if(data&&data.length){
+    const {data,error}=await sb.from('answers').select('question_id,value').eq('user_id',APP.user.id);
+    if(!error && data && data.length){
+      const knownIds=new Set(APP.stmts.map(s=>s.id));
       data.forEach(a=>{
-        const choice=a.value===1?'agree':a.value===-1?'disagree':'pass';
-        if(!APP.votes[a.question_id]) APP.votes[a.question_id]=choice;
+        if(!knownIds.has(a.question_id)) return;
+        APP.votes[a.question_id]=a.value===1?'agree':a.value===-1?'disagree':'pass';
       });
+      try{ localStorage.setItem(votesKey(),JSON.stringify(APP.votes)); }catch(e){}
+      let i=0; while(i<APP.stmts.length && APP.votes[APP.stmts[i].id]) i++; APP.stmtIndex=i;
+      return;
     }
   }catch(e){}
-  // Set stmtIndex past already-voted statements
-  let i=0;
-  while(i<APP.stmts.length && APP.votes[APP.stmts[i].id]) i++;
-  APP.stmtIndex=i;
+  // Fallback: localStorage (offline / first login before any write)
+  try{ const stored=localStorage.getItem(votesKey()); if(stored) APP.votes=JSON.parse(stored); }catch(e){}
+  let i=0; while(i<APP.stmts.length && APP.votes[APP.stmts[i].id]) i++; APP.stmtIndex=i;
 }
 
 async function saveVote(stmtId,choice){
   APP.votes[stmtId]=choice;
   try{ localStorage.setItem(votesKey(),JSON.stringify(APP.votes)); }catch(e){}
   const val=choice==='agree'?1:choice==='disagree'?-1:0;
-  try{
-    await sb.from('answers').upsert({user_id:APP.user.id,question_id:stmtId,value:val},{onConflict:'user_id,question_id'});
-  }catch(e){}
+  const {error}=await sb.from('answers').upsert(
+    {user_id:APP.user.id,question_id:stmtId,value:val},
+    {onConflict:'user_id,question_id'}
+  );
+  if(error) console.error('[CG] vote save failed:',error.message);
 }
 
 // ══════════════════════════════════════════
