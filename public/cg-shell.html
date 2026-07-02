@@ -335,6 +335,7 @@ a{color:inherit;text-decoration:none}
         <div class="field"><label>Email</label><input type="email" id="si-email" autocomplete="email" placeholder="you@example.com"></div>
         <div class="field"><label>Password</label><div class="pw-wrap"><input type="password" id="si-pass" autocomplete="current-password" placeholder="Your password"><button type="button" class="pw-toggle" onclick="togglePw('si-pass',this)" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
         <button class="btn-primary" onclick="doSignIn()">Sign in →</button>
+        <p style="text-align:center;margin-top:12px;font-size:13px"><a href="#" onclick="doForgotPassword(event)" style="color:#9c7b3a;text-decoration:underline">Forgot password?</a></p>
       </div>
       <div id="auth-signup" style="display:none">
         <div class="field"><label>Email</label><input type="email" id="su-email" autocomplete="email" placeholder="you@example.com"></div>
@@ -800,6 +801,17 @@ async function doSignIn(){
   const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
   if(error){showAuthErr(error.message);return;}
   await startSession(data.user);
+}
+
+async function doForgotPassword(e){
+  e.preventDefault();
+  const email=g('si-email').value.trim();
+  if(!email){showAuthErr('Enter your email above first.');return;}
+  g('auth-err').classList.remove('show');
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.href});
+  if(error){showAuthErr(error.message);return;}
+  showAuthErr('Password reset email sent — check your inbox.');
+  g('auth-err').style.color='#3d6630';
 }
 
 async function doSignUp(){
