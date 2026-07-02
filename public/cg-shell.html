@@ -756,7 +756,16 @@ async function doSignUp() {
     avatar_color: avatarColor,
     is_admin: isAdmin,
   });
-  if (profErr) { showAuthErr(profErr.message); return; }
+  if (profErr) {
+    // Delete the auth user we just created so they can try again cleanly
+    await sb.auth.signOut();
+    if (profErr.message.includes('profiles_username_key') || profErr.code === '23505') {
+      showAuthErr('That username is already taken. Please choose a different one.');
+    } else {
+      showAuthErr('Something went wrong creating your account. Please try again.');
+    }
+    return;
+  }
 
   await startSession(data.user);
 }
