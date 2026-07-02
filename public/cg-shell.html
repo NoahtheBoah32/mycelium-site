@@ -22,28 +22,89 @@
 }
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:14px;line-height:1.5}
+/* Auth screen breaks out of overflow:hidden by being fixed + self-scrolling */
 button{font-family:var(--font-sans);cursor:pointer;border:none;background:none}
 input,textarea,select{font-family:var(--font-sans);font-size:14px}
 a{color:var(--amber);text-decoration:none}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
 
-/* ── Auth Screen ── */
-#auth-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
-.auth-card{width:420px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px 36px}
-.auth-logo{font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber-lt);margin-bottom:28px}
-.auth-heading{font-family:var(--font-serif);font-size:26px;color:var(--text);margin-bottom:6px}
-.auth-sub{font-size:13px;color:var(--text-dim);margin-bottom:28px}
-.auth-tabs{display:flex;gap:0;margin-bottom:28px;border-bottom:1px solid var(--border)}
-.auth-tab{padding:8px 16px 10px;font-size:13px;font-weight:600;color:var(--text-dim);cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.15s,border-color 0.15s}
-.auth-tab.active{color:var(--amber-lt);border-bottom-color:var(--amber)}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
-.field label{font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--text-dim);text-transform:uppercase}
-.field input,.field select,.field textarea{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text);outline:none;transition:border-color 0.15s}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--amber)}
-.field select option{background:var(--bg3)}
-.btn-primary{width:100%;padding:11px;background:var(--amber);color:#1a1208;border-radius:var(--radius-sm);font-weight:700;font-size:13px;letter-spacing:0.3px;transition:background 0.15s;margin-top:4px}
-.btn-primary:hover{background:var(--amber-lt)}
-.auth-err{background:rgba(220,60,60,0.12);border:1px solid rgba(220,60,60,0.3);border-radius:var(--radius-sm);padding:10px 12px;color:#ff8a80;font-size:12px;margin-bottom:12px;display:none}
+/* ── Auth Screen — Light Mode ── */
+#auth-screen{
+  position:fixed;inset:0;z-index:1000;
+  background:#F5EFE0;
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+}
+.auth-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 32px;flex-shrink:0;
+}
+.auth-nav-logo{
+  font-size:11px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;
+  color:#5C3D0A;
+}
+.auth-nav-right{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(44,25,5,0.5)}
+.auth-nav-link{
+  font-size:13px;font-weight:600;color:#5C3D0A;
+  background:none;border:none;cursor:pointer;padding:0;
+  text-decoration:underline;text-underline-offset:2px;
+}
+.auth-stage{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:24px 16px 48px;
+}
+.auth-card{
+  width:100%;max-width:440px;
+  background:#FFFDF8;border:1px solid rgba(92,61,10,0.12);
+  border-radius:20px;padding:44px 40px;
+  box-shadow:0 4px 32px rgba(92,61,10,0.08);
+}
+.auth-pill{
+  display:inline-block;
+  font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:#5C3D0A;border:1px solid rgba(92,61,10,0.25);
+  border-radius:20px;padding:4px 12px;margin-bottom:20px;
+}
+.auth-heading{
+  font-family:var(--font-serif);font-size:30px;font-weight:700;
+  color:#1C1005;line-height:1.25;margin-bottom:8px;
+}
+.auth-heading em{font-style:italic;color:var(--amber)}
+.auth-sub{font-size:13px;color:rgba(44,25,5,0.55);margin-bottom:28px;line-height:1.6}
+.auth-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid rgba(92,61,10,0.12)}
+.auth-tab{
+  padding:8px 16px 10px;font-size:13px;font-weight:600;
+  color:rgba(44,25,5,0.4);cursor:pointer;background:none;border:none;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color 0.15s,border-color 0.15s;
+}
+.auth-tab.active{color:#5C3D0A;border-bottom-color:var(--amber)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:11px;font-weight:700;letter-spacing:0.8px;color:rgba(44,25,5,0.6);text-transform:uppercase}
+.field input,.field select,.field textarea{
+  background:#FBF8F1;border:1px solid rgba(92,61,10,0.18);
+  border-radius:8px;padding:11px 12px;
+  color:#1C1005;outline:none;font-size:14px;
+  transition:border-color 0.15s,box-shadow 0.15s;
+}
+.field input::placeholder{color:rgba(44,25,5,0.3)}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--amber);box-shadow:0 0 0 3px rgba(196,135,42,0.12);
+}
+.field select option{background:#FBF8F1;color:#1C1005}
+.btn-primary{
+  width:100%;padding:13px;
+  background:#1C1005;color:#F5EFE0;
+  border-radius:8px;font-weight:700;font-size:14px;letter-spacing:0.4px;
+  transition:background 0.15s;margin-top:6px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-primary:hover{background:#2c1a08}
+.auth-err{
+  background:rgba(220,60,60,0.07);border:1px solid rgba(220,60,60,0.25);
+  border-radius:8px;padding:10px 12px;color:#c0392b;
+  font-size:12px;margin-bottom:12px;display:none;
+}
 .auth-err.show{display:block}
 
 /* ── App Shell ── */
@@ -240,7 +301,9 @@ a{color:var(--amber);text-decoration:none}
 
 @media(max-width:700px){
   #map-panel{display:none}
-  .auth-card{width:100%;max-width:400px;margin:16px;padding:28px 24px}
+  .auth-nav{padding:14px 20px}
+  .auth-card{padding:32px 24px}
+  .auth-heading{font-size:26px}
 }
 </style>
 </head>
@@ -248,42 +311,57 @@ a{color:var(--amber);text-decoration:none}
 
 <!-- ======= AUTH SCREEN ======= -->
 <div id="auth-screen">
-  <div class="auth-card">
-    <div class="auth-logo">:: MYCELIUM</div>
-    <h1 class="auth-heading">Common Ground</h1>
-    <p class="auth-sub">A community sensemaking space. Answer questions. Shape the map.</p>
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tab-signin-btn" onclick="switchAuthTab('signin')">Sign In</button>
-      <button class="auth-tab" id="tab-signup-btn" onclick="switchAuthTab('signup')">Sign Up</button>
-    </div>
-    <div id="auth-err" class="auth-err"></div>
 
-    <!-- Sign In -->
-    <div id="auth-signin">
-      <div class="field"><label>Email</label><input type="email" id="si-email" autocomplete="email"></div>
-      <div class="field"><label>Password</label><input type="password" id="si-pass" autocomplete="current-password"></div>
-      <button class="btn-primary" onclick="doSignIn()">Sign In</button>
+  <!-- Top nav -->
+  <nav class="auth-nav">
+    <div class="auth-nav-logo">:: Mycelium</div>
+    <div class="auth-nav-right">
+      <span id="auth-nav-label">New to Common Ground?</span>
+      <button class="auth-nav-link" id="auth-nav-link" onclick="switchAuthTab('signup')">Join →</button>
     </div>
+  </nav>
 
-    <!-- Sign Up -->
-    <div id="auth-signup" style="display:none">
-      <div class="field"><label>Email</label><input type="email" id="su-email" autocomplete="email"></div>
-      <div class="field"><label>Password</label><input type="password" id="su-pass" autocomplete="new-password"></div>
-      <div class="field"><label>Username</label><input type="text" id="su-username" maxlength="30" placeholder="How you'll appear on the map"></div>
-      <div class="field"><label>Location <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><input type="text" id="su-location" placeholder="e.g. Metro Manila, Oriental Mindoro"></div>
-      <div class="field">
-        <label>Primary Practice</label>
-        <select id="su-practice">
-          <option value="grower">Grower — food, soil, plants, land</option>
-          <option value="teacher">Teacher / Educator</option>
-          <option value="designer">Permaculture Designer</option>
-          <option value="learner" selected>Learner — just starting out</option>
-          <option value="other">Other</option>
-        </select>
+  <!-- Card -->
+  <div class="auth-stage">
+    <div class="auth-card">
+      <div class="auth-pill">Common Ground</div>
+      <h1 class="auth-heading" id="auth-main-heading">Your <em>roots</em> are waiting.</h1>
+      <p class="auth-sub" id="auth-main-sub">Sign in to see where you stand — your answers, your position on the map, and the conversations you left off.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-signin-btn" onclick="switchAuthTab('signin')">Sign In</button>
+        <button class="auth-tab" id="tab-signup-btn" onclick="switchAuthTab('signup')">Sign Up</button>
       </div>
-      <button class="btn-primary" onclick="doSignUp()">Create Account</button>
+      <div id="auth-err" class="auth-err"></div>
+
+      <!-- Sign In -->
+      <div id="auth-signin">
+        <div class="field"><label>Email</label><input type="email" id="si-email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input type="password" id="si-pass" autocomplete="current-password" placeholder="Your password"></div>
+        <button class="btn-primary" onclick="doSignIn()">Sign in →</button>
+      </div>
+
+      <!-- Sign Up -->
+      <div id="auth-signup" style="display:none">
+        <div class="field"><label>Email</label><input type="email" id="su-email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input type="password" id="su-pass" autocomplete="new-password" placeholder="Choose a password"></div>
+        <div class="field"><label>Username</label><input type="text" id="su-username" maxlength="30" placeholder="How you'll appear on the map"></div>
+        <div class="field"><label>Location <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(optional)</span></label><input type="text" id="su-location" placeholder="e.g. Metro Manila, Oriental Mindoro"></div>
+        <div class="field">
+          <label>Primary Practice</label>
+          <select id="su-practice">
+            <option value="grower">Grower — food, soil, plants, land</option>
+            <option value="teacher">Teacher / Educator</option>
+            <option value="designer">Permaculture Designer</option>
+            <option value="learner" selected>Learner — just starting out</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="doSignUp()">Create account →</button>
+      </div>
     </div>
   </div>
+
 </div>
 
 <!-- ======= MAIN APP ======= -->
@@ -801,11 +879,21 @@ function switchAuthTab(tab) {
     g('auth-signup').style.display = 'none';
     g('tab-signin-btn').classList.add('active');
     g('tab-signup-btn').classList.remove('active');
+    g('auth-main-heading').innerHTML = 'Your <em>roots</em> are waiting.';
+    g('auth-main-sub').textContent = 'Sign in to see where you stand — your answers, your position on the map, and the conversations you left off.';
+    g('auth-nav-label').textContent = 'New to Common Ground?';
+    g('auth-nav-link').textContent = 'Join →';
+    g('auth-nav-link').onclick = () => switchAuthTab('signup');
   } else {
     g('auth-signin').style.display = 'none';
     g('auth-signup').style.display = 'block';
     g('tab-signin-btn').classList.remove('active');
     g('tab-signup-btn').classList.add('active');
+    g('auth-main-heading').innerHTML = 'Plant your <em>flag.</em>';
+    g('auth-main-sub').textContent = 'Create your profile, answer a few questions, and find where you land on the permaculture map.';
+    g('auth-nav-label').textContent = 'Already have an account?';
+    g('auth-nav-link').textContent = 'Sign in →';
+    g('auth-nav-link').onclick = () => switchAuthTab('signin');
   }
 }
 
