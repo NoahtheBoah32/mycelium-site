@@ -1142,7 +1142,6 @@
 
 
 
-
 <!-- ── CLUSTER PANEL ── -->
 <div id="cluster-panel">
   <div id="cluster-overlay" onclick="closeClusterPanel()"></div>
@@ -1483,7 +1482,21 @@ async function saveVote(stmtId,choice){
 // ══════════════════════════════════════════
 function welcomeKey(){return'cg-welcome-dismissed-'+APP.user.id;}
 // ── SILENT CONTENT MODERATION ──
-const BANNED_PATTERNS=[/polycri/i,/poly.cri/i,/permaculture.polycri/i];
+const BANNED_PATTERNS=[
+  // Polycrisis variants
+  /polycri/i,/poly[\s\-]?cri/i,
+  // Collapse / doom framing
+  /\bcollaps/i,/catastroph/i,/doomsday/i,/apocalyp/i,/armageddon/i,
+  /zeitgeist/i,/teotwawki/i,/\bshtf\b/i,/end[\s\-]?times/i,
+  // Survivalist / prepper
+  /\bprepp/i,/\bsurvivalist/i,/survival\s+mode/i,
+  // Political chaos / military instability
+  /\bcoup\b/i,/escalat\w*\s+conflict/i,
+  // ChatGPT / consultant language
+  /overarching/i,/\brubric\b/i,/\bstressors?\b/i,/paradigm[\s\-]?shift/i,
+  /deep[\s\-]?dive/i,/\bsynergy\b/i,/\btransformative\b/i,
+  /thought[\s\-]?leader/i,/holistic[\s\-]approach/i,/game[\s\-]?changer/i,
+];
 function isBanned(text){return BANNED_PATTERNS.some(p=>p.test(text));}
 
 function renderWelcomeBanner(username){
@@ -1919,3 +1932,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 
 </body></html>
+
+
+
