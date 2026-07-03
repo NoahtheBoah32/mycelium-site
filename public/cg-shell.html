@@ -326,11 +326,8 @@
 #cg-badge-out:hover{color:rgba(232,220,200,0.7)}
 
 /* ── WELCOME BANNER ── */
-#cg-welcome{display:none;background:linear-gradient(90deg,rgba(95,125,79,0.12),rgba(95,125,79,0.06));border-bottom:1px solid rgba(95,125,79,0.2);padding:14px 28px;align-items:flex-start;justify-content:space-between;gap:16px;position:relative;z-index:10}
-#cg-welcome.on{display:flex}
-#cg-welcome-text{font-size:14px;color:rgb(46,35,16);line-height:1.5}
-#cg-welcome-close{background:none;border:none;cursor:pointer;font-size:18px;color:rgba(46,35,16,0.4);line-height:1;flex-shrink:0;padding:0}
-#cg-welcome-close:hover{color:rgba(46,35,16,0.7)}
+#cg-welcome{display:none;background:linear-gradient(90deg,rgba(95,125,79,0.12),rgba(95,125,79,0.06));border-bottom:1px solid rgba(95,125,79,0.2);padding:13px 28px;align-items:flex-start;justify-content:space-between;gap:16px}
+#cg-welcome.on{display:flex!important}
 
 /* ── CLUSTER PANEL ── */
 #cluster-panel{display:none;position:fixed;inset:0;z-index:900}
@@ -466,11 +463,7 @@
   <button id="cg-badge-out" onclick="doSignOut()">Sign out</button>
 </div>
 
-<!-- ── WELCOME BANNER ── -->
-<div id="cg-welcome">
-  <span id="cg-welcome-text"></span>
-  <button id="cg-welcome-close" onclick="dismissWelcome()">×</button>
-</div>
+<!-- welcome banner is injected inline into the design HTML between nav and hero -->
 
 <div id="dc-root"><div class="sc-host" data-sc-name="od-source"><div data-dc-tpl="5" style="--px: 0; --py: 0; background: rgb(232, 219, 192); color: rgb(46, 35, 16); overflow-x: hidden;">
 
@@ -491,7 +484,10 @@
   </div>
 
   
-  <section data-dc-tpl="27" data-screen-label="Hero" style="position: relative; overflow: hidden; min-height: 94vh; display: flex; align-items: center; background: radial-gradient(125% 96% at 50% 8%, rgb(70, 56, 33) 0%, rgb(44, 33, 16) 38%, rgb(24, 17, 10) 66%, rgb(12, 9, 5) 100%); color: rgb(243, 232, 210);">
+  <div id="cg-welcome" style="display:none;background:linear-gradient(90deg,rgba(95,125,79,0.12),rgba(95,125,79,0.06));border-bottom:1px solid rgba(95,125,79,0.2);padding:13px 28px;align-items:flex-start;justify-content:space-between;gap:16px">
+  <span id="cg-welcome-text" style="font-size:14px;color:rgb(46,35,16);line-height:1.5"></span>
+  <button onclick="dismissWelcome()" style="background:none;border:none;cursor:pointer;font-size:18px;color:rgba(46,35,16,0.4);line-height:1;padding:0;flex-shrink:0">×</button>
+</div><section data-dc-tpl="27" data-screen-label="Hero" style="position: relative; overflow: hidden; min-height: 94vh; display: flex; align-items: center; background: radial-gradient(125% 96% at 50% 8%, rgb(70, 56, 33) 0%, rgb(44, 33, 16) 38%, rgb(24, 17, 10) 66%, rgb(12, 9, 5) 100%); color: rgb(243, 232, 210);">
     
     <canvas data-dc-tpl="28" width="1920" height="904" style="position: absolute; inset: 0px; width: 100%; height: 100%; pointer-events: none;" id="cg-hero-canvas"></canvas>
     
@@ -1232,42 +1228,8 @@ const PROFILES={
   bridgers:[0.26,0.80,0.38,0.46,0.96,0.14,0.95,0.62],
 };
 
-const FORUM_BASE=[
-  {id:'q1',text:"Should soil-less systems like hydroponics be classified as permaculture on the platform?",who:"Bea Calma",role:"Member",ago:"2d ago",color:"#c0703e",responses:61,agree:34,pass:14,disagree:52,status:"Seen differently",statusFg:"#a85a2c",statusBg:"rgba(192,112,62,0.13)"},
-  {id:'q2',text:"Translate core guides into Filipino and Bisaya before adding new English content.",who:"Lakan Bituin",role:"Baganihan Collective",ago:"5d ago",color:"#5f7d4f",responses:74,agree:81,pass:9,disagree:10,status:"Near consensus",statusFg:"#4c6840",statusBg:"rgba(95,125,79,0.14)"},
-  {id:'q3',text:"Partner orgs should be able to flag — not remove — content they dispute.",who:"Dr. Elena Varga",role:"Philippine Permaculture Assoc.",ago:"1d ago",color:"#8a5a78",responses:38,agree:58,pass:22,disagree:20,status:"Gathering responses",statusFg:"#8a6d2c",statusBg:"rgba(184,146,74,0.16)"},
-  {id:'q4',text:"Creators who sell paid courses elsewhere can still be featured for their free content.",who:"Tomas Quibo",role:"Market Gardener",ago:"3d ago",color:"#c0703e",responses:52,agree:47,pass:15,disagree:38,status:"Seen differently",statusFg:"#a85a2c",statusBg:"rgba(192,112,62,0.13)"},
-  {id:'q5',text:"Container gardens on a balcony should count as a real implementation, not just practice.",who:"Aria Santos",role:"Member",ago:"6h ago",color:"#5f7d4f",responses:19,agree:72,pass:18,disagree:10,status:"Gathering responses",statusFg:"#8a6d2c",statusBg:"rgba(184,146,74,0.16)"},
-  {id:'q6',text:"Permaculture content here should center food sovereignty, not just food security.",who:"Noor Aquino",role:"Member",ago:"4d ago",color:"#8a5a78",responses:66,agree:69,pass:17,disagree:14,status:"Mapped last week",statusFg:"#6e4862",statusBg:"rgba(138,90,120,0.14)"},
-];
-
-const CHAT_SEED={
-  q1:[
-    {who:"Tomas Quibo",role:"Market Gardener",color:"#c0703e",ago:"2d",text:"If the yield feeds a barangay, why does the substrate matter? Outcomes over orthodoxy."},
-    {who:"Dr. Elena Varga",role:"Phil. Permaculture Assoc.",color:"#5f7d4f",ago:"2d",text:"Because permaculture is a soil-and-water ethic, not just a yield number. Hydroponics can be brilliant agriculture and still not be this."},
-    {who:"Noor Aquino",role:"Member",color:"#8a5a78",ago:"1d",text:"Could we list it as 'adjacent practice' rather than fight over the label? Keeps the door open without redefining the word."},
-  ],
-  q2:[
-    {who:"Lakan Bituin",role:"Baganihan Collective",color:"#5f7d4f",ago:"5d",text:"Most of our elders read Bisaya first. English-only guides quietly gatekeep the people who know the land best."},
-    {who:"Aria Santos",role:"Member",color:"#8a5a78",ago:"4d",text:"Strong agree. I'd even help translate — is there a glossary we'd standardise first?"},
-  ],
-  q3:[
-    {who:"Dr. Elena Varga",role:"Phil. Permaculture Assoc.",color:"#5f7d4f",ago:"1d",text:"Flagging, not removing, is the right instinct. Disagreement should be visible, not deleted."},
-    {who:"Maya Reyes",role:"Facilitator",color:"#8a5a78",ago:"23h",text:"Agreed — a flag could even link to the cluster map for that statement. Dissent becomes context, not censorship."},
-  ],
-  q4:[
-    {who:"Joaquin Riego",role:"Founder",color:"#5f7d4f",ago:"3d",text:"Free content is free content. We feature the work, not someone's whole business model."},
-    {who:"Bea Calma",role:"Member",color:"#c0703e",ago:"2d",text:"As long as the free guide isn't just a teaser funnel for the paid course. That'd erode trust fast."},
-  ],
-  q5:[
-    {who:"Aria Santos",role:"Member",color:"#8a5a78",ago:"6h",text:"My whole 'farm' is twelve containers on a 4th-floor balcony. It feeds my family. That's real to me."},
-    {who:"Tomas Quibo",role:"Market Gardener",color:"#c0703e",ago:"4h",text:"100%. Scale is a spectrum, not a gate. A balcony that closes a food loop counts."},
-  ],
-  q6:[
-    {who:"Noor Aquino",role:"Member",color:"#8a5a78",ago:"4d",text:"'Sovereignty' names who holds power over the food system. 'Security' just asks if bellies are full. Big difference."},
-    {who:"Dr. Elena Varga",role:"Phil. Permaculture Assoc.",color:"#5f7d4f",ago:"4d",text:"Agreed, and it aligns with featuring indigenous practice prominently. Same root principle."},
-  ],
-};
+// Forum starts empty — only real user-submitted questions appear
+const FORUM_BASE=[];
 
 // ══════════════════════════════════════════
 //  POLIS ALGORITHM
@@ -1399,7 +1361,7 @@ function computeYou(votes){
 // ══════════════════════════════════════════
 const APP={
   user:null,votes:{},stmts:[...STMTS_BASE],stmtIndex:0,lastVoted:null,
-  forum:FORUM_BASE.map(q=>({...q,thread:[...(CHAT_SEED[q.id]||[])]})),
+  forum:[],
   openThreadId:null,heroRaf:null,mapRaf:null,mapHoverCi:null,mapCentroids:[],
   mouse:{x:0,y:0},
 };
@@ -1485,7 +1447,7 @@ async function doSignOut(){
   if(APP.heroRaf)cancelAnimationFrame(APP.heroRaf);
   if(APP.mapRaf)cancelAnimationFrame(APP.mapRaf);
   APP.user=null;APP.votes={};APP.stmts=[...STMTS_BASE];APP.stmtIndex=0;APP.lastVoted=null;
-  APP.forum=FORUM_BASE.map(q=>({...q,thread:[...(CHAT_SEED[q.id]||[])]}));
+  APP.forum=[];
   const auth=g('cg-auth');if(auth){auth.style.opacity='1';auth.style.display='flex';auth.style.pointerEvents='';}
   const badge=g('cg-user-badge');if(badge)badge.style.display='none';
   const wb=g('cg-welcome');if(wb)wb.classList.remove('on');
@@ -1520,14 +1482,18 @@ async function saveVote(stmtId,choice){
 //  WELCOME BANNER
 // ══════════════════════════════════════════
 function welcomeKey(){return'cg-welcome-dismissed-'+APP.user.id;}
+// ── SILENT CONTENT MODERATION ──
+const BANNED_PATTERNS=[/polycri/i,/poly.cri/i,/permaculture.polycri/i];
+function isBanned(text){return BANNED_PATTERNS.some(p=>p.test(text));}
+
 function renderWelcomeBanner(username){
   try{if(localStorage.getItem(welcomeKey()))return;}catch(e){}
   const el=g('cg-welcome-text');
   if(el)el.innerHTML='Welcome to <strong>Common Ground</strong>, <strong>'+escHtml(username)+'</strong>. This is Mycelium\'s open sensemaking space. Your responses are anonymous — the map shows where the community agrees and where we\'re still working things out.';
-  const wb=g('cg-welcome');if(wb)wb.classList.add('on');
+  const wb=g('cg-welcome');if(wb){wb.style.display='flex';}
 }
 function dismissWelcome(){
-  const wb=g('cg-welcome');if(wb)wb.classList.remove('on');
+  const wb=g('cg-welcome');if(wb)wb.style.display='none';
   try{localStorage.setItem(welcomeKey(),'1');}catch(e){}
 }
 
@@ -1690,6 +1656,10 @@ function renderResults(){
 // ══════════════════════════════════════════
 function renderForum(){
   const grid=g('cg-forum-grid');if(!grid)return;
+  if(!APP.forum.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0 20px;"><div style="font-family:Newsreader,serif;font-size:22px;color:rgb(106,90,62);margin-bottom:10px;">No questions yet.</div><div style="font-size:14px;color:rgb(154,128,73);line-height:1.6">Be the first to pitch a question for the community to weigh in on.</div></div>';
+    return;
+  }
   grid.innerHTML=APP.forum.map(q=>'<div style="display:flex;flex-direction:column;background:rgb(244,236,216);border:1px solid rgba(67,51,11,0.12);border-radius:18px;padding:22px 22px 18px;">'
     +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">'
     +'<div style="display:flex;align-items:center;gap:9px;">'
@@ -1722,6 +1692,7 @@ function weighIn(id){
 function pitchQuestion(){
   const inp=document.querySelector('#cg-pitch-wrap input')||g('propose-input');
   const v=(inp&&inp.value||'').trim();if(!v)return;
+  if(isBanned(v)){if(inp)inp.value='';return;}
   const id='u'+Date.now();
   APP.stmts.push({id:'f-'+id,text:v,who:APP.user.username,role:'Member',color:'#C4872A'});
   APP.forum.unshift({id,text:v,who:APP.user.username,role:'Member',ago:'just now',color:'#C4872A',responses:1,agree:100,pass:0,disagree:0,status:'Gathering responses',statusFg:'#8a6d2c',statusBg:'rgba(184,146,74,0.16)',queued:true,thread:[]});
@@ -1745,6 +1716,7 @@ function renderThreadMessages(q){
 }
 function sendThreadMsg(){
   const inp=g('thread-input');const v=(inp&&inp.value||'').trim();if(!v)return;
+  if(isBanned(v)){if(inp)inp.value='';return;}
   const q=APP.forum.find(x=>x.id===APP.openThreadId);if(!q)return;
   const ans=Object.keys(APP.votes).filter(id=>APP.votes[id]!=='pass').length;
   const ci=ans>=3?computeYou(APP.votes).ci:null;
