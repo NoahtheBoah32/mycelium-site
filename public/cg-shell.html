@@ -1885,6 +1885,9 @@ function launchApp(){
   }
   // Initialize vote card, sidebar, results, forum
   updateVoteCard();updateProgressBar();updatePosSidebar();renderResults();renderForum();
+  // Clear the hardcoded "85" participant count — no real participants yet
+  const mapCountEl=document.querySelector('[data-dc-tpl="174"] .sc-interp');
+  if(mapCountEl)mapCountEl.closest('h2').innerHTML='Grouped by how they responded';
   // Start canvases
   startHero();startMap();
   // Wire cluster legend buttons
