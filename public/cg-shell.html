@@ -1906,6 +1906,8 @@ function launchApp(){
 //  MOUSE PARALLAX + KEYBOARD
 // ══════════════════════════════════════════
 window.addEventListener('mousemove',e=>{APP.mouse.x=(e.clientX/innerWidth-0.5)*2;APP.mouse.y=(e.clientY/innerHeight-0.5)*2;});
+// Test/debug accessor — exposes const-scoped state to external evaluate() calls
+window._cg={get A(){return APP;},get P(){return POLIS;},get SB(){return sb;}};
 document.addEventListener('DOMContentLoaded',async()=>{
   const ti=g('thread-input');if(ti)ti.addEventListener('keydown',e=>{if(e.key==='Enter')sendThreadMsg();});
   const si=g('si-email');if(si)si.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
