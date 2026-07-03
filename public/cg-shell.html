@@ -1203,6 +1203,9 @@ const STMTS_BASE=[
   {id:'s8',text:"When the community is split on a topic, the platform should present every side rather than recommend one approach.",who:"Joaquin Riego",role:"Member",color:"#5f7d4f"},
 ];
 
+function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0000-'+n.toString().padStart(12,'0');}
+function qidToStmt(uuid){const n=parseInt(uuid.split('-').pop());return(n>=1&&n<=STMTS_BASE.length)?'s'+n:null;}
+
 const CLUSTERS=[
   {id:'stewards',name:'The Stewards',short:'Stewards',color:'#5f7d4f',centroid:[-0.62,-0.16],n:32,
    tagline:'Land and lineage first.',
@@ -1285,7 +1288,7 @@ function pcts(counts){
   const out=fl.slice();for(let i=0;i<rem;i++)out[order[i%order.length][1]]++;return out;
 }
 let POLIS=null;
-function buildPolis(){
+async function buildPolis(){
   const rng=rng32(20260611);const participants=[];
   CLUSTERS.forEach((c,ci)=>{
     const pkey=['stewards','builders','bridgers'][ci];
@@ -1339,7 +1342,18 @@ function buildPolis(){
   });
   const bridges=[];
   for(let b=0;b<10;b++){const i=(rng2()*participants.length)|0,j=(rng2()*participants.length)|0;if(participants[i].ci!==participants[j].ci)bridges.push([i,j]);}
-  POLIS={participants,pca:{means,pcs,sx,sy},groupPct,consensus,divides,threads,bridges};
+  POLIS={participants,pca:{means,pcs,sx,sy},groupPct,consensus,divides,threads,bridges,realParticipants:[]};
+  try{
+    const{data,error}=await sb.from('answers').select('user_id,question_id,value');
+    if(!error&&data&&data.length){
+      const byUser={};
+      data.forEach(a=>{const sid=qidToStmt(a.question_id);if(!sid)return;if(!byUser[a.user_id])byUser[a.user_id]={};byUser[a.user_id][sid]=a.value===1?'agree':a.value===-1?'disagree':'pass';});
+      Object.entries(byUser).forEach(([uid,votes])=>{
+        if(Object.values(votes).filter(v=>v!=='pass').length<3)return;
+        POLIS.realParticipants.push({uid,pos:projectVotes(votes)});
+      });
+    }
+  }catch(e){}
 }
 function projectVotes(votes){
   if(!POLIS||!POLIS.pca)return[0,0];
@@ -1439,7 +1453,7 @@ async function startSession(authUser){
   if(!profile){showAuthErr('Profile not found. Contact the moderator.');return;}
   APP.user={...profile,avatarColor:profile.avatar_color,isAdmin:profile.is_admin};
   await loadVotes();
-  buildPolis();
+  await buildPolis();
   launchApp();
 }
 async function doSignOut(){
@@ -1461,8 +1475,7 @@ async function loadVotes(){
   try{
     const{data,error}=await sb.from('answers').select('question_id,value').eq('user_id',APP.user.id);
     if(!error&&data&&data.length){
-      const knownIds=new Set(STMTS_BASE.map(s=>s.id));
-      data.forEach(a=>{if(!knownIds.has(a.question_id))return;APP.votes[a.question_id]=a.value===1?'agree':a.value===-1?'disagree':'pass';});
+      data.forEach(a=>{const sid=qidToStmt(a.question_id);if(!sid)return;APP.votes[sid]=a.value===1?'agree':a.value===-1?'disagree':'pass';});
       try{localStorage.setItem(votesKey(),JSON.stringify(APP.votes));}catch(e){}
       let i=0;while(i<APP.stmts.length&&APP.votes[APP.stmts[i].id])i++;APP.stmtIndex=i;return;
     }
@@ -1474,7 +1487,7 @@ async function saveVote(stmtId,choice){
   APP.votes[stmtId]=choice;
   try{localStorage.setItem(votesKey(),JSON.stringify(APP.votes));}catch(e){}
   const val=choice==='agree'?1:choice==='disagree'?-1:0;
-  const{error}=await sb.from('answers').upsert({user_id:APP.user.id,question_id:stmtId,value:val},{onConflict:'user_id,question_id'});
+  const{error}=await sb.from('answers').upsert({user_id:APP.user.id,question_id:stmtQID(stmtId),value:val},{onConflict:'user_id,question_id'});
   if(error)console.error('[CG] vote save failed:',error.message);
 }
 
@@ -1831,6 +1844,15 @@ function startMap(){
       ctx.beginPath();ctx.arc(xy[0],xy[1],pr+9,0,6.2832);ctx.strokeStyle='rgba(255,247,230,0.4)';ctx.lineWidth=1.5;ctx.stroke();
       ctx.beginPath();ctx.arc(xy[0],xy[1],pr,0,6.2832);ctx.fillStyle='#fff3da';ctx.shadowColor='#ffd98a';ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0;
     }
+    // Real participant dots
+    if(POLIS.realParticipants&&POLIS.realParticipants.length){
+      POLIS.realParticipants.forEach(rp=>{
+        if(APP.user&&rp.uid===APP.user.id)return;
+        const xy=proj(rp.pos[0],rp.pos[1],0.5);
+        ctx.beginPath();ctx.arc(xy[0],xy[1],3.5,0,6.2832);
+        ctx.fillStyle='rgba(255,247,230,0.35)';ctx.shadowColor='rgba(255,220,140,0.3)';ctx.shadowBlur=6;ctx.fill();ctx.shadowBlur=0;
+      });
+    }
     // Cluster zone labels
     APP.mapCentroids.forEach(({x,y,ci})=>{
       const c=CL[ci];const active=(APP.mapHoverCi===ci);
@@ -1887,7 +1909,7 @@ function launchApp(){
   updateVoteCard();updateProgressBar();updatePosSidebar();renderResults();renderForum();
   // Clear the hardcoded "85" participant count — no real participants yet
   const mapCountEl=document.querySelector('[data-dc-tpl="174"] .sc-interp');
-  if(mapCountEl)mapCountEl.closest('h2').innerHTML='Grouped by how they responded';
+  if(mapCountEl){const h2=mapCountEl.closest('h2');if(h2){const rc=POLIS&&POLIS.realParticipants?POLIS.realParticipants.length:0;h2.innerHTML=rc>0?rc+' '+(rc===1?'person has':'people have')+' mapped their position':'Grouped by how they responded';}}
   // Start canvases
   startHero();startMap();
   // Wire cluster legend buttons
