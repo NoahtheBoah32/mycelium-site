@@ -1347,6 +1347,7 @@ async function buildPolis(){
     const{data,error}=await sb.from('answers').select('user_id,question_id,value');
     if(!error&&data&&data.length){
       const byUser={};
+      POLIS.totalAnswers=data.length;
       data.forEach(a=>{const sid=qidToStmt(a.question_id);if(!sid)return;if(!byUser[a.user_id])byUser[a.user_id]={};byUser[a.user_id][sid]=a.value===1?'agree':a.value===-1?'disagree':'pass';});
       Object.entries(byUser).forEach(([uid,votes])=>{
         if(Object.values(votes).filter(v=>v!=='pass').length<3)return;
@@ -1573,7 +1574,9 @@ function doVote(choice){
   }else{commitVote(stmt,choice);}
 }
 async function commitVote(stmt,choice){
+  const isNewAnswer=!(stmt.id in APP.votes);
   try{await saveVote(stmt.id,choice);}catch(e){APP.votes[stmt.id]=choice;}
+  if(isNewAnswer&&/^s\d+$/.test(stmt.id)&&POLIS)POLIS.totalAnswers=(POLIS.totalAnswers||0)+1;
   APP.lastVoted={id:stmt.id,text:stmt.text,choice};
   // Live stats: this vote changes the numbers immediately
   if(stmt.id.startsWith('f-')){
@@ -1605,6 +1608,7 @@ async function commitVote(stmt,choice){
   updatePosSidebar();
   renderResults();
   renderLastVoted();
+  updatePulse();
 }
 
 function updateVoteCard(){
@@ -1729,6 +1733,10 @@ function renderResults(){
     return;
   }
   const{consensus,divides}=POLIS;
+  const realN=(POLIS.realParticipants||[]).length;
+  const liveBadge='<div style="grid-column:1/-1;display:flex;align-items:center;gap:10px;margin-bottom:4px;">'
+    +'<span style="width:7px;height:7px;border-radius:50%;background:#5f7d4f;box-shadow:0 0 0 3px rgba(95,125,79,0.2);"></span>'
+    +'<span style="font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgb(106,90,62);">Live · recomputed from real answers · '+realN+' member'+(realN===1?'':'s')+' on the map</span></div>';
   function resultCard(r,borderColor){
     return '<div style="background:rgb(244,236,216);border:1px solid rgba('+borderColor+',0.3);border-radius:16px;padding:20px 22px;margin-bottom:16px;">'
       +'<p style="font-family:Newsreader,serif;font-size:17px;line-height:1.35;margin:0 0 14px;color:rgb(46,35,16);">'+escHtml(r.st.text)+'</p>'
@@ -1739,9 +1747,25 @@ function renderResults(){
         +'<div style="font-size:12px;color:'+c.color+';font-weight:600;width:32px;text-align:right;">'+r.v[i]+'%</div></div>').join('')
       +'</div>';
   }
-  grid.innerHTML=''
+  grid.innerHTML=liveBadge
     +'<div>'+consensus.map(r=>resultCard(r,'95,125,79')).join('')+'</div>'
     +'<div>'+divides.map(r=>resultCard(r,'192,112,62')).join('')+'</div>';
+}
+
+// ══════════════════════════════════════════
+//  VILLAGE PULSE (live counters above the Open Floor)
+// ══════════════════════════════════════════
+function updatePulse(){
+  const el=g('cg-pulse');if(!el||!POLIS)return;
+  const realN=(POLIS.realParticipants||[]).length;
+  const answers=POLIS.totalAnswers||0;
+  const planted=APP.forum.length;
+  const stat=(n,label)=>'<div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:Newsreader,serif;font-size:26px;font-weight:500;color:rgb(46,35,16);">'+n+'</span><span style="font-size:11.5px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;color:rgb(154,128,73);">'+label+'</span></div>';
+  el.innerHTML='<span style="width:8px;height:8px;border-radius:50%;background:#5f7d4f;box-shadow:0 0 0 3px rgba(95,125,79,0.18);flex-shrink:0;"></span>'
+    +stat(realN,realN===1?'member on the map':'members on the map')
+    +stat(answers,'answers recorded')
+    +stat(planted,planted===1?'question planted':'questions planted')
+    +'<span style="font-size:12px;color:rgb(154,128,73);margin-left:auto;font-style:italic;font-family:Newsreader,serif;">Numbers move as the village answers.</span>';
 }
 
 // ══════════════════════════════════════════
@@ -1753,7 +1777,7 @@ function renderForum(){
     grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0 20px;"><div style="font-family:Newsreader,serif;font-size:22px;color:rgb(106,90,62);margin-bottom:10px;">No questions yet.</div><div style="font-size:14px;color:rgb(154,128,73);line-height:1.6">Be the first to pitch a question for the community to weigh in on.</div></div>';
     return;
   }
-  grid.innerHTML=APP.forum.map(q=>'<div style="display:flex;flex-direction:column;background:rgb(244,236,216);border:1px solid rgba(67,51,11,0.12);border-radius:18px;padding:22px 22px 18px;">'
+  grid.innerHTML=APP.forum.map(q=>'<div style="display:flex;flex-direction:column;background:rgb(244,236,216);border:1px solid rgba(67,51,11,0.12);border-left:3px solid '+(q.color||'#C4872A')+';border-radius:18px;padding:22px 22px 18px;">'
     +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">'
     +'<div style="display:flex;align-items:center;gap:9px;">'
     +'<span style="width:30px;height:30px;border-radius:50%;background:'+q.color+';display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:11.5px;">'+initials(q.who)+'</span>'
@@ -1790,7 +1814,7 @@ function pitchQuestion(){
   APP.stmts.push({id:'f-'+id,text:v,who:APP.user.username,role:'Member',color:'#C4872A'});
   APP.forum.unshift({id,text:v,who:APP.user.username,role:'Member',ago:'just now',color:'#C4872A',responses:1,aN:1,pN:0,dN:0,status:'Gathering responses',statusFg:'#8a6d2c',statusBg:'rgba(184,146,74,0.16)',queued:true,thread:[]});
   if(inp)inp.value='';
-  toast('Your question is in the voting queue.');renderForum();
+  toast('Your question is in the voting queue.');renderForum();updatePulse();
 }
 
 // ══════════════════════════════════════════
@@ -1984,8 +2008,15 @@ function launchApp(){
     if(dot){dot.style.background=APP.user.avatar_color||'#C4872A';dot.textContent=initials(APP.user.username);}
     if(nm)nm.textContent=APP.user.username;
   }
+  // Village pulse strip above the Open Floor
+  const fg=g('cg-forum-grid');
+  if(fg&&!g('cg-pulse')){
+    const pulse=document.createElement('div');pulse.id='cg-pulse';
+    pulse.style.cssText='display:flex;flex-wrap:wrap;gap:26px;align-items:center;background:rgb(244,236,216);border:1px solid rgba(67,51,11,0.12);border-radius:14px;padding:14px 22px;margin:0 0 18px;';
+    fg.parentElement.insertBefore(pulse,fg);
+  }
   // Initialize vote card, sidebar, results, forum
-  updateVoteCard();updateProgressBar();updatePosSidebar();renderResults();renderForum();
+  updateVoteCard();updateProgressBar();updatePosSidebar();renderResults();renderForum();updatePulse();
   // Clear the hardcoded "85" participant count — no real participants yet
   const mapCountEl=document.querySelector('[data-dc-tpl="174"] .sc-interp');
   if(mapCountEl){const h2=mapCountEl.closest('h2');if(h2){const rc=POLIS&&POLIS.realParticipants?POLIS.realParticipants.length:0;h2.innerHTML=rc>0?rc+' '+(rc===1?'person has':'people have')+' mapped their position':'Grouped by how they responded';}}
@@ -2035,7 +2066,7 @@ function startIntro(){
   css.textContent=`
 #cg-intro{position:fixed;inset:0;z-index:2147483000;background:#10130c;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;opacity:1;transition:opacity .7s ease}
 #cg-intro.cgi-out{opacity:0;pointer-events:none}
-.cgi-stage{position:fixed;inset:0;z-index:0}
+.cgi-stage{position:sticky;top:0;height:100vh;margin-bottom:-100vh;z-index:0}
 .cgi-stage canvas{position:absolute;inset:0;width:100%;height:100%}
 .cgi-cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-44%);width:min(860px,90vw);text-align:center;opacity:0;transition:opacity .6s ease,transform .6s ease;pointer-events:none;padding:50px 30px}
 .cgi-cap::before{content:'';position:absolute;inset:-12% -8%;background:radial-gradient(ellipse at center,rgba(8,10,6,.6) 0%,rgba(8,10,6,.3) 55%,transparent 75%);z-index:-1}
@@ -2133,6 +2164,14 @@ function startIntro(){
   }
   ov.querySelector('#cgi-skip').addEventListener('click',finishIntro);
   ov.addEventListener('scroll',onScroll,{passive:true});
+  // Drive the scroll ourselves: fixed/sticky descendants make browsers chain wheel
+  // events to the (locked) page viewport instead of this overlay, so wheel input
+  // dies without this. Manual handling also survives any host-page listeners.
+  ov.addEventListener('wheel',e=>{
+    e.preventDefault();e.stopPropagation();
+    const k=e.deltaMode===1?40:(e.deltaMode===2?ov.clientHeight:1);
+    ov.scrollTop+=e.deltaY*k;
+  },{passive:false});
   window.addEventListener('resize',fit);
   fit();onScroll();raf=requestAnimationFrame(loop);
 }
