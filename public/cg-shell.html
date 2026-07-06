@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="only light">
 <title>Common Ground | Mycelium</title>
 <link rel="icon" href="/favicon.svg">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -11,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
+  color-scheme:only light; /* keep the village in daylight even under Chrome auto dark mode */
   --paper:#f5efe0;
   --paper2:#ece2cb;
   --card:#fbf7ec;
@@ -86,6 +88,8 @@ h2.big em{font-style:italic;color:var(--moss)}
 .hs-item:last-child{border-right:none}
 .hs-n{font-family:'Fraunces',serif;font-size:34px;font-weight:400;color:var(--amber);line-height:1;font-variant-numeric:tabular-nums}
 .hs-l{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-faint);margin-top:5px;font-weight:600}
+#replay-walk{margin-top:18px;background:none;border:none;cursor:pointer;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;color:var(--amber);padding:6px 0;border-bottom:1px solid rgba(176,122,38,.4);transition:color .2s,border-color .2s}
+#replay-walk:hover{color:var(--clay);border-color:var(--clay)}
 .markers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:70px}
 .marker{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:36px 30px;position:relative}
 .marker::before{content:'';position:absolute;top:0;left:28px;width:34px;height:3px;background:var(--mk,var(--amber));border-radius:0 0 3px 3px}
@@ -188,12 +192,21 @@ h2.big em{font-style:italic;color:var(--moss)}
 
 /* open floor */
 #floor{background:var(--paper2)}
-.pitch{margin-top:44px;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:10px 10px 10px 22px;display:flex;align-items:center;gap:14px;max-width:760px;box-shadow:0 14px 40px -22px rgba(42,35,24,.4)}
-.pitch:focus-within{border-color:rgba(176,122,38,.5)}
+.pitch{margin-top:44px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:5px;padding:10px 10px 10px 20px;display:flex;align-items:center;gap:14px;max-width:760px;box-shadow:0 14px 40px -22px rgba(42,35,24,.4);transition:box-shadow .25s,border-color .25s}
+.pitch:focus-within{border-color:rgba(176,122,38,.55);box-shadow:0 14px 44px -18px rgba(176,122,38,.35)}
+.pitch svg{width:20px;height:20px;flex-shrink:0;opacity:.55}
 #pitch-input{flex:1;border:none;background:none;outline:none;font-size:14.5px;font-weight:300;color:var(--ink);padding:12px 0}
-#pitch-btn{padding:13px 26px;background:var(--ink);color:var(--paper);border:none;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;border-radius:3px}
-#pitch-btn:hover{background:var(--moss)}
-#pulse{display:flex;flex-wrap:wrap;gap:26px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:14px 22px;margin-top:18px;max-width:760px}
+#pitch-input::placeholder{color:var(--ink-faint)}
+#pitch-btn{padding:13px 26px;background:var(--moss);color:#fbf7ec;border:none;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:background .2s}
+#pitch-btn:hover{background:#3a5233}
+#pulse{background:var(--card);border:1px solid var(--line);border-radius:5px;margin-top:18px;max-width:760px;overflow:hidden}
+.pulse-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.pulse-tile{padding:18px 22px;border-right:1px solid var(--line)}
+.pulse-tile:last-child{border-right:none}
+.pulse-n{font-family:'Fraunces',serif;font-size:30px;color:var(--amber);line-height:1;font-variant-numeric:tabular-nums}
+.pulse-l{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-faint);margin-top:5px;font-weight:600}
+.pulse-note{border-top:1px solid var(--line);padding:11px 22px;font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-faint);display:flex;align-items:center;gap:9px}
+.pulse-note::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 3px rgba(74,103,65,.18);flex-shrink:0}
 .floor-grid{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .fq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:4px;padding:24px 26px}
 .fq-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:11px;color:var(--ink-faint)}
@@ -203,7 +216,10 @@ h2.big em{font-style:italic;color:var(--moss)}
 .fq-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(42,35,24,.08);padding-top:12px;font-size:11.5px;color:var(--ink-faint)}
 .fq-foot button{border:1px solid var(--line);background:none;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);padding:8px 16px;border-radius:3px;cursor:pointer}
 .fq-foot button:hover{border-color:var(--amber);color:var(--amber)}
-.floor-empty{margin-top:34px;font-size:14px;color:var(--ink-faint);font-weight:300}
+.floor-empty{margin-top:34px;max-width:760px;border:1.5px dashed rgba(42,35,24,.25);border-radius:6px;padding:44px 30px;text-align:center;background:rgba(251,247,236,.5)}
+.floor-empty svg{width:34px;height:34px;margin-bottom:14px;opacity:.6}
+.floor-empty h4{font-family:'Fraunces',serif;font-weight:400;font-size:21px;color:var(--ink);margin-bottom:6px}
+.floor-empty p{font-size:13px;color:var(--ink-faint);font-weight:300}
 
 /* closing */
 #depart{background:var(--dark)}
@@ -294,6 +310,7 @@ h2.big em{font-style:italic;color:var(--moss)}
           <div class="hs-item"><div class="hs-n" id="stat-answers">0</div><div class="hs-l">Answers recorded</div></div>
           <div class="hs-item"><div class="hs-n" id="stat-questions">8</div><div class="hs-l">Questions live</div></div>
         </div>
+        <button id="replay-walk" class="rv" onclick="startIntro()">↻ Walk the trail again</button>
       </div>
       <div class="arrive-photo rv">
         <img src="/cg-intro/frames/i_132.webp" alt="The village dock">
@@ -406,12 +423,17 @@ h2.big em{font-style:italic;color:var(--moss)}
       <h2 class="big rv">Questions the village <em>is growing.</em></h2>
       <p class="lede rv">Anyone can plant a statement. As people respond it gets mapped, and the camps show where it truly stands. No moderator picks the agenda.</p>
       <div class="pitch rv">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2a2318" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M5 10c0-4 3-7 7-7 0 4-3 7-7 7Zm14 3c0 4-3 7-7 7 0-4 3-7 7-7Z"/></svg>
         <input id="pitch-input" type="text" placeholder="Plant a question. e.g. Should beginners ever need to pay to start learning?" maxlength="160">
         <button id="pitch-btn" onclick="pitchQuestion()">Plant it</button>
       </div>
       <div id="pulse" class="rv"></div>
       <div class="floor-grid" id="floor-grid"></div>
-      <div class="floor-empty" id="floor-empty">No community questions yet. Be the first to plant one.</div>
+      <div class="floor-empty" id="floor-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4a6741" stroke-width="1.5" stroke-linecap="round"><path d="M12 21v-8M12 13c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0c0-4-3-7-7-7 0 4 3 7 7 7Z"/></svg>
+        <h4>The floor is quiet.</h4>
+        <p>No community questions yet. Plant the first one and the village will weigh it.</p>
+      </div>
     </div>
   </section>
 
@@ -863,12 +885,12 @@ function renderStats(){
   g('stat-answers').textContent=POLIS.totalAnswers||0;
   g('stat-questions').textContent=STMTS_BASE.length+APP.forum.length;
   const pulse=g('pulse');
-  const stat=(v,l)=>'<div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:Fraunces,serif;font-size:24px;color:var(--ink);">'+v+'</span><span style="font-size:10.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-faint);">'+l+'</span></div>';
-  pulse.innerHTML='<span style="width:8px;height:8px;border-radius:50%;background:#4a6741;box-shadow:0 0 0 3px rgba(74,103,65,.18);flex-shrink:0;"></span>'
-    +stat(n,n===1?'voice on the map':'voices on the map')
-    +stat(POLIS.totalAnswers||0,'answers recorded')
-    +stat(APP.forum.length,APP.forum.length===1?'question planted':'questions planted')
-    +'<span style="font-size:12px;color:var(--ink-faint);margin-left:auto;font-style:italic;font-family:Fraunces,serif;">Every number here is a real member.</span>';
+  const tile=(v,l)=>'<div class="pulse-tile"><div class="pulse-n">'+v+'</div><div class="pulse-l">'+l+'</div></div>';
+  pulse.innerHTML='<div class="pulse-grid">'
+    +tile(n,n===1?'voice on the map':'voices on the map')
+    +tile(POLIS.totalAnswers||0,'answers recorded')
+    +tile(APP.forum.length,APP.forum.length===1?'question planted':'questions planted')
+    +'</div><div class="pulse-note">Every number here is a real member. They move as the village answers.</div>';
 }
 function renderCamps(){
   const wrap=g('camp-panels');
