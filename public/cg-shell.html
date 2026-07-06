@@ -2034,8 +2034,9 @@ function launchApp(){
     entries.forEach(e=>{if(e.isIntersecting)e.target.style.cssText+='opacity:1!important;transform:none!important;';});
   },{threshold:0.15});
   document.querySelectorAll('[data-reveal]').forEach(el=>revealObserver.observe(el));
-  // The walk to the village — plays once per explicit sign-in, skippable
-  if(APP._playIntro){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}}
+  // The walk to the village — always after an explicit sign-in, and once per
+  // device for saved-session logins. Skippable either way.
+  if(APP._playIntro||!cgiSeen()){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}}
 }
 
 // ══════════════════════════════════════════
@@ -2050,7 +2051,13 @@ document.addEventListener('DOMContentLoaded',async()=>{
   const sp=g('si-pass');if(sp)sp.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
   const su=g('su-pass');if(su)su.addEventListener('keydown',e=>{if(e.key==='Enter')doSignUp();});
   // Auto-restore Supabase session on page load
-  try{const{data:{session}}=await sb.auth.getSession();if(session)await startSession(session.user);}catch(e){}
+  let hadSession=false;
+  try{const{data:{session}}=await sb.auth.getSession();if(session){hadSession=true;await startSession(session.user);}}catch(e){}
+  // Warm the intro frames while the visitor is still on the auth screen (or if
+  // this device has not seen the walk yet), so the intro starts instantly.
+  try{
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!hadSession||!cgiSeen()))cgiPrefetch();
+  }catch(e){}
 });
 
 // ══════════════════════════════════════════
@@ -2058,6 +2065,31 @@ document.addEventListener('DOMContentLoaded',async()=>{
 //  Frames live at /cg-intro/frames/. 1-30: the trail corner. 31-132: the dock.
 // ══════════════════════════════════════════
 const CGI_FRAMES=132,CGI_SEG1=30,CGI_PATH=i=>'/cg-intro/frames/i_'+String(i+1).padStart(3,'0')+'.webp';
+// Ordered prefetch with a small pool: frames arrive in walk order, so the intro
+// can begin the moment the first stretch is ready instead of waiting for all 132.
+// Kicked off while the user is still on the auth screen, so sign-in feels instant.
+const cgiImgs=new Array(CGI_FRAMES);
+let cgiLoaded=0,cgiContig=0,cgiStarted=false;
+const cgiProgressCbs=[];
+function cgiSeen(){try{return !!localStorage.getItem('cg-intro-seen');}catch(e){return false;}}
+function cgiPrefetch(){
+  if(cgiStarted)return;cgiStarted=true;
+  let next=0,active=0;const POOL=6;
+  const pump=()=>{
+    while(active<POOL&&next<CGI_FRAMES){
+      const i=next++;active++;
+      const im=new Image();im.decoding='async';
+      im.onload=im.onerror=()=>{
+        active--;cgiLoaded++;
+        while(cgiContig<CGI_FRAMES&&cgiImgs[cgiContig]&&cgiImgs[cgiContig].complete)cgiContig++;
+        cgiProgressCbs.forEach(cb=>{try{cb();}catch(e){}});
+        pump();
+      };
+      im.src=CGI_PATH(i);cgiImgs[i]=im;
+    }
+  };
+  pump();
+}
 function startIntro(){
   if(document.getElementById('cg-intro'))return;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -2110,27 +2142,33 @@ function startIntro(){
   document.documentElement.style.overflow='hidden';
   document.body.style.overflow='hidden';
   const cv=ov.querySelector('canvas'),ctx=cv.getContext('2d');
-  const frames=new Array(CGI_FRAMES);let loaded=0,finished=false;
+  let finished=false;
   const fill=ov.querySelector('.cgi-load-fill'),loadBar=ov.querySelector('.cgi-load');
   let cw=0,ch=0,cur=0,tgt=0,last=-1,raf=0,lastT=0;
   function fit(){const d=Math.min(2,devicePixelRatio||1);cw=innerWidth;ch=innerHeight;cv.width=cw*d;cv.height=ch*d;ctx.setTransform(d,0,0,d,0,0);last=-1;draw(cur,true);}
   function draw(idx,force){
     idx=Math.max(0,Math.min(CGI_FRAMES-1,Math.round(idx)));
+    // never show an unloaded frame: hold at the loaded frontier instead
+    if(cgiContig>0)idx=Math.min(idx,cgiContig-1);
     if(idx===last&&!force)return;
-    const im=frames[idx];if(!im||!im.complete||!im.naturalWidth)return;
+    const im=cgiImgs[idx];if(!im||!im.complete||!im.naturalWidth)return;
     const s=Math.max(cw/im.naturalWidth,ch/im.naturalHeight),w=im.naturalWidth*s,h=im.naturalHeight*s;
     ctx.fillStyle='#10130c';ctx.fillRect(0,0,cw,ch);
     ctx.drawImage(im,(cw-w)/2,(ch-h)/2,w,h);last=idx;
   }
-  for(let i=0;i<CGI_FRAMES;i++){
-    const im=new Image();
-    im.onload=im.onerror=()=>{loaded++;fill.style.width=Math.round(loaded/CGI_FRAMES*100)+'%';if(loaded>=CGI_FRAMES)loadBar.classList.add('done');if(i===0)draw(0,true);};
-    im.src=CGI_PATH(i);frames[i]=im;
-  }
+  cgiPrefetch();
+  const updBar=()=>{
+    fill.style.width=Math.round(cgiLoaded/CGI_FRAMES*100)+'%';
+    if(cgiLoaded>=CGI_FRAMES)loadBar.classList.add('done');
+    if(last<0)draw(0,true);
+  };
+  cgiProgressCbs.push(updBar);updBar();
   const sp1=ov.querySelector('.cgi-sp1'),br=ov.querySelector('.cgi-bridge'),sp2=ov.querySelector('.cgi-sp2');
   function finishIntro(){
     if(finished)return;finished=true;
+    try{localStorage.setItem('cg-intro-seen','1');}catch(e){}
     cancelAnimationFrame(raf);
+    const ci=cgiProgressCbs.indexOf(updBar);if(ci>=0)cgiProgressCbs.splice(ci,1);
     ov.classList.add('cgi-out');
     document.documentElement.style.overflow='';
     document.body.style.overflow='';
@@ -2176,6 +2214,7 @@ function startIntro(){
   fit();onScroll();raf=requestAnimationFrame(loop);
 }
 window._cg.intro=()=>startIntro();
+window._cg.introState=()=>({loaded:cgiLoaded,contig:cgiContig,started:cgiStarted,seen:cgiSeen()});
 </script>
 
 </body></html>
