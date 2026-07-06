@@ -720,7 +720,7 @@ async function doSignUp(){
 async function startSession(authUser){
   const{data:profile}=await sb.from('profiles').select('*').eq('id',authUser.id).single();
   if(!profile){showAuthErr('Profile not found. Contact the moderator.');return;}
-  APP.user={...profile,avatarColor:profile.avatar_color,isAdmin:profile.is_admin};
+  APP.user={...profile,avatarColor:profile.avatar_color,isAdmin:profile.is_admin||(authUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase()};
   await loadVotes();
   await buildPolis();
   launchApp();
@@ -978,7 +978,9 @@ function launchApp(){
   renderStatement();renderMap();renderStats();renderCamps();renderFloor();renderYouLine();
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.08});
   document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
-  if(APP._playIntro||!cgiSeen()){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}}
+  // The walk: every visit for the admin, once per device for everyone else,
+  // always after an explicit sign-in. Skip stays available either way.
+  if(APP._playIntro||!cgiSeen()||APP.user.isAdmin){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}}
 }
 document.getElementById('stones').addEventListener('click',e=>{
   const st=e.target.closest('.stone');if(!st||g('stones').classList.contains('done'))return;
@@ -992,7 +994,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
   const pi=g('pitch-input');if(pi)pi.addEventListener('keydown',e=>{if(e.key==='Enter')pitchQuestion();});
   let hadSession=false;
   try{const{data:{session}}=await sb.auth.getSession();if(session){hadSession=true;await startSession(session.user);}}catch(e){}
-  try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!hadSession||!cgiSeen()))cgiPrefetch();}catch(e){}
+  try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!hadSession||!cgiSeen()||(APP.user&&APP.user.isAdmin)))cgiPrefetch();}catch(e){}
 });
 
 // ══════════════════════════════════════════
