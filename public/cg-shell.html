@@ -192,14 +192,14 @@ h2.big em{font-style:italic;color:var(--moss)}
 
 /* open floor */
 #floor{background:var(--paper2)}
-.pitch{margin-top:44px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:5px;padding:10px 10px 10px 20px;display:flex;align-items:center;gap:14px;max-width:760px;box-shadow:0 14px 40px -22px rgba(42,35,24,.4);transition:box-shadow .25s,border-color .25s}
+.pitch{margin-top:44px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:5px;padding:10px 10px 10px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 14px 40px -22px rgba(42,35,24,.4);transition:box-shadow .25s,border-color .25s}
 .pitch:focus-within{border-color:rgba(176,122,38,.55);box-shadow:0 14px 44px -18px rgba(176,122,38,.35)}
 .pitch svg{width:20px;height:20px;flex-shrink:0;opacity:.55}
 #pitch-input{flex:1;border:none;background:none;outline:none;font-size:14.5px;font-weight:300;color:var(--ink);padding:12px 0}
 #pitch-input::placeholder{color:var(--ink-faint)}
 #pitch-btn{padding:13px 26px;background:var(--moss);color:#fbf7ec;border:none;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:background .2s}
 #pitch-btn:hover{background:#3a5233}
-#pulse{background:var(--card);border:1px solid var(--line);border-radius:5px;margin-top:18px;max-width:760px;overflow:hidden}
+#pulse{background:var(--card);border:1px solid var(--line);border-radius:5px;margin-top:18px;overflow:hidden}
 .pulse-grid{display:grid;grid-template-columns:repeat(3,1fr)}
 .pulse-tile{padding:18px 22px;border-right:1px solid var(--line)}
 .pulse-tile:last-child{border-right:none}
@@ -211,11 +211,15 @@ h2.big em{font-style:italic;color:var(--moss)}
 .fq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:4px;padding:24px 26px}
 .fq-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:11px;color:var(--ink-faint)}
 .fq-meta b{font-size:12px;color:var(--ink);font-weight:600}
+.fq-who{display:flex;align-items:center;gap:9px}
+.fq-ava{width:26px;height:26px;border-radius:50%;background:var(--moss);color:#fbf7ec;display:grid;place-items:center;font-size:11px;font-weight:600}
 .fq-text{font-family:'Fraunces',serif;font-size:18px;font-style:italic;line-height:1.5;margin-bottom:16px}
 .fq-bars{margin-bottom:8px}
 .fq-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(42,35,24,.08);padding-top:12px;font-size:11.5px;color:var(--ink-faint)}
 .fq-foot button{border:1px solid var(--line);background:none;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);padding:8px 16px;border-radius:3px;cursor:pointer}
 .fq-foot button:hover{border-color:var(--amber);color:var(--amber)}
+.fq-foot .fq-del{border:none;color:var(--ink-faint);padding:8px 10px}
+.fq-foot .fq-del:hover{color:#a04226;border:none}
 .floor-empty{margin-top:34px;max-width:760px;border:1.5px dashed rgba(42,35,24,.25);border-radius:6px;padding:44px 30px;text-align:center;background:rgba(251,247,236,.5)}
 .floor-empty svg{width:34px;height:34px;margin-bottom:14px;opacity:.6}
 .floor-empty h4{font-family:'Fraunces',serif;font-weight:400;font-size:21px;color:var(--ink);margin-bottom:6px}
@@ -473,7 +477,36 @@ const STMTS_BASE=[
   {id:'s8',text:"When the community is split on a topic, the platform should present every side rather than recommend one approach."},
 ];
 function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0000-'+n.toString().padStart(12,'0');}
-function qidToStmt(uuid){const n=parseInt(uuid.split('-').pop());return(n>=1&&n<=STMTS_BASE.length)?'s'+n:null;}
+STMTS_BASE.forEach(s=>{s.qid=stmtQID(s.id);});
+
+// ── LIVE QUESTION REGISTRY ──
+// The questions table in Supabase is the shared source of truth. The eight
+// seed statements keep their product wording client-side; every planted
+// question is a real row that every member sees and answers.
+let QINDEX={};
+async function loadQuestions(){
+  APP.dynamicQ=[];
+  QINDEX={};
+  STMTS_BASE.forEach(s=>{QINDEX[s.qid]=s;});
+  try{
+    const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at').eq('status','approved').order('created_at',{ascending:true});
+    if(!error&&data){
+      data.forEach(r=>{
+        if(QINDEX[r.id])return; // seed rows: client wording wins
+        if(/^PROBE:/.test(r.body))return; // test artifacts stay off the floor
+        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A villager',at:r.created_at};
+        APP.dynamicQ.push(st);QINDEX[r.id]=st;
+      });
+      const uids=[...new Set(APP.dynamicQ.map(q=>q.by).filter(Boolean))];
+      if(uids.length){
+        const{data:profs}=await sb.from('profiles').select('id,username').in('id',uids);
+        const byId={};(profs||[]).forEach(p=>{byId[p.id]=p.username;});
+        APP.dynamicQ.forEach(q=>{if(byId[q.by])q.byName=byId[q.by];});
+      }
+    }
+  }catch(e){console.error('[CG] loadQuestions failed',e);}
+  APP.stmts=[...STMTS_BASE,...APP.dynamicQ];
+}
 
 // Camp identities are the village's lore. They label real clusters; they hold no
 // votes of their own. ARCHETYPES are expected leanings per statement, used only
@@ -551,17 +584,17 @@ function hash32(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charC
 
 let POLIS=null;
 async function buildPolis(){
-  POLIS={users:[],stats:{},clusters:null,pca:null,totalAnswers:0};
-  STMTS_BASE.forEach(s=>POLIS.stats[s.id]={a:0,p:0,d:0,n:0});
+  POLIS={users:[],stats:{},clusters:null,pca:null,totalAnswers:0,cols:APP.stmts.slice()};
+  POLIS.cols.forEach(s=>POLIS.stats[s.id]={a:0,p:0,d:0,n:0});
   try{
     const{data,error}=await sb.from('answers').select('user_id,question_id,value');
     if(error||!data)return;
-    POLIS.totalAnswers=data.length;
     const byUser={};
     data.forEach(r=>{
-      const sid=qidToStmt(r.question_id);if(!sid)return;
+      const st=QINDEX[r.question_id];if(!st)return; // answers to retired questions drop out
+      POLIS.totalAnswers++;
       if(!byUser[r.user_id])byUser[r.user_id]={};
-      byUser[r.user_id][sid]=r.value===1?'agree':r.value===-1?'disagree':'pass';
+      byUser[r.user_id][st.id]=r.value===1?'agree':r.value===-1?'disagree':'pass';
     });
     Object.entries(byUser).forEach(([uid,votes])=>{
       Object.entries(votes).forEach(([sid,v])=>{
@@ -575,11 +608,11 @@ async function buildPolis(){
   }catch(e){console.error('[CG] buildPolis failed',e);}
 }
 function computeClusters(){
-  const S=STMTS_BASE.length;
+  const COLS=POLIS.cols,S=COLS.length;
   const voters=POLIS.users.filter(u=>u.nonPass>=2);
   POLIS.clusters=null;POLIS.pca=null;
   if(!voters.length)return;
-  const M=voters.map(u=>STMTS_BASE.map(s=>u.votes[s.id]!==undefined?enc(u.votes[s.id]):null));
+  const M=voters.map(u=>COLS.map(s=>u.votes[s.id]!==undefined?enc(u.votes[s.id]):null));
   const means=new Array(S).fill(0);
   for(let j=0;j<S;j++){let m=0,c=0;M.forEach(row=>{if(row[j]!==null){m+=row[j];c++;}});means[j]=c?m/c:0;}
   const C=M.map(row=>row.map((v,j)=>(v===null?means[j]:v)-means[j]));
@@ -602,15 +635,18 @@ function computeClusters(){
     for(let c=0;c<k;c++){
       const members=voters.filter((u,i)=>labels[i]===c);
       if(!members.length)continue;
-      const meanVote=STMTS_BASE.map((s,j)=>{
+      const meanVote=COLS.map((s,j)=>{
         let sum=0,n=0;members.forEach(m=>{if(m.votes[s.id]!==undefined&&m.votes[s.id]!=='pass'){sum+=enc(m.votes[s.id]);n++;}});
         return n?sum/n:0;
       });
       clusters.push({members,centroid:cents[c],meanVote,camp:null});
     }
-    // name each real cluster after the camp archetype it best matches (greedy)
+    // name each real cluster after the camp archetype it best matches (greedy);
+    // archetypes are defined over the eight seed statements, planted questions
+    // contribute their own geometry but not to naming
+    const paddedArch=ARCHETYPES.map(ar=>COLS.map(s=>{const si=STMTS_BASE.indexOf(s);return si>=0?ar[si]:0;}));
     const scores=[];
-    clusters.forEach((cl,i)=>ARCHETYPES.forEach((ar,j)=>scores.push([dot(cl.meanVote,ar),i,j])));
+    clusters.forEach((cl,i)=>paddedArch.forEach((ar,j)=>scores.push([dot(cl.meanVote,ar),i,j])));
     scores.sort((a,b)=>b[0]-a[0]);
     const usedC=new Set(),usedA=new Set();
     scores.forEach(([,i,j])=>{if(!usedC.has(i)&&!usedA.has(j)){clusters[i].camp=j;usedC.add(i);usedA.add(j);}});
@@ -618,7 +654,7 @@ function computeClusters(){
     // repness: the statement that most sets this cluster apart (Polis-style)
     clusters.forEach(cl=>{
       let rep=null;
-      STMTS_BASE.forEach((s,j)=>{
+      COLS.forEach((s,j)=>{
         const own=cl.meanVote[j];
         const others=clusters.filter(x=>x!==cl);
         if(!others.length)return;
@@ -635,7 +671,7 @@ function computeClusters(){
 function projectVotes(votes){
   if(!POLIS||!POLIS.pca)return[0,0];
   const{means,pcs,sx,sy}=POLIS.pca;
-  const row=STMTS_BASE.map((s,j)=>(votes[s.id]!==undefined?enc(votes[s.id]):means[j])-means[j]);
+  const row=POLIS.cols.map((s,j)=>(votes[s.id]!==undefined?enc(votes[s.id]):means[j])-means[j]);
   return[dot(row,pcs[0])*sx,dot(row,pcs[1])*sy];
 }
 function myCamp(){
@@ -653,7 +689,7 @@ function myCamp(){
 // ══════════════════════════════════════════
 //  APP STATE + HELPERS
 // ══════════════════════════════════════════
-const APP={user:null,votes:{},stmts:[...STMTS_BASE],stmtIndex:0,forum:[]};
+const APP={user:null,votes:{},stmts:[...STMTS_BASE],stmtIndex:0,dynamicQ:[]};
 const g=id=>document.getElementById(id);
 function toast(msg){const el=g('cg-toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),2800);}
 function initials(name){return name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
@@ -721,13 +757,14 @@ async function startSession(authUser){
   const{data:profile}=await sb.from('profiles').select('*').eq('id',authUser.id).single();
   if(!profile){showAuthErr('Profile not found. Contact the moderator.');return;}
   APP.user={...profile,avatarColor:profile.avatar_color,isAdmin:profile.is_admin||(authUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase()};
+  await loadQuestions();
   await loadVotes();
   await buildPolis();
   launchApp();
 }
 async function doSignOut(){
   await sb.auth.signOut();
-  APP.user=null;APP.votes={};APP.stmts=[...STMTS_BASE];APP.stmtIndex=0;APP.forum=[];
+  APP.user=null;APP.votes={};APP.stmts=[...STMTS_BASE];APP.stmtIndex=0;APP.dynamicQ=[];QINDEX={};
   g('village').style.display='none';
   g('userchip').style.display='none';
   const auth=g('cg-auth');auth.style.opacity='1';auth.style.display='flex';auth.style.pointerEvents='';
@@ -742,7 +779,7 @@ async function loadVotes(){
   try{
     const{data,error}=await sb.from('answers').select('question_id,value').eq('user_id',APP.user.id);
     if(!error&&data&&data.length){
-      data.forEach(a=>{const sid=qidToStmt(a.question_id);if(!sid)return;APP.votes[sid]=a.value===1?'agree':a.value===-1?'disagree':'pass';});
+      data.forEach(a=>{const st=QINDEX[a.question_id];if(!st)return;APP.votes[st.id]=a.value===1?'agree':a.value===-1?'disagree':'pass';});
       try{localStorage.setItem(votesKey(),JSON.stringify(APP.votes));}catch(e){}
     }else{
       try{const stored=localStorage.getItem(votesKey());if(stored)APP.votes=JSON.parse(stored);}catch(e){}
@@ -750,12 +787,12 @@ async function loadVotes(){
   }catch(e){}
   let i=0;while(i<APP.stmts.length&&APP.votes[APP.stmts[i].id]!==undefined)i++;APP.stmtIndex=i;
 }
-async function saveVote(stmtId,choice){
-  APP.votes[stmtId]=choice;
+async function saveVote(stmt,choice){
+  APP.votes[stmt.id]=choice;
   try{localStorage.setItem(votesKey(),JSON.stringify(APP.votes));}catch(e){}
-  if(!/^s\d+$/.test(stmtId))return;
+  if(!stmt.qid)return;
   const val=choice==='agree'?1:choice==='disagree'?-1:0;
-  const{error}=await sb.from('answers').upsert({user_id:APP.user.id,question_id:stmtQID(stmtId),value:val},{onConflict:'user_id,question_id'});
+  const{error}=await sb.from('answers').upsert({user_id:APP.user.id,question_id:stmt.qid,value:val},{onConflict:'user_id,question_id'});
   if(error)console.error('[CG] vote save failed:',error.message);
 }
 
@@ -790,40 +827,32 @@ async function castVote(choice){
   const stones=g('stones');
   stones.classList.add('done');
   stones.querySelector('[data-v="'+choice+'"]').classList.add('picked');
-  const isBase=/^s\d+$/.test(st.id);
-  await saveVote(st.id,choice);
-  if(isBase){
-    // fold my vote into the live model immediately
-    const meIdx=POLIS.users.findIndex(u=>u.uid===APP.user.id);
-    const myVotes={};Object.keys(APP.votes).forEach(id=>{if(/^s\d+$/.test(id))myVotes[id]=APP.votes[id];});
-    const nonPass=Object.values(myVotes).filter(v=>v!=='pass').length;
-    if(meIdx>=0){POLIS.users[meIdx].votes=myVotes;POLIS.users[meIdx].nonPass=nonPass;}
-    else POLIS.users.push({uid:APP.user.id,votes:myVotes,nonPass});
-    POLIS.stats={};STMTS_BASE.forEach(s=>POLIS.stats[s.id]={a:0,p:0,d:0,n:0});
-    POLIS.users.forEach(u=>Object.entries(u.votes).forEach(([sid,v])=>{const x=POLIS.stats[sid];if(!x)return;x.n++;if(v==='agree')x.a++;else if(v==='disagree')x.d++;else x.p++;}));
-    POLIS.totalAnswers=POLIS.users.reduce((a,u)=>a+Object.keys(u.votes).length,0);
-    computeClusters();
-  }else{
-    const q=APP.forum.find(x=>'f-'+x.id===st.id);
-    if(q){if(choice==='agree')q.aN++;else if(choice==='disagree')q.dN++;else q.pN++;renderFloor();}
-  }
+  await saveVote(st,choice);
+  // fold my vote into the live model immediately: every question shapes the map
+  const meIdx=POLIS.users.findIndex(u=>u.uid===APP.user.id);
+  const myVotes={};Object.keys(APP.votes).forEach(id=>{if(POLIS.stats[id])myVotes[id]=APP.votes[id];});
+  const nonPass=Object.values(myVotes).filter(v=>v!=='pass').length;
+  if(meIdx>=0){POLIS.users[meIdx].votes=myVotes;POLIS.users[meIdx].nonPass=nonPass;}
+  else POLIS.users.push({uid:APP.user.id,votes:myVotes,nonPass});
+  POLIS.stats={};POLIS.cols.forEach(s=>POLIS.stats[s.id]={a:0,p:0,d:0,n:0});
+  POLIS.users.forEach(u=>Object.entries(u.votes).forEach(([sid,v])=>{const x=POLIS.stats[sid];if(!x)return;x.n++;if(v==='agree')x.a++;else if(v==='disagree')x.d++;else x.p++;}));
+  POLIS.totalAnswers=POLIS.users.reduce((a,u)=>a+Object.keys(u.votes).length,0);
+  computeClusters();
   renderReveal(st,choice);
-  renderMap();renderStats();renderCamps();renderYouLine();
+  renderMap();renderStats();renderCamps();renderYouLine();renderFloor();
   g('fc-next').classList.add('ready');
 }
 function renderReveal(st,choice){
   const el=g('leanings');
-  const isBase=/^s\d+$/.test(st.id);
-  let a=0,p=0,d=0,n=0;
-  if(isBase){const x=POLIS.stats[st.id];a=x.a;p=x.p;d=x.d;n=x.n;}
-  else{const q=APP.forum.find(x=>'f-'+x.id===st.id);if(q){a=q.aN;p=q.pN;d=q.dN;n=a+p+d;}}
+  const x=POLIS.stats[st.id]||{a:0,p:0,d:0,n:0};
+  const a=x.a,p=x.p,d=x.d,n=x.n;
   const pc=pcts([a,p,d]);
   const label=choice==='agree'?'You stood with it':choice==='disagree'?'You stepped back':'You let it pass';
   let html='<div class="lean-title">'+label+' · '+n+' voice'+(n===1?'':'s')+' so far</div>';
   [['Stand with','#4a6741',pc[0],a],['Let pass','#8a8065',pc[1],p],['Step back','#a65a38',pc[2],d]].forEach(([l,c,pct,cnt])=>{
     html+='<div class="lean-row" style="--ln:'+c+'"><span class="lean-name">'+l+'</span><div class="lean-track"><div class="lean-fill" data-w="'+pct+'"></div></div><span class="lean-pct">'+cnt+' · '+pct+'%</span></div>';
   });
-  if(isBase&&POLIS.clusters){
+  if(POLIS.clusters){
     html+='<div class="lean-title" style="margin-top:18px">By camp: share who stand with it</div>';
     POLIS.clusters.forEach(cl=>{
       const camp=CAMPS[cl.camp];
@@ -832,7 +861,7 @@ function renderReveal(st,choice){
       const pct=voted.length?Math.round(ag/voted.length*100):0;
       html+='<div class="lean-row" style="--ln:'+camp.color+'"><span class="lean-name">'+camp.short+'</span><div class="lean-track"><div class="lean-fill" data-w="'+(voted.length?pct:0)+'"></div></div><span class="lean-pct">'+(voted.length?pct+'%':'no votes')+'</span></div>';
     });
-  }else if(isBase){
+  }else{
     html+='<div class="lean-note">Camp breakdown appears once 4 or more voices are on the map.</div>';
   }
   el.innerHTML=html;
@@ -883,13 +912,13 @@ function renderStats(){
   const n=(POLIS.mapUsers||[]).length;
   g('stat-voices').textContent=n;
   g('stat-answers').textContent=POLIS.totalAnswers||0;
-  g('stat-questions').textContent=STMTS_BASE.length+APP.forum.length;
+  g('stat-questions').textContent=APP.stmts.length;
   const pulse=g('pulse');
   const tile=(v,l)=>'<div class="pulse-tile"><div class="pulse-n">'+v+'</div><div class="pulse-l">'+l+'</div></div>';
   pulse.innerHTML='<div class="pulse-grid">'
     +tile(n,n===1?'voice on the map':'voices on the map')
     +tile(POLIS.totalAnswers||0,'answers recorded')
-    +tile(APP.forum.length,APP.forum.length===1?'question planted':'questions planted')
+    +tile(APP.dynamicQ.length,APP.dynamicQ.length===1?'question planted':'questions planted')
     +'</div><div class="pulse-note">Every number here is a real member. They move as the village answers.</div>';
 }
 function renderCamps(){
@@ -919,7 +948,7 @@ function openCamp(i){
 }
 function renderYouLine(){
   const el=g('you-line');
-  const nonPass=Object.keys(APP.votes).filter(id=>/^s\d+$/.test(id)&&APP.votes[id]!=='pass').length;
+  const nonPass=Object.keys(APP.votes).filter(id=>POLIS&&POLIS.stats[id]&&APP.votes[id]!=='pass').length;
   if(nonPass<3){el.textContent='';return;}
   const ci=myCamp();
   if(ci==null){el.textContent='Your totem is on the map.';return;}
@@ -929,37 +958,61 @@ function renderYouLine(){
 // ══════════════════════════════════════════
 //  OPEN FLOOR
 // ══════════════════════════════════════════
-function pitchQuestion(){
+async function pitchQuestion(){
   const inp=g('pitch-input');
   const v=(inp.value||'').trim();if(!v)return;
   if(isBanned(v)){inp.value='';return;}
-  const id='u'+hash32(APP.user.id+v+APP.forum.length);
-  APP.stmts.push({id:'f-'+id,text:v});
-  APP.forum.unshift({id,text:v,who:APP.user.username,aN:0,pN:0,dN:0});
+  if(v.length<12){toast('Give the village a fuller question to weigh.');return;}
   inp.value='';
+  const{data,error}=await sb.from('questions').insert({body:v,proposed_by:APP.user.id,status:'approved'}).select().single();
+  if(error||!data){console.error('[CG] plant failed',error);toast('The floor could not hold that one. Try again.');return;}
+  const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,at:data.created_at};
+  APP.dynamicQ.push(st);QINDEX[st.qid]=st;APP.stmts.push(st);
+  POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};
   if(APP.stmtIndex>=APP.stmts.length-1)renderStatement();
-  toast('Planted. It joins the council fire queue.');
+  toast('Planted for the whole village. It joins the council fire queue.');
   renderFloor();renderStats();
 }
-function weighIn(id){
-  const idx=APP.stmts.findIndex(s=>s.id==='f-'+id);
+async function uprootQuestion(stId){
+  const st=APP.dynamicQ.find(q=>q.id===stId);if(!st)return;
+  if(!APP.user||!(APP.user.isAdmin||st.by===APP.user.id))return;
+  const{data,error}=await sb.from('questions').delete().eq('id',st.qid).select();
+  if(error||!data||!data.length){toast('Uproot is not enabled on the server yet. Ask the keeper to unlock it.');return;}
+  try{await sb.from('answers').delete().eq('question_id',st.qid);}catch(e){}
+  APP.dynamicQ=APP.dynamicQ.filter(q=>q.id!==stId);
+  delete QINDEX[st.qid];
+  const si=APP.stmts.findIndex(s=>s.id===stId);
+  if(si>=0){APP.stmts.splice(si,1);if(APP.stmtIndex>si)APP.stmtIndex--;}
+  delete APP.votes[stId];
+  try{localStorage.setItem(votesKey(),JSON.stringify(APP.votes));}catch(e){}
+  await buildPolis();
+  renderStatement();renderFloor();renderStats();renderMap();renderCamps();
+  toast('Uprooted for the whole village.');
+}
+function weighIn(stId){
+  const idx=APP.stmts.findIndex(s=>s.id===stId);
   if(idx<0)return;
-  if(APP.votes['f-'+id]!==undefined){toast('You already answered this one.');return;}
+  if(APP.votes[stId]!==undefined){toast('You already answered this one.');return;}
   APP.stmtIndex=Math.min(APP.stmtIndex,idx);
   renderStatement();
   document.getElementById('council').scrollIntoView({behavior:'smooth'});
 }
 function renderFloor(){
   const grid=g('floor-grid');
-  g('floor-empty').style.display=APP.forum.length?'none':'block';
-  grid.innerHTML=APP.forum.map(q=>{
-    const n=q.aN+q.pN+q.dN;
-    const pc=pcts([q.aN,q.pN,q.dN]);
+  g('floor-empty').style.display=APP.dynamicQ.length?'none':'block';
+  grid.innerHTML=APP.dynamicQ.slice().reverse().map(q=>{
+    const x=(POLIS&&POLIS.stats[q.id])||{a:0,p:0,d:0,n:0};
+    const n=x.n;
+    const pc=pcts([x.a,x.p,x.d]);
     const bars=[['Stand with','#4a6741',pc[0]],['Let pass','#8a8065',pc[1]],['Step back','#a65a38',pc[2]]].map(([l,c,p])=>
       '<div class="lean-row" style="--ln:'+c+';margin-bottom:6px;"><span class="lean-name" style="font-size:10.5px;">'+l+'</span><div class="lean-track" style="height:6px;"><div class="lean-fill" style="width:'+(n?p:0)+'%;"></div></div><span class="lean-pct" style="font-size:10px;">'+(n?p+'%':'·')+'</span></div>').join('');
-    return '<div class="fq"><div class="fq-meta"><b>'+escHtml(q.who)+'</b><span>'+n+' response'+(n===1?'':'s')+'</span></div>'
+    const canDel=APP.user&&(APP.user.isAdmin||q.by===APP.user.id);
+    const mine=APP.votes[q.id]!==undefined;
+    return '<div class="fq"><div class="fq-meta"><span class="fq-who"><span class="fq-ava">'+escHtml((q.byName||'V')[0].toUpperCase())+'</span><b>'+escHtml(q.byName||'A villager')+'</b></span><span>'+n+' response'+(n===1?'':'s')+'</span></div>'
       +'<p class="fq-text">"'+escHtml(q.text)+'"</p><div class="fq-bars">'+bars+'</div>'
-      +'<div class="fq-foot"><span>Session question · answers live here for now</span><button onclick="weighIn(\''+q.id+'\')">Weigh in</button></div></div>';
+      +'<div class="fq-foot"><span>Village question · everyone sees this</span><div style="display:flex;gap:6px;align-items:center;">'
+      +(canDel?'<button class="fq-del" onclick="uprootQuestion(\''+q.id+'\')">Uproot</button>':'')
+      +'<button onclick="weighIn(\''+q.id+'\')"'+(mine?' disabled style="opacity:.4;pointer-events:none;"':'')+'>'+(mine?'Answered':'Weigh in')+'</button></div></div></div>';
   }).join('');
 }
 
