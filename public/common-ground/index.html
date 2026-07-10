@@ -564,7 +564,7 @@ h2.big em{font-style:italic;color:var(--green)}
         <div>
           <p class="eyebrow rv">Start here</p>
           <h2 class="big rv">Answer a few <em>statements.</em></h2>
-          <p class="lede rv">The community put these forward. Read each one and tap how you feel. After every answer, you see how everyone else answered too.</p>
+          <p class="lede rv">These are the questions we are all weighing in on. Read each one and tap how you feel. After every answer, you see how everyone else answered too.</p>
           <div class="you-line" id="you-line"></div>
         </div>
         <div class="fire-card rv" id="fire-card">
@@ -1055,7 +1055,7 @@ function fireAnsweredToday(){try{return parseInt(localStorage.getItem(fireDayKey
 function bumpFireToday(){try{localStorage.setItem(fireDayKey(),String(fireAnsweredToday()+1));}catch(e){}}
 // Build the day's batch: up to ten unanswered statements, capped by what is left of today's ten.
 function buildFireBatch(){
-  const eligible=APP.stmts.filter(s=>s.kind!=='question');
+  const eligible=STMTS_BASE.filter(s=>s.kind!=='question'); // the curated set only; community posts live on the floor
   const unanswered=eligible.filter(s=>APP.votes[s.id]===undefined);
   const remaining=Math.max(0,FIRE_DAILY-fireAnsweredToday());
   APP.fire=unanswered.slice(0,Math.min(FIRE_DAILY,remaining));
@@ -1496,12 +1496,10 @@ async function pitchPost(){
   const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind,media_url:data.media_url,media_type:data.media_type,media_name:data.media_name};
   APP.dynamicQ.push(st);QINDEX[st.qid]=st;
   if(st.kind==='statement'){
-    APP.stmts.push(st);
+    APP.stmts.push(st); // votable on the floor + feeds the map, but not the curated campfire
     if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}
-    if(APP.votes[st.id]===undefined)APP.fire.push(st); // wire it into today's campfire
-    if(g('stones').style.display==='none')renderStatement();
   }
-  toast(st.kind==='statement'?'Posted. It is on the floor and in the campfire.':'Posted. People can reply on the floor.');
+  toast('Posted on the floor.');
   renderFeed();renderStats();
 }
 async function uprootPost(stId){
@@ -1616,7 +1614,7 @@ async function onRemoteQuestion(row){
   if(row.proposed_by){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.proposed_by).single();if(data){byName=data.username;byColor=data.avatar_color;}}catch(e){}}
   const st={id:'q'+row.id.slice(0,8),qid:row.id,text:row.body,by:row.proposed_by,byName,byColor,at:row.created_at,kind:k,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name};
   APP.dynamicQ.push(st);QINDEX[st.qid]=st;
-  if(k==='statement'){APP.stmts.push(st);if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}if(APP.votes[st.id]===undefined)APP.fire.push(st);if(g('stones')&&g('stones').style.display==='none')renderStatement();}
+  if(k==='statement'){APP.stmts.push(st);if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}}
   renderFeed();renderStats();
   if(row.proposed_by!==APP.user.id)toast(byName+' just posted');
 }
