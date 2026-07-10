@@ -196,7 +196,7 @@ h2.big em{font-style:italic;color:var(--green)}
 #compose-input{width:100%;border:1.5px solid var(--line-2);background:var(--card-warm);border-radius:14px;padding:18px;font-size:1.08rem;color:var(--ink);outline:none;resize:vertical;line-height:1.55;min-height:124px}
 #compose-input:focus{border-color:var(--amber)}
 #compose-input::placeholder{color:var(--ink-3)}
-.compose-actions{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:14px}
+.compose-actions{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:14px}
 .compose-note{font-size:.92rem;color:var(--ink-3)}
 #compose-btn{padding:16px 40px;background:var(--green);color:#fff;border:none;font-size:.98rem;font-weight:600;letter-spacing:.3px;cursor:pointer;border-radius:50px;white-space:nowrap;transition:background .2s}
 #compose-btn:hover{background:var(--green-2)}
@@ -244,6 +244,42 @@ h2.big em{font-style:italic;color:var(--green)}
 .feed-empty svg{width:38px;height:38px;stroke:var(--green);margin-bottom:14px}
 .feed-empty h4{font-family:var(--font-display);font-weight:500;font-size:1.6rem;color:var(--ink);margin-bottom:6px}
 .feed-empty p{font-size:1rem;color:var(--ink-3)}
+/* the board: a wall of cards */
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px;align-items:start}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 22px 16px;cursor:pointer;display:flex;flex-direction:column;gap:14px;min-height:172px;box-shadow:0 8px 26px -22px rgba(42,35,24,.5);transition:transform .16s,box-shadow .16s,border-color .16s}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 18px 44px -24px rgba(42,35,24,.55);border-color:var(--line-2)}
+.pcard-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pcard-time{font-size:.8rem;color:var(--ink-3)}
+.pcard-text{font-family:var(--font-serif);font-size:1.18rem;line-height:1.45;color:var(--ink);font-weight:500;flex:1;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.pcard-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:13px;border-top:1px solid var(--line);margin-top:auto}
+.pcard-who{display:flex;align-items:center;gap:8px;font-size:.86rem;font-weight:600;color:var(--ink-2);min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.pcard-ava{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+.pcard-metric{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.pcard-metric svg{width:15px;height:15px;stroke:var(--ink-3)}
+/* focused post modal */
+#post-ov{position:fixed;inset:0;z-index:460;background:rgba(20,16,8,.55);display:none;align-items:center;justify-content:center;padding:22px}
+#post-ov.open{display:flex}
+#post-modal{width:min(600px,96vw);max-height:88vh;overflow-y:auto;background:var(--card);border-radius:20px;padding:34px 34px 30px;box-shadow:0 40px 110px -28px rgba(0,0,0,.55);position:relative}
+.pm-x{position:absolute;top:16px;right:18px;background:none;border:none;font-size:22px;color:var(--ink-3);cursor:pointer;line-height:1;z-index:2}
+.pm-x:hover{color:var(--ink)}
+.pm-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-right:26px}
+.pm-ava{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:15px;font-weight:700;flex-shrink:0}
+.pm-name{font-size:1rem;font-weight:700;color:var(--ink)}
+.pm-time{font-size:.82rem;color:var(--ink-3)}
+.pm-head .uproot{font-size:.82rem}
+.pm-text{font-family:var(--font-serif);font-size:1.42rem;line-height:1.42;color:var(--ink);font-weight:500;margin-bottom:22px}
+.weighin-btn{background:var(--green);color:#fff;border:none;font-size:.98rem;font-weight:600;padding:14px 34px;border-radius:50px;cursor:pointer}
+.weighin-btn:hover{background:var(--green-2)}
+.pm-hint{font-size:.88rem;color:var(--ink-3);margin-top:10px}
+.pm-vote{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:16px}
+.pm-opt{padding:14px 8px;border:2px solid var(--line-2);background:var(--card-warm);border-radius:12px;cursor:pointer;font-size:.92rem;font-weight:700;color:var(--ink);transition:all .15s}
+.pm-opt:hover{border-color:var(--vc);color:var(--vc)}
+.pm-opt.sel{border-color:var(--vc);color:var(--vc);background:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--vc) 24%,transparent)}
+.pm-bars{margin-bottom:4px}
+.pm-replies{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+.pm-replies-title{font-size:.8rem;letter-spacing:1px;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+@media(max-width:1000px){.board{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.board{grid-template-columns:1fr}}
 
 /* ============ FOOTER ============ */
 #foot{background:var(--deep);color:var(--cream-dim);padding:56px 0 46px}
@@ -480,7 +516,7 @@ h2.big em{font-style:italic;color:var(--green)}
     <div class="wrap">
       <p class="eyebrow rv">The floor is open</p>
       <h2 class="big rv">Say it <em>here.</em></h2>
-      <p class="lede rv">This is the open floor. Post a statement for people to vote on, or ask a question for people to answer. Reply to anyone. No moderator picks what we talk about. We do.</p>
+      <p class="lede rv">This is our space. Post anything, and reply to anyone.</p>
       <div class="compose rv">
         <div class="compose-toggle">
           <button id="ct-statement" class="act" onclick="setComposeType('statement')">
@@ -493,9 +529,9 @@ h2.big em{font-style:italic;color:var(--green)}
           </button>
         </div>
         <textarea id="compose-input" rows="3" maxlength="600" placeholder="Share what is on your mind. A thought, a statement, anything worth talking about."></textarea>
-        <div class="compose-actions"><span class="compose-note" id="compose-note">People can weigh in and reply.</span><button id="compose-btn" onclick="pitchPost()">Post it</button></div>
+        <div class="compose-actions"><button id="compose-btn" onclick="pitchPost()">Post it</button></div>
       </div>
-      <div class="feed" id="feed"></div>
+      <div class="board" id="feed"></div>
       <div class="feed-empty" id="feed-empty">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8M12 13c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0c0-4-3-7-7-7 0 4 3 7 7 7Z"/></svg>
         <h4>The floor is quiet.</h4>
@@ -536,6 +572,9 @@ h2.big em{font-style:italic;color:var(--green)}
   </div>
 </div>
 
+<!-- ===== POST MODAL ===== -->
+<div id="post-ov" onclick="closePost(event)"><div id="post-modal"></div></div>
+
 <div id="toast"></div>
 
 <script>
@@ -574,7 +613,8 @@ async function loadQuestions(){
       data.forEach(r=>{
         if(QINDEX[r.id])return; // seed rows already handled
         if(/^PROBE:/.test(r.body))return; // test artifacts stay off the floor
-        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,kind:r.kind||'statement'};
+        let k=r.kind||'statement'; if(k==='statement'&&isQuestionLike(r.body))k='question'; // keep questions out of the campfire
+        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,kind:k};
         APP.dynamicQ.push(st);QINDEX[r.id]=st;
       });
       const uids=[...new Set(APP.dynamicQ.map(q=>q.by).filter(Boolean))];
@@ -618,13 +658,13 @@ async function submitReply(stId){
   ta.value='';ta.style.height='auto';
   const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body}).select().single();
   if(error||!data){toast('That reply did not send. Try again.');return;}
-  (APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body,at:data.created_at});
+  if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body,at:data.created_at});
   // notify the post author (if it is someone else and not a seed statement)
   if(st.by&&st.by!==APP.user.id){
     try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:body.slice(0,140)});}catch(e){}
   }
   renderFeed();
-  const box=document.getElementById('rp-'+stId);if(box)box.classList.add('open');
+  if(POST_OPEN===stId)renderPostModal(stId);
   toast('Reply sent.');
 }
 async function deleteReply(stId,rid){
@@ -633,6 +673,7 @@ async function deleteReply(stId,rid){
   if(error){toast('Could not remove that reply.');return;}
   APP.replies[st.qid]=(APP.replies[st.qid]||[]).filter(r=>r.id!==rid);
   renderFeed();
+  if(POST_OPEN===stId)renderPostModal(stId);
 }
 
 // ══════════════════════════════════════════
@@ -862,7 +903,9 @@ function myCamp(){
 // ══════════════════════════════════════════
 //  APP STATE + HELPERS
 // ══════════════════════════════════════════
-const APP={user:null,votes:{},stmts:[...STMTS_BASE],stmtIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif'};
+const APP={user:null,votes:{},stmts:[...STMTS_BASE],fire:[],fireIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif'};
+let POST_OPEN=null, POST_REVEAL=null, RT=null, _ansT=null;
+const FIRE_DAILY=10; // the campfire is a batch of ten a day
 const g=id=>document.getElementById(id);
 function toast(msg){const el=g('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),2800);}
 function initials(name){return (name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
@@ -874,6 +917,25 @@ function timeAgo(iso){if(!iso)return'';const s=Math.floor((Date.now()-new Date(i
 const BANNED_PATTERNS=[/polycri/i,/poly[\s\-]?cri/i,/\bcollaps/i,/catastroph/i,/doomsday/i,/apocalyp/i,/armageddon/i,/teotwawki/i,/\bshtf\b/i,/end[\s\-]?times/i,/\bprepp/i,/\bsurvivalist/i,/survival\s+mode/i,/\bdoom(sday|scroll|er)?\b/i,/\bcoup\b/i,/societal\s+collapse/i,/escalat\w*\s+conflict/i];
 function isBanned(text){return BANNED_PATTERNS.some(p=>p.test(text));}
 function autosize(ta){ta.style.height='auto';ta.style.height=Math.min(200,ta.scrollHeight)+'px';}
+// Detection: a question ("What do I plant?") is NOT an agree/disagree statement, so it
+// never enters the campfire. Statements are declarative; questions go to the floor only.
+function isQuestionLike(t){
+  const s=(t||'').trim();
+  if(/\?\s*$/.test(s))return true;
+  return /^(what|whats|how|why|when|where|who|whom|whose|which|can|could|should|would|do|does|did|is|are|am|was|were|will|has|have|had|may|might|anyone|anybody|any tips|any advice|help)\b/i.test(s);
+}
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function fireDayKey(){return 'cg-fireday-'+(APP.user?APP.user.id:'x')+'-'+todayStr();}
+function fireAnsweredToday(){try{return parseInt(localStorage.getItem(fireDayKey())||'0',10)||0;}catch(e){return 0;}}
+function bumpFireToday(){try{localStorage.setItem(fireDayKey(),String(fireAnsweredToday()+1));}catch(e){}}
+// Build the day's batch: up to ten unanswered statements, capped by what is left of today's ten.
+function buildFireBatch(){
+  const eligible=APP.stmts.filter(s=>s.kind!=='question');
+  const unanswered=eligible.filter(s=>APP.votes[s.id]===undefined);
+  const remaining=Math.max(0,FIRE_DAILY-fireAnsweredToday());
+  APP.fire=unanswered.slice(0,Math.min(FIRE_DAILY,remaining));
+  APP.fireIndex=0;
+}
 
 // ══════════════════════════════════════════
 //  AUTH
@@ -942,9 +1004,10 @@ async function startSession(authUser){
   launchApp();
 }
 async function doSignOut(){
+  if(RT){try{sb.removeChannel(RT);}catch(e){}RT=null;}
   await sb.auth.signOut();
-  APP.user=null;APP.votes={};APP.stmts=[...STMTS_BASE];APP.stmtIndex=0;APP.dynamicQ=[];APP.replies={};APP.notifs=[];APP.bugs=[];QINDEX={};
-  g('app').style.display='none';g('topnav').style.display='none';g('bug-fab').style.display='none';
+  APP.user=null;APP.votes={};APP.stmts=[...STMTS_BASE];APP.fire=[];APP.fireIndex=0;APP.dynamicQ=[];APP.replies={};APP.notifs=[];APP.bugs=[];QINDEX={};POST_OPEN=null;
+  g('app').style.display='none';g('topnav').style.display='none';g('bug-fab').style.display='none';g('post-ov').classList.remove('open');g('inbox-ov').classList.remove('open');
   const auth=g('cg-auth');auth.style.opacity='1';auth.style.display='flex';auth.style.pointerEvents='';
 }
 
@@ -963,7 +1026,6 @@ async function loadVotes(){
       try{const stored=localStorage.getItem(votesKey());if(stored)APP.votes=JSON.parse(stored);}catch(e){}
     }
   }catch(e){}
-  let i=0;while(i<APP.stmts.length&&APP.votes[APP.stmts[i].id]!==undefined)i++;APP.stmtIndex=i;
 }
 async function saveVote(stmt,choice){
   APP.votes[stmt.id]=choice;
@@ -978,32 +1040,36 @@ async function saveVote(stmt,choice){
 //  COUNCIL FIRE (guided vote flow)
 // ══════════════════════════════════════════
 function renderStatement(){
-  const total=APP.stmts.length;
-  if(APP.stmtIndex>=total){renderDone();return;}
-  const st=APP.stmts[APP.stmtIndex];
-  g('fc-num').textContent=(APP.stmtIndex+1)+' of '+total;
+  const total=APP.fire.length;
+  if(APP.fireIndex>=total){renderFireEnd();return;}
+  const st=APP.fire[APP.fireIndex];
+  g('fc-num').textContent=(APP.fireIndex+1)+' of '+total;
   g('fc-stmt').textContent='"'+st.text+'"';
   const stones=g('stones');
-  stones.style.display='grid';stones.classList.remove('done');
-  stones.querySelectorAll('.stone').forEach(s=>s.classList.remove('picked'));
-  g('leanings').classList.remove('open');g('leanings').innerHTML='';
-  g('fc-next').classList.remove('ready');
-  g('fc-next').textContent=APP.stmtIndex===total-1?'Finish':'Next';
+  stones.style.display='grid';
+  const existing=APP.votes[st.id];
+  stones.querySelectorAll('.stone').forEach(s=>s.classList.toggle('picked',existing===s.dataset.v));
+  g('fc-next').textContent=APP.fireIndex===total-1?'Finish':'Next';
+  if(existing!==undefined){renderReveal(st,existing);g('fc-next').classList.add('ready');}
+  else{g('leanings').classList.remove('open');g('leanings').innerHTML='';g('fc-next').classList.remove('ready');}
 }
-function renderDone(){
-  g('fc-num').textContent='All done';
-  g('fc-stmt').textContent='';
+function renderFireEnd(){
+  g('fc-num').textContent='';g('fc-stmt').textContent='';
   g('stones').style.display='none';
   g('fc-next').classList.remove('ready');
   g('leanings').classList.add('open');
-  g('leanings').innerHTML='<div class="fc-done"><h3>You have answered them all.</h3><p>Your dot is on the map now. Head to the floor to post your own, or check back when new statements arrive.</p><a href="#forum">Go to the floor</a></div>';
+  const capped=fireAnsweredToday()>=FIRE_DAILY;
+  const h=capped?'That is your ten for today.':'You are all caught up.';
+  const p=capped?'Come back tomorrow for ten more. The floor stays open in the meantime.':'You have answered every statement waiting for you. New ones show up here as people post them, and the floor is always open.';
+  g('leanings').innerHTML='<div class="fc-done"><h3>'+h+'</h3><p>'+p+'</p><a href="#forum">Go to the floor</a></div>';
 }
 async function castVote(choice){
-  const st=APP.stmts[APP.stmtIndex];if(!st)return;
-  const stones=g('stones');
-  stones.classList.add('done');
-  stones.querySelector('[data-v="'+choice+'"]').classList.add('picked');
+  const st=APP.fire[APP.fireIndex];if(!st)return;
+  const isNew=APP.votes[st.id]===undefined;
+  if(isNew&&fireAnsweredToday()>=FIRE_DAILY){toast('That is your ten for today. Come back tomorrow.');return;}
+  g('stones').querySelectorAll('.stone').forEach(s=>s.classList.toggle('picked',s.dataset.v===choice));
   await saveVote(st,choice);
+  if(isNew)bumpFireToday();
   foldMyVote();
   renderReveal(st,choice);
   renderMap();renderStats();renderGroups();renderYouLine();renderFeed();
@@ -1045,7 +1111,7 @@ function renderReveal(st,choice){
   el.innerHTML=html;el.classList.add('open');
   requestAnimationFrame(()=>setTimeout(()=>{el.querySelectorAll('.lean-fill').forEach(f=>{f.style.width=f.dataset.w+'%';});},60));
 }
-function nextStatement(){APP.stmtIndex++;renderStatement();}
+function nextStatement(){APP.fireIndex++;renderStatement();}
 
 // ══════════════════════════════════════════
 //  OPINION MAP  (professional scatter, replaces the village map)
@@ -1157,27 +1223,27 @@ function setComposeType(t){
   APP.composeType=t;
   g('ct-statement').classList.toggle('act',t==='statement');
   g('ct-question').classList.toggle('act',t==='question');
-  const inp=g('compose-input');const note=g('compose-note');
-  if(t==='statement'){
-    inp.placeholder='Share what is on your mind. A thought, a statement, anything worth talking about.';
-    if(note)note.textContent='People can weigh in and reply.';
-  }else{
-    inp.placeholder='Ask the community a question.';
-    if(note)note.textContent='People can answer in the replies.';
-  }
+  const inp=g('compose-input');
+  inp.placeholder=t==='statement'?'Share what is on your mind. A thought, a statement, anything worth talking about.':'Ask the community a question.';
 }
 async function pitchPost(){
   const inp=g('compose-input');
   const v=(inp.value||'').trim();if(!v)return;
   if(isBanned(v)){inp.value='';return;}
-  const kind=APP.composeType;
+  let kind=APP.composeType;
+  if(kind==='statement'&&isQuestionLike(v))kind='question'; // a question is not a campfire statement
   inp.value='';autosize(inp);
   const{data,error}=await sb.from('questions').insert({body:v,proposed_by:APP.user.id,status:'approved',kind}).select().single();
   if(error||!data){console.error('[CG] post failed',error);toast('That did not post. Try again.');return;}
   const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind};
   APP.dynamicQ.push(st);QINDEX[st.qid]=st;
-  if(kind==='statement'){APP.stmts.push(st);POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};if(APP.stmtIndex>=APP.stmts.length-1)renderStatement();}
-  toast(kind==='statement'?'Posted. People can vote on it now.':'Posted. People can reply now.');
+  if(st.kind==='statement'){
+    APP.stmts.push(st);
+    if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}
+    if(APP.votes[st.id]===undefined)APP.fire.push(st); // wire it into today's campfire
+    if(g('stones').style.display==='none')renderStatement();
+  }
+  toast(st.kind==='statement'?'Posted. It is on the floor and in the campfire.':'Posted. People can reply on the floor.');
   renderFeed();renderStats();
 }
 async function uprootPost(stId){
@@ -1188,67 +1254,130 @@ async function uprootPost(stId){
   try{await sb.from('answers').delete().eq('question_id',st.qid);}catch(e){}
   APP.dynamicQ=APP.dynamicQ.filter(q=>q.id!==stId);
   delete QINDEX[st.qid];delete APP.replies[st.qid];
-  const si=APP.stmts.findIndex(s=>s.id===stId);
-  if(si>=0){APP.stmts.splice(si,1);if(APP.stmtIndex>si)APP.stmtIndex--;}
+  APP.stmts=APP.stmts.filter(s=>s.id!==stId);
+  APP.fire=APP.fire.filter(s=>s.id!==stId);
+  if(APP.fireIndex>=APP.fire.length)APP.fireIndex=Math.max(0,APP.fire.length-1);
   delete APP.votes[stId];
   try{localStorage.setItem(votesKey(),JSON.stringify(APP.votes));}catch(e){}
   await buildPolis();
+  if(POST_OPEN===stId)closePost();
   renderStatement();renderFeed();renderStats();renderMap();renderGroups();
   toast('Post removed.');
 }
 async function votePost(stId,choice){
-  const st=APP.dynamicQ.find(q=>q.id===stId);if(!st||st.kind!=='statement')return;
-  if(APP.votes[stId]!==undefined)return;
+  const st=APP.dynamicQ.find(q=>q.id===stId);if(!st||st.kind==='question')return;
+  const isNew=APP.votes[stId]===undefined;
+  if(isNew&&fireAnsweredToday()>=FIRE_DAILY){toast('That is your ten for today. Come back tomorrow.');return;}
+  if(isNew)bumpFireToday();
   await saveVote(st,choice);
   foldMyVote();
   renderFeed();renderMap();renderStats();renderGroups();renderYouLine();
-  toast('Your answer is in.');
+  if(POST_OPEN===stId)renderPostModal(stId);
+  toast(isNew?'Your answer is in.':'Answer updated.');
 }
-function toggleReplies(stId){
-  const box=g('rp-'+stId);if(box)box.classList.toggle('open');
-}
+// ── the board: a wall of cards, non-linear, no scrolling to see other posts ──
 function renderFeed(){
-  const feed=g('feed');
+  const board=g('feed');
   g('feed-empty').style.display=APP.dynamicQ.length?'none':'block';
-  feed.innerHTML=APP.dynamicQ.slice().reverse().map(q=>{
-    const avaColor=q.byColor||'#8a7d5f';
-    const head='<div class="post-head"><span class="post-ava" style="background:'+avaColor+'">'+escHtml(initials(q.byName))+'</span>'
-      +'<div class="post-who"><div class="post-name">'+escHtml(q.byName||'A member')+'</div><div class="post-time">'+timeAgo(q.at)+'</div></div>'
-      +'<span class="post-kind '+q.kind+'">'+(q.kind==='question'?'Question':'Statement')+'</span></div>';
-    const text='<div class="post-text">'+(q.kind==='question'?'':'"')+escHtml(q.text)+(q.kind==='question'?'':'"')+'</div>';
-    let voteBlock='';
-    if(q.kind==='statement'){
-      const x=(POLIS&&POLIS.stats[q.id])||{a:0,p:0,d:0,n:0};
-      const n=x.n;const pc=pcts([x.a,x.p,x.d]);
-      const bars=[['Agree','#2F6B3A',pc[0]],['Not sure','#8A7B57',pc[1]],['Disagree','#B24A2E',pc[2]]].map(([l,c,p])=>
-        '<div class="lean-row" style="--ln:'+c+';margin-bottom:7px;"><span class="lean-name" style="font-size:.86rem;">'+l+'</span><div class="lean-track" style="height:8px;"><div class="lean-fill" style="width:'+(n?p:0)+'%;"></div></div><span class="lean-pct" style="font-size:.82rem;">'+(n?p+'%':'—')+'</span></div>').join('');
-      voteBlock='<div class="post-bars">'+bars+'</div>';
-      if(APP.votes[q.id]===undefined){
-        voteBlock+='<div class="vote-btns">'
-          +'<button class="vbtn" style="--vc:#2F6B3A" onclick="votePost(\''+q.id+'\',\'agree\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Agree</button>'
-          +'<button class="vbtn" style="--vc:#8A7B57" onclick="votePost(\''+q.id+'\',\'pass\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>Not sure</button>'
-          +'<button class="vbtn" style="--vc:#B24A2E" onclick="votePost(\''+q.id+'\',\'disagree\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Disagree</button></div>';
-      }else{
-        const mine=APP.votes[q.id];
-        const lbl=mine==='agree'?'You agreed':mine==='disagree'?'You disagreed':'You were not sure';
-        voteBlock+='<div class="voted-tag"><svg viewBox="0 0 24 24" fill="none" stroke="#2F6B3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'+lbl+'</div>';
-      }
-    }
-    const reps=APP.replies[q.qid]||[];
-    const canDel=APP.user&&(APP.user.isAdmin||q.by===APP.user.id);
-    const foot='<div class="post-foot"><button class="reply-toggle" onclick="toggleReplies(\''+q.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'+reps.length+' '+(reps.length===1?'reply':'replies')+'</button>'
-      +(canDel?'<button class="uproot" onclick="uprootPost(\''+q.id+'\')">Remove</button>':'')+'</div>';
-    const replyList=reps.map(r=>{
-      const canDelR=APP.user&&(APP.user.isAdmin||r.by===APP.user.id);
-      return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span>'
-        +'<div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+'</span>'
-        +(canDelR?'<button class="reply-del" onclick="deleteReply(\''+q.id+'\',\''+r.id+'\')">remove</button>':'')
-        +'</div><div class="reply-text">'+escHtml(r.body)+'</div></div></div>';
-    }).join('');
-    const replyForm='<div class="reply-form"><textarea id="rf-'+q.id+'" rows="1" maxlength="500" placeholder="Write a reply..." oninput="autosize(this)"></textarea><button onclick="submitReply(\''+q.id+'\')">Send</button></div>';
-    const repliesBox='<div class="replies" id="rp-'+q.id+'">'+replyList+replyForm+'</div>';
-    return '<div class="post">'+head+text+voteBlock+foot+repliesBox+'</div>';
+  board.innerHTML=APP.dynamicQ.slice().reverse().map(q=>{
+    const reps=(APP.replies[q.qid]||[]).length;
+    const n=(POLIS&&POLIS.stats[q.id])?POLIS.stats[q.id].n:0;
+    const metric=q.kind==='statement'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M6 20v-4M18 20V6"/></svg>'+n+' weighed in'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'+reps+' '+(reps===1?'reply':'replies');
+    return '<div class="pcard" onclick="openPost(\''+q.id+'\')">'
+      +'<div class="pcard-top"><span class="post-kind '+q.kind+'">'+(q.kind==='question'?'Question':'Statement')+'</span><span class="pcard-time">'+timeAgo(q.at)+'</span></div>'
+      +'<div class="pcard-text">'+escHtml(q.text)+'</div>'
+      +'<div class="pcard-foot"><span class="pcard-who"><span class="pcard-ava" style="background:'+(q.byColor||'#8a7d5f')+'">'+escHtml(initials(q.byName))+'</span>'+escHtml(q.byName||'A member')+'</span><span class="pcard-metric">'+metric+'</span></div>'
+      +'</div>';
   }).join('');
+}
+// ── the focused post: full text, hidden weigh-in, and the reply thread ──
+function openPost(id){POST_OPEN=id;POST_REVEAL=null;renderPostModal(id);g('post-ov').classList.add('open');}
+function closePost(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;POST_OPEN=null;POST_REVEAL=null;g('post-ov').classList.remove('open');}
+function revealWeigh(id){POST_REVEAL=id;renderPostModal(id);}
+function renderPostModal(id){
+  const q=APP.dynamicQ.find(x=>x.id===id);if(!q){closePost();return;}
+  const m=g('post-modal');
+  const reps=APP.replies[q.qid]||[];
+  const canDel=APP.user&&(APP.user.isAdmin||q.by===APP.user.id);
+  let voteHtml='';
+  if(q.kind==='statement'){
+    const voted=APP.votes[q.id]!==undefined;
+    const revealed=(POST_REVEAL===id)||voted;
+    if(!revealed){
+      voteHtml='<button class="weighin-btn" onclick="revealWeigh(\''+id+'\')">Weigh in</button>'
+        +'<div class="pm-hint">Only if you want to take a side. Not every post needs one.</div>';
+    }else{
+      const x=(POLIS&&POLIS.stats[q.id])||{a:0,p:0,d:0,n:0};const pc=pcts([x.a,x.p,x.d]);const mine=APP.votes[q.id];
+      voteHtml='<div class="pm-vote">'+[['agree','Agree','#2F6B3A'],['pass','Not sure','#8A7B57'],['disagree','Disagree','#B24A2E']].map(v=>'<button class="pm-opt'+(mine===v[0]?' sel':'')+'" style="--vc:'+v[2]+'" onclick="votePost(\''+id+'\',\''+v[0]+'\')">'+v[1]+'</button>').join('')+'</div>';
+      voteHtml+='<div class="pm-bars">'+[['Agree','#2F6B3A',pc[0],x.a],['Not sure','#8A7B57',pc[1],x.p],['Disagree','#B24A2E',pc[2],x.d]].map(r=>'<div class="lean-row" style="--ln:'+r[1]+'"><span class="lean-name">'+r[0]+'</span><div class="lean-track"><div class="lean-fill" style="width:'+(x.n?r[2]:0)+'%"></div></div><span class="lean-pct">'+r[3]+(x.n?' · '+r[2]+'%':'')+'</span></div>').join('')+'</div>';
+    }
+  }
+  const replyList=reps.map(r=>{
+    const canDelR=APP.user&&(APP.user.isAdmin||r.by===APP.user.id);
+    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+'</span>'+(canDelR?'<button class="reply-del" onclick="deleteReply(\''+id+'\',\''+r.id+'\')">remove</button>':'')+'</div><div class="reply-text">'+escHtml(r.body)+'</div></div></div>';
+  }).join('');
+  m.innerHTML='<button class="pm-x" onclick="closePost()">✕</button>'
+    +'<div class="pm-head"><span class="pm-ava" style="background:'+(q.byColor||'#8a7d5f')+'">'+escHtml(initials(q.byName))+'</span><div class="pm-who"><div class="pm-name">'+escHtml(q.byName||'A member')+'</div><div class="pm-time">'+timeAgo(q.at)+' · '+(q.kind==='question'?'Question':'Statement')+'</div></div>'+(canDel?'<button class="uproot" style="margin-left:auto" onclick="uprootPost(\''+id+'\')">Remove</button>':'')+'</div>'
+    +'<div class="pm-text">'+escHtml(q.text)+'</div>'
+    +voteHtml
+    +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
+    +'<div class="reply-form"><textarea id="rf-'+id+'" rows="1" maxlength="500" placeholder="Write a reply..." oninput="autosize(this)"></textarea><button onclick="submitReply(\''+id+'\')">Send</button></div></div>';
+}
+
+// ══════════════════════════════════════════
+//  LIVE  (Supabase Realtime: see posts, replies and votes without refreshing)
+// ══════════════════════════════════════════
+function subscribeRealtime(){
+  if(RT)return;
+  try{
+    RT=sb.channel('cg-live')
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'questions'},p=>onRemoteQuestion(p.new))
+      .on('postgres_changes',{event:'DELETE',schema:'public',table:'questions'},p=>onRemoteQuestionDel(p.old))
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'replies'},p=>onRemoteReply(p.new))
+      .on('postgres_changes',{event:'*',schema:'public',table:'answers'},()=>onRemoteAnswer())
+      .subscribe();
+  }catch(e){console.error('[CG] realtime failed',e);}
+}
+async function onRemoteQuestion(row){
+  if(!row||QINDEX[row.id])return;
+  if(row.status&&row.status!=='approved')return;
+  if(/^PROBE:/.test(row.body||''))return;
+  let k=row.kind||'statement'; if(k==='statement'&&isQuestionLike(row.body))k='question';
+  let byName='A member',byColor='#8a7d5f';
+  if(row.proposed_by){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.proposed_by).single();if(data){byName=data.username;byColor=data.avatar_color;}}catch(e){}}
+  const st={id:'q'+row.id.slice(0,8),qid:row.id,text:row.body,by:row.proposed_by,byName,byColor,at:row.created_at,kind:k};
+  APP.dynamicQ.push(st);QINDEX[st.qid]=st;
+  if(k==='statement'){APP.stmts.push(st);if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}if(APP.votes[st.id]===undefined)APP.fire.push(st);if(g('stones')&&g('stones').style.display==='none')renderStatement();}
+  renderFeed();renderStats();
+  if(row.proposed_by!==APP.user.id)toast(byName+' just posted');
+}
+function onRemoteQuestionDel(row){
+  if(!row)return;const st=QINDEX[row.id];if(!st)return;
+  APP.dynamicQ=APP.dynamicQ.filter(q=>q.qid!==row.id);
+  APP.stmts=APP.stmts.filter(s=>s.qid!==row.id);
+  APP.fire=APP.fire.filter(s=>s.qid!==row.id);
+  delete QINDEX[row.id];delete APP.replies[row.id];
+  if(POST_OPEN===st.id)closePost();
+  renderFeed();renderStats();
+}
+async function onRemoteReply(row){
+  if(!row)return;const st=QINDEX[row.question_id];if(!st)return;
+  if((APP.replies[row.question_id]||[]).some(r=>r.id===row.id))return;
+  let name='A member',color='#8a7d5f';
+  if(row.user_id){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.user_id).single();if(data){name=data.username;color=data.avatar_color;}}catch(e){}}
+  (APP.replies[row.question_id]=APP.replies[row.question_id]||[]).push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at});
+  renderFeed();
+  if(POST_OPEN&&st.id===POST_OPEN)renderPostModal(POST_OPEN);
+}
+function onRemoteAnswer(){
+  clearTimeout(_ansT);
+  _ansT=setTimeout(async()=>{
+    await buildPolis();
+    renderMap();renderStats();renderGroups();renderFeed();renderYouLine();
+    if(POST_OPEN)renderPostModal(POST_OPEN);
+  },1400);
 }
 
 // ══════════════════════════════════════════
@@ -1292,7 +1421,7 @@ async function openNotif(nid,qid){
   const n=APP.notifs.find(x=>x.id===nid);
   if(n&&!n.read){n.read=true;updateInboxBadge();try{await sb.from('notifications').update({read:true}).eq('id',nid);}catch(e){}}
   closeInbox();
-  if(qid){const st=APP.dynamicQ.find(q=>q.qid===qid);if(st){const box=g('rp-'+st.id);g('forum').scrollIntoView({behavior:'smooth'});setTimeout(()=>{if(box){box.classList.add('open');const card=box.closest('.post');if(card)card.scrollIntoView({behavior:'smooth',block:'center'});}},400);}}
+  if(qid){const st=APP.dynamicQ.find(q=>q.qid===qid);if(st)openPost(st.id);}
   renderInbox();
 }
 
@@ -1317,14 +1446,16 @@ function launchApp(){
   g('nav-name').textContent=APP.user.username;
   updateInboxBadge();
   setComposeType('statement');
+  buildFireBatch();
   renderStatement();renderMap();renderStats();renderGroups();renderFeed();renderYouLine();
+  subscribeRealtime();
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.08});
   document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
   if(APP._playIntro||!cgiSeen()||APP.user.isAdmin){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}}
 }
 document.getElementById('stones').addEventListener('click',e=>{
-  const st=e.target.closest('.stone');if(!st||g('stones').classList.contains('done'))return;
-  castVote(st.dataset.v);
+  const st=e.target.closest('.stone');if(!st)return;
+  castVote(st.dataset.v); // re-clicking a different stone changes your answer
 });
 window.addEventListener('resize',()=>{try{renderMap();}catch(e){}});
 window._cg={get A(){return APP;},get P(){return POLIS;},get SB(){return sb;}};
