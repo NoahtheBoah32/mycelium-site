@@ -367,6 +367,38 @@ h2.big em{font-style:italic;color:var(--green)}
 .reply-attach{background:var(--card-warm);border:1.5px solid var(--line-2);color:var(--ink-3);width:44px;height:44px;border-radius:11px;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
 .reply-attach:hover{border-color:var(--amber);color:var(--amber)}
 .reply-attach svg{width:18px;height:18px}
+.emoji-btn{padding:12px 14px}
+.emoji-btn svg{width:18px;height:18px}
+#emoji-panel{position:fixed;z-index:600;display:none;grid-template-columns:repeat(8,1fr);gap:2px;background:var(--card);border:1px solid var(--line-2);border-radius:14px;padding:10px;box-shadow:0 20px 54px -18px rgba(0,0,0,.45);width:304px;max-height:214px;overflow-y:auto}
+#emoji-panel.open{display:grid}
+#emoji-panel button{background:none;border:none;font-size:22px;cursor:pointer;padding:4px;border-radius:8px;line-height:1}
+#emoji-panel button:hover{background:var(--cream-2)}
+#react-bar{position:fixed;z-index:610;display:none;gap:2px;background:var(--card);border:1px solid var(--line-2);border-radius:50px;padding:6px 8px;box-shadow:0 16px 44px -14px rgba(0,0,0,.4)}
+#react-bar.open{display:flex}
+#react-bar button{background:none;border:none;font-size:24px;cursor:pointer;padding:5px 6px;border-radius:50%;line-height:1;transition:transform .12s}
+#react-bar button:hover{transform:scale(1.25)}
+.rx-row{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:12px}
+.rx-pill{display:inline-flex;align-items:center;gap:5px;background:var(--card-warm);border:1px solid var(--line-2);border-radius:20px;padding:5px 11px;font-size:.98rem;cursor:pointer;line-height:1}
+.rx-pill b{font-weight:700;font-size:.82rem;color:var(--ink-2)}
+.rx-pill.mine{background:color-mix(in srgb,var(--amber) 16%,transparent);border-color:var(--amber)}
+.rx-pill:hover{border-color:var(--amber)}
+.rx-add{display:inline-grid;place-items:center;width:32px;height:32px;background:none;border:1px solid var(--line-2);border-radius:50%;cursor:pointer;color:var(--ink-3)}
+.rx-add:hover{border-color:var(--amber);color:var(--amber)}
+.rx-add svg{width:17px;height:17px}
+.rt-link{color:var(--amber);text-decoration:underline;word-break:break-all}
+.yt-embed{position:relative;margin-top:12px;border-radius:12px;overflow:hidden;cursor:pointer;background:#000;aspect-ratio:16/9;max-width:100%}
+.yt-embed img{width:100%;height:100%;object-fit:cover;display:block}
+.yt-embed .yt-play{position:absolute;inset:0;display:grid;place-items:center}
+.yt-embed .yt-play svg{width:56px;height:56px;filter:drop-shadow(0 2px 10px rgba(0,0,0,.6))}
+.yt-embed.playing{cursor:default}
+.yt-embed iframe{width:100%;height:100%;border:0;display:block}
+.pcard-file{display:flex;align-items:center;gap:9px;background:var(--card-warm);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:.92rem;font-weight:600;color:var(--ink-2)}
+.pcard-file svg{width:22px;height:22px;stroke:var(--amber);flex-shrink:0}
+.pm-file{display:inline-flex;align-items:center;gap:10px;background:var(--card-warm);border:1px solid var(--line-2);border-radius:12px;padding:14px 18px;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:20px;word-break:break-all;text-decoration:none}
+.pm-file:hover{border-color:var(--amber);color:var(--amber)}
+.pm-file svg{width:22px;height:22px;stroke:var(--amber);flex-shrink:0}
+.compose-preview .pv-doc{width:40px;height:40px;display:grid;place-items:center;background:var(--cream-2);border-radius:7px;flex-shrink:0}
+.compose-preview .pv-doc svg{width:20px;height:20px;stroke:var(--amber)}
 .fc-discuss{margin-top:12px;width:100%;padding:13px;background:none;border:1.5px solid var(--line-2);color:var(--ink-2);font-size:.92rem;font-weight:600;border-radius:50px;cursor:pointer;text-align:center}
 .fc-discuss:hover{border-color:var(--amber);color:var(--amber)}
 /* ============ RESPONSIVE ============ */
@@ -605,8 +637,9 @@ h2.big em{font-style:italic;color:var(--green)}
         </div>
         <textarea id="compose-input" rows="3" maxlength="600" placeholder="Share what is on your mind. A thought, a statement, anything worth talking about."></textarea>
         <div class="compose-actions">
-          <input type="file" id="compose-file" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime" style="display:none" onchange="onComposeFile(event)">
-          <button type="button" class="attach-btn" onclick="document.getElementById('compose-file').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg><span class="attach-lbl">Photo or video</span></button>
+          <input type="file" id="compose-file" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onComposeFile(event)">
+          <button type="button" class="attach-btn" onclick="document.getElementById('compose-file').click()" title="Attach a photo, video, or file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg><span class="attach-lbl">Attach</span></button>
+          <button type="button" class="attach-btn emoji-btn" onclick="toggleEmoji('compose-input',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button>
           <div id="compose-preview" class="compose-preview" style="display:none"></div>
           <button id="compose-btn" onclick="pitchPost()">Post it</button>
         </div>
@@ -655,6 +688,10 @@ h2.big em{font-style:italic;color:var(--green)}
 <!-- ===== POST MODAL ===== -->
 <div id="post-ov" onclick="closePost(event)"><div id="post-modal"></div></div>
 
+<!-- ===== EMOJI PICKER + REACTIONS ===== -->
+<div id="emoji-panel"></div>
+<div id="react-bar"></div>
+
 <div id="toast"></div>
 
 <script>
@@ -688,13 +725,13 @@ async function loadQuestions(){
   APP.dynamicQ=[];QINDEX={};
   STMTS_BASE.forEach(s=>{QINDEX[s.qid]=s;});
   try{
-    const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,kind,media_url,media_type').eq('status','approved').order('created_at',{ascending:true});
+    const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,kind,media_url,media_type,media_name').eq('status','approved').order('created_at',{ascending:true});
     if(!error&&data){
       data.forEach(r=>{
         if(QINDEX[r.id])return; // seed rows already handled
         if(/^PROBE:/.test(r.body))return; // test artifacts stay off the floor
         let k=r.kind||'statement'; if(k==='statement'&&isQuestionLike(r.body))k='question'; // keep questions out of the campfire
-        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,kind:k,media_url:r.media_url,media_type:r.media_type};
+        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,kind:k,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name};
         APP.dynamicQ.push(st);QINDEX[r.id]=st;
       });
       const uids=[...new Set(APP.dynamicQ.map(q=>q.by).filter(Boolean))];
@@ -718,14 +755,14 @@ async function loadReplies(){
   const qids=[...new Set([...APP.dynamicQ.map(q=>q.qid),...STMTS_BASE.map(s=>s.qid)])];
   if(!qids.length)return;
   try{
-    const{data,error}=await sb.from('replies').select('id,question_id,user_id,body,created_at,media_url,media_type').in('question_id',qids).order('created_at',{ascending:true});
+    const{data,error}=await sb.from('replies').select('id,question_id,user_id,body,created_at,media_url,media_type,media_name').in('question_id',qids).order('created_at',{ascending:true});
     if(error||!data)return;
     const uids=[...new Set(data.map(r=>r.user_id))];
     let byId={};
     if(uids.length){const{data:profs}=await sb.from('profiles').select('id,username,avatar_color').in('id',uids);(profs||[]).forEach(p=>{byId[p.id]=p;});}
     data.forEach(r=>{
       const p=byId[r.user_id]||{};
-      (APP.replies[r.question_id]=APP.replies[r.question_id]||[]).push({id:r.id,by:r.user_id,name:p.username||'A member',color:p.avatar_color||'#8a7d5f',body:r.body,at:r.created_at,media_url:r.media_url,media_type:r.media_type});
+      (APP.replies[r.question_id]=APP.replies[r.question_id]||[]).push({id:r.id,by:r.user_id,name:p.username||'A member',color:p.avatar_color||'#8a7d5f',body:r.body,at:r.created_at,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name});
     });
   }catch(e){console.error('[CG] loadReplies failed',e);}
 }
@@ -741,10 +778,10 @@ async function submitReply(stId){
   let media_url=null,media_type=null;
   if(media){media_url=await uploadMedia(media.file);if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
   ta.value='';ta.style.height='auto';
-  const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body:body||'',media_url,media_type}).select().single();
+  const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body:body||'',media_url,media_type,media_name:media?media.file.name:null}).select().single();
   if(error||!data){toast('That reply did not send. Try again.');return;}
   clearMedia('pendingReplyMedia');
-  if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body:body||'',at:data.created_at,media_url,media_type});
+  if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body:body||'',at:data.created_at,media_url,media_type,media_name:data.media_name});
   if(st.by&&st.by!==APP.user.id){
     try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:(body||'[photo or video]').slice(0,140)});}catch(e){}
   }
@@ -988,7 +1025,7 @@ function myCamp(){
 // ══════════════════════════════════════════
 //  APP STATE + HELPERS
 // ══════════════════════════════════════════
-const APP={user:null,votes:{},stmts:[...STMTS_BASE],fire:[],fireIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif',pendingMedia:null,pendingReplyMedia:null};
+const APP={user:null,votes:{},stmts:[...STMTS_BASE],fire:[],fireIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif',pendingMedia:null,pendingReplyMedia:null,reactions:{}};
 let POST_OPEN=null, POST_REVEAL=null, RT=null, _ansT=null;
 const FIRE_DAILY=10; // the campfire is a batch of ten a day
 const MAX_MEDIA=8*1024*1024; // 8 MB cap on photos and videos
@@ -1028,9 +1065,8 @@ function buildFireBatch(){
 function pickMedia(file,slot){ // slot: 'pendingMedia' | 'pendingReplyMedia'
   if(!file)return false;
   const isImg=/^image\//.test(file.type), isVid=/^video\//.test(file.type);
-  if(!isImg&&!isVid){toast('Please pick a photo or a video.');return false;}
   if(file.size>MAX_MEDIA){toast('That file is over 8 MB. Please pick a smaller one.');return false;}
-  APP[slot]={file,type:isImg?'image':'video',url:URL.createObjectURL(file)};
+  APP[slot]={file,type:isImg?'image':isVid?'video':'file',url:(isImg||isVid)?URL.createObjectURL(file):null};
   return true;
 }
 function clearMedia(slot){if(APP[slot]){try{URL.revokeObjectURL(APP[slot].url);}catch(e){}}APP[slot]=null;}
@@ -1039,7 +1075,7 @@ function renderComposePreview(){
   const pv=g('compose-preview');const m=APP.pendingMedia;
   if(!m){pv.style.display='none';pv.innerHTML='';return;}
   pv.style.display='flex';
-  pv.innerHTML=(m.type==='image'?'<img src="'+m.url+'">':'<video src="'+m.url+'" muted></video>')+'<span class="pv-name">'+escHtml(m.file.name)+'</span><button class="pv-x" onclick="clearComposeMedia()" title="Remove">✕</button>';
+  pv.innerHTML=(m.type==='image'?'<img src="'+m.url+'">':m.type==='video'?'<video src="'+m.url+'" muted></video>':'<span class="pv-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></span>')+'<span class="pv-name">'+escHtml(m.file.name)+'</span><button class="pv-x" onclick="clearComposeMedia()" title="Remove">✕</button>';
 }
 function clearComposeMedia(){clearMedia('pendingMedia');const f=g('compose-file');if(f)f.value='';renderComposePreview();}
 async function uploadMedia(file){
@@ -1050,18 +1086,104 @@ async function uploadMedia(file){
   const{data}=sb.storage.from('post-media').getPublicUrl(path);
   return data?data.publicUrl:null;
 }
-function mediaHtmlFull(url,type){
+function mediaHtmlFull(url,type,name){
   if(!url)return'';
-  return type==='video'
-    ? '<video class="pm-media" src="'+escHtml(url)+'" controls playsinline preload="metadata"></video>'
-    : '<img class="pm-media" src="'+escHtml(url)+'" alt="attachment" loading="lazy">';
+  if(type==='video')return '<video class="pm-media" src="'+escHtml(url)+'" controls playsinline preload="metadata"></video>';
+  if(type==='file')return '<a class="pm-file" href="'+escHtml(url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>'+escHtml(name||'Open attachment')+'</a>';
+  return '<img class="pm-media" src="'+escHtml(url)+'" alt="attachment" loading="lazy">';
 }
 function mediaHtmlThumb(url,type){
   if(!url)return'';
+  if(type==='file')return '<div class="pcard-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Attachment</div>';
   return type==='video'
     ? '<div class="pcard-media"><video src="'+escHtml(url)+'#t=0.1" muted preload="metadata"></video><span class="pcard-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>'
     : '<div class="pcard-media"><img src="'+escHtml(url)+'" loading="lazy" alt=""></div>';
 }
+// ══════════════════════════════════════════
+//  MESSENGER-STYLE INPUT: Enter sends, Shift+Enter = new line, Ctrl+V attaches, emoji picker
+// ══════════════════════════════════════════
+function composeKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();pitchPost();} }
+function replyKey(e,id){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submitReply(id);} }
+function handlePasteMedia(e,slot,after){
+  const files=(e.clipboardData&&e.clipboardData.files)?[...e.clipboardData.files]:[];
+  if(files.length){ if(pickMedia(files[0],slot)){ e.preventDefault(); if(after)after(); } }
+}
+function onComposePaste(e){ handlePasteMedia(e,'pendingMedia',renderComposePreview); }
+function onReplyPaste(e){ handlePasteMedia(e,'pendingReplyMedia',()=>{ if(POST_OPEN)renderPostModal(POST_OPEN); }); }
+const CG_EMOJIS=['😀','😁','😂','🤣','😊','😍','😎','🤗','🤔','😅','😴','😭','😮','😡','🥳','😇','🙂','😉','😢','🥺','👍','👎','🙏','👏','🙌','💪','✌️','🤝','🫶','👀','❤️','🧡','💛','💚','💙','💜','🖤','🔥','✨','⭐','💯','✅','❗','❓','🌱','🌿','🍀','🌻','🌾','🌳','🥕','🍅','🌽','🥬','🐛','🐝','🦋','☀️','💧','🎉'];
+let EMOJI_TARGET=null;
+function toggleEmoji(targetId,btn){
+  const panel=g('emoji-panel');
+  if(panel.classList.contains('open')&&EMOJI_TARGET===targetId){panel.classList.remove('open');return;}
+  EMOJI_TARGET=targetId;
+  panel.innerHTML=CG_EMOJIS.map(x=>'<button type="button" onclick="pickEmoji(\''+x+'\')">'+x+'</button>').join('');
+  const r=btn.getBoundingClientRect();const pw=Math.min(304,window.innerWidth-20),ph=214;
+  let left=Math.max(10,Math.min(r.left,window.innerWidth-pw-10));
+  let top=r.top-ph-8; if(top<10)top=Math.min(window.innerHeight-ph-10,r.bottom+8);
+  panel.style.left=left+'px';panel.style.top=top+'px';panel.classList.add('open');
+}
+function pickEmoji(x){
+  const ta=g(EMOJI_TARGET);if(!ta)return;
+  const s=ta.selectionStart!=null?ta.selectionStart:ta.value.length,e2=ta.selectionEnd!=null?ta.selectionEnd:ta.value.length;
+  ta.value=ta.value.slice(0,s)+x+ta.value.slice(e2);
+  const pos=s+x.length;ta.selectionStart=ta.selectionEnd=pos;ta.focus();autosize(ta);
+}
+document.addEventListener('click',e=>{const p=g('emoji-panel');if(p&&p.classList.contains('open')&&!e.target.closest('#emoji-panel')&&!e.target.closest('.emoji-btn'))p.classList.remove('open');});
+// ── emoji reactions on posts and replies ──
+const QUICK_REACT=['❤️','😂','😮','😢','👍','🔥'];
+async function loadReactions(post){
+  if(!post)return;
+  const replyIds=(APP.replies[post.qid]||[]).map(r=>r.id);
+  const ids=[post.qid,...replyIds];
+  try{
+    const{data,error}=await sb.from('reactions').select('target_type,target_id,user_id,emoji').in('target_id',ids);
+    if(error)return;
+    ids.forEach(id=>{delete APP.reactions['post:'+id];delete APP.reactions['reply:'+id];});
+    (data||[]).forEach(r=>{const k=r.target_type+':'+r.target_id;(APP.reactions[k]=APP.reactions[k]||[]).push({user_id:r.user_id,emoji:r.emoji});});
+  }catch(e){}
+}
+function renderReactions(type,id){
+  const key=type+':'+id;const list=APP.reactions[key]||[];
+  const mine=APP.user?list.find(r=>r.user_id===APP.user.id):null;
+  const groups={};list.forEach(r=>{groups[r.emoji]=(groups[r.emoji]||0)+1;});
+  const pills=Object.keys(groups).map(em=>'<button class="rx-pill'+(mine&&mine.emoji===em?' mine':'')+'" onclick="reactTo(\''+type+'\',\''+id+'\',\''+em+'\')">'+em+'<b>'+groups[em]+'</b></button>').join('');
+  return '<div class="rx-row">'+pills+'<button class="rx-add" onclick="openReactBar(event,\''+type+'\',\''+id+'\')" title="React"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button></div>';
+}
+async function reactTo(type,id,emoji){
+  if(!APP.user)return;
+  const key=type+':'+id;const list=APP.reactions[key]=APP.reactions[key]||[];
+  const mine=list.find(r=>r.user_id===APP.user.id);let action;
+  if(mine&&mine.emoji===emoji){APP.reactions[key]=list.filter(r=>r.user_id!==APP.user.id);action='del';}
+  else if(mine){mine.emoji=emoji;action='up';}
+  else{list.push({user_id:APP.user.id,emoji});action='up';}
+  if(POST_OPEN)renderPostModal(POST_OPEN);
+  try{
+    if(action==='del')await sb.from('reactions').delete().eq('target_type',type).eq('target_id',id).eq('user_id',APP.user.id);
+    else await sb.from('reactions').upsert({target_type:type,target_id:id,user_id:APP.user.id,emoji},{onConflict:'target_type,target_id,user_id'});
+  }catch(e){console.error('[CG] react failed',e);}
+}
+function openReactBar(e,type,id){
+  e.stopPropagation();
+  const bar=g('react-bar');
+  bar.innerHTML=QUICK_REACT.map(em=>'<button type="button" onclick="reactTo(\''+type+'\',\''+id+'\',\''+em+'\');closeReactBar()">'+em+'</button>').join('');
+  const r=e.currentTarget.getBoundingClientRect();const bw=286;
+  let left=Math.max(10,Math.min(r.left-6,window.innerWidth-bw-10));
+  let top=r.top-54;if(top<10)top=r.bottom+8;
+  bar.style.left=left+'px';bar.style.top=top+'px';bar.classList.add('open');
+}
+function closeReactBar(){const b=g('react-bar');if(b)b.classList.remove('open');}
+document.addEventListener('click',e=>{const b=g('react-bar');if(b&&b.classList.contains('open')&&!e.target.closest('#react-bar')&&!e.target.closest('.rx-add'))b.classList.remove('open');});
+let _rxT=null;
+function onRemoteReaction(){if(!POST_OPEN)return;clearTimeout(_rxT);_rxT=setTimeout(async()=>{const p=findPost(POST_OPEN);if(p){await loadReactions(p);if(POST_OPEN)renderPostModal(POST_OPEN);}},700);}
+// ── rich text: clickable links + YouTube thumbnails ──
+function richText(raw){
+  raw=raw||'';const re=/(https?:\/\/[^\s<]+)/g;let out='',last=0,m;
+  while((m=re.exec(raw))){out+=escHtml(raw.slice(last,m.index));const u=m[1];out+='<a href="'+escHtml(u)+'" target="_blank" rel="noopener" class="rt-link">'+escHtml(u)+'</a>';last=m.index+u.length;}
+  out+=escHtml(raw.slice(last));return out;
+}
+function ytId(text){const m=(text||'').match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:null;}
+function ytEmbedHtml(text){const id=ytId(text);if(!id)return'';return '<div class="yt-embed" data-yt="'+id+'" onclick="playYt(event,this)"><img src="https://img.youtube.com/vi/'+id+'/hqdefault.jpg" alt="YouTube video"><span class="yt-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>';}
+function playYt(e,el){e.stopPropagation();const id=el.dataset.yt;el.innerHTML='<iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';el.classList.add('playing');}
 
 // ══════════════════════════════════════════
 //  AUTH
@@ -1132,7 +1254,7 @@ async function startSession(authUser){
 async function doSignOut(){
   if(RT){try{sb.removeChannel(RT);}catch(e){}RT=null;}
   await sb.auth.signOut();
-  APP.user=null;APP.votes={};APP.stmts=[...STMTS_BASE];APP.fire=[];APP.fireIndex=0;APP.dynamicQ=[];APP.replies={};APP.notifs=[];APP.bugs=[];QINDEX={};POST_OPEN=null;
+  APP.user=null;APP.votes={};APP.stmts=[...STMTS_BASE];APP.fire=[];APP.fireIndex=0;APP.dynamicQ=[];APP.replies={};APP.notifs=[];APP.bugs=[];APP.reactions={};QINDEX={};POST_OPEN=null;
   g('app').style.display='none';g('topnav').style.display='none';g('bug-fab').style.display='none';g('post-ov').classList.remove('open');g('inbox-ov').classList.remove('open');
   const auth=g('cg-auth');auth.style.opacity='1';auth.style.display='flex';auth.style.pointerEvents='';
 }
@@ -1368,10 +1490,10 @@ async function pitchPost(){
   let media_url=null,media_type=null;
   if(media){btn.textContent='Uploading...';btn.disabled=true;media_url=await uploadMedia(media.file);btn.textContent='Post it';btn.disabled=false;if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
   inp.value='';autosize(inp);
-  const{data,error}=await sb.from('questions').insert({body:v||'',proposed_by:APP.user.id,status:'approved',kind,media_url,media_type}).select().single();
+  const{data,error}=await sb.from('questions').insert({body:v||'',proposed_by:APP.user.id,status:'approved',kind,media_url,media_type,media_name:media?media.file.name:null}).select().single();
   if(error||!data){console.error('[CG] post failed',error);toast('That did not post. Try again.');return;}
   clearComposeMedia();
-  const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind,media_url:data.media_url,media_type:data.media_type};
+  const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind,media_url:data.media_url,media_type:data.media_type,media_name:data.media_name};
   APP.dynamicQ.push(st);QINDEX[st.qid]=st;
   if(st.kind==='statement'){
     APP.stmts.push(st);
@@ -1423,14 +1545,14 @@ function renderFeed(){
       : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'+reps+' '+(reps===1?'reply':'replies');
     return '<div class="pcard" onclick="openPost(\''+q.id+'\')">'
       +'<div class="pcard-top"><span class="post-kind '+q.kind+'">'+(q.kind==='question'?'Question':'Statement')+'</span><span class="pcard-time">'+timeAgo(q.at)+'</span></div>'
-      +mediaHtmlThumb(q.media_url,q.media_type)
+      +(q.media_url?mediaHtmlThumb(q.media_url,q.media_type):(ytId(q.text)?'<div class="pcard-media"><img src="https://img.youtube.com/vi/'+ytId(q.text)+'/hqdefault.jpg" alt=""><span class="pcard-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>':''))
       +(q.text?'<div class="pcard-text">'+escHtml(q.text)+'</div>':'')
       +'<div class="pcard-foot"><span class="pcard-who"><span class="pcard-ava" style="background:'+(q.byColor||'#8a7d5f')+'">'+escHtml(initials(q.byName))+'</span>'+escHtml(q.byName||'A member')+'</span><span class="pcard-metric">'+metric+'</span></div>'
       +'</div>';
   }).join('');
 }
 // ── the focused post: full text, hidden weigh-in, and the reply thread ──
-function openPost(id){POST_OPEN=id;POST_REVEAL=null;renderPostModal(id);g('post-ov').classList.add('open');}
+function openPost(id){POST_OPEN=id;POST_REVEAL=null;renderPostModal(id);g('post-ov').classList.add('open');const p=findPost(id);if(p)loadReactions(p).then(()=>{if(POST_OPEN===id)renderPostModal(id);});}
 function closePost(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;POST_OPEN=null;POST_REVEAL=null;g('post-ov').classList.remove('open');}
 function revealWeigh(id){POST_REVEAL=id;renderPostModal(id);}
 function renderPostModal(id){
@@ -1454,18 +1576,20 @@ function renderPostModal(id){
   }
   const replyList=reps.map(r=>{
     const canDelR=APP.user&&(APP.user.isAdmin||r.by===APP.user.id);
-    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+'</span>'+(canDelR?'<button class="reply-del" onclick="deleteReply(\''+id+'\',\''+r.id+'\')">remove</button>':'')+'</div>'+(r.body?'<div class="reply-text">'+escHtml(r.body)+'</div>':'')+(r.media_url?'<div class="reply-media">'+mediaHtmlFull(r.media_url,r.media_type)+'</div>':'')+'</div></div>';
+    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+'</span>'+(canDelR?'<button class="reply-del" onclick="deleteReply(\''+id+'\',\''+r.id+'\')">remove</button>':'')+'</div>'+(r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'')+(r.media_url?'<div class="reply-media">'+mediaHtmlFull(r.media_url,r.media_type,r.media_name)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
   }).join('');
   const rm=APP.pendingReplyMedia;
   const replyPreview=rm?('<div class="compose-preview" style="display:flex;margin-bottom:8px">'+(rm.type==='image'?'<img src="'+rm.url+'">':'<video src="'+rm.url+'" muted></video>')+'<span class="pv-name">'+escHtml(rm.file.name)+'</span><button class="pv-x" onclick="clearReplyMedia()">✕</button></div>'):'';
   m.innerHTML='<button class="pm-x" onclick="closePost()">✕</button>'
     +'<div class="pm-head"><span class="pm-ava" style="background:'+byColor+'">'+escHtml(initials(byName))+'</span><div class="pm-who"><div class="pm-name">'+escHtml(byName)+'</div><div class="pm-time">'+timeAgo(q.at)+' · '+(q.kind==='question'?'Question':'Statement')+'</div></div>'+(canDel?'<button class="uproot" style="margin-left:auto" onclick="uprootPost(\''+id+'\')">Remove</button>':'')+'</div>'
-    +(q.text?'<div class="pm-text">'+escHtml(q.text)+'</div>':'')
-    +mediaHtmlFull(q.media_url,q.media_type)
+    +(q.text?'<div class="pm-text">'+richText(q.text)+'</div>':'')
+    +mediaHtmlFull(q.media_url,q.media_type,q.media_name)
+    +ytEmbedHtml(q.text)
     +voteHtml
+    +renderReactions('post',q.qid)
     +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
     +replyPreview
-    +'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime" style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach a photo or video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><textarea id="rf-'+id+'" rows="1" maxlength="500" placeholder="Write a reply..." oninput="autosize(this)"></textarea><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div>';
+    +'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><textarea id="rf-'+id+'" rows="1" maxlength="500" placeholder="Write a reply..." oninput="autosize(this)" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)"></textarea><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div>';
 }
 
 // ══════════════════════════════════════════
@@ -1479,6 +1603,7 @@ function subscribeRealtime(){
       .on('postgres_changes',{event:'DELETE',schema:'public',table:'questions'},p=>onRemoteQuestionDel(p.old))
       .on('postgres_changes',{event:'INSERT',schema:'public',table:'replies'},p=>onRemoteReply(p.new))
       .on('postgres_changes',{event:'*',schema:'public',table:'answers'},()=>onRemoteAnswer())
+      .on('postgres_changes',{event:'*',schema:'public',table:'reactions'},()=>onRemoteReaction())
       .subscribe();
   }catch(e){console.error('[CG] realtime failed',e);}
 }
@@ -1489,7 +1614,7 @@ async function onRemoteQuestion(row){
   let k=row.kind||'statement'; if(k==='statement'&&isQuestionLike(row.body))k='question';
   let byName='A member',byColor='#8a7d5f';
   if(row.proposed_by){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.proposed_by).single();if(data){byName=data.username;byColor=data.avatar_color;}}catch(e){}}
-  const st={id:'q'+row.id.slice(0,8),qid:row.id,text:row.body,by:row.proposed_by,byName,byColor,at:row.created_at,kind:k,media_url:row.media_url,media_type:row.media_type};
+  const st={id:'q'+row.id.slice(0,8),qid:row.id,text:row.body,by:row.proposed_by,byName,byColor,at:row.created_at,kind:k,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name};
   APP.dynamicQ.push(st);QINDEX[st.qid]=st;
   if(k==='statement'){APP.stmts.push(st);if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}if(APP.votes[st.id]===undefined)APP.fire.push(st);if(g('stones')&&g('stones').style.display==='none')renderStatement();}
   renderFeed();renderStats();
@@ -1509,7 +1634,7 @@ async function onRemoteReply(row){
   if((APP.replies[row.question_id]||[]).some(r=>r.id===row.id))return;
   let name='A member',color='#8a7d5f';
   if(row.user_id){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.user_id).single();if(data){name=data.username;color=data.avatar_color;}}catch(e){}}
-  (APP.replies[row.question_id]=APP.replies[row.question_id]||[]).push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at,media_url:row.media_url,media_type:row.media_type});
+  (APP.replies[row.question_id]=APP.replies[row.question_id]||[]).push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name});
   renderFeed();
   if(POST_OPEN&&st.id===POST_OPEN)renderPostModal(POST_OPEN);
 }
@@ -1605,7 +1730,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
   const si=g('si-email');if(si)si.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
   const sp=g('si-pass');if(sp)sp.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
   const su=g('su-pass');if(su)su.addEventListener('keydown',e=>{if(e.key==='Enter')doSignUp();});
-  const ci=g('compose-input');if(ci)ci.addEventListener('input',()=>autosize(ci));
+  const ci=g('compose-input');if(ci){ci.addEventListener('input',()=>autosize(ci));ci.addEventListener('keydown',composeKey);ci.addEventListener('paste',onComposePaste);}
   let hadSession=false;
   try{const{data:{session}}=await sb.auth.getSession();if(session){hadSession=true;await startSession(session.user);}}catch(e){}
   try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!hadSession||!cgiSeen()||(APP.user&&APP.user.isAdmin)))cgiPrefetch();}catch(e){}
