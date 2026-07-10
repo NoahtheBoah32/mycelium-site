@@ -1265,12 +1265,10 @@ function votesKey(){return'cg-votes-'+APP.user.id;}
 async function loadVotes(){
   APP.votes={};
   try{
+    // the database is the single source of truth for votes (no stale browser cache)
     const{data,error}=await sb.from('answers').select('question_id,value').eq('user_id',APP.user.id);
-    if(!error&&data&&data.length){
+    if(!error&&data){
       data.forEach(a=>{const st=QINDEX[a.question_id];if(!st)return;APP.votes[st.id]=a.value===1?'agree':a.value===-1?'disagree':'pass';});
-      try{localStorage.setItem(votesKey(),JSON.stringify(APP.votes));}catch(e){}
-    }else{
-      try{const stored=localStorage.getItem(votesKey());if(stored)APP.votes=JSON.parse(stored);}catch(e){}
     }
   }catch(e){}
 }
