@@ -1055,10 +1055,9 @@ function fireAnsweredToday(){try{return parseInt(localStorage.getItem(fireDayKey
 function bumpFireToday(){try{localStorage.setItem(fireDayKey(),String(fireAnsweredToday()+1));}catch(e){}}
 // Build the day's batch: up to ten unanswered statements, capped by what is left of today's ten.
 function buildFireBatch(){
-  const eligible=STMTS_BASE.filter(s=>s.kind!=='question'); // the curated set only; community posts live on the floor
-  const unanswered=eligible.filter(s=>APP.votes[s.id]===undefined);
-  const remaining=Math.max(0,FIRE_DAILY-fireAnsweredToday());
-  APP.fire=unanswered.slice(0,Math.min(FIRE_DAILY,remaining));
+  // the campfire is the curated seed statements; you answer each once. community posts live on the floor.
+  const eligible=STMTS_BASE.filter(s=>s.kind!=='question');
+  APP.fire=eligible.filter(s=>APP.votes[s.id]===undefined);
   APP.fireIndex=0;
 }
 // ── media: photos and videos, 8 MB cap, uploaded to Supabase Storage ──
@@ -1308,18 +1307,12 @@ function renderFireEnd(){
   g('fc-discuss').style.display='none';
   g('fc-next').classList.remove('ready');
   g('leanings').classList.add('open');
-  const capped=fireAnsweredToday()>=FIRE_DAILY;
-  const h=capped?'That is your ten for today.':'You are all caught up.';
-  const p=capped?'Come back tomorrow for ten more. The floor stays open in the meantime.':'You have answered every statement waiting for you. New ones show up here as people post them, and the floor is always open.';
-  g('leanings').innerHTML='<div class="fc-done"><h3>'+h+'</h3><p>'+p+'</p><a href="#forum">Go to the floor</a></div>';
+  g('leanings').innerHTML='<div class="fc-done"><h3>You have answered them all.</h3><p>Nice work, your dot is on the map. The floor is where it all happens now, post, reply, and react with everyone.</p><a href="#forum">Go to the floor</a></div>';
 }
 async function castVote(choice){
   const st=APP.fire[APP.fireIndex];if(!st)return;
-  const isNew=APP.votes[st.id]===undefined;
-  if(isNew&&fireAnsweredToday()>=FIRE_DAILY){toast('That is your ten for today. Come back tomorrow.');return;}
   g('stones').querySelectorAll('.stone').forEach(s=>s.classList.toggle('picked',s.dataset.v===choice));
   await saveVote(st,choice);
-  if(isNew)bumpFireToday();
   foldMyVote();
   renderReveal(st,choice);
   renderMap();renderStats();renderGroups();renderYouLine();renderFeed();
@@ -1523,8 +1516,6 @@ async function uprootPost(stId){
 async function votePost(stId,choice){
   const st=findPost(stId);if(!st||st.kind==='question')return;
   const isNew=APP.votes[stId]===undefined;
-  if(isNew&&fireAnsweredToday()>=FIRE_DAILY){toast('That is your ten for today. Come back tomorrow.');return;}
-  if(isNew)bumpFireToday();
   await saveVote(st,choice);
   foldMyVote();
   renderFeed();renderMap();renderStats();renderGroups();renderYouLine();
