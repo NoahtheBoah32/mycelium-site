@@ -157,18 +157,26 @@ h2.big em{font-style:italic;color:var(--green)}
 #groups .eyebrow{color:var(--amber-lt)}#groups .eyebrow::before{background:var(--amber-lt)}
 #groups h2.big{color:#fff}#groups h2.big em{color:#e7c98b}
 #groups .lede{color:var(--cream-dim)}
-.omap-card{margin-top:46px;background:var(--card-warm);border-radius:18px;overflow:hidden;box-shadow:0 34px 90px -30px rgba(0,0,0,.55)}
-.omap-hd{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 26px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.omap-hd .t{font-family:var(--font-head);font-size:1.05rem;font-weight:600;color:var(--ink)}
-.omap-live{font-size:.82rem;font-weight:600;color:var(--green);display:flex;align-items:center;gap:8px}
-.omap-live::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(47,79,47,.16)}
-.omap-canvas-wrap{padding:18px 22px}
-#omap-canvas{display:block;width:100%;border-radius:10px}
-.omap-legend{display:flex;flex-wrap:wrap;gap:8px 22px;padding:6px 26px 22px}
-.omap-leg{display:flex;align-items:center;gap:9px;font-size:.9rem;color:var(--ink-2);font-weight:500}
-.omap-leg .chip{width:14px;height:14px;border-radius:50%}
-.omap-leg .chip.you{background:transparent;border:2.5px solid var(--ink)}
-.groups-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+.groups-head{display:grid;grid-template-columns:1.55fr .95fr;gap:52px;align-items:end}
+.map-snapshot{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px 30px}
+.snap-big{font-family:var(--font-serif);font-size:3.4rem;font-weight:600;color:#e7c98b;line-height:1;font-variant-numeric:tabular-nums}
+.snap-lbl{font-size:.98rem;color:#fff;font-weight:600;margin-top:4px}
+.snap-sub{font-size:.94rem;color:var(--cream-dim);margin-top:16px;line-height:1.5}
+.snap-sub b{color:#fff;font-weight:700}
+.snap-live{margin-top:14px;font-size:.82rem;color:var(--cream-dim);display:flex;align-items:center;gap:8px}
+.snap-live::before{content:'';width:8px;height:8px;border-radius:50%;background:#7bbf6a;box-shadow:0 0 0 4px rgba(123,191,106,.2)}
+.omap-card{margin-top:36px;background:#20271c;border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;box-shadow:0 40px 100px -34px rgba(0,0,0,.7)}
+.omap-hd{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 28px;border-bottom:1px solid rgba(255,255,255,.09);flex-wrap:wrap}
+.omap-hd .t{font-family:var(--font-head);font-size:1.08rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:10px}
+.omap-hd .t svg{width:20px;height:20px;stroke:var(--amber-lt)}
+.omap-live{font-size:.85rem;font-weight:600;color:#a9d39a;display:flex;align-items:center;gap:8px}
+.omap-live::before{content:'';width:8px;height:8px;border-radius:50%;background:#7bbf6a;box-shadow:0 0 0 4px rgba(123,191,106,.2)}
+#omap-canvas{display:block;width:100%}
+.omap-legend{display:flex;flex-wrap:wrap;gap:10px 24px;padding:16px 28px 22px;border-top:1px solid rgba(255,255,255,.07)}
+.omap-leg{display:flex;align-items:center;gap:9px;font-size:.92rem;color:var(--cream-text);font-weight:600}
+.omap-leg .chip{width:13px;height:13px;border-radius:50%;box-shadow:0 0 10px -1px currentColor}
+.omap-leg .chip.you{background:transparent;border:2.5px solid #fff;box-shadow:none}
+.groups-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
 .gcard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-top:4px solid var(--gc);border-radius:14px;padding:26px 24px}
 .gcard .gname{font-family:var(--font-head);font-size:1.24rem;font-weight:600;color:#fff;margin-bottom:4px}
 .gcard .gkind{font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--cream-dim);font-weight:600;margin-bottom:14px}
@@ -184,12 +192,13 @@ h2.big em{font-style:italic;color:var(--green)}
 .compose-toggle button{border:none;background:none;font-family:var(--font-ui);font-size:.88rem;font-weight:600;color:var(--ink-3);cursor:pointer;padding:10px 18px;border-radius:8px;display:flex;align-items:center;gap:8px}
 .compose-toggle button svg{width:17px;height:17px}
 .compose-toggle button.act{background:var(--card);color:var(--ink);box-shadow:0 2px 8px -2px rgba(42,35,24,.24)}
-.compose-hint{font-size:.92rem;color:var(--ink-3);margin-bottom:14px;line-height:1.55}
-.compose-row{display:flex;gap:12px;align-items:flex-end}
-#compose-input{flex:1;border:1.5px solid var(--line-2);background:var(--card-warm);border-radius:12px;padding:15px 16px;font-size:1.05rem;color:var(--ink);outline:none;resize:none;line-height:1.5;min-height:72px}
+.compose-hint{display:none}
+#compose-input{width:100%;border:1.5px solid var(--line-2);background:var(--card-warm);border-radius:14px;padding:18px;font-size:1.08rem;color:var(--ink);outline:none;resize:vertical;line-height:1.55;min-height:124px}
 #compose-input:focus{border-color:var(--amber)}
 #compose-input::placeholder{color:var(--ink-3)}
-#compose-btn{padding:15px 28px;background:var(--green);color:#fff;border:none;font-size:.9rem;font-weight:600;letter-spacing:.3px;cursor:pointer;border-radius:50px;white-space:nowrap;transition:background .2s}
+.compose-actions{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:14px}
+.compose-note{font-size:.92rem;color:var(--ink-3)}
+#compose-btn{padding:16px 40px;background:var(--green);color:#fff;border:none;font-size:.98rem;font-weight:600;letter-spacing:.3px;cursor:pointer;border-radius:50px;white-space:nowrap;transition:background .2s}
 #compose-btn:hover{background:var(--green-2)}
 .feed{margin-top:30px;display:flex;flex-direction:column;gap:18px}
 .post{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:0 10px 30px -24px rgba(42,35,24,.4)}
@@ -275,7 +284,11 @@ h2.big em{font-style:italic;color:var(--green)}
 .inbox-empty svg{width:40px;height:40px;stroke:var(--line-2);margin-bottom:14px}
 .bugrow{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;margin-bottom:12px}
 .bugrow .bt{font-size:.98rem;color:var(--ink);line-height:1.5;white-space:pre-wrap;word-break:break-word}
-.bugrow .bm{font-size:.78rem;color:var(--ink-3);margin-top:9px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bugrow .bm{font-size:.78rem;color:var(--ink-3);margin-top:11px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.bugrow.done{opacity:.55}
+.bresolve{background:var(--green);color:#fff;border:none;font-size:.76rem;font-weight:600;padding:6px 13px;border-radius:20px;cursor:pointer}
+.bresolve:hover{background:var(--green-2)}
+.bdone{color:var(--green);font-weight:700;font-size:.76rem}
 
 /* ============ BUG FAB + MODAL ============ */
 #bug-fab{position:fixed;bottom:22px;right:22px;z-index:180;display:none;align-items:center;gap:9px;background:var(--slate);color:var(--cream-text);border:1px solid rgba(255,255,255,.15);padding:12px 18px;border-radius:50px;font-size:.88rem;font-weight:600;cursor:pointer;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);transition:transform .18s,background .18s}
@@ -305,8 +318,9 @@ h2.big em{font-style:italic;color:var(--green)}
   #fire .fire-grid{grid-template-columns:1fr;gap:38px}
   #fire{background-attachment:scroll}
   .groups-grid{grid-template-columns:1fr}
-  .compose-row{flex-direction:column;align-items:stretch}
+  .compose-actions{flex-direction:column;align-items:stretch}
   #compose-btn{width:100%}
+  .groups-head{grid-template-columns:1fr;gap:24px}
   .lean-row{grid-template-columns:96px 1fr 74px}
 }
 </style>
@@ -437,15 +451,25 @@ h2.big em{font-style:italic;color:var(--green)}
 
   <section class="sec" id="groups">
     <div class="wrap">
-      <p class="eyebrow rv">Where everyone stands</p>
-      <h2 class="big rv">The map of <em>how we think.</em></h2>
-      <p class="lede rv">Each dot is a real person. People who answer alike sit close together. People who see things differently sit further apart. This map is drawn from real answers, live, right in your browser. Nobody is placed by hand.</p>
+      <div class="groups-head">
+        <div>
+          <p class="eyebrow rv">Where everyone stands</p>
+          <h2 class="big rv">The map of <em>how we think.</em></h2>
+          <p class="lede rv">Each dot is a real person. People who answer alike sit close together. People who see it differently sit further apart. It is drawn from real answers, live, right in your browser. Nobody is placed by hand.</p>
+        </div>
+        <div class="map-snapshot rv">
+          <div class="snap-big" id="snap-people">0</div>
+          <div class="snap-lbl">people on the map</div>
+          <div class="snap-sub" id="snap-sub">Groups form as people answer</div>
+          <div class="snap-live">Updating live in your browser</div>
+        </div>
+      </div>
       <div class="omap-card rv">
         <div class="omap-hd">
-          <div class="t">Opinion map</div>
+          <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>The living map</div>
           <div class="omap-live" id="omap-count">0 people on the map</div>
         </div>
-        <div class="omap-canvas-wrap"><canvas id="omap-canvas"></canvas></div>
+        <canvas id="omap-canvas"></canvas>
         <div class="omap-legend" id="omap-legend"></div>
       </div>
       <div class="groups-grid" id="groups-grid"></div>
@@ -468,11 +492,8 @@ h2.big em{font-style:italic;color:var(--green)}
             Ask a question
           </button>
         </div>
-        <div class="compose-hint" id="compose-hint">A <b>statement</b> is something people agree or disagree with. It shapes the map.</div>
-        <div class="compose-row">
-          <textarea id="compose-input" rows="1" maxlength="220" placeholder="Say something people can agree or disagree with. Example: Beginners should never have to pay to start learning."></textarea>
-          <button id="compose-btn" onclick="pitchPost()">Post it</button>
-        </div>
+        <textarea id="compose-input" rows="3" maxlength="600" placeholder="Share what is on your mind. A thought, a statement, anything worth talking about."></textarea>
+        <div class="compose-actions"><span class="compose-note" id="compose-note">People can weigh in and reply.</span><button id="compose-btn" onclick="pitchPost()">Post it</button></div>
       </div>
       <div class="feed" id="feed"></div>
       <div class="feed-empty" id="feed-empty">
@@ -632,7 +653,8 @@ async function loadNotifications(){
 }
 function unreadCount(){return (APP.notifs||[]).filter(n=>!n.read).length;}
 function updateInboxBadge(){
-  const b=document.getElementById('inbox-badge');const c=unreadCount();
+  const b=document.getElementById('inbox-badge');let c=unreadCount();
+  if(APP.user&&APP.user.isAdmin)c+=(APP.bugs||[]).filter(x=>!x.resolved).length;
   if(c>0){b.textContent=c>9?'9+':c;b.style.display='grid';}else{b.style.display='none';}
 }
 async function markAllRead(){
@@ -660,6 +682,12 @@ async function loadBugReports(){
     const{data,error}=await sb.from('bug_reports').select('id,body,page,user_agent,resolved,created_at').order('created_at',{ascending:false}).limit(80);
     if(!error&&data)APP.bugs=data;
   }catch(e){console.error('[CG] loadBugReports failed',e);}
+}
+async function resolveBug(id){
+  const{error}=await sb.from('bug_reports').update({resolved:true}).eq('id',id);
+  if(error){toast('Could not update that.');return;}
+  const b=(APP.bugs||[]).find(x=>x.id===id);if(b)b.resolved=true;
+  updateInboxBadge();renderInbox();
 }
 
 // ══════════════════════════════════════════
@@ -839,8 +867,11 @@ const g=id=>document.getElementById(id);
 function toast(msg){const el=g('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),2800);}
 function initials(name){return (name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
 function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function hexA(hex,a){const h=hex.replace('#','');return'rgba('+parseInt(h.slice(0,2),16)+','+parseInt(h.slice(2,4),16)+','+parseInt(h.slice(4,6),16)+','+a+')';}
 function timeAgo(iso){if(!iso)return'';const s=Math.floor((Date.now()-new Date(iso).getTime())/1000);if(s<60)return'just now';const m=Math.floor(s/60);if(m<60)return m+'m ago';const h=Math.floor(m/60);if(h<24)return h+'h ago';const d=Math.floor(h/24);if(d<7)return d+'d ago';return new Date(iso).toLocaleDateString();}
-const BANNED_PATTERNS=[/polycri/i,/poly[\s\-]?cri/i,/\bcollaps/i,/catastroph/i,/doomsday/i,/apocalyp/i,/armageddon/i,/zeitgeist/i,/teotwawki/i,/\bshtf\b/i,/end[\s\-]?times/i,/\bprepp/i,/\bsurvivalist/i,/survival\s+mode/i,/\bcoup\b/i,/escalat\w*\s+conflict/i,/overarching/i,/\brubric\b/i,/\bstressors?\b/i,/paradigm[\s\-]?shift/i,/deep[\s\-]?dive/i,/\bsynergy\b/i,/\btransformative\b/i,/thought[\s\-]?leader/i,/holistic[\s\-]approach/i,/game[\s\-]?changer/i];
+// Silent safe-space filter: doom / collapse / prepper agenda quietly fails to post.
+// No user-facing restrictions beyond this. All other moderation is done by the admin.
+const BANNED_PATTERNS=[/polycri/i,/poly[\s\-]?cri/i,/\bcollaps/i,/catastroph/i,/doomsday/i,/apocalyp/i,/armageddon/i,/teotwawki/i,/\bshtf\b/i,/end[\s\-]?times/i,/\bprepp/i,/\bsurvivalist/i,/survival\s+mode/i,/\bdoom(sday|scroll|er)?\b/i,/\bcoup\b/i,/societal\s+collapse/i,/escalat\w*\s+conflict/i];
 function isBanned(text){return BANNED_PATTERNS.some(p=>p.test(text));}
 function autosize(ta){ta.style.height='auto';ta.style.height=Math.min(200,ta.scrollHeight)+'px';}
 
@@ -1021,36 +1052,67 @@ function nextStatement(){APP.stmtIndex++;renderStatement();}
 // ══════════════════════════════════════════
 function renderMap(){
   const cv=g('omap-canvas');if(!cv)return;
-  const wrap=cv.parentElement;
-  const W=Math.max(280,wrap.clientWidth-44);
-  const H=Math.max(320,Math.min(500,Math.round(W*0.6)));
+  const card=cv.parentElement;
+  const W=Math.max(300,card.clientWidth);
+  const H=Math.max(300,Math.min(440,Math.round(W*0.5)));
   const dpr=Math.min(2,devicePixelRatio||1);
   cv.width=W*dpr;cv.height=H*dpr;cv.style.height=H+'px';
   const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.clearRect(0,0,W,H);
-  ctx.fillStyle='#FBF8F1';ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='rgba(60,50,30,0.07)';ctx.lineWidth=1;
-  for(let i=1;i<6;i++){const x=W*i/6;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-  for(let i=1;i<5;i++){const y=H*i/5;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  const cx=W/2,cy=H/2;
+  // deep, warm field
+  const bg=ctx.createRadialGradient(cx,cy,12,cx,cy,Math.max(W,H)*0.72);
+  bg.addColorStop(0,'#2e3d2c');bg.addColorStop(0.55,'#232c1e');bg.addColorStop(1,'#161b12');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  // ripple rings radiating from the shared centre
+  ctx.strokeStyle='rgba(226,214,180,0.07)';ctx.lineWidth=1;
+  const rx=W/2-40,ry=H/2-30;
+  [0.3,0.55,0.8,1.05].forEach(f=>{ctx.beginPath();ctx.ellipse(cx,cy,rx*f,ry*f,0,0,7);ctx.stroke();});
   const users=(POLIS&&POLIS.mapUsers)||[];
-  const pad=44;
-  const toXY=p=>[pad+((p[0]+1)/2)*(W-2*pad),pad+((-p[1]+1)/2)*(H-2*pad)];
+  const padX=66,padY=54;
+  const toXY=p=>[cx+p[0]*(W/2-padX),cy-p[1]*(H/2-padY)];
+  // cluster halos, then faint constellation lines
+  if(POLIS&&POLIS.clusters){
+    POLIS.clusters.forEach(cl=>{
+      const[hx,hy]=toXY(cl.centroid),col=CAMPS[cl.camp].color;
+      const g2=ctx.createRadialGradient(hx,hy,6,hx,hy,130);
+      g2.addColorStop(0,hexA(col,0.20));g2.addColorStop(1,hexA(col,0));
+      ctx.fillStyle=g2;ctx.beginPath();ctx.arc(hx,hy,130,0,7);ctx.fill();
+    });
+    POLIS.clusters.forEach(cl=>{
+      const pts=cl.members.filter(m=>m.pos).map(m=>toXY(m.pos));
+      ctx.strokeStyle=hexA(CAMPS[cl.camp].color,0.18);ctx.lineWidth=1;
+      for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i][0]-pts[j][0],dy=pts[i][1]-pts[j][1];
+        if(dx*dx+dy*dy<150*150){ctx.beginPath();ctx.moveTo(pts[i][0],pts[i][1]);ctx.lineTo(pts[j][0],pts[j][1]);ctx.stroke();}
+      }
+    });
+  }
+  // the shared centre
+  const cgg=ctx.createRadialGradient(cx,cy,2,cx,cy,52);
+  cgg.addColorStop(0,'rgba(231,201,139,0.42)');cgg.addColorStop(1,'rgba(231,201,139,0)');
+  ctx.fillStyle=cgg;ctx.beginPath();ctx.arc(cx,cy,52,0,7);ctx.fill();
+  ctx.fillStyle='rgba(231,201,139,0.85)';ctx.beginPath();ctx.arc(cx,cy,3,0,7);ctx.fill();
+  ctx.font='700 10px Inter,sans-serif';ctx.fillStyle='rgba(231,201,139,0.6)';ctx.textAlign='center';
+  ctx.fillText('C O M M O N   G R O U N D',cx,cy+66);
+  // people as glowing points
   users.forEach(u=>{
     if(!u.pos)return;const[x,y]=toXY(u.pos);
     const me=APP.user&&u.uid===APP.user.id;
-    const col=(u.camp!=null&&POLIS.clusters)?CAMPS[u.camp].color:'#9a8f76';
-    ctx.beginPath();ctx.arc(x,y,me?9:7,0,7);ctx.fillStyle=col;ctx.globalAlpha=me?1:.88;ctx.fill();ctx.globalAlpha=1;
-    if(me){ctx.lineWidth=3;ctx.strokeStyle='#232019';ctx.stroke();
-      ctx.font='700 13px Inter,sans-serif';ctx.fillStyle='#232019';ctx.textAlign='center';ctx.fillText('You',x,y-15);}
+    const col=(u.camp!=null&&POLIS.clusters)?CAMPS[u.camp].color:'#cabf9c';
+    const gg=ctx.createRadialGradient(x,y,1,x,y,me?24:17);
+    gg.addColorStop(0,hexA(col,0.9));gg.addColorStop(1,hexA(col,0));
+    ctx.fillStyle=gg;ctx.beginPath();ctx.arc(x,y,me?24:17,0,7);ctx.fill();
+    ctx.fillStyle=col;ctx.beginPath();ctx.arc(x,y,me?7.5:5.5,0,7);ctx.fill();
+    if(me){ctx.lineWidth=2.5;ctx.strokeStyle='#fff';ctx.stroke();
+      ctx.font='700 13px Inter,sans-serif';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText('You',x,y-17);}
   });
-  if(!users.length){ctx.fillStyle='#6B6252';ctx.font='400 16px Inter,sans-serif';ctx.textAlign='center';ctx.fillText('Answer a few statements and your dot appears here.',W/2,H/2);}
+  if(!users.length){ctx.fillStyle='rgba(239,231,213,0.55)';ctx.font='400 15px Inter,sans-serif';ctx.textAlign='center';ctx.fillText('Answer a few statements and you appear here.',cx,cy-66);}
   const n=users.length;
   g('omap-count').textContent=n+(n===1?' person':' people')+' on the map';
-  // legend
-  const leg=g('omap-legend');
-  let lh='';
-  if(POLIS.clusters){CAMPS.forEach((c,i)=>{const live=POLIS.clusters.find(cl=>cl.camp===i);if(live)lh+='<div class="omap-leg"><span class="chip" style="background:'+c.color+'"></span>'+c.short+' · '+live.members.length+'</div>';});}
-  else if(n){lh+='<div class="omap-leg"><span class="chip" style="background:#9a8f76"></span>People answering</div>';}
+  const leg=g('omap-legend');let lh='';
+  if(POLIS&&POLIS.clusters){CAMPS.forEach((c,i)=>{const live=POLIS.clusters.find(cl=>cl.camp===i);if(live)lh+='<div class="omap-leg"><span class="chip" style="background:'+c.color+';color:'+c.color+'"></span>'+c.short+' · '+live.members.length+'</div>';});}
+  else if(n){lh+='<div class="omap-leg"><span class="chip" style="background:#cabf9c;color:#cabf9c"></span>People answering</div>';}
   lh+='<div class="omap-leg"><span class="chip you"></span>You</div>';
   leg.innerHTML=lh;
 }
@@ -1059,6 +1121,9 @@ function renderStats(){
   g('stat-people').textContent=n;
   g('stat-answers').textContent=(POLIS&&POLIS.totalAnswers)||0;
   g('stat-posts').textContent=APP.dynamicQ.length;
+  const sp=g('snap-people');if(sp)sp.textContent=n;
+  const ng=(POLIS&&POLIS.clusters)?POLIS.clusters.length:0;
+  const ss=g('snap-sub');if(ss)ss.innerHTML=ng?('<b>'+ng+'</b> group'+(ng===1?'':'s')+' have formed'):'Groups form as people answer';
 }
 function renderGroups(){
   const wrap=g('groups-grid');
@@ -1092,20 +1157,19 @@ function setComposeType(t){
   APP.composeType=t;
   g('ct-statement').classList.toggle('act',t==='statement');
   g('ct-question').classList.toggle('act',t==='question');
-  const inp=g('compose-input');
+  const inp=g('compose-input');const note=g('compose-note');
   if(t==='statement'){
-    g('compose-hint').innerHTML='A <b>statement</b> is something people agree or disagree with. It shapes the map.';
-    inp.placeholder='Say something people can agree or disagree with. Example: Beginners should never have to pay to start learning.';
+    inp.placeholder='Share what is on your mind. A thought, a statement, anything worth talking about.';
+    if(note)note.textContent='People can weigh in and reply.';
   }else{
-    g('compose-hint').innerHTML='A <b>question</b> is something people answer in their own words, in the replies.';
-    inp.placeholder='Ask the community something. Example: What is the hardest part of starting your own garden?';
+    inp.placeholder='Ask the community a question.';
+    if(note)note.textContent='People can answer in the replies.';
   }
 }
 async function pitchPost(){
   const inp=g('compose-input');
   const v=(inp.value||'').trim();if(!v)return;
   if(isBanned(v)){inp.value='';return;}
-  if(v.length<12){toast('Give a little more so people can respond.');return;}
   const kind=APP.composeType;
   inp.value='';autosize(inp);
   const{data,error}=await sb.from('questions').insert({body:v,proposed_by:APP.user.id,status:'approved',kind}).select().single();
@@ -1194,16 +1258,19 @@ function openInbox(){loadNotifications().then(()=>{loadBugReports().then(()=>{re
 function closeInbox(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;g('inbox-ov').classList.remove('open');}
 function setInboxTab(t){APP.inboxTab=t;g('ib-tab-notif').classList.toggle('act',t==='notif');const bt=g('ib-tab-bugs');if(bt)bt.classList.toggle('act',t==='bugs');renderInbox();}
 function renderInbox(){
-  // admin gets a bug reports tab
   const tabs=g('inbox-tabs');
-  if(APP.user&&APP.user.isAdmin&&!g('ib-tab-bugs')){
-    const b=document.createElement('button');b.id='ib-tab-bugs';b.textContent='Bug reports';b.onclick=()=>setInboxTab('bugs');tabs.appendChild(b);
+  if(APP.user&&APP.user.isAdmin){
+    let bt=g('ib-tab-bugs');
+    if(!bt){bt=document.createElement('button');bt.id='ib-tab-bugs';bt.onclick=()=>setInboxTab('bugs');tabs.appendChild(bt);}
+    const total=(APP.bugs||[]).length;
+    bt.textContent='Bug reports'+(total?' ('+total+')':'');
+    bt.classList.toggle('act',APP.inboxTab==='bugs');
   }
   const list=g('inbox-list');const tools=g('inbox-tools');
   if(APP.inboxTab==='bugs'&&APP.user&&APP.user.isAdmin){
     tools.style.display='none';
-    if(!APP.bugs.length){list.innerHTML='<div class="inbox-empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="8" height="13" rx="4"/><path d="M12 2v3M5 11h14M4 15h3m10 0h3"/></svg><p>No bug reports yet.</p></div>';return;}
-    list.innerHTML=APP.bugs.map(b=>'<div class="bugrow"><div class="bt">'+escHtml(b.body)+'</div><div class="bm"><span>'+timeAgo(b.created_at)+'</span><span>'+escHtml(b.page||'')+'</span></div></div>').join('');
+    if(!APP.bugs.length){list.innerHTML='<div class="inbox-empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="8" height="13" rx="4"/><path d="M12 2v3M5 11h14M4 15h3m10 0h3"/></svg><p>No bug reports yet.<br>When someone reports a problem, it lands here for you.</p></div>';return;}
+    list.innerHTML=APP.bugs.map(b=>'<div class="bugrow'+(b.resolved?' done':'')+'"><div class="bt">'+escHtml(b.body)+'</div><div class="bm"><span>'+timeAgo(b.created_at)+' · '+escHtml(b.page||'')+'</span>'+(b.resolved?'<span class="bdone">Resolved</span>':'<button class="bresolve" onclick="resolveBug(\''+b.id+'\')">Mark resolved</button>')+'</div></div>').join('');
     return;
   }
   tools.style.display='flex';
