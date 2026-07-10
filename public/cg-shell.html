@@ -1230,7 +1230,7 @@ async function doSignUp(){
   const colors=['#C4872A','#4a7c59','#5b7fa6','#8a5a78','#c0703e','#5f7d4f'];
   const color=colors[Math.floor(Math.random()*colors.length)];
   const isAdmin=email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
-  const{error:profErr}=await sb.from('profiles').insert({id:data.user.id,username,bio:'',location,practice,avatar_color:color,is_admin:isAdmin});
+  const{error:profErr}=await sb.from('profiles').insert({id:data.user.id,username,bio:'',location,practice,avatar_color:color,is_admin:false});
   if(profErr){
     await sb.auth.signOut();
     if(profErr.code==='23505'){showAuthErr('That name is already taken.');}
