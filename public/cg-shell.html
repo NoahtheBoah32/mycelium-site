@@ -383,6 +383,13 @@ h2.big em{font-style:italic;color:var(--green)}
 .bug-actions .send{background:var(--green);color:#fff;border:none;font-size:.92rem;font-weight:600;padding:13px 30px;border-radius:50px;cursor:pointer}
 .bug-actions .send:hover{background:var(--green-2)}
 
+/* ============ MOBILE BOTTOM NAV (jump between sections on a phone) ============ */
+#mnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:190;background:var(--slate);border-top:1px solid rgba(255,255,255,.12);padding:5px 4px;box-shadow:0 -8px 26px -12px rgba(0,0,0,.5)}
+#mnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 0;color:var(--cream-dim);font-size:.7rem;font-weight:600;letter-spacing:.2px}
+#mnav a svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8}
+#mnav a.act{color:var(--amber-lt)}
+.sec{scroll-margin-top:66px}   /* jump lands the section below the sticky header */
+
 /* ============ MISC ============ */
 #toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,90px);background:var(--ink);color:var(--cream);font-size:.95rem;padding:14px 26px;border-radius:12px;box-shadow:0 16px 44px -10px rgba(20,16,9,.5);transition:transform .45s cubic-bezier(.2,.8,.25,1);z-index:950;max-width:88vw;text-align:center}
 #toast.show{transform:translate(-50%,0)}
@@ -442,6 +449,8 @@ h2.big em{font-style:italic;color:var(--green)}
 .compose-preview .pv-doc svg{width:20px;height:20px;stroke:var(--amber)}
 .fc-discuss{margin-top:12px;width:100%;padding:13px;background:none;border:1.5px solid var(--line-2);color:var(--ink-2);font-size:.92rem;font-weight:600;border-radius:50px;cursor:pointer;text-align:center}
 .fc-discuss:hover{border-color:var(--amber);color:var(--amber)}
+.fc-back{margin-top:10px;width:100%;padding:10px;background:none;border:none;color:var(--ink-3);font-size:.86rem;font-weight:600;cursor:pointer;text-align:center}
+.fc-back:hover{color:var(--ink)}
 /* ============ RESPONSIVE ============ */
 @media(max-width:900px){
   .wel-grid{grid-template-columns:1fr;gap:36px}
@@ -506,6 +515,15 @@ h2.big em{font-style:italic;color:var(--green)}
   #foot{padding:42px 0 38px}
   #foot .q{font-size:1.28rem}
 }
+/* phones: show the bottom section-nav; make the report button a compact icon above it */
+@media(max-width:720px){
+  #mnav{display:flex}
+  #app{padding-bottom:64px}
+  #bug-fab{bottom:72px;right:14px;width:48px;height:48px;padding:0;gap:0;border-radius:50%;justify-content:center}
+  #bug-fab .bf-lbl{display:none}
+  #toast{bottom:88px}
+  #foot{padding-bottom:82px}
+}
 </style>
 </head>
 <body>
@@ -514,9 +532,9 @@ h2.big em{font-style:italic;color:var(--green)}
 <header id="topnav">
   <a class="nav-brand" href="https://mycelium-learn.com"><img src="/images/logo.png" alt="Mycelium"><span>Common Ground</span></a>
   <div class="nav-links">
-    <a href="#fire">Answer</a>
-    <a href="#groups">Groups</a>
-    <a href="#forum">Forum</a>
+    <a href="#fire" onclick="goSection(event,'fire')">Answer</a>
+    <a href="#groups" onclick="goSection(event,'groups')">Groups</a>
+    <a href="#forum" onclick="goSection(event,'forum')">Forum</a>
     <button class="nav-icon" id="inbox-btn" onclick="openInbox()" aria-label="Inbox">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
       <span class="nav-badge" id="inbox-badge" style="display:none">0</span>
@@ -525,6 +543,13 @@ h2.big em{font-style:italic;color:var(--green)}
     <button class="nav-signout" onclick="doSignOut()">Sign out</button>
   </div>
 </header>
+
+<!-- bottom section-nav for phones (top links are hidden on mobile) -->
+<nav id="mnav" aria-label="Jump to a section">
+  <a href="#fire" data-sec="fire" onclick="goSection(event,'fire')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Answer</span></a>
+  <a href="#groups" data-sec="groups" onclick="goSection(event,'groups')"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17.5" cy="10" r="2.5"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5M16 20c0-2.2 1.8-3.8 4-3.8"/></svg><span>Groups</span></a>
+  <a href="#forum" data-sec="forum" onclick="goSection(event,'forum')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Forum</span></a>
+</nav>
 
 <!-- ===== AUTH ===== -->
 <div id="cg-auth">
@@ -627,6 +652,7 @@ h2.big em{font-style:italic;color:var(--green)}
           </div>
           <div class="leanings" id="leanings"></div>
           <button class="fc-next" id="fc-next" onclick="nextStatement()">Next</button>
+          <button class="fc-back" id="fc-back" onclick="prevStatement()" style="display:none">← Back to the previous one</button>
           <button class="fc-discuss" id="fc-discuss" onclick="discussCurrent()" style="display:none">Say more about this on the floor →</button>
         </div>
       </div>
@@ -722,7 +748,7 @@ h2.big em{font-style:italic;color:var(--green)}
 </div>
 
 <!-- ===== BUG REPORT ===== -->
-<button id="bug-fab" onclick="openBug()"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.5 2.5h5L16 2M12 8v13M5 11h14M4 15h2m12 0h2M4.5 8.5 3 7m18 1.5L19.5 7M4.5 19 3 20.5m18-1.5 1.5 1.5"/><rect x="8" y="6" width="8" height="13" rx="4"/></svg>Report a problem</button>
+<button id="bug-fab" onclick="openBug()"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.5 2.5h5L16 2M12 8v13M5 11h14M4 15h2m12 0h2M4.5 8.5 3 7m18 1.5L19.5 7M4.5 19 3 20.5m18-1.5 1.5 1.5"/><rect x="8" y="6" width="8" height="13" rx="4"/></svg><span class="bf-lbl">Report a problem</span></button>
 <div id="bug-ov" onclick="closeBug(event)">
   <div id="bug-modal">
     <h3>Something feel off?</h3>
@@ -1103,10 +1129,11 @@ function fireAnsweredToday(){try{return parseInt(localStorage.getItem(fireDayKey
 function bumpFireToday(){try{localStorage.setItem(fireDayKey(),String(fireAnsweredToday()+1));}catch(e){}}
 // Build the day's batch: up to ten unanswered statements, capped by what is left of today's ten.
 function buildFireBatch(){
-  // the campfire is the curated seed statements; you answer each once. community posts live on the floor.
-  const eligible=STMTS_BASE.filter(s=>s.kind!=='question');
-  APP.fire=eligible.filter(s=>APP.votes[s.id]===undefined);
-  APP.fireIndex=0;
+  // the campfire is the curated seed statements; always all of them, so the count is always "x of 8".
+  APP.fire=STMTS_BASE.filter(s=>s.kind!=='question');
+  // resume on the first one you have not answered yet (new people start at 1, returners pick up where they left off)
+  const firstUnanswered=APP.fire.findIndex(s=>APP.votes[s.id]===undefined);
+  APP.fireIndex=firstUnanswered<0?0:firstUnanswered;
 }
 // ── media: photos and videos, 8 MB cap, uploaded to Supabase Storage ──
 function pickMedia(file,slot){ // slot: 'pendingMedia' | 'pendingReplyMedia'
@@ -1425,14 +1452,17 @@ function renderStatement(){
   const existing=APP.votes[st.id];
   stones.querySelectorAll('.stone').forEach(s=>s.classList.toggle('picked',existing===s.dataset.v));
   g('fc-next').textContent=APP.fireIndex===total-1?'Finish':'Next';
+  g('fc-back').style.display=APP.fireIndex>0?'block':'none';
   if(existing!==undefined){renderReveal(st,existing);g('fc-next').classList.add('ready');}
   else{g('leanings').classList.remove('open');g('leanings').innerHTML='';g('fc-next').classList.remove('ready');}
 }
+function prevStatement(){if(APP.fireIndex>0){APP.fireIndex--;renderStatement();}}
 function renderFireEnd(){
   g('fc-num').textContent='';g('fc-stmt').textContent='';
   g('stones').style.display='none';
   g('fc-discuss').style.display='none';
   g('fc-next').classList.remove('ready');
+  g('fc-back').style.display=APP.fire.length>0?'block':'none';
   g('leanings').classList.add('open');
   g('leanings').innerHTML='<div class="fc-done"><h3>You have answered them all.</h3><p>Nice work, your dot is on the map. The floor is where it all happens now, post, reply, and react with everyone.</p><a href="#forum">Go to the floor</a></div>';
 }
@@ -1876,6 +1906,8 @@ function closeBug(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;g
 // ══════════════════════════════════════════
 //  LAUNCH
 // ══════════════════════════════════════════
+// reliable section jump (native hash scroll is flaky in some in-app browsers)
+function goSection(e,id){if(e&&e.preventDefault)e.preventDefault();const el=g(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 function launchApp(){
   const auth=g('cg-auth');
   auth.style.opacity='0';auth.style.pointerEvents='none';
@@ -1893,6 +1925,11 @@ function launchApp(){
   subscribeRealtime();
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.08});
   document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+  // bottom-nav: highlight the tab for whichever section is centered in view
+  try{
+    const secObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.querySelectorAll('#mnav a').forEach(a=>a.classList.toggle('act',a.dataset.sec===e.target.id));}),{rootMargin:'-45% 0px -45% 0px'});
+    ['fire','groups','forum'].forEach(id=>{const el=g(id);if(el)secObs.observe(el);});
+  }catch(e){}
   if(APP._playIntro||!cgiSeen()){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}} // plays once for everyone (admin included); replay via the "Watch the walk in again" button
 }
 document.getElementById('stones').addEventListener('click',e=>{
