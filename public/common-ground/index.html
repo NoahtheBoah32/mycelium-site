@@ -57,8 +57,8 @@ a{color:inherit;text-decoration:none}
 @media(max-width:720px){.nav-links>a{display:none}.nav-name{display:none}.nav-user{padding-left:8px}}
 
 /* ============ AUTH ============ */
-#cg-auth{position:fixed;inset:0;z-index:900;background:linear-gradient(160deg,#3a2c09,#43330B 45%,#2F2A1F);display:flex;align-items:center;justify-content:center;padding:22px;transition:opacity .4s}
-.auth-card{width:min(940px,96vw);background:var(--card);border-radius:18px;box-shadow:0 40px 120px -30px rgba(0,0,0,.6);display:grid;grid-template-columns:1.02fr .98fr;overflow:hidden}
+#cg-auth{position:fixed;inset:0;z-index:900;background:linear-gradient(160deg,#3a2c09,#43330B 45%,#2F2A1F);display:flex;justify-content:center;padding:22px;overflow-y:auto;-webkit-overflow-scrolling:touch;transition:opacity .4s}
+.auth-card{width:min(940px,96vw);background:var(--card);border-radius:18px;box-shadow:0 40px 120px -30px rgba(0,0,0,.6);display:grid;grid-template-columns:1.02fr .98fr;overflow:hidden;margin:auto}
 .auth-left{padding:52px 48px;display:flex;flex-direction:column;background:var(--olive);color:var(--cream-text)}
 .auth-left .logo{height:34px;width:auto;align-self:flex-start;object-fit:contain;margin-bottom:38px}
 .auth-eye{font-family:var(--font-ui);font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--amber-lt);font-weight:700;margin-bottom:18px}
@@ -373,7 +373,7 @@ h2.big em{font-style:italic;color:var(--green)}
 #bug-fab svg{width:18px;height:18px;stroke:var(--amber-lt)}
 #bug-ov{position:fixed;inset:0;z-index:500;background:rgba(20,16,8,.55);display:none;align-items:center;justify-content:center;padding:22px}
 #bug-ov.open{display:flex}
-#bug-modal{width:min(520px,96vw);background:var(--card);border-radius:18px;padding:34px 34px 30px;box-shadow:0 40px 100px -24px rgba(0,0,0,.5)}
+#bug-modal{width:min(520px,96vw);max-height:90vh;overflow-y:auto;background:var(--card);border-radius:18px;padding:34px 34px 30px;box-shadow:0 40px 100px -24px rgba(0,0,0,.5)}
 #bug-modal h3{font-family:var(--font-display);font-weight:500;font-size:1.8rem;color:var(--ink);margin-bottom:8px}
 #bug-modal p{font-size:1rem;color:var(--ink-2);line-height:1.6;margin-bottom:18px}
 #bug-text{width:100%;min-height:150px;border:1.5px solid var(--line-2);background:var(--card-warm);border-radius:12px;padding:15px;font-size:1.02rem;color:var(--ink);outline:none;resize:vertical;line-height:1.55}
