@@ -196,6 +196,31 @@ h2.big em{font-style:italic;color:var(--green)}
 #compose-input{width:100%;border:1.5px solid var(--line-2);background:var(--card-warm);border-radius:14px;padding:18px;font-size:1.08rem;color:var(--ink);outline:none;resize:vertical;line-height:1.55;min-height:124px}
 #compose-input:focus{border-color:var(--amber)}
 #compose-input::placeholder{color:var(--ink-3)}
+/* formatting toolbar (bold / italic / heading) */
+.fmt-bar{display:flex;align-items:center;gap:5px;margin-bottom:8px;flex-wrap:wrap}
+.fmt-btn{background:var(--card-warm);border:1.5px solid var(--line-2);border-radius:8px;min-width:34px;height:32px;padding:0 8px;cursor:pointer;color:var(--ink-2);font-size:.95rem;line-height:1;display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-sans)}
+.fmt-btn:hover{border-color:var(--amber);color:var(--ink);background:var(--card)}
+.fmt-btn b{font-weight:800}.fmt-btn i{font-style:italic;font-weight:600}
+.fmt-hint{font-size:.76rem;color:var(--ink-3);margin-left:4px}
+/* rich text output: headings, bold, italic, paragraphs */
+.pm-text .rt-h,.reply-text .rt-h{font-family:var(--font-serif);font-weight:700;line-height:1.24;margin:.55em 0 .25em;color:var(--ink)}
+.pm-text h3.rt-h{font-size:1.72rem}.pm-text h4.rt-h{font-size:1.4rem}.pm-text h5.rt-h{font-size:1.16rem}
+.reply-text h3.rt-h{font-size:1.24rem}.reply-text h4.rt-h{font-size:1.12rem}.reply-text h5.rt-h{font-size:1.03rem}
+.rt-p{margin:0}.rt-p+.rt-p{margin-top:.5em}.rt-gap{height:.55em}
+.pm-text strong,.reply-text strong{font-weight:800}
+.pm-text em,.reply-text em{font-style:italic}
+/* inline edit box */
+.pm-edit{margin-bottom:22px}
+.edit-box{width:100%;border:1.5px solid var(--amber);background:var(--card-warm);border-radius:12px;padding:13px;font-size:1.05rem;color:var(--ink);outline:none;resize:vertical;line-height:1.5;font-family:var(--font-sans);min-height:84px}
+.edit-actions{display:flex;gap:8px;margin-top:9px}
+.edit-save{background:var(--amber);color:#fff;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;font-weight:600;font-family:var(--font-sans)}
+.edit-save:hover{filter:brightness(1.06)}
+.edit-cancel{background:none;border:1.5px solid var(--line-2);color:var(--ink-2);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:var(--font-sans)}
+.edit-cancel:hover{color:var(--ink)}
+.pm-acts{margin-left:auto;display:flex;gap:8px}
+.pm-edit-btn{background:none;border:none;color:var(--ink-3);cursor:pointer;font-size:.82rem;font-family:var(--font-sans)}
+.pm-edit-btn:hover{color:var(--amber)}
+.edited-tag{color:var(--ink-3);font-style:italic}
 .compose-actions{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:14px}
 .compose-note{font-size:.92rem;color:var(--ink-3)}
 #compose-btn{padding:16px 40px;background:var(--green);color:#fff;border:none;font-size:.98rem;font-weight:600;letter-spacing:.3px;cursor:pointer;border-radius:50px;white-space:nowrap;transition:background .2s}
@@ -635,6 +660,12 @@ h2.big em{font-style:italic;color:var(--green)}
             Ask a question
           </button>
         </div>
+        <div class="fmt-bar">
+          <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap('compose-input','**','**','bold text')" title="Bold"><b>B</b></button>
+          <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap('compose-input','*','*','italic text')" title="Italic"><i>I</i></button>
+          <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtHeading('compose-input')" title="Heading">H</button>
+          <span class="fmt-hint">Tip: **bold**, *italic*, # heading</span>
+        </div>
         <textarea id="compose-input" rows="3" maxlength="600" placeholder="Share what is on your mind. A thought, a statement, anything worth talking about."></textarea>
         <div class="compose-actions">
           <input type="file" id="compose-file" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onComposeFile(event)">
@@ -725,13 +756,13 @@ async function loadQuestions(){
   APP.dynamicQ=[];QINDEX={};
   STMTS_BASE.forEach(s=>{QINDEX[s.qid]=s;});
   try{
-    const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,kind,media_url,media_type,media_name').eq('status','approved').order('created_at',{ascending:true});
+    const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,edited_at,kind,media_url,media_type,media_name').eq('status','approved').order('created_at',{ascending:true});
     if(!error&&data){
       data.forEach(r=>{
         if(QINDEX[r.id])return; // seed rows already handled
         if(/^PROBE:/.test(r.body))return; // test artifacts stay off the floor
         let k=r.kind||'statement'; if(k==='statement'&&isQuestionLike(r.body))k='question'; // keep questions out of the campfire
-        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,kind:k,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name};
+        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,edited:!!r.edited_at,kind:k,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name};
         APP.dynamicQ.push(st);QINDEX[r.id]=st;
       });
       const uids=[...new Set(APP.dynamicQ.map(q=>q.by).filter(Boolean))];
@@ -755,14 +786,14 @@ async function loadReplies(){
   const qids=[...new Set([...APP.dynamicQ.map(q=>q.qid),...STMTS_BASE.map(s=>s.qid)])];
   if(!qids.length)return;
   try{
-    const{data,error}=await sb.from('replies').select('id,question_id,user_id,body,created_at,media_url,media_type,media_name').in('question_id',qids).order('created_at',{ascending:true});
+    const{data,error}=await sb.from('replies').select('id,question_id,user_id,body,created_at,edited_at,media_url,media_type,media_name').in('question_id',qids).order('created_at',{ascending:true});
     if(error||!data)return;
     const uids=[...new Set(data.map(r=>r.user_id))];
     let byId={};
     if(uids.length){const{data:profs}=await sb.from('profiles').select('id,username,avatar_color').in('id',uids);(profs||[]).forEach(p=>{byId[p.id]=p;});}
     data.forEach(r=>{
       const p=byId[r.user_id]||{};
-      (APP.replies[r.question_id]=APP.replies[r.question_id]||[]).push({id:r.id,by:r.user_id,name:p.username||'A member',color:p.avatar_color||'#8a7d5f',body:r.body,at:r.created_at,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name});
+      (APP.replies[r.question_id]=APP.replies[r.question_id]||[]).push({id:r.id,by:r.user_id,name:p.username||'A member',color:p.avatar_color||'#8a7d5f',body:r.body,at:r.created_at,edited:!!r.edited_at,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name});
     });
   }catch(e){console.error('[CG] loadReplies failed',e);}
 }
@@ -1026,7 +1057,7 @@ function myCamp(){
 //  APP STATE + HELPERS
 // ══════════════════════════════════════════
 const APP={user:null,votes:{},stmts:[...STMTS_BASE],fire:[],fireIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif',pendingMedia:null,pendingReplyMedia:null,reactions:{}};
-let POST_OPEN=null, POST_REVEAL=null, RT=null, _ansT=null;
+let POST_OPEN=null, POST_REVEAL=null, RT=null, _ansT=null, EDIT_TARGET=null;
 const FIRE_DAILY=10; // the campfire is a batch of ten a day
 const MAX_MEDIA=8*1024*1024; // 8 MB cap on photos and videos
 // any post lookup: community posts live in dynamicQ, the eight seeds live in APP.stmts
@@ -1174,11 +1205,56 @@ function closeReactBar(){const b=g('react-bar');if(b)b.classList.remove('open');
 document.addEventListener('click',e=>{const b=g('react-bar');if(b&&b.classList.contains('open')&&!e.target.closest('#react-bar')&&!e.target.closest('.rx-add'))b.classList.remove('open');});
 let _rxT=null;
 function onRemoteReaction(){if(!POST_OPEN)return;clearTimeout(_rxT);_rxT=setTimeout(async()=>{const p=findPost(POST_OPEN);if(p){await loadReactions(p);if(POST_OPEN)renderPostModal(POST_OPEN);}},700);}
-// ── rich text: clickable links + YouTube thumbnails ──
+// ── rich text: markdown (bold/italic/headings) + clickable links + YouTube thumbnails ──
+// safety: text is HTML-escaped FIRST, then we only insert our own <strong>/<em>/<a>/<h*> tags.
+function fmtInline(raw){
+  const re=/(https?:\/\/[^\s<]+)/g;let s='',last=0,m;
+  while((m=re.exec(raw))){s+=escHtml(raw.slice(last,m.index));const u=m[1];s+='<a href="'+escHtml(u)+'" target="_blank" rel="noopener" class="rt-link">'+escHtml(u)+'</a>';last=m.index+u.length;}
+  s+=escHtml(raw.slice(last));
+  s=s.replace(/\*\*([^\n]+?)\*\*/g,'<strong>$1</strong>');                 // **bold**
+  s=s.replace(/(^|[^*\w])\*(?!\s)([^*\n]+?)\*(?!\*)/g,'$1<em>$2</em>');      // *italic*
+  s=s.replace(/(^|[^_\w])_(?!\s)([^_\n]+?)_(?![_\w])/g,'$1<em>$2</em>');     // _italic_
+  return s;
+}
+// strip markdown markers for plain previews (board cards) so syntax doesn't leak
+function stripMd(raw){
+  return (raw||'').replace(/^\s{0,3}#{1,3}\s+/gm,'').replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*\n]+)\*/g,'$1').replace(/(^|[^_\w])_([^_\n]+)_(?![_\w])/g,'$1$2').replace(/\s*\n\s*/g,' ').trim();
+}
 function richText(raw){
-  raw=raw||'';const re=/(https?:\/\/[^\s<]+)/g;let out='',last=0,m;
-  while((m=re.exec(raw))){out+=escHtml(raw.slice(last,m.index));const u=m[1];out+='<a href="'+escHtml(u)+'" target="_blank" rel="noopener" class="rt-link">'+escHtml(u)+'</a>';last=m.index+u.length;}
-  out+=escHtml(raw.slice(last));return out;
+  const lines=(raw||'').split('\n');let out='';
+  for(const line of lines){
+    const hm=line.match(/^\s*(#{1,3})\s+(.+?)\s*$/);
+    if(hm){const lvl=hm[1].length,tag=lvl===1?'h3':lvl===2?'h4':'h5';out+='<'+tag+' class="rt-h">'+fmtInline(hm[2])+'</'+tag+'>';}
+    else if(line.trim()==='')out+='<div class="rt-gap"></div>';
+    else out+='<div class="rt-p">'+fmtInline(line)+'</div>';
+  }
+  return out;
+}
+// ── formatting toolbar helpers (wrap selection / prefix a heading) ──
+function fmtWrap(taId,before,after,placeholder){
+  const ta=g(taId);if(!ta)return;
+  const s=ta.selectionStart,e=ta.selectionEnd,sel=ta.value.slice(s,e)||placeholder||'';
+  ta.value=ta.value.slice(0,s)+before+sel+after+ta.value.slice(e);
+  ta.focus();ta.selectionStart=s+before.length;ta.selectionEnd=s+before.length+sel.length;
+  autosize(ta);
+}
+function fmtHeading(taId){
+  const ta=g(taId);if(!ta)return;
+  const pos=ta.selectionStart,before=ta.value.slice(0,pos),lineStart=before.lastIndexOf('\n')+1;
+  const rest=ta.value.slice(lineStart);
+  if(/^#{1,3}\s/.test(rest)){ // already a heading here: bump the level, cycle off after ###
+    const cur=rest.match(/^(#{1,3})\s/)[1].length;
+    if(cur>=3){ta.value=ta.value.slice(0,lineStart)+rest.replace(/^#{1,3}\s/,'');ta.selectionStart=ta.selectionEnd=pos-4;}
+    else{ta.value=ta.value.slice(0,lineStart)+'#'+rest;ta.selectionStart=ta.selectionEnd=pos+1;}
+  }else{ta.value=ta.value.slice(0,lineStart)+'## '+rest;ta.selectionStart=ta.selectionEnd=pos+3;}
+  ta.focus();autosize(ta);
+}
+function fmtToolbar(taId){
+  return '<div class="fmt-bar">'
+    +'<button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap(\''+taId+'\',\'**\',\'**\',\'bold text\')" title="Bold"><b>B</b></button>'
+    +'<button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap(\''+taId+'\',\'*\',\'*\',\'italic text\')" title="Italic"><i>I</i></button>'
+    +'<button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtHeading(\''+taId+'\')" title="Heading">H</button>'
+    +'</div>';
 }
 function ytId(text){const m=(text||'').match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:null;}
 function ytEmbedHtml(text){const id=ytId(text);if(!id)return'';return '<div class="yt-embed" data-yt="'+id+'" onclick="playYt(event,this)"><img src="https://img.youtube.com/vi/'+id+'/hqdefault.jpg" alt="YouTube video"><span class="yt-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>';}
@@ -1533,7 +1609,7 @@ function renderFeed(){
     return '<div class="pcard" onclick="openPost(\''+q.id+'\')">'
       +'<div class="pcard-top"><span class="post-kind '+q.kind+'">'+(q.kind==='question'?'Question':'Statement')+'</span><span class="pcard-time">'+timeAgo(q.at)+'</span></div>'
       +(q.media_url?mediaHtmlThumb(q.media_url,q.media_type):(ytId(q.text)?'<div class="pcard-media"><img src="https://img.youtube.com/vi/'+ytId(q.text)+'/hqdefault.jpg" alt=""><span class="pcard-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>':''))
-      +(q.text?'<div class="pcard-text">'+escHtml(q.text)+'</div>':'')
+      +(q.text?'<div class="pcard-text">'+escHtml(stripMd(q.text))+'</div>':'')
       +'<div class="pcard-foot"><span class="pcard-who"><span class="pcard-ava" style="background:'+(q.byColor||'#8a7d5f')+'">'+escHtml(initials(q.byName))+'</span>'+escHtml(q.byName||'A member')+'</span><span class="pcard-metric">'+metric+'</span></div>'
       +'</div>';
   }).join('');
@@ -1542,6 +1618,36 @@ function renderFeed(){
 function openPost(id){POST_OPEN=id;POST_REVEAL=null;renderPostModal(id);g('post-ov').classList.add('open');const p=findPost(id);if(p)loadReactions(p).then(()=>{if(POST_OPEN===id)renderPostModal(id);});}
 function closePost(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;POST_OPEN=null;POST_REVEAL=null;g('post-ov').classList.remove('open');}
 function revealWeigh(id){POST_REVEAL=id;renderPostModal(id);}
+// ── edit a post or reply in place (author or admin) ──
+function focusEditBox(taId){setTimeout(()=>{const ta=g(taId);if(ta){ta.focus();autosize(ta);ta.selectionStart=ta.selectionEnd=ta.value.length;}},0);}
+function editPost(id){EDIT_TARGET={t:'post',id};renderPostModal(id);focusEditBox('edit-post-ta');}
+function editReply(pid,rid){EDIT_TARGET={t:'reply',pid,rid};renderPostModal(pid);focusEditBox('edit-reply-ta');}
+function cancelEdit(){const id=POST_OPEN;EDIT_TARGET=null;if(id)renderPostModal(id);}
+async function savePostEdit(id){
+  const q=findPost(id);if(!q)return;
+  const ta=g('edit-post-ta');if(!ta)return;
+  const v=(ta.value||'').trim();
+  if(!v&&!q.media_url){toast('A post needs some words.');return;}
+  if(v&&isBanned(v)){EDIT_TARGET=null;renderPostModal(id);return;} // silent blacklist: drop the edit, no notice
+  const{error}=await sb.from('questions').update({body:v,edited_at:new Date().toISOString()}).eq('id',q.qid);
+  if(error){console.error('[CG] post edit failed',error);toast('Could not save the edit.');return;}
+  q.text=v;q.edited=true;EDIT_TARGET=null;
+  renderPostModal(id);renderFeed();
+  toast('Post updated.');
+}
+async function saveReplyEdit(pid,rid){
+  const st=findPost(pid);if(!st)return;
+  const ta=g('edit-reply-ta');if(!ta)return;
+  const v=(ta.value||'').trim();
+  const arr=APP.replies[st.qid]||[];const r=arr.find(x=>x.id===rid);if(!r)return;
+  if(!v&&!r.media_url){toast('A reply needs some words.');return;}
+  if(v&&isBanned(v)){EDIT_TARGET=null;renderPostModal(pid);return;}
+  const{error}=await sb.from('replies').update({body:v,edited_at:new Date().toISOString()}).eq('id',rid);
+  if(error){console.error('[CG] reply edit failed',error);toast('Could not save the edit.');return;}
+  r.body=v;r.edited=true;EDIT_TARGET=null;
+  renderPostModal(pid);
+  toast('Reply updated.');
+}
 function renderPostModal(id){
   const q=findPost(id);if(!q){closePost();return;}
   const m=g('post-modal');
@@ -1562,14 +1668,24 @@ function renderPostModal(id){
     }
   }
   const replyList=reps.map(r=>{
-    const canDelR=APP.user&&(APP.user.isAdmin||r.by===APP.user.id);
-    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+'</span>'+(canDelR?'<button class="reply-del" onclick="deleteReply(\''+id+'\',\''+r.id+'\')">remove</button>':'')+'</div>'+(r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'')+(r.media_url?'<div class="reply-media">'+mediaHtmlFull(r.media_url,r.media_type,r.media_name)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
+    const canEditR=APP.user&&(APP.user.isAdmin||r.by===APP.user.id);
+    const editingThis=EDIT_TARGET&&EDIT_TARGET.t==='reply'&&EDIT_TARGET.rid===r.id;
+    const rActs=canEditR&&!editingThis?'<button class="reply-del" onclick="editReply(\''+id+'\',\''+r.id+'\')">edit</button><button class="reply-del" onclick="deleteReply(\''+id+'\',\''+r.id+'\')">remove</button>':'';
+    const rBody=editingThis
+      ? '<div class="pm-edit">'+fmtToolbar('edit-reply-ta')+'<textarea class="edit-box" id="edit-reply-ta" maxlength="500">'+escHtml(r.body||'')+'</textarea><div class="edit-actions"><button class="edit-save" onclick="saveReplyEdit(\''+id+'\',\''+r.id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
+      : (r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'');
+    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(r.media_url?'<div class="reply-media">'+mediaHtmlFull(r.media_url,r.media_type,r.media_name)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
   }).join('');
   const rm=APP.pendingReplyMedia;
   const replyPreview=rm?('<div class="compose-preview" style="display:flex;margin-bottom:8px">'+(rm.type==='image'?'<img src="'+rm.url+'">':'<video src="'+rm.url+'" muted></video>')+'<span class="pv-name">'+escHtml(rm.file.name)+'</span><button class="pv-x" onclick="clearReplyMedia()">✕</button></div>'):'';
+  const editingPost=EDIT_TARGET&&EDIT_TARGET.t==='post'&&EDIT_TARGET.id===id;
+  const acts=(canDel&&!editingPost)?'<div class="pm-acts">'+((q.text||q.media_url)?'<button class="pm-edit-btn" onclick="editPost(\''+id+'\')">Edit</button>':'')+'<button class="uproot" onclick="uprootPost(\''+id+'\')">Remove</button></div>':'';
+  const postBody=editingPost
+    ? '<div class="pm-edit">'+fmtToolbar('edit-post-ta')+'<textarea class="edit-box" id="edit-post-ta" maxlength="600" style="min-height:120px;font-size:1.1rem">'+escHtml(q.text||'')+'</textarea><div class="edit-actions"><button class="edit-save" onclick="savePostEdit(\''+id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
+    : (q.text?'<div class="pm-text">'+richText(q.text)+'</div>':'');
   m.innerHTML='<button class="pm-x" onclick="closePost()">✕</button>'
-    +'<div class="pm-head"><span class="pm-ava" style="background:'+byColor+'">'+escHtml(initials(byName))+'</span><div class="pm-who"><div class="pm-name">'+escHtml(byName)+'</div><div class="pm-time">'+timeAgo(q.at)+' · '+(q.kind==='question'?'Question':'Statement')+'</div></div>'+(canDel?'<button class="uproot" style="margin-left:auto" onclick="uprootPost(\''+id+'\')">Remove</button>':'')+'</div>'
-    +(q.text?'<div class="pm-text">'+richText(q.text)+'</div>':'')
+    +'<div class="pm-head"><span class="pm-ava" style="background:'+byColor+'">'+escHtml(initials(byName))+'</span><div class="pm-who"><div class="pm-name">'+escHtml(byName)+'</div><div class="pm-time">'+timeAgo(q.at)+' · '+(q.kind==='question'?'Question':'Statement')+(q.edited?' · <span class="edited-tag">edited</span>':'')+'</div></div>'+acts+'</div>'
+    +postBody
     +mediaHtmlFull(q.media_url,q.media_type,q.media_name)
     +ytEmbedHtml(q.text)
     +voteHtml
@@ -1587,8 +1703,10 @@ function subscribeRealtime(){
   try{
     RT=sb.channel('cg-live')
       .on('postgres_changes',{event:'INSERT',schema:'public',table:'questions'},p=>onRemoteQuestion(p.new))
+      .on('postgres_changes',{event:'UPDATE',schema:'public',table:'questions'},p=>onRemoteQuestionEdit(p.new))
       .on('postgres_changes',{event:'DELETE',schema:'public',table:'questions'},p=>onRemoteQuestionDel(p.old))
       .on('postgres_changes',{event:'INSERT',schema:'public',table:'replies'},p=>onRemoteReply(p.new))
+      .on('postgres_changes',{event:'UPDATE',schema:'public',table:'replies'},p=>onRemoteReplyEdit(p.new))
       .on('postgres_changes',{event:'*',schema:'public',table:'answers'},()=>onRemoteAnswer())
       .on('postgres_changes',{event:'*',schema:'public',table:'reactions'},()=>onRemoteReaction())
       .subscribe();
@@ -1606,6 +1724,22 @@ async function onRemoteQuestion(row){
   if(k==='statement'){APP.stmts.push(st);if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}}
   renderFeed();renderStats();
   if(row.proposed_by!==APP.user.id)toast(byName+' just posted');
+}
+function onRemoteQuestionEdit(row){
+  if(!row)return;const st=QINDEX[row.id];if(!st)return;
+  if(st.text===row.body)return; // our own edit echoing back
+  st.text=row.body;st.edited=!!row.edited_at;
+  renderFeed();
+  const mine=EDIT_TARGET&&EDIT_TARGET.t==='post'&&EDIT_TARGET.id===st.id;
+  if(POST_OPEN===st.id&&!mine)renderPostModal(st.id);
+}
+function onRemoteReplyEdit(row){
+  if(!row)return;const arr=APP.replies[row.question_id];if(!arr)return;
+  const r=arr.find(x=>x.id===row.id);if(!r)return;
+  if(r.body===row.body)return;
+  r.body=row.body;r.edited=!!row.edited_at;
+  const st=QINDEX[row.question_id];const mine=EDIT_TARGET&&EDIT_TARGET.t==='reply'&&EDIT_TARGET.rid===row.id;
+  if(POST_OPEN&&st&&POST_OPEN===st.id&&!mine)renderPostModal(POST_OPEN);
 }
 function onRemoteQuestionDel(row){
   if(!row)return;const st=QINDEX[row.id];if(!st)return;
