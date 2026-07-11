@@ -201,7 +201,23 @@ h2.big em{font-style:italic;color:var(--green)}
 .fmt-btn{background:var(--card-warm);border:1.5px solid var(--line-2);border-radius:8px;min-width:34px;height:32px;padding:0 8px;cursor:pointer;color:var(--ink-2);font-size:.95rem;line-height:1;display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-sans)}
 .fmt-btn:hover{border-color:var(--amber);color:var(--ink);background:var(--card)}
 .fmt-btn b{font-weight:800}.fmt-btn i{font-style:italic;font-weight:600}
+.fmt-btn.on{border-color:var(--amber);background:var(--amber);color:#fff}
+.fmt-btn.fmt-word{min-width:auto;padding:0 11px;font-size:.8rem;font-weight:600}
 .fmt-hint{font-size:.76rem;color:var(--ink-3);margin-left:4px}
+/* the live WYSIWYG editor (contenteditable) */
+.rich-editor{width:100%;border:1.5px solid var(--line-2);background:var(--card-warm);border-radius:14px;padding:15px 17px;font-size:1.05rem;color:var(--ink);outline:none;line-height:1.55;min-height:116px;max-height:340px;overflow-y:auto;font-family:var(--font-sans);white-space:pre-wrap;word-wrap:break-word}
+.rich-editor:focus{border-color:var(--amber)}
+.rich-editor.is-empty:before{content:attr(data-ph);color:var(--ink-3);pointer-events:none}
+.rich-editor h3,.rich-editor h4,.rich-editor h5{font-family:var(--font-serif);font-weight:700;line-height:1.24;margin:.35em 0 .2em;color:var(--ink)}
+.rich-editor h3{font-size:1.5rem}.rich-editor h4{font-size:1.26rem}.rich-editor h5{font-size:1.1rem}
+.rich-editor strong,.rich-editor b{font-weight:800}
+.rich-editor em,.rich-editor i{font-style:italic}
+.rich-editor div,.rich-editor p{margin:0}
+.rich-editor.re-reply{min-height:44px;padding:11px 14px;font-size:1rem;border-radius:12px}
+.rich-editor.re-edit{min-height:96px}
+.reply-compose{margin-top:4px}
+.reply-compose .fmt-bar{margin-bottom:6px}
+.reply-form .rich-editor{flex:1;min-height:44px;max-height:180px;padding:11px 13px;font-size:.98rem;border-radius:11px;white-space:pre-wrap}
 /* rich text output: headings, bold, italic, paragraphs */
 .pm-text .rt-h,.reply-text .rt-h{font-family:var(--font-serif);font-weight:700;line-height:1.24;margin:.55em 0 .25em;color:var(--ink)}
 .pm-text h3.rt-h{font-size:1.72rem}.pm-text h4.rt-h{font-size:1.4rem}.pm-text h5.rt-h{font-size:1.16rem}
@@ -660,13 +676,13 @@ h2.big em{font-style:italic;color:var(--green)}
             Ask a question
           </button>
         </div>
-        <div class="fmt-bar">
-          <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap('compose-input','**','**','bold text')" title="Bold"><b>B</b></button>
-          <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap('compose-input','*','*','italic text')" title="Italic"><i>I</i></button>
-          <button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtHeading('compose-input')" title="Heading">H</button>
-          <span class="fmt-hint">Tip: **bold**, *italic*, # heading</span>
+        <div class="fmt-bar" id="fmtbar-compose-input">
+          <button type="button" class="fmt-btn" data-cmd="bold" onmousedown="event.preventDefault()" onclick="fmtCmd('compose-input','bold')" title="Bold"><b>B</b></button>
+          <button type="button" class="fmt-btn" data-cmd="italic" onmousedown="event.preventDefault()" onclick="fmtCmd('compose-input','italic')" title="Italic"><i>I</i></button>
+          <button type="button" class="fmt-btn fmt-word" data-cmd="H3" onmousedown="event.preventDefault()" onclick="fmtCmd('compose-input','H3')" title="Heading">Heading</button>
+          <button type="button" class="fmt-btn fmt-word" data-cmd="H4" onmousedown="event.preventDefault()" onclick="fmtCmd('compose-input','H4')" title="Subheading">Subheading</button>
         </div>
-        <textarea id="compose-input" rows="3" maxlength="600" placeholder="Share what is on your mind. A thought, a statement, anything worth talking about."></textarea>
+        <div id="compose-input" class="rich-editor is-empty" contenteditable="true" data-ph="Share what is on your mind. A thought, a statement, anything worth talking about." oninput="onEditorInput(this)" onkeyup="updateFmtState('compose-input')" onmouseup="updateFmtState('compose-input')"></div>
         <div class="compose-actions">
           <input type="file" id="compose-file" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onComposeFile(event)">
           <button type="button" class="attach-btn" onclick="document.getElementById('compose-file').click()" title="Attach a photo, video, or file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg><span class="attach-lbl">Attach</span></button>
@@ -801,14 +817,15 @@ function onReplyFile(e){const f=e.target.files&&e.target.files[0];if(pickMedia(f
 function clearReplyMedia(){clearMedia('pendingReplyMedia');if(POST_OPEN)renderPostModal(POST_OPEN);}
 async function submitReply(stId){
   const st=findPost(stId);if(!st)return;
-  const ta=document.getElementById('rf-'+stId);if(!ta)return;
-  const body=(ta.value||'').trim();
+  if(!g('rf-'+stId))return;
+  const body=readEditor('rf-'+stId);
   const media=APP.pendingReplyMedia;
   if(!body&&!media)return;
-  if(body&&isBanned(body)){ta.value='';return;}
+  if(body&&body.length>500){toast('Keep a reply under 500 characters.');return;}
+  if(body&&isBanned(body)){clearEditor('rf-'+stId);return;}
   let media_url=null,media_type=null;
   if(media){media_url=await uploadMedia(media.file);if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
-  ta.value='';ta.style.height='auto';
+  clearEditor('rf-'+stId);
   const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body:body||'',media_url,media_type,media_name:media?media.file.name:null}).select().single();
   if(error||!data){toast('That reply did not send. Try again.');return;}
   clearMedia('pendingReplyMedia');
@@ -1136,10 +1153,11 @@ function composeKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();pitc
 function replyKey(e,id){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submitReply(id);} }
 function handlePasteMedia(e,slot,after){
   const files=(e.clipboardData&&e.clipboardData.files)?[...e.clipboardData.files]:[];
-  if(files.length){ if(pickMedia(files[0],slot)){ e.preventDefault(); if(after)after(); } }
+  if(files.length){ if(pickMedia(files[0],slot)){ e.preventDefault(); if(after)after(); return true; } }
+  return false;
 }
-function onComposePaste(e){ handlePasteMedia(e,'pendingMedia',renderComposePreview); }
-function onReplyPaste(e){ handlePasteMedia(e,'pendingReplyMedia',()=>{ if(POST_OPEN)renderPostModal(POST_OPEN); }); }
+function onComposePaste(e){ if(!handlePasteMedia(e,'pendingMedia',renderComposePreview)) pasteText(e); }
+function onReplyPaste(e){ if(!handlePasteMedia(e,'pendingReplyMedia',()=>{ if(POST_OPEN)renderPostModal(POST_OPEN); })) pasteText(e); }
 const CG_EMOJIS=['😀','😁','😂','🤣','😊','😍','😎','🤗','🤔','😅','😴','😭','😮','😡','🥳','😇','🙂','😉','😢','🥺','👍','👎','🙏','👏','🙌','💪','✌️','🤝','🫶','👀','❤️','🧡','💛','💚','💙','💜','🖤','🔥','✨','⭐','💯','✅','❗','❓','🌱','🌿','🍀','🌻','🌾','🌳','🥕','🍅','🌽','🥬','🐛','🐝','🦋','☀️','💧','🎉'];
 let EMOJI_TARGET=null;
 function toggleEmoji(targetId,btn){
@@ -1153,10 +1171,9 @@ function toggleEmoji(targetId,btn){
   panel.style.left=left+'px';panel.style.top=top+'px';panel.classList.add('open');
 }
 function pickEmoji(x){
-  const ta=g(EMOJI_TARGET);if(!ta)return;
-  const s=ta.selectionStart!=null?ta.selectionStart:ta.value.length,e2=ta.selectionEnd!=null?ta.selectionEnd:ta.value.length;
-  ta.value=ta.value.slice(0,s)+x+ta.value.slice(e2);
-  const pos=s+x.length;ta.selectionStart=ta.selectionEnd=pos;ta.focus();autosize(ta);
+  const el=g(EMOJI_TARGET);if(!el)return;el.focus();
+  if(el.isContentEditable){document.execCommand('insertText',false,x);onEditorInput(el);}
+  else{const s=el.selectionStart!=null?el.selectionStart:el.value.length,e2=el.selectionEnd!=null?el.selectionEnd:el.value.length;el.value=el.value.slice(0,s)+x+el.value.slice(e2);el.selectionStart=el.selectionEnd=s+x.length;if(typeof autosize==='function')autosize(el);}
 }
 document.addEventListener('click',e=>{const p=g('emoji-panel');if(p&&p.classList.contains('open')&&!e.target.closest('#emoji-panel')&&!e.target.closest('.emoji-btn'))p.classList.remove('open');});
 // ── emoji reactions on posts and replies ──
@@ -1230,31 +1247,67 @@ function richText(raw){
   }
   return out;
 }
-// ── formatting toolbar helpers (wrap selection / prefix a heading) ──
-function fmtWrap(taId,before,after,placeholder){
-  const ta=g(taId);if(!ta)return;
-  const s=ta.selectionStart,e=ta.selectionEnd,sel=ta.value.slice(s,e)||placeholder||'';
-  ta.value=ta.value.slice(0,s)+before+sel+after+ta.value.slice(e);
-  ta.focus();ta.selectionStart=s+before.length;ta.selectionEnd=s+before.length+sel.length;
-  autosize(ta);
+// ══ WYSIWYG rich editor: click a button, the text changes right there (no symbols) ══
+// You type into a contenteditable box that shows real bold/italic/headings. On save we
+// convert it to our safe markdown storage; on display richText() renders it (escape-first).
+function fmtBtns(id,withHeadings){
+  let b='<button type="button" class="fmt-btn" data-cmd="bold" onmousedown="event.preventDefault()" onclick="fmtCmd(\''+id+'\',\'bold\')" title="Bold"><b>B</b></button>'
+    +'<button type="button" class="fmt-btn" data-cmd="italic" onmousedown="event.preventDefault()" onclick="fmtCmd(\''+id+'\',\'italic\')" title="Italic"><i>I</i></button>';
+  if(withHeadings)b+='<button type="button" class="fmt-btn fmt-word" data-cmd="H3" onmousedown="event.preventDefault()" onclick="fmtCmd(\''+id+'\',\'H3\')" title="Heading">Heading</button>'
+    +'<button type="button" class="fmt-btn fmt-word" data-cmd="H4" onmousedown="event.preventDefault()" onclick="fmtCmd(\''+id+'\',\'H4\')" title="Subheading">Subheading</button>';
+  return '<div class="fmt-bar" id="fmtbar-'+id+'">'+b+'</div>';
 }
-function fmtHeading(taId){
-  const ta=g(taId);if(!ta)return;
-  const pos=ta.selectionStart,before=ta.value.slice(0,pos),lineStart=before.lastIndexOf('\n')+1;
-  const rest=ta.value.slice(lineStart);
-  if(/^#{1,3}\s/.test(rest)){ // already a heading here: bump the level, cycle off after ###
-    const cur=rest.match(/^(#{1,3})\s/)[1].length;
-    if(cur>=3){ta.value=ta.value.slice(0,lineStart)+rest.replace(/^#{1,3}\s/,'');ta.selectionStart=ta.selectionEnd=pos-4;}
-    else{ta.value=ta.value.slice(0,lineStart)+'#'+rest;ta.selectionStart=ta.selectionEnd=pos+1;}
-  }else{ta.value=ta.value.slice(0,lineStart)+'## '+rest;ta.selectionStart=ta.selectionEnd=pos+3;}
-  ta.focus();autosize(ta);
+function fmtBar(id){return fmtBtns(id,true);}
+function fmtBarSlim(id){return fmtBtns(id,false);}
+function fmtCmd(id,cmd){
+  const el=g(id);if(!el)return;el.focus();
+  try{document.execCommand('styleWithCSS',false,false);}catch(e){}
+  if(cmd==='bold')document.execCommand('bold');
+  else if(cmd==='italic')document.execCommand('italic');
+  else{const cur=blockTag(el);const want=(cur===cmd)?'div':cmd.toLowerCase();document.execCommand('formatBlock',false,'<'+want+'>');}
+  onEditorInput(el);updateFmtState(id);
 }
-function fmtToolbar(taId){
-  return '<div class="fmt-bar">'
-    +'<button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap(\''+taId+'\',\'**\',\'**\',\'bold text\')" title="Bold"><b>B</b></button>'
-    +'<button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtWrap(\''+taId+'\',\'*\',\'*\',\'italic text\')" title="Italic"><i>I</i></button>'
-    +'<button type="button" class="fmt-btn" onmousedown="event.preventDefault()" onclick="fmtHeading(\''+taId+'\')" title="Heading">H</button>'
-    +'</div>';
+function blockTag(el){
+  let n=(window.getSelection&&getSelection().anchorNode)||null;
+  while(n&&n!==el){if(n.nodeType===1&&/^(H3|H4|H5|DIV|P|LI)$/.test(n.tagName))return n.tagName;n=n.parentNode;}
+  return 'DIV';
+}
+function updateFmtState(id){
+  const el=g(id),bar=g('fmtbar-'+id);if(!el||!bar)return;
+  let bold=false,ital=false;try{bold=document.queryCommandState('bold');ital=document.queryCommandState('italic');}catch(e){}
+  const bt=blockTag(el);
+  bar.querySelectorAll('.fmt-btn').forEach(b=>{const c=b.dataset.cmd;const on=c==='bold'?bold:c==='italic'?ital:(bt===c);b.classList.toggle('on',!!on);});
+}
+function onEditorInput(el){if(el)el.classList.toggle('is-empty',!el.textContent.trim()&&!el.querySelector('img'));}
+// convert the editor's live HTML into our markdown storage (produces TEXT, so no XSS surface)
+function nodeMd(node){
+  if(node.nodeType===3)return node.nodeValue.replace(/ /g,' ');
+  if(node.nodeType!==1)return '';
+  const inner=[...node.childNodes].map(nodeMd).join('');
+  switch(node.tagName){
+    case 'B':case 'STRONG':return inner.trim()?'**'+inner.trim()+'**':inner;
+    case 'I':case 'EM':return inner.trim()?'*'+inner.trim()+'*':inner;
+    case 'A':return inner;
+    case 'BR':return '\n';
+    case 'H1':case 'H2':case 'H3':return '\n# '+inner.trim()+'\n';
+    case 'H4':case 'H5':case 'H6':return '\n## '+inner.trim()+'\n';
+    case 'DIV':case 'P':case 'LI':return '\n'+inner+'\n';
+    default:return inner;
+  }
+}
+function readEditor(id){
+  const el=g(id);if(!el)return '';
+  const md=[...el.childNodes].map(nodeMd).join('');
+  return md.replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').replace(/^\n+|\n+$/g,'').trim();
+}
+function setEditor(id,md){const el=g(id);if(!el)return;el.innerHTML=md?richText(md):'';onEditorInput(el);}
+function clearEditor(id){const el=g(id);if(el){el.innerHTML='';onEditorInput(el);}}
+// paste as plain text so no foreign formatting/HTML sneaks in (files handled separately)
+function pasteText(e){
+  const cd=e.clipboardData||window.clipboardData;if(!cd)return false;
+  if(cd.files&&cd.files.length)return false; // let the file-paste handler take it
+  const t=cd.getData('text/plain');if(t==null)return false;
+  e.preventDefault();document.execCommand('insertText',false,t);return true;
 }
 function ytId(text){const m=(text||'').match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:null;}
 function ytEmbedHtml(text){const id=ytId(text);if(!id)return'';return '<div class="yt-embed" data-yt="'+id+'" onclick="playYt(event,this)"><img src="https://img.youtube.com/vi/'+id+'/hqdefault.jpg" alt="YouTube video"><span class="yt-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>';}
@@ -1542,21 +1595,21 @@ function setComposeType(t){
   g('ct-statement').classList.toggle('act',t==='statement');
   g('ct-question').classList.toggle('act',t==='question');
   const inp=g('compose-input');
-  inp.placeholder=t==='statement'?'Share what is on your mind. A thought, a statement, anything worth talking about.':'Ask the community a question.';
+  inp.setAttribute('data-ph',t==='statement'?'Share what is on your mind. A thought, a statement, anything worth talking about.':'Ask the community a question.');
 }
 async function pitchPost(){
-  const inp=g('compose-input');
-  const v=(inp.value||'').trim();
+  const v=readEditor('compose-input');
   const media=APP.pendingMedia;
   if(!v&&!media)return;
-  if(v&&isBanned(v)){inp.value='';return;}
+  if(v&&v.length>600){toast('Keep a post under 600 characters.');return;}
+  if(v&&isBanned(v)){clearEditor('compose-input');return;}
   let kind=APP.composeType;
   if(!v)kind='question'; // a photo or video on its own has nothing to agree or disagree with
   else if(kind==='statement'&&isQuestionLike(v))kind='question';
   const btn=g('compose-btn');
   let media_url=null,media_type=null;
   if(media){btn.textContent='Uploading...';btn.disabled=true;media_url=await uploadMedia(media.file);btn.textContent='Post it';btn.disabled=false;if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
-  inp.value='';autosize(inp);
+  clearEditor('compose-input');
   const{data,error}=await sb.from('questions').insert({body:v||'',proposed_by:APP.user.id,status:'approved',kind,media_url,media_type,media_name:media?media.file.name:null}).select().single();
   if(error||!data){console.error('[CG] post failed',error);toast('That did not post. Try again.');return;}
   clearComposeMedia();
@@ -1619,15 +1672,16 @@ function openPost(id){POST_OPEN=id;POST_REVEAL=null;renderPostModal(id);g('post-
 function closePost(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;POST_OPEN=null;POST_REVEAL=null;g('post-ov').classList.remove('open');}
 function revealWeigh(id){POST_REVEAL=id;renderPostModal(id);}
 // ── edit a post or reply in place (author or admin) ──
-function focusEditBox(taId){setTimeout(()=>{const ta=g(taId);if(ta){ta.focus();autosize(ta);ta.selectionStart=ta.selectionEnd=ta.value.length;}},0);}
+function focusEditBox(id){setTimeout(()=>{const el=g(id);if(!el)return;el.focus();try{const r=document.createRange();r.selectNodeContents(el);r.collapse(false);const s=getSelection();s.removeAllRanges();s.addRange(r);}catch(e){}updateFmtState(id);},0);}
 function editPost(id){EDIT_TARGET={t:'post',id};renderPostModal(id);focusEditBox('edit-post-ta');}
 function editReply(pid,rid){EDIT_TARGET={t:'reply',pid,rid};renderPostModal(pid);focusEditBox('edit-reply-ta');}
 function cancelEdit(){const id=POST_OPEN;EDIT_TARGET=null;if(id)renderPostModal(id);}
 async function savePostEdit(id){
   const q=findPost(id);if(!q)return;
-  const ta=g('edit-post-ta');if(!ta)return;
-  const v=(ta.value||'').trim();
+  if(!g('edit-post-ta'))return;
+  const v=readEditor('edit-post-ta');
   if(!v&&!q.media_url){toast('A post needs some words.');return;}
+  if(v.length>600){toast('Keep a post under 600 characters.');return;}
   if(v&&isBanned(v)){EDIT_TARGET=null;renderPostModal(id);return;} // silent blacklist: drop the edit, no notice
   const{error}=await sb.from('questions').update({body:v,edited_at:new Date().toISOString()}).eq('id',q.qid);
   if(error){console.error('[CG] post edit failed',error);toast('Could not save the edit.');return;}
@@ -1637,10 +1691,11 @@ async function savePostEdit(id){
 }
 async function saveReplyEdit(pid,rid){
   const st=findPost(pid);if(!st)return;
-  const ta=g('edit-reply-ta');if(!ta)return;
-  const v=(ta.value||'').trim();
+  if(!g('edit-reply-ta'))return;
+  const v=readEditor('edit-reply-ta');
   const arr=APP.replies[st.qid]||[];const r=arr.find(x=>x.id===rid);if(!r)return;
   if(!v&&!r.media_url){toast('A reply needs some words.');return;}
+  if(v.length>500){toast('Keep a reply under 500 characters.');return;}
   if(v&&isBanned(v)){EDIT_TARGET=null;renderPostModal(pid);return;}
   const{error}=await sb.from('replies').update({body:v,edited_at:new Date().toISOString()}).eq('id',rid);
   if(error){console.error('[CG] reply edit failed',error);toast('Could not save the edit.');return;}
@@ -1672,7 +1727,7 @@ function renderPostModal(id){
     const editingThis=EDIT_TARGET&&EDIT_TARGET.t==='reply'&&EDIT_TARGET.rid===r.id;
     const rActs=canEditR&&!editingThis?'<button class="reply-del" onclick="editReply(\''+id+'\',\''+r.id+'\')">edit</button><button class="reply-del" onclick="deleteReply(\''+id+'\',\''+r.id+'\')">remove</button>':'';
     const rBody=editingThis
-      ? '<div class="pm-edit">'+fmtToolbar('edit-reply-ta')+'<textarea class="edit-box" id="edit-reply-ta" maxlength="500">'+escHtml(r.body||'')+'</textarea><div class="edit-actions"><button class="edit-save" onclick="saveReplyEdit(\''+id+'\',\''+r.id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
+      ? '<div class="pm-edit">'+fmtBarSlim('edit-reply-ta')+'<div class="rich-editor re-edit" id="edit-reply-ta" contenteditable="true" data-ph="Edit your reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'edit-reply-ta\')" onmouseup="updateFmtState(\'edit-reply-ta\')" onpaste="pasteText(event)">'+richText(r.body||'')+'</div><div class="edit-actions"><button class="edit-save" onclick="saveReplyEdit(\''+id+'\',\''+r.id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
       : (r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'');
     return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(r.media_url?'<div class="reply-media">'+mediaHtmlFull(r.media_url,r.media_type,r.media_name)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
   }).join('');
@@ -1681,7 +1736,7 @@ function renderPostModal(id){
   const editingPost=EDIT_TARGET&&EDIT_TARGET.t==='post'&&EDIT_TARGET.id===id;
   const acts=(canDel&&!editingPost)?'<div class="pm-acts">'+((q.text||q.media_url)?'<button class="pm-edit-btn" onclick="editPost(\''+id+'\')">Edit</button>':'')+'<button class="uproot" onclick="uprootPost(\''+id+'\')">Remove</button></div>':'';
   const postBody=editingPost
-    ? '<div class="pm-edit">'+fmtToolbar('edit-post-ta')+'<textarea class="edit-box" id="edit-post-ta" maxlength="600" style="min-height:120px;font-size:1.1rem">'+escHtml(q.text||'')+'</textarea><div class="edit-actions"><button class="edit-save" onclick="savePostEdit(\''+id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
+    ? '<div class="pm-edit">'+fmtBar('edit-post-ta')+'<div class="rich-editor re-edit" id="edit-post-ta" contenteditable="true" data-ph="Edit your post..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'edit-post-ta\')" onmouseup="updateFmtState(\'edit-post-ta\')" onpaste="pasteText(event)">'+richText(q.text||'')+'</div><div class="edit-actions"><button class="edit-save" onclick="savePostEdit(\''+id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
     : (q.text?'<div class="pm-text">'+richText(q.text)+'</div>':'');
   m.innerHTML='<button class="pm-x" onclick="closePost()">✕</button>'
     +'<div class="pm-head"><span class="pm-ava" style="background:'+byColor+'">'+escHtml(initials(byName))+'</span><div class="pm-who"><div class="pm-name">'+escHtml(byName)+'</div><div class="pm-time">'+timeAgo(q.at)+' · '+(q.kind==='question'?'Question':'Statement')+(q.edited?' · <span class="edited-tag">edited</span>':'')+'</div></div>'+acts+'</div>'
@@ -1692,7 +1747,7 @@ function renderPostModal(id){
     +renderReactions('post',q.qid)
     +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
     +replyPreview
-    +'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><textarea id="rf-'+id+'" rows="1" maxlength="500" placeholder="Write a reply..." oninput="autosize(this)" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)"></textarea><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div>';
+    +'<div class="reply-compose">'+fmtBarSlim('rf-'+id)+'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><div id="rf-'+id+'" class="rich-editor re-reply is-empty" contenteditable="true" data-ph="Write a reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'rf-'+id+'\')" onmouseup="updateFmtState(\'rf-'+id+'\')" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)"></div><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div></div>';
 }
 
 // ══════════════════════════════════════════
@@ -1851,7 +1906,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
   const si=g('si-email');if(si)si.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
   const sp=g('si-pass');if(sp)sp.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
   const su=g('su-pass');if(su)su.addEventListener('keydown',e=>{if(e.key==='Enter')doSignUp();});
-  const ci=g('compose-input');if(ci){ci.addEventListener('input',()=>autosize(ci));ci.addEventListener('keydown',composeKey);ci.addEventListener('paste',onComposePaste);}
+  const ci=g('compose-input');if(ci){ci.addEventListener('paste',onComposePaste);onEditorInput(ci);}
   let hadSession=false;
   try{const{data:{session}}=await sb.auth.getSession();if(session){hadSession=true;await startSession(session.user);}}catch(e){}
   try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!hadSession||!cgiSeen()||(APP.user&&APP.user.isAdmin)))cgiPrefetch();}catch(e){}
