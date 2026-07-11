@@ -814,7 +814,7 @@ async function submitReply(stId){
   clearMedia('pendingReplyMedia');
   if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body:body||'',at:data.created_at,media_url,media_type,media_name:data.media_name});
   if(st.by&&st.by!==APP.user.id){
-    try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:(body||'[photo or video]').slice(0,140)});}catch(e){}
+    try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:(stripMd(body)||'[photo or video]').slice(0,140)});}catch(e){}
   }
   renderFeed();
   if(POST_OPEN===stId)renderPostModal(stId);
@@ -1516,7 +1516,7 @@ function renderGroups(){
     let liveHtml;
     if(live){
       liveHtml='<div class="glive">';
-      if(live.rep){liveHtml+='This group most clearly '+(live.rep.diff>=0?'agrees with':'disagrees with')+' <b>&ldquo;'+escHtml(live.rep.s.text)+'&rdquo;</b>';}
+      if(live.rep){liveHtml+='This group most clearly '+(live.rep.diff>=0?'agrees with':'disagrees with')+' <b>&ldquo;'+escHtml(stripMd(live.rep.s.text))+'&rdquo;</b>';}
       else{liveHtml+='This group is still taking shape.';}
       liveHtml+='</div><span class="gsize">'+live.members.length+' '+(live.members.length===1?'person':'people')+' here</span>';
     }else{
