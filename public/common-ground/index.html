@@ -1714,8 +1714,7 @@ function renderPostModal(id){
     const voted=APP.votes[q.id]!==undefined;
     const revealed=(POST_REVEAL===id)||voted;
     if(!revealed){
-      voteHtml='<button class="weighin-btn" onclick="revealWeigh(\''+id+'\')">Weigh in</button>'
-        +'<div class="pm-hint">Only if you want to take a side. Not every post needs one.</div>';
+      voteHtml='<button class="weighin-btn" onclick="revealWeigh(\''+id+'\')">Weigh in</button>';
     }else{
       const x=(POLIS&&POLIS.stats[q.id])||{a:0,p:0,d:0,n:0};const pc=pcts([x.a,x.p,x.d]);const mine=APP.votes[q.id];
       voteHtml='<div class="pm-vote">'+[['agree','Agree','#2F6B3A'],['pass','Not sure','#8A7B57'],['disagree','Disagree','#B24A2E']].map(v=>'<button class="pm-opt'+(mine===v[0]?' sel':'')+'" style="--vc:'+v[2]+'" onclick="votePost(\''+id+'\',\''+v[0]+'\')">'+v[1]+'</button>').join('')+'</div>';
