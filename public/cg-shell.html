@@ -1893,7 +1893,7 @@ function launchApp(){
   subscribeRealtime();
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.08});
   document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
-  if(APP._playIntro||!cgiSeen()||APP.user.isAdmin){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}}
+  if(APP._playIntro||!cgiSeen()){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}} // plays once for everyone (admin included); replay via the "Watch the walk in again" button
 }
 document.getElementById('stones').addEventListener('click',e=>{
   const st=e.target.closest('.stone');if(!st)return;
