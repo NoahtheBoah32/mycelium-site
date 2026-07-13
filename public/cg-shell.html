@@ -844,24 +844,28 @@ function clearReplyMedia(){clearMedia('pendingReplyMedia');if(POST_OPEN)renderPo
 async function submitReply(stId){
   const st=findPost(stId);if(!st)return;
   if(!g('rf-'+stId))return;
+  if(submitReply._busy)return; // double-submit guard: no duplicate rows from a fast double-tap
   const body=readEditor('rf-'+stId);
   const media=APP.pendingReplyMedia;
   if(!body&&!media)return;
   if(body&&body.length>500){toast('Keep a reply under 500 characters.');return;}
   if(body&&isBanned(body)){clearEditor('rf-'+stId);return;}
-  let media_url=null,media_type=null;
-  if(media){media_url=await uploadMedia(media.file);if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
-  clearEditor('rf-'+stId);
-  const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body:body||'',media_url,media_type,media_name:media?media.file.name:null}).select().single();
-  if(error||!data){toast('That reply did not send. Try again.');return;}
-  clearMedia('pendingReplyMedia');
-  if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body:body||'',at:data.created_at,media_url,media_type,media_name:data.media_name});
-  if(st.by&&st.by!==APP.user.id){
-    try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:(stripMd(body)||'[photo or video]').slice(0,140)});}catch(e){}
-  }
-  renderFeed();
-  if(POST_OPEN===stId)renderPostModal(stId);
-  toast('Reply sent.');
+  submitReply._busy=true;
+  try{
+    let media_url=null,media_type=null;
+    if(media){media_url=await uploadMedia(media.file);if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
+    clearEditor('rf-'+stId);
+    const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body:body||'',media_url,media_type,media_name:media?media.file.name:null}).select().single();
+    if(error||!data){toast('That reply did not send. Try again.');return;}
+    clearMedia('pendingReplyMedia');
+    if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body:body||'',at:data.created_at,media_url,media_type,media_name:data.media_name});
+    if(st.by&&st.by!==APP.user.id){
+      try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:(stripMd(body)||'[photo or video]').slice(0,140)});}catch(e){}
+    }
+    renderFeed();
+    if(POST_OPEN===stId)renderPostModal(stId);
+    toast('Reply sent.');
+  }finally{submitReply._busy=false;}
 }
 async function deleteReply(stId,rid){
   const st=findPost(stId);if(!st)return;
@@ -1109,6 +1113,8 @@ const g=id=>document.getElementById(id);
 function toast(msg){const el=g('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),2800);}
 function initials(name){return (name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
 function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+// dedupe a list by id — last line of defense so the UI can never show a duplicate reply/post
+function uniqById(arr){const seen=new Set();return (arr||[]).filter(r=>{if(!r||seen.has(r.id))return false;seen.add(r.id);return true;});}
 function hexA(hex,a){const h=hex.replace('#','');return'rgba('+parseInt(h.slice(0,2),16)+','+parseInt(h.slice(2,4),16)+','+parseInt(h.slice(4,6),16)+','+a+')';}
 function timeAgo(iso){if(!iso)return'';const s=Math.floor((Date.now()-new Date(iso).getTime())/1000);if(s<60)return'just now';const m=Math.floor(s/60);if(m<60)return m+'m ago';const h=Math.floor(m/60);if(h<24)return h+'h ago';const d=Math.floor(h/24);if(d<7)return d+'d ago';return new Date(iso).toLocaleDateString();}
 // Silent safe-space filter: doom / collapse / prepper agenda quietly fails to post.
@@ -1633,24 +1639,29 @@ async function pitchPost(){
   if(!v&&!media)return;
   if(v&&v.length>600){toast('Keep a post under 600 characters.');return;}
   if(v&&isBanned(v)){clearEditor('compose-input');return;}
+  if(pitchPost._busy)return; // double-submit guard: no duplicate posts from a fast double-tap
   let kind=APP.composeType;
   if(!v)kind='question'; // a photo or video on its own has nothing to agree or disagree with
   else if(kind==='statement'&&isQuestionLike(v))kind='question';
   const btn=g('compose-btn');
-  let media_url=null,media_type=null;
-  if(media){btn.textContent='Uploading...';btn.disabled=true;media_url=await uploadMedia(media.file);btn.textContent='Post it';btn.disabled=false;if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
-  clearEditor('compose-input');
-  const{data,error}=await sb.from('questions').insert({body:v||'',proposed_by:APP.user.id,status:'approved',kind,media_url,media_type,media_name:media?media.file.name:null}).select().single();
-  if(error||!data){console.error('[CG] post failed',error);toast('That did not post. Try again.');return;}
-  clearComposeMedia();
-  const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind,media_url:data.media_url,media_type:data.media_type,media_name:data.media_name};
-  APP.dynamicQ.push(st);QINDEX[st.qid]=st;
-  if(st.kind==='statement'){
-    APP.stmts.push(st); // votable on the floor + feeds the map, but not the curated campfire
-    if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}
-  }
-  toast('Posted on the floor.');
-  renderFeed();renderStats();
+  pitchPost._busy=true;
+  try{
+    let media_url=null,media_type=null;
+    if(media){btn.textContent='Uploading...';btn.disabled=true;media_url=await uploadMedia(media.file);btn.textContent='Post it';btn.disabled=false;if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
+    clearEditor('compose-input');
+    const{data,error}=await sb.from('questions').insert({body:v||'',proposed_by:APP.user.id,status:'approved',kind,media_url,media_type,media_name:media?media.file.name:null}).select().single();
+    if(error||!data){console.error('[CG] post failed',error);toast('That did not post. Try again.');return;}
+    clearComposeMedia();
+    if(QINDEX[data.id]){renderFeed();renderStats();return;} // realtime already added it
+    const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind,media_url:data.media_url,media_type:data.media_type,media_name:data.media_name};
+    APP.dynamicQ.push(st);QINDEX[st.qid]=st;
+    if(st.kind==='statement'){
+      APP.stmts.push(st); // votable on the floor + feeds the map, but not the curated campfire
+      if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}
+    }
+    toast('Posted on the floor.');
+    renderFeed();renderStats();
+  }finally{pitchPost._busy=false;}
 }
 async function uprootPost(stId){
   const st=APP.dynamicQ.find(q=>q.id===stId);if(!st)return;
@@ -1684,7 +1695,7 @@ function renderFeed(){
   const board=g('feed');
   g('feed-empty').style.display=APP.dynamicQ.length?'none':'block';
   board.innerHTML=APP.dynamicQ.slice().reverse().map(q=>{
-    const reps=(APP.replies[q.qid]||[]).length;
+    const reps=uniqById(APP.replies[q.qid]).length;
     const n=(POLIS&&POLIS.stats[q.id])?POLIS.stats[q.id].n:0;
     const metric=q.kind==='statement'
       ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M6 20v-4M18 20V6"/></svg>'+n+' weighed in'
@@ -1736,7 +1747,7 @@ async function saveReplyEdit(pid,rid){
 function renderPostModal(id){
   const q=findPost(id);if(!q){closePost();return;}
   const m=g('post-modal');
-  const reps=APP.replies[q.qid]||[];
+  const reps=uniqById(APP.replies[q.qid]);
   const byName=q.byName||'Common Ground', byColor=q.byColor||'#6f7d52';
   const canDel=APP.user&&q.by&&(APP.user.isAdmin||q.by===APP.user.id);
   let voteHtml='';
@@ -1803,6 +1814,7 @@ async function onRemoteQuestion(row){
   let k=row.kind||'statement'; if(k==='statement'&&isQuestionLike(row.body))k='question';
   let byName='A member',byColor='#8a7d5f';
   if(row.proposed_by){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.proposed_by).single();if(data){byName=data.username;byColor=data.avatar_color;}}catch(e){}}
+  if(QINDEX[row.id])return; // re-check after the await: a duplicate realtime event may have added it while we waited
   const st={id:'q'+row.id.slice(0,8),qid:row.id,text:row.body,by:row.proposed_by,byName,byColor,at:row.created_at,kind:k,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name};
   APP.dynamicQ.push(st);QINDEX[st.qid]=st;
   if(k==='statement'){APP.stmts.push(st);if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}}
@@ -1836,10 +1848,12 @@ function onRemoteQuestionDel(row){
 }
 async function onRemoteReply(row){
   if(!row)return;const st=QINDEX[row.question_id];if(!st)return;
-  if((APP.replies[row.question_id]||[]).some(r=>r.id===row.id))return;
+  const arr=(APP.replies[row.question_id]=APP.replies[row.question_id]||[]);
+  if(arr.some(r=>r.id===row.id))return;
   let name='A member',color='#8a7d5f';
   if(row.user_id){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.user_id).single();if(data){name=data.username;color=data.avatar_color;}}catch(e){}}
-  (APP.replies[row.question_id]=APP.replies[row.question_id]||[]).push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name});
+  if(arr.some(r=>r.id===row.id))return; // re-check after the await: a duplicate realtime event may have added it while we waited
+  arr.push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name});
   renderFeed();
   if(POST_OPEN&&st.id===POST_OPEN)renderPostModal(POST_OPEN);
 }
