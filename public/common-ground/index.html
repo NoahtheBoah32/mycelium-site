@@ -400,7 +400,7 @@ h2.big em{font-style:italic;color:var(--green)}
 .attach-btn{display:inline-flex;align-items:center;gap:8px;background:var(--card-warm);border:1.5px solid var(--line-2);color:var(--ink-2);font-size:.9rem;font-weight:600;padding:11px 16px;border-radius:50px;cursor:pointer}
 .attach-btn:hover{border-color:var(--amber);color:var(--amber)}
 .attach-btn svg{width:17px;height:17px;flex-shrink:0}
-.compose-preview{display:flex;align-items:center;gap:9px;font-size:.85rem;color:var(--ink-2);background:var(--card-warm);border:1px solid var(--line);border-radius:12px;padding:6px 10px;max-width:300px;min-width:0}
+.compose-preview{display:flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:.85rem;color:var(--ink-2);background:var(--card-warm);border:1px solid var(--line);border-radius:12px;padding:9px 11px;max-width:100%;min-width:0}
 .compose-preview img,.compose-preview video{width:40px;height:40px;object-fit:cover;border-radius:7px;flex-shrink:0;background:#000}
 .compose-preview .pv-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
 .compose-preview .pv-x{background:none;border:none;color:var(--ink-3);cursor:pointer;font-size:16px;flex-shrink:0;line-height:1;padding:0 2px}
@@ -412,6 +412,41 @@ h2.big em{font-style:italic;color:var(--green)}
 .pm-media{display:block;width:100%;max-height:62vh;object-fit:contain;border-radius:12px;margin-bottom:20px;background:#000}
 .reply-media{margin-top:8px}
 .reply-media .pm-media{max-height:320px;margin-bottom:0}
+.pm-media{cursor:zoom-in}
+/* compose preview: little thumbnails with a corner remove button */
+.pv-item{position:relative;width:56px;height:56px;flex-shrink:0}
+.pv-item img,.pv-item video{width:100%;height:100%;object-fit:cover;border-radius:9px;background:#000;display:block}
+.pv-item .pv-doc{width:56px;height:56px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);border-radius:9px;color:var(--ink-3)}
+.pv-item .pv-doc svg{width:22px;height:22px}
+.pv-item .pv-x{position:absolute;top:-7px;right:-7px;background:var(--ink);color:#fff;border:2px solid var(--card-warm);border-radius:50%;width:20px;height:20px;font-size:11px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.pv-item .pv-x:hover{background:var(--disagree)}
+/* published multi-image gallery */
+.pm-gallery{display:grid;gap:4px;border-radius:12px;overflow:hidden;margin-bottom:20px;max-width:100%}
+.pm-gallery.g1{grid-template-columns:1fr}
+.pm-gallery.g2{grid-template-columns:1fr 1fr}
+.pm-gallery.g3{grid-template-columns:1fr 1fr 1fr}
+.pm-gallery.g4{grid-template-columns:1fr 1fr}
+.pm-gitem{position:relative;border:none;padding:0;margin:0;cursor:zoom-in;background:#000;overflow:hidden;display:block;aspect-ratio:1}
+.pm-gitem img{width:100%;height:100%;object-fit:cover;display:block}
+.pm-gallery.g1 .pm-gitem{aspect-ratio:auto}
+.pm-gallery.g1 .pm-gitem img{object-fit:contain;width:100%;max-height:62vh}
+.pm-more{position:absolute;inset:0;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;font-size:1.7rem;font-weight:700;letter-spacing:.5px}
+.reply-media .pm-gallery{margin-bottom:0}
+.reply-media .pm-gallery.g1 .pm-gitem img{max-height:320px}
+/* board card: attachment count badge */
+.pcard-count{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.62);color:#fff;font-size:.78rem;font-weight:600;padding:3px 8px;border-radius:20px;display:flex;align-items:center;gap:4px;z-index:2}
+.pcard-count svg{width:13px;height:13px}
+/* full-screen image viewer */
+#lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.93);display:none;align-items:center;justify-content:center;padding:20px}
+#lightbox.open{display:flex}
+#lightbox .lb-img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:6px;box-shadow:0 24px 90px rgba(0,0,0,.6)}
+#lightbox .lb-close{position:fixed;top:18px;right:22px;background:rgba(255,255,255,.14);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:21px;cursor:pointer;line-height:1;z-index:2}
+#lightbox .lb-close:hover{background:rgba(255,255,255,.26)}
+#lightbox .lb-nav{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.14);border:none;color:#fff;width:52px;height:52px;border-radius:50%;font-size:32px;line-height:0;cursor:pointer;z-index:2;display:grid;place-items:center}
+#lightbox .lb-nav:hover{background:rgba(255,255,255,.26)}
+#lightbox .lb-prev{left:18px}#lightbox .lb-next{right:18px}
+#lightbox .lb-count{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.85);font-size:.9rem;font-weight:500;z-index:2}
+@media(max-width:640px){#lightbox .lb-nav{width:44px;height:44px;font-size:26px}#lightbox .lb-prev{left:8px}#lightbox .lb-next{right:8px}}
 .reply-attach{background:var(--card-warm);border:1.5px solid var(--line-2);color:var(--ink-3);width:44px;height:44px;border-radius:11px;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
 .reply-attach:hover{border-color:var(--amber);color:var(--amber)}
 .reply-attach svg{width:18px;height:18px}
@@ -710,7 +745,7 @@ h2.big em{font-style:italic;color:var(--green)}
         </div>
         <div id="compose-input" class="rich-editor is-empty" contenteditable="true" data-ph="Share what is on your mind. A thought, a statement, anything worth talking about." oninput="onEditorInput(this)" onkeyup="updateFmtState('compose-input')" onmouseup="updateFmtState('compose-input')"></div>
         <div class="compose-actions">
-          <input type="file" id="compose-file" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onComposeFile(event)">
+          <input type="file" id="compose-file" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" multiple style="display:none" onchange="onComposeFile(event)">
           <button type="button" class="attach-btn" onclick="document.getElementById('compose-file').click()" title="Attach a photo, video, or file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg><span class="attach-lbl">Attach</span></button>
           <button type="button" class="attach-btn emoji-btn" onclick="toggleEmoji('compose-input',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button>
           <div id="compose-preview" class="compose-preview" style="display:none"></div>
@@ -798,13 +833,13 @@ async function loadQuestions(){
   APP.dynamicQ=[];QINDEX={};
   STMTS_BASE.forEach(s=>{QINDEX[s.qid]=s;});
   try{
-    const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,edited_at,kind,media_url,media_type,media_name').eq('status','approved').order('created_at',{ascending:true});
+    const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,edited_at,kind,media,media_url,media_type,media_name').eq('status','approved').order('created_at',{ascending:true});
     if(!error&&data){
       data.forEach(r=>{
         if(QINDEX[r.id])return; // seed rows already handled
         if(/^PROBE:/.test(r.body))return; // test artifacts stay off the floor
         let k=r.kind||'statement'; if(k==='statement'&&isQuestionLike(r.body))k='question'; // keep questions out of the campfire
-        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,edited:!!r.edited_at,kind:k,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name};
+        const st={id:'q'+r.id.slice(0,8),qid:r.id,text:r.body,by:r.proposed_by,byName:'A member',at:r.created_at,edited:!!r.edited_at,kind:k,media:r.media,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name};
         APP.dynamicQ.push(st);QINDEX[r.id]=st;
       });
       const uids=[...new Set(APP.dynamicQ.map(q=>q.by).filter(Boolean))];
@@ -828,37 +863,37 @@ async function loadReplies(){
   const qids=[...new Set([...APP.dynamicQ.map(q=>q.qid),...STMTS_BASE.map(s=>s.qid)])];
   if(!qids.length)return;
   try{
-    const{data,error}=await sb.from('replies').select('id,question_id,user_id,body,created_at,edited_at,media_url,media_type,media_name').in('question_id',qids).order('created_at',{ascending:true});
+    const{data,error}=await sb.from('replies').select('id,question_id,user_id,body,created_at,edited_at,media,media_url,media_type,media_name').in('question_id',qids).order('created_at',{ascending:true});
     if(error||!data)return;
     const uids=[...new Set(data.map(r=>r.user_id))];
     let byId={};
     if(uids.length){const{data:profs}=await sb.from('profiles').select('id,username,avatar_color').in('id',uids);(profs||[]).forEach(p=>{byId[p.id]=p;});}
     data.forEach(r=>{
       const p=byId[r.user_id]||{};
-      (APP.replies[r.question_id]=APP.replies[r.question_id]||[]).push({id:r.id,by:r.user_id,name:p.username||'A member',color:p.avatar_color||'#8a7d5f',body:r.body,at:r.created_at,edited:!!r.edited_at,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name});
+      (APP.replies[r.question_id]=APP.replies[r.question_id]||[]).push({id:r.id,by:r.user_id,name:p.username||'A member',color:p.avatar_color||'#8a7d5f',body:r.body,at:r.created_at,edited:!!r.edited_at,media:r.media,media_url:r.media_url,media_type:r.media_type,media_name:r.media_name});
     });
   }catch(e){console.error('[CG] loadReplies failed',e);}
 }
-function onReplyFile(e){const f=e.target.files&&e.target.files[0];if(pickMedia(f,'pendingReplyMedia')&&POST_OPEN)renderPostModal(POST_OPEN);e.target.value='';}
+function onReplyFile(e){[...(e.target.files||[])].forEach(f=>pickMedia(f,'pendingReplyMedia'));if(POST_OPEN)renderPostModal(POST_OPEN);e.target.value='';}
 function clearReplyMedia(){clearMedia('pendingReplyMedia');if(POST_OPEN)renderPostModal(POST_OPEN);}
 async function submitReply(stId){
   const st=findPost(stId);if(!st)return;
   if(!g('rf-'+stId))return;
   if(submitReply._busy)return; // double-submit guard: no duplicate rows from a fast double-tap
   const body=readEditor('rf-'+stId);
-  const media=APP.pendingReplyMedia;
-  if(!body&&!media)return;
+  const mediaList=APP.pendingReplyMedia||[];
+  if(!body&&!mediaList.length)return;
   if(body&&body.length>500){toast('Keep a reply under 500 characters.');return;}
   if(body&&isBanned(body)){clearEditor('rf-'+stId);return;}
   submitReply._busy=true;
   try{
-    let media_url=null,media_type=null;
-    if(media){media_url=await uploadMedia(media.file);if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
+    let mediaArr=null,first=null;
+    if(mediaList.length){mediaArr=await uploadMediaList(mediaList);if(!mediaArr.length){toast('The files did not upload. Try smaller ones.');return;}first=mediaArr[0];}
     clearEditor('rf-'+stId);
-    const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body:body||'',media_url,media_type,media_name:media?media.file.name:null}).select().single();
+    const{data,error}=await sb.from('replies').insert({question_id:st.qid,user_id:APP.user.id,body:body||'',media:mediaArr,media_url:first?first.url:null,media_type:first?first.type:null,media_name:first?first.name:null}).select().single();
     if(error||!data){toast('That reply did not send. Try again.');return;}
     clearMedia('pendingReplyMedia');
-    if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body:body||'',at:data.created_at,media_url,media_type,media_name:data.media_name});
+    if(!(APP.replies[st.qid]||[]).some(r=>r.id===data.id))(APP.replies[st.qid]=APP.replies[st.qid]||[]).push({id:data.id,by:APP.user.id,name:APP.user.username,color:APP.user.avatar_color,body:body||'',at:data.created_at,media:data.media,media_url:data.media_url,media_type:data.media_type,media_name:data.media_name});
     if(st.by&&st.by!==APP.user.id){
       try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:(stripMd(body)||'[photo or video]').slice(0,140)});}catch(e){}
     }
@@ -1103,10 +1138,11 @@ function myCamp(){
 // ══════════════════════════════════════════
 //  APP STATE + HELPERS
 // ══════════════════════════════════════════
-const APP={user:null,votes:{},stmts:[...STMTS_BASE],fire:[],fireIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif',pendingMedia:null,pendingReplyMedia:null,reactions:{}};
+const APP={user:null,votes:{},stmts:[...STMTS_BASE],fire:[],fireIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif',pendingMedia:[],pendingReplyMedia:[],reactions:{}};
 let POST_OPEN=null, POST_REVEAL=null, RT=null, _ansT=null, EDIT_TARGET=null;
 const FIRE_DAILY=10; // the campfire is a batch of ten a day
 const MAX_MEDIA=8*1024*1024; // 8 MB cap on photos and videos
+const MAX_ATTACH=4; // up to four attachments per post/reply
 // any post lookup: community posts live in dynamicQ, the eight seeds live in APP.stmts
 function findPost(id){return APP.dynamicQ.find(q=>q.id===id)||APP.stmts.find(s=>s.id===id)||STMTS_BASE.find(s=>s.id===id)||null;}
 const g=id=>document.getElementById(id);
@@ -1142,20 +1178,26 @@ function buildFireBatch(){
   APP.fireIndex=firstUnanswered<0?0:firstUnanswered;
 }
 // ── media: photos and videos, 8 MB cap, uploaded to Supabase Storage ──
-function pickMedia(file,slot){ // slot: 'pendingMedia' | 'pendingReplyMedia'
+function pickMedia(file,slot){ // slot: 'pendingMedia' | 'pendingReplyMedia' — each holds an ARRAY
   if(!file)return false;
+  if(!Array.isArray(APP[slot]))APP[slot]=[];
+  if(APP[slot].length>=MAX_ATTACH){toast('You can attach up to '+MAX_ATTACH+' files at a time.');return false;}
   const isImg=/^image\//.test(file.type), isVid=/^video\//.test(file.type);
   if(file.size>MAX_MEDIA){toast('That file is over 8 MB. Please pick a smaller one.');return false;}
-  APP[slot]={file,type:isImg?'image':isVid?'video':'file',url:(isImg||isVid)?URL.createObjectURL(file):null};
+  APP[slot].push({file,type:isImg?'image':isVid?'video':'file',url:(isImg||isVid)?URL.createObjectURL(file):null});
   return true;
 }
-function clearMedia(slot){if(APP[slot]){try{URL.revokeObjectURL(APP[slot].url);}catch(e){}}APP[slot]=null;}
-function onComposeFile(e){const f=e.target.files&&e.target.files[0];if(pickMedia(f,'pendingMedia'))renderComposePreview();e.target.value='';}
+function clearMedia(slot){ (APP[slot]||[]).forEach(m=>{try{if(m.url)URL.revokeObjectURL(m.url);}catch(e){}}); APP[slot]=[]; }
+function removeMediaAt(slot,i,after){ const m=(APP[slot]||[])[i]; if(m){try{if(m.url)URL.revokeObjectURL(m.url);}catch(e){}} (APP[slot]||[]).splice(i,1); if(after)after(); }
+function onComposeFile(e){ [...(e.target.files||[])].forEach(f=>pickMedia(f,'pendingMedia')); renderComposePreview(); e.target.value=''; }
+function previewStrip(list,slot,after){
+  return list.map((m,i)=>'<span class="pv-item">'+(m.type==='image'?'<img src="'+m.url+'">':m.type==='video'?'<video src="'+m.url+'" muted></video>':'<span class="pv-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></span>')+'<button class="pv-x" onclick="removeMediaAt(\''+slot+'\','+i+','+after+')" title="Remove">✕</button></span>').join('');
+}
 function renderComposePreview(){
-  const pv=g('compose-preview');const m=APP.pendingMedia;
-  if(!m){pv.style.display='none';pv.innerHTML='';return;}
+  const pv=g('compose-preview');const list=APP.pendingMedia||[];
+  if(!list.length){pv.style.display='none';pv.innerHTML='';return;}
   pv.style.display='flex';
-  pv.innerHTML=(m.type==='image'?'<img src="'+m.url+'">':m.type==='video'?'<video src="'+m.url+'" muted></video>':'<span class="pv-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></span>')+'<span class="pv-name">'+escHtml(m.file.name)+'</span><button class="pv-x" onclick="clearComposeMedia()" title="Remove">✕</button>';
+  pv.innerHTML=previewStrip(list,'pendingMedia','renderComposePreview');
 }
 function clearComposeMedia(){clearMedia('pendingMedia');const f=g('compose-file');if(f)f.value='';renderComposePreview();}
 async function uploadMedia(file){
@@ -1166,12 +1208,69 @@ async function uploadMedia(file){
   const{data}=sb.storage.from('post-media').getPublicUrl(path);
   return data?data.publicUrl:null;
 }
+async function uploadMediaList(list){ // returns [{url,type,name},...] for the ones that uploaded
+  const out=[];
+  for(const m of (list||[])){ const url=await uploadMedia(m.file); if(url) out.push({url,type:m.type,name:m.file.name}); }
+  return out;
+}
+// ── unified media render: prefers the multi-image gallery, falls back to the old single columns ──
+function mediaBlock(o){
+  if(o&&Array.isArray(o.media)&&o.media.length) return mediaGalleryHtml(o.media);
+  if(o&&o.media_url) return mediaHtmlFull(o.media_url,o.media_type,o.media_name);
+  return '';
+}
+function mediaThumbBlock(o){
+  if(o&&Array.isArray(o.media)&&o.media.length){
+    const first=o.media.find(m=>m.type==='image')||o.media[0];
+    const badge=o.media.length>1?'<span class="pcard-count"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M21 7v12a2 2 0 0 1-2 2H7"/></svg>'+o.media.length+'</span>':'';
+    return mediaHtmlThumb(first.url,first.type).replace('</div>',badge+'</div>');
+  }
+  if(o&&o.media_url) return mediaHtmlThumb(o.media_url,o.media_type);
+  return '';
+}
 function mediaHtmlFull(url,type,name){
   if(!url)return'';
   if(type==='video')return '<video class="pm-media" src="'+escHtml(url)+'" controls playsinline preload="metadata"></video>';
   if(type==='file')return '<a class="pm-file" href="'+escHtml(url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>'+escHtml(name||'Open attachment')+'</a>';
-  return '<img class="pm-media" src="'+escHtml(url)+'" alt="attachment" loading="lazy">';
+  return '<img class="pm-media" src="'+escHtml(url)+'" alt="attachment" loading="lazy" onclick="openLightbox([\''+escHtml(url).replace(/'/g,"\\'")+'\'],0)">';
 }
+// ── multi-image gallery (1-4 tiles, +N overlay) opening a lightbox ──
+function mediaGalleryHtml(items){
+  const imgs=items.filter(m=>m.type==='image'), others=items.filter(m=>m.type!=='image');
+  let html='';
+  if(imgs.length){
+    const urls=imgs.map(m=>m.url);
+    const b64=btoa(unescape(encodeURIComponent(JSON.stringify(urls))));
+    const shown=imgs.slice(0,4);
+    html+='<div class="pm-gallery g'+Math.min(imgs.length,4)+'">'+shown.map((m,i)=>{
+      const more=(i===3&&imgs.length>4)?'<span class="pm-more">+'+(imgs.length-4)+'</span>':'';
+      return '<button type="button" class="pm-gitem" onclick="galleryClick(\''+b64+'\','+i+')"><img src="'+escHtml(m.url)+'" loading="lazy" alt="">'+more+'</button>';
+    }).join('')+'</div>';
+  }
+  others.forEach(m=>{ html+=mediaHtmlFull(m.url,m.type,m.name); });
+  return html;
+}
+function galleryClick(b64,i){ let urls; try{urls=JSON.parse(decodeURIComponent(escape(atob(b64))));}catch(e){return;} openLightbox(urls,i); }
+let LB=null;
+function openLightbox(urls,i){
+  if(!urls||!urls.length)return;
+  LB={urls,i:i||0};
+  let ov=g('lightbox');
+  if(!ov){ ov=document.createElement('div'); ov.id='lightbox'; document.body.appendChild(ov);
+    ov.addEventListener('click',e=>{ if(e.target===ov||e.target.closest('.lb-close'))closeLightbox(); }); }
+  renderLightbox(); ov.classList.add('open');
+}
+function renderLightbox(){
+  const ov=g('lightbox'); if(!ov||!LB)return; const multi=LB.urls.length>1;
+  ov.innerHTML='<button class="lb-close" aria-label="Close">✕</button>'
+    +(multi?'<button class="lb-nav lb-prev" onclick="lbStep(event,-1)">‹</button>':'')
+    +'<img class="lb-img" src="'+escHtml(LB.urls[LB.i])+'" alt="">'
+    +(multi?'<button class="lb-nav lb-next" onclick="lbStep(event,1)">›</button>':'')
+    +(multi?'<div class="lb-count">'+(LB.i+1)+' / '+LB.urls.length+'</div>':'');
+}
+function lbStep(e,d){ if(e)e.stopPropagation(); if(!LB)return; LB.i=(LB.i+d+LB.urls.length)%LB.urls.length; renderLightbox(); }
+function closeLightbox(){ const ov=g('lightbox'); if(ov)ov.classList.remove('open'); LB=null; }
+document.addEventListener('keydown',e=>{ if(!LB)return; if(e.key==='Escape')closeLightbox(); else if(e.key==='ArrowLeft')lbStep(null,-1); else if(e.key==='ArrowRight')lbStep(null,1); });
 function mediaHtmlThumb(url,type){
   if(!url)return'';
   if(type==='file')return '<div class="pcard-file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Attachment</div>';
@@ -1186,7 +1285,7 @@ function composeKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();pitc
 function replyKey(e,id){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submitReply(id);} }
 function handlePasteMedia(e,slot,after){
   const files=(e.clipboardData&&e.clipboardData.files)?[...e.clipboardData.files]:[];
-  if(files.length){ if(pickMedia(files[0],slot)){ e.preventDefault(); if(after)after(); return true; } }
+  if(files.length){ let any=false; files.forEach(f=>{ if(pickMedia(f,slot))any=true; }); if(any){ e.preventDefault(); if(after)after(); return true; } }
   return false;
 }
 function onComposePaste(e){ if(!handlePasteMedia(e,'pendingMedia',renderComposePreview)) pasteText(e); }
@@ -1635,8 +1734,8 @@ function setComposeType(t){
 }
 async function pitchPost(){
   const v=readEditor('compose-input');
-  const media=APP.pendingMedia;
-  if(!v&&!media)return;
+  const mediaList=APP.pendingMedia||[];
+  if(!v&&!mediaList.length)return;
   if(v&&v.length>600){toast('Keep a post under 600 characters.');return;}
   if(v&&isBanned(v)){clearEditor('compose-input');return;}
   if(pitchPost._busy)return; // double-submit guard: no duplicate posts from a fast double-tap
@@ -1646,14 +1745,14 @@ async function pitchPost(){
   const btn=g('compose-btn');
   pitchPost._busy=true;
   try{
-    let media_url=null,media_type=null;
-    if(media){btn.textContent='Uploading...';btn.disabled=true;media_url=await uploadMedia(media.file);btn.textContent='Post it';btn.disabled=false;if(!media_url){toast('The file did not upload. Try a smaller one.');return;}media_type=media.type;}
+    let mediaArr=null,first=null;
+    if(mediaList.length){btn.textContent='Uploading...';btn.disabled=true;mediaArr=await uploadMediaList(mediaList);btn.textContent='Post it';btn.disabled=false;if(!mediaArr.length){toast('The files did not upload. Try smaller ones.');return;}first=mediaArr[0];}
     clearEditor('compose-input');
-    const{data,error}=await sb.from('questions').insert({body:v||'',proposed_by:APP.user.id,status:'approved',kind,media_url,media_type,media_name:media?media.file.name:null}).select().single();
+    const{data,error}=await sb.from('questions').insert({body:v||'',proposed_by:APP.user.id,status:'approved',kind,media:mediaArr,media_url:first?first.url:null,media_type:first?first.type:null,media_name:first?first.name:null}).select().single();
     if(error||!data){console.error('[CG] post failed',error);toast('That did not post. Try again.');return;}
     clearComposeMedia();
     if(QINDEX[data.id]){renderFeed();renderStats();return;} // realtime already added it
-    const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind,media_url:data.media_url,media_type:data.media_type,media_name:data.media_name};
+    const st={id:'q'+data.id.slice(0,8),qid:data.id,text:data.body,by:data.proposed_by,byName:APP.user.username,byColor:APP.user.avatar_color,at:data.created_at,kind:data.kind||kind,media:data.media,media_url:data.media_url,media_type:data.media_type,media_name:data.media_name};
     APP.dynamicQ.push(st);QINDEX[st.qid]=st;
     if(st.kind==='statement'){
       APP.stmts.push(st); // votable on the floor + feeds the map, but not the curated campfire
@@ -1702,7 +1801,7 @@ function renderFeed(){
       : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'+reps+' '+(reps===1?'reply':'replies');
     return '<div class="pcard" onclick="openPost(\''+q.id+'\')">'
       +'<div class="pcard-top"><span class="post-kind '+q.kind+'">'+(q.kind==='question'?'Question':'Statement')+'</span><span class="pcard-time">'+timeAgo(q.at)+'</span></div>'
-      +(q.media_url?mediaHtmlThumb(q.media_url,q.media_type):(ytId(q.text)?'<div class="pcard-media"><img src="https://img.youtube.com/vi/'+ytId(q.text)+'/hqdefault.jpg" alt=""><span class="pcard-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>':''))
+      +(mediaThumbBlock(q)||(ytId(q.text)?'<div class="pcard-media"><img src="https://img.youtube.com/vi/'+ytId(q.text)+'/hqdefault.jpg" alt=""><span class="pcard-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span></div>':''))
       +(q.text?'<div class="pcard-text">'+escHtml(stripMd(q.text))+'</div>':'')
       +'<div class="pcard-foot"><span class="pcard-who"><span class="pcard-ava" style="background:'+(q.byColor||'#8a7d5f')+'">'+escHtml(initials(q.byName))+'</span>'+escHtml(q.byName||'A member')+'</span><span class="pcard-metric">'+metric+'</span></div>'
       +'</div>';
@@ -1769,10 +1868,10 @@ function renderPostModal(id){
     const rBody=editingThis
       ? '<div class="pm-edit">'+fmtBarSlim('edit-reply-ta')+'<div class="rich-editor re-edit" id="edit-reply-ta" contenteditable="true" data-ph="Edit your reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'edit-reply-ta\')" onmouseup="updateFmtState(\'edit-reply-ta\')" onpaste="pasteText(event)">'+richText(r.body||'')+'</div><div class="edit-actions"><button class="edit-save" onclick="saveReplyEdit(\''+id+'\',\''+r.id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
       : (r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'');
-    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(r.media_url?'<div class="reply-media">'+mediaHtmlFull(r.media_url,r.media_type,r.media_name)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
+    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(mediaBlock(r)?'<div class="reply-media">'+mediaBlock(r)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
   }).join('');
-  const rm=APP.pendingReplyMedia;
-  const replyPreview=rm?('<div class="compose-preview" style="display:flex;margin-bottom:8px">'+(rm.type==='image'?'<img src="'+rm.url+'">':'<video src="'+rm.url+'" muted></video>')+'<span class="pv-name">'+escHtml(rm.file.name)+'</span><button class="pv-x" onclick="clearReplyMedia()">✕</button></div>'):'';
+  const rmList=APP.pendingReplyMedia||[];
+  const replyPreview=rmList.length?('<div class="compose-preview" style="display:flex;margin-bottom:8px">'+previewStrip(rmList,'pendingReplyMedia','()=>{if(POST_OPEN)renderPostModal(POST_OPEN)}')+'</div>'):'';
   const editingPost=EDIT_TARGET&&EDIT_TARGET.t==='post'&&EDIT_TARGET.id===id;
   const acts=(canDel&&!editingPost)?'<div class="pm-acts">'+((q.text||q.media_url)?'<button class="pm-edit-btn" onclick="editPost(\''+id+'\')">Edit</button>':'')+'<button class="uproot" onclick="uprootPost(\''+id+'\')">Remove</button></div>':'';
   const postBody=editingPost
@@ -1781,13 +1880,13 @@ function renderPostModal(id){
   m.innerHTML='<button class="pm-x" onclick="closePost()">✕</button>'
     +'<div class="pm-head"><span class="pm-ava" style="background:'+byColor+'">'+escHtml(initials(byName))+'</span><div class="pm-who"><div class="pm-name">'+escHtml(byName)+'</div><div class="pm-time">'+timeAgo(q.at)+' · '+(q.kind==='question'?'Question':'Statement')+(q.edited?' · <span class="edited-tag">edited</span>':'')+'</div></div>'+acts+'</div>'
     +postBody
-    +mediaHtmlFull(q.media_url,q.media_type,q.media_name)
+    +mediaBlock(q)
     +ytEmbedHtml(q.text)
     +voteHtml
     +renderReactions('post',q.qid)
     +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
     +replyPreview
-    +'<div class="reply-compose">'+fmtBarSlim('rf-'+id)+'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><div id="rf-'+id+'" class="rich-editor re-reply is-empty" contenteditable="true" data-ph="Write a reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'rf-'+id+'\')" onmouseup="updateFmtState(\'rf-'+id+'\')" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)"></div><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div></div>';
+    +'<div class="reply-compose">'+fmtBarSlim('rf-'+id)+'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" multiple style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><div id="rf-'+id+'" class="rich-editor re-reply is-empty" contenteditable="true" data-ph="Write a reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'rf-'+id+'\')" onmouseup="updateFmtState(\'rf-'+id+'\')" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)"></div><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div></div>';
 }
 
 // ══════════════════════════════════════════
@@ -1815,7 +1914,7 @@ async function onRemoteQuestion(row){
   let byName='A member',byColor='#8a7d5f';
   if(row.proposed_by){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.proposed_by).single();if(data){byName=data.username;byColor=data.avatar_color;}}catch(e){}}
   if(QINDEX[row.id])return; // re-check after the await: a duplicate realtime event may have added it while we waited
-  const st={id:'q'+row.id.slice(0,8),qid:row.id,text:row.body,by:row.proposed_by,byName,byColor,at:row.created_at,kind:k,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name};
+  const st={id:'q'+row.id.slice(0,8),qid:row.id,text:row.body,by:row.proposed_by,byName,byColor,at:row.created_at,kind:k,media:row.media,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name};
   APP.dynamicQ.push(st);QINDEX[st.qid]=st;
   if(k==='statement'){APP.stmts.push(st);if(POLIS){POLIS.cols.push(st);POLIS.stats[st.id]={a:0,p:0,d:0,n:0};}}
   renderFeed();renderStats();
@@ -1853,7 +1952,7 @@ async function onRemoteReply(row){
   let name='A member',color='#8a7d5f';
   if(row.user_id){try{const{data}=await sb.from('profiles').select('username,avatar_color').eq('id',row.user_id).single();if(data){name=data.username;color=data.avatar_color;}}catch(e){}}
   if(arr.some(r=>r.id===row.id))return; // re-check after the await: a duplicate realtime event may have added it while we waited
-  arr.push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name});
+  arr.push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at,media:row.media,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name});
   renderFeed();
   if(POST_OPEN&&st.id===POST_OPEN)renderPostModal(POST_OPEN);
 }
