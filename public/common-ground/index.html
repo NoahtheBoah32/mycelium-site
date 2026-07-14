@@ -413,6 +413,9 @@ h2.big em{font-style:italic;color:var(--green)}
 .reply-media{margin-top:8px}
 .reply-media .pm-media{max-height:320px;margin-bottom:0}
 .pm-media{cursor:zoom-in}
+/* drag-and-drop file highlight */
+.compose.drag-over{outline:2px dashed var(--amber);outline-offset:-6px;border-radius:20px}
+.rich-editor.drag-over{border-color:var(--amber);background:rgba(196,135,42,.08)}
 /* compose preview: little thumbnails with a corner remove button */
 .pv-item{position:relative;width:56px;height:56px;flex-shrink:0}
 .pv-item img,.pv-item video{width:100%;height:100%;object-fit:cover;border-radius:9px;background:#000;display:block}
@@ -1190,6 +1193,17 @@ function pickMedia(file,slot){ // slot: 'pendingMedia' | 'pendingReplyMedia' —
 function clearMedia(slot){ (APP[slot]||[]).forEach(m=>{try{if(m.url)URL.revokeObjectURL(m.url);}catch(e){}}); APP[slot]=[]; }
 function removeMediaAt(slot,i,after){ const m=(APP[slot]||[])[i]; if(m){try{if(m.url)URL.revokeObjectURL(m.url);}catch(e){}} (APP[slot]||[]).splice(i,1); if(after)after(); }
 function onComposeFile(e){ [...(e.target.files||[])].forEach(f=>pickMedia(f,'pendingMedia')); renderComposePreview(); e.target.value=''; }
+// ── drag-and-drop files straight onto the composer / reply box ──
+function onMediaDragOver(e){ e.preventDefault(); if(e.dataTransfer)e.dataTransfer.dropEffect='copy'; const el=e.currentTarget; if(el&&el.classList)el.classList.add('drag-over'); }
+function onMediaDragLeave(e){ const el=e.currentTarget; if(el&&el.classList)el.classList.remove('drag-over'); }
+function onMediaDrop(e,slot,after){
+  e.preventDefault(); e.stopPropagation();
+  const el=e.currentTarget; if(el&&el.classList)el.classList.remove('drag-over');
+  const files=(e.dataTransfer&&e.dataTransfer.files)?[...e.dataTransfer.files]:[];
+  if(!files.length)return;
+  let any=false; files.forEach(f=>{ if(pickMedia(f,slot))any=true; });
+  if(any&&after)after();
+}
 function previewStrip(list,slot,after){
   return list.map((m,i)=>'<span class="pv-item">'+(m.type==='image'?'<img src="'+m.url+'">':m.type==='video'?'<video src="'+m.url+'" muted></video>':'<span class="pv-doc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></span>')+'<button class="pv-x" onclick="removeMediaAt(\''+slot+'\','+i+','+after+')" title="Remove">✕</button></span>').join('');
 }
@@ -1886,7 +1900,7 @@ function renderPostModal(id){
     +renderReactions('post',q.qid)
     +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
     +replyPreview
-    +'<div class="reply-compose">'+fmtBarSlim('rf-'+id)+'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" multiple style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><div id="rf-'+id+'" class="rich-editor re-reply is-empty" contenteditable="true" data-ph="Write a reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'rf-'+id+'\')" onmouseup="updateFmtState(\'rf-'+id+'\')" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)"></div><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div></div>';
+    +'<div class="reply-compose">'+fmtBarSlim('rf-'+id)+'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" multiple style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><div id="rf-'+id+'" class="rich-editor re-reply is-empty" contenteditable="true" data-ph="Write a reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'rf-'+id+'\')" onmouseup="updateFmtState(\'rf-'+id+'\')" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)" ondragover="onMediaDragOver(event)" ondragleave="onMediaDragLeave(event)" ondrop="onMediaDrop(event,\'pendingReplyMedia\',function(){if(POST_OPEN)renderPostModal(POST_OPEN)})"></div><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div></div>';
 }
 
 // ══════════════════════════════════════════
@@ -2055,7 +2069,10 @@ document.addEventListener('DOMContentLoaded',async()=>{
   const si=g('si-email');if(si)si.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
   const sp=g('si-pass');if(sp)sp.addEventListener('keydown',e=>{if(e.key==='Enter')doSignIn();});
   const su=g('su-pass');if(su)su.addEventListener('keydown',e=>{if(e.key==='Enter')doSignUp();});
-  const ci=g('compose-input');if(ci){ci.addEventListener('paste',onComposePaste);onEditorInput(ci);}
+  const ci=g('compose-input');if(ci){ci.addEventListener('paste',onComposePaste);onEditorInput(ci);
+    const cbox=ci.closest('.compose')||ci;
+    [ci,cbox].forEach(el=>{ el.addEventListener('dragover',onMediaDragOver); el.addEventListener('dragleave',onMediaDragLeave); el.addEventListener('drop',e=>onMediaDrop(e,'pendingMedia',renderComposePreview)); });
+  }
   let hadSession=false;
   try{const{data:{session}}=await sb.auth.getSession();if(session){hadSession=true;await startSession(session.user);}}catch(e){}
   try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!hadSession||!cgiSeen()||(APP.user&&APP.user.isAdmin)))cgiPrefetch();}catch(e){}
