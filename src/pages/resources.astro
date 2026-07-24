@@ -4,6 +4,11 @@ import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 const articles = [
+  // Baganihan Reports — field reports / issue briefs from the Baganihan Collective.
+  // Branded (logo tag + green) so credibility reads as the collective's, not one author.
+  // Joaquin feeds the real reports; the placeholder below only previews the card treatment.
+  { cat: "Baganihan Reports", bag: true, internal: true, cta: "Read Report", title: "Placeholder — your first Baganihan report goes here", desc: "This card shows how each Baganihan Report will look once you feed me the content. Every report carries the Baganihan mark so it reads as the collective's field work.", img: null, learn: "#" },
+
   { cat: "Community Event", title: "Kabuohan Workshop", desc: "A full-day parent-child learning journey in permaculture gardening and primitive pottery, hosted by Baganihan Collective at Pacita Organic Garden.", img: "/images/events/kabuohan/group-lawn.jpg", learn: "/events/kabuohan-workshop", view: null, internal: true, cta: "View Recap" },
   { cat: "Getting Started", title: "What is Permaculture? — Article", desc: "Permaculture gets thrown around a lot, but rarely explained well. It is not just organic gardening. It is a design system that applies to backyards, communities, and entire ways of living.", img: "/images/wp/RESIZED-PERMACULTURE-FOR-BEGGINERS.png", learn: "https://homefortheharvest.com/permaculture-for-beginners/", view: "https://homefortheharvest.com/permaculture-for-beginners/" },
   { cat: "Beginner", title: "First Steps !! — Article", desc: "Understanding permaculture and knowing what to do with that knowledge is equally important. How to read your space, what to prioritize first, and what you can realistically start in a week.", img: "/images/wp/HOW-TO-START-A-PERMACULTURE-GARDEN.png", learn: "https://www.masterclass.com/articles/how-to-start-a-permaculture-garden", view: "https://www.masterclass.com/articles/how-to-start-a-permaculture-garden" },
@@ -11,6 +16,10 @@ const articles = [
   { cat: "Beginner", title: "Designing a Food Forest — Article", desc: "A food forest is a working, layered ecosystem that produces food and largely takes care of itself. If you want to see what all the concepts look like in practice, start here.", img: "/images/wp/HOW-TO-CREATE-A-FOOD-FOREST.png", learn: "https://permacultureapprentice.com/creating-a-food-forest-step-by-step-guide/", view: "https://permacultureapprentice.com/creating-a-food-forest-step-by-step-guide/" },
   { cat: "Intermediate", title: "Regenerative Living", desc: "Overview of ecosystem restoration through water capture, soil health, and biodiversity enhancement. By applying permaculture ethics, we can encourage individuals rather than institutions.", img: null, learn: "https://www.resilience.org/stories/2015-11-02/permaculture-regenerative-not-merely-sustainable/", view: "https://www.resilience.org/stories/2015-11-02/permaculture-regenerative-not-merely-sustainable/" },
 ];
+
+const slug = (s) => s.toLowerCase().replace(/\s+/g, '-');
+const catOrder = ["Baganihan Reports", "Getting Started", "Beginner", "Intermediate", "Community Event"];
+const tabs = ["All", ...catOrder.filter(c => articles.some(a => a.cat === c))];
 ---
 
 <BaseLayout title="Resources - Mycelium">
@@ -25,21 +34,32 @@ const articles = [
 
   <section class="rp-grid-section">
     <div class="rp-inner">
-      <div class="rp-grid">
+
+      <!-- Filter tabs -->
+      <div class="rp-filters" id="rp-filters">
+        {tabs.map((t, i) => (
+          <button class={`rp-filter${i === 0 ? ' active' : ''}`} data-filter={t === 'All' ? 'all' : slug(t)}>{t}</button>
+        ))}
+      </div>
+
+      <div class="rp-grid" id="rp-grid">
         {articles.map(a => (
-          <div class="rc">
+          <div class={`rc${a.bag ? ' rc-bag' : ''}`} data-cat={slug(a.cat)}>
             {a.img && (
               <div class="rc-thumb">
                 <img src={a.img} alt={a.title} loading="lazy" />
               </div>
             )}
             <div class="rc-body">
-              <span class="rc-cat">{a.cat}</span>
+              {a.bag
+                ? <span class="rc-cat rc-cat-bag"><img src="/images/baganihan-logo.jpg" alt="" class="rc-bag-tag-logo" />{a.cat}</span>
+                : <span class="rc-cat">{a.cat}</span>
+              }
               <h3 class="rc-title">{a.title}</h3>
               <p class="rc-desc">{a.desc}</p>
               <div class="rc-actions">
                 {a.internal
-                  ? <a href={a.learn} class="btn-view">{a.cta || 'Learn More'}</a>
+                  ? <a href={a.learn} class={`btn-view${a.bag ? ' btn-view-bag' : ''}`}>{a.cta || 'Learn More'}</a>
                   : <>
                       <a href={a.learn} target="_blank" rel="noopener" class="btn-learn">Learn More</a>
                       {a.view && <a href={a.view} target="_blank" rel="noopener" class="btn-view">View Resource</a>}
@@ -56,12 +76,34 @@ const articles = [
   <SiteFooter />
 </BaseLayout>
 
+<script>
+  const btns = Array.from(document.querySelectorAll('.rp-filter'));
+  const cards = Array.from(document.querySelectorAll('#rp-grid .rc'));
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.getAttribute('data-filter');
+      cards.forEach(c => {
+        c.style.display = (f === 'all' || c.getAttribute('data-cat') === f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
 <style>
 .rp-hero { background: #fff; padding: 64px 40px 40px; border-bottom: 1px solid #f0f0f0; }
 .rp-inner { max-width: 1260px; margin: 0 auto; }
 .rp-title { font-family: var(--font-serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 400; color: #242424; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 12px; text-align: center; }
 .rp-sub { font-family: var(--font-outfit); font-size: 1rem; color: #666; line-height: 1.6; text-align: center; }
 .rp-grid-section { background: #f9f9f7; padding: 40px 40px 80px; }
+
+/* filter tabs */
+.rp-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+.rp-filter { font-family: var(--font-inter); font-size: 0.82rem; font-weight: 600; color: #444; background: #fff; border: 1px solid #d8d8d8; padding: 9px 20px; border-radius: 50px; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
+.rp-filter:hover { border-color: #2F4F2F; color: #2F4F2F; }
+.rp-filter.active { background: #2F4F2F; border-color: #2F4F2F; color: #fff; }
+
 .rp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .rc { background: #fff; border-radius: 10px; border: 1px solid #e8e8e8; overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.2s, transform 0.15s; }
 .rc:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
@@ -77,6 +119,14 @@ const articles = [
 .btn-learn:hover { border-color: #2F4F2F; color: #2F4F2F; }
 .btn-view { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 600; background: #5A3A1C; color: #fff; padding: 6px 14px; border-radius: 50px; transition: background 0.15s; text-decoration: none; display: inline-block; }
 .btn-view:hover { background: #947153; }
+
+/* Baganihan Reports branded card */
+.rc-bag { border-color: #d8e3d4; }
+.rc-cat-bag { display: inline-flex; align-items: center; gap: 6px; color: #2F6B3A; }
+.rc-bag-tag-logo { width: 15px; height: 15px; border-radius: 3px; object-fit: cover; }
+.btn-view-bag { background: #2F6B3A; }
+.btn-view-bag:hover { background: #3f8c4e; }
+
 @media (max-width: 1024px) { .rp-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .rp-hero { padding: 40px 20px 28px; } .rp-grid-section { padding: 28px 20px 60px; } .rp-grid { grid-template-columns: 1fr; } }
 </style>
