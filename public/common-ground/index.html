@@ -562,6 +562,72 @@ h2.big em{font-style:italic;color:var(--green)}
   #toast{bottom:88px}
   #foot{padding-bottom:82px}
 }
+
+/* ══════════════════════════════════════════
+   WHAT'S NEW ON MYCELIUM  (release announcements)
+   ══════════════════════════════════════════ */
+.wn{margin:30px 0 0}
+.wn-bar{cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .12s}
+.wn-bar:hover{transform:translateY(-1px)}
+/* Option B — masthead divider */
+.wnb{display:flex;align-items:center;justify-content:center;gap:18px;background:var(--card);border:1px solid var(--line-2);border-radius:12px;padding:17px 24px;box-shadow:0 10px 30px -24px rgba(42,35,24,.5);position:relative}
+.wnb:hover{border-color:var(--amber-lt)}
+.b-rule{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line-2))}
+.b-rule-r{background:linear-gradient(90deg,var(--line-2),transparent)}
+.b-mid{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.b-t{font-family:var(--font-ui);font-size:.82rem;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;color:var(--ink-2)}
+.b-n{font-family:var(--font-ui);font-size:.72rem;font-weight:700;letter-spacing:1px;color:var(--amber);display:inline-flex;align-items:center;gap:7px}
+.b-n .newdot{width:7px;height:7px}
+.wn-chev{width:18px;height:18px;stroke:var(--ink-3);fill:none;stroke-width:1.8;transition:transform .22s;flex-shrink:0;position:absolute;right:22px}
+.wn.open .wn-chev{transform:rotate(180deg)}
+.wn-drop{max-height:0;overflow:hidden;transition:max-height .34s ease}
+.wn.open .wn-drop{max-height:1400px;margin-top:20px}
+.wn-chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.wn-chip{font-family:var(--font-ui);font-size:.78rem;font-weight:600;color:var(--ink-3);background:var(--card);border:1px solid var(--line-2);padding:7px 15px;border-radius:30px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.wn-chip:hover{border-color:var(--amber-lt)}
+.wn-chip.act{background:var(--green);border-color:var(--green);color:#fff}
+.wn-board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+.wn-empty{grid-column:1/-1;text-align:center;padding:34px 20px;border:2px dashed var(--line-2);border-radius:14px;background:var(--card-warm);color:var(--ink-3);font-size:.96rem}
+@media(max-width:1000px){.wn-board{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.wn-board{grid-template-columns:1fr}}
+
+/* announcement cards */
+.flair{font-family:var(--font-ui);font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;font-weight:700;padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+.flair::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.f-report{color:#2F6B3A;background:rgba(47,107,58,.13)}
+.f-video{color:#A96E15;background:rgba(169,110,21,.13)}
+.f-event{color:#9C5B2E;background:rgba(156,91,46,.14)}
+.pcard.update{background:var(--card-warm);border-top:3px solid var(--fc,var(--green))}
+.up-off{font-family:var(--font-ui);font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);background:var(--cream-2);padding:2px 7px;border-radius:20px}
+.up-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-ui);font-size:.82rem;font-weight:700;color:#fff;background:var(--fc,var(--green));padding:9px 16px;border-radius:40px;text-decoration:none;width:max-content;border:none;cursor:pointer}
+.up-link:hover{filter:brightness(1.08)}
+.up-discuss{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-ui);font-size:.82rem;font-weight:600;color:var(--ink-3);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0}
+.up-discuss:hover{color:var(--ink)}
+.up-discuss svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* release modal extras (reuses .pm-* post-modal styles) */
+.rel-kicker{display:inline-flex;margin-bottom:2px}
+.rel-hero{border-radius:12px;overflow:hidden;margin:4px 0 2px;background:var(--cream-2)}
+.rel-hero img{width:100%;max-height:230px;object-fit:cover;display:block}
+.rel-cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-ui);font-size:.94rem;font-weight:700;color:#fff;background:var(--fc,var(--green));padding:13px 22px;border-radius:44px;text-decoration:none;width:max-content;margin:6px 0 2px}
+.rel-cta:hover{filter:brightness(1.08)}
+
+/* inbox — New Releases rows */
+.nrel{display:flex;gap:12px;padding:15px 14px;border-radius:12px;cursor:pointer;transition:background .15s}
+.nrel:hover{background:var(--card)}
+.nrel.unread{background:var(--card)}
+.nrel-ic{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;color:#fff;font-weight:700;font-size:.82rem}
+.nrel-title{font-size:.95rem;color:var(--ink);line-height:1.35}
+.nrel-title b{font-weight:700}
+.nrel-snip{font-size:.88rem;color:var(--ink-3);margin-top:3px;line-height:1.42;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.nrel-date{font-size:.78rem;color:var(--ink-3);margin-top:5px}
+.nrel-un{width:9px;height:9px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:6px}
+.inbox-tabs button .newdot{position:absolute;top:8px;right:10px}
+.inbox-tabs button{position:relative}
+
+.newdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber-lt);box-shadow:0 0 0 0 rgba(196,135,42,.55);animation:wn-pulse 2.4s infinite}
+@keyframes wn-pulse{0%{box-shadow:0 0 0 0 rgba(196,135,42,.5)}70%{box-shadow:0 0 0 7px rgba(196,135,42,0)}100%{box-shadow:0 0 0 0 rgba(196,135,42,0)}}
+@media (prefers-reduced-motion: reduce){.newdot{animation:none}}
 </style>
 </head>
 <body>
@@ -755,6 +821,26 @@ h2.big em{font-style:italic;color:var(--green)}
           <button id="compose-btn" onclick="pitchPost()">Post it</button>
         </div>
       </div>
+
+      <!-- ===== WHAT'S NEW ON MYCELIUM ===== -->
+      <div class="wn" id="wn" style="display:none">
+        <div class="wn-bar wnb" onclick="toggleWN()">
+          <span class="b-rule"></span>
+          <span class="b-mid"><span class="b-t">What's New on Mycelium</span><span class="b-n" id="wn-count"></span></span>
+          <span class="b-rule b-rule-r"></span>
+          <svg class="wn-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="wn-drop">
+          <div class="wn-chips" id="wn-chips">
+            <button class="wn-chip act" data-cat="all" onclick="filterReleases('all',this)">All</button>
+            <button class="wn-chip" data-cat="report" onclick="filterReleases('report',this)">Reports</button>
+            <button class="wn-chip" data-cat="video" onclick="filterReleases('video',this)">Videos</button>
+            <button class="wn-chip" data-cat="event" onclick="filterReleases('event',this)">Events</button>
+          </div>
+          <div class="wn-board" id="wn-board"></div>
+        </div>
+      </div>
+
       <div class="board" id="feed"></div>
       <div class="feed-empty" id="feed-empty">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8M12 13c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0c0-4-3-7-7-7 0 4 3 7 7 7Z"/></svg>
@@ -779,6 +865,7 @@ h2.big em{font-style:italic;color:var(--green)}
     <div class="inbox-hd"><h3>Your inbox</h3><button class="x" onclick="closeInbox()">✕</button></div>
     <div class="inbox-tabs" id="inbox-tabs">
       <button id="ib-tab-notif" class="act" onclick="setInboxTab('notif')">Replies to you</button>
+      <button id="ib-tab-releases" onclick="setInboxTab('releases')">New Releases<span class="newdot" id="ib-rel-dot" style="display:none"></span></button>
     </div>
     <div class="inbox-tools" id="inbox-tools"><span id="inbox-count"></span><button id="inbox-markread" onclick="markAllRead()">Mark all read</button></div>
     <div class="inbox-list" id="inbox-list"></div>
@@ -830,11 +917,43 @@ const STMTS_BASE=[
 function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0000-'+n.toString().padStart(12,'0');}
 STMTS_BASE.forEach(s=>{s.qid=stmtQID(s.id);s.kind='statement';});
 
+// ══════════════════════════════════════════
+//  RELEASES  (What's New on Mycelium — Mycelium's own announcements)
+//  Each release is anchored to a real questions row (fixed id) so the exact
+//  same reply + reaction machinery as any post attaches to it. Releases stay
+//  OFF the discussion board — they surface only in the What's New dropdown and
+//  the inbox. Author shows as "Mycelium", like a house account.
+// ══════════════════════════════════════════
+const RELEASES=[
+  {
+    id:'rel-bag-001',
+    qid:'00000000-0000-0000-0001-000000000001',
+    cat:'report',
+    flair:'Baganihan Report',
+    fc:'#2F6B3A',
+    title:'Issue No. 001 · Building Community Resilience',
+    summary:"The first Baganihan Community Situation Report. Seeing change early, strengthening what a community already has, and deciding together.",
+    image:'/images/baganihan/community-garden.jpg',
+    link:'/resources/baganihan/issue-001-community-resilience',
+    cta:'Read the report',
+    at:'2026-07-24T06:00:00+08:00',
+    icon:'BR', inboxTitle:'New Baganihan Report'
+  },
+];
+const RELEASE_INDEX={}; const RELEASE_QIDS=new Set();
+RELEASES.forEach(r=>{r.kind='release';r.by=null;r.byName='Mycelium';r.byColor='#2F4F2F';r.text='';RELEASE_INDEX[r.id]=r;RELEASE_INDEX[r.qid]=r;RELEASE_QIDS.add(r.qid);});
+let RELEASE_FILTER='all';
+function relSeenKey(){return 'cg-releases-seen';}
+function loadSeenReleases(){try{return new Set(JSON.parse(localStorage.getItem(relSeenKey())||'[]'));}catch(e){return new Set();}}
+function unseenReleaseCount(){const seen=loadSeenReleases();return RELEASES.filter(r=>!seen.has(r.id)).length;}
+function markReleasesSeen(){try{localStorage.setItem(relSeenKey(),JSON.stringify(RELEASES.map(r=>r.id)));}catch(e){}updateReleaseSignals();}
+
 // ── LIVE POST REGISTRY ──
 let QINDEX={};
 async function loadQuestions(){
   APP.dynamicQ=[];QINDEX={};
   STMTS_BASE.forEach(s=>{QINDEX[s.qid]=s;});
+  RELEASES.forEach(r=>{QINDEX[r.qid]=r;}); // register releases so their replies/reactions resolve — the QINDEX guard below then keeps their anchor rows off the board
   try{
     const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,edited_at,kind,media,media_url,media_type,media_name').eq('status','approved').order('created_at',{ascending:true});
     if(!error&&data){
@@ -863,7 +982,7 @@ async function loadQuestions(){
 // ══════════════════════════════════════════
 async function loadReplies(){
   APP.replies={};
-  const qids=[...new Set([...APP.dynamicQ.map(q=>q.qid),...STMTS_BASE.map(s=>s.qid)])];
+  const qids=[...new Set([...APP.dynamicQ.map(q=>q.qid),...STMTS_BASE.map(s=>s.qid),...RELEASES.map(r=>r.qid)])];
   if(!qids.length)return;
   try{
     const{data,error}=await sb.from('replies').select('id,question_id,user_id,body,created_at,edited_at,media,media_url,media_type,media_name').in('question_id',qids).order('created_at',{ascending:true});
@@ -901,6 +1020,7 @@ async function submitReply(stId){
       try{await sb.from('notifications').insert({recipient_id:st.by,actor_id:APP.user.id,kind:'reply',question_id:st.qid,reply_id:data.id,preview:(stripMd(body)||'[photo or video]').slice(0,140)});}catch(e){}
     }
     renderFeed();
+    if(RELEASE_QIDS.has(st.qid))renderReleases();
     if(POST_OPEN===stId)renderPostModal(stId);
     toast('Reply sent.');
   }finally{submitReply._busy=false;}
@@ -911,6 +1031,7 @@ async function deleteReply(stId,rid){
   if(error){toast('Could not remove that reply.');return;}
   APP.replies[st.qid]=(APP.replies[st.qid]||[]).filter(r=>r.id!==rid);
   renderFeed();
+  if(RELEASE_QIDS.has(st.qid))renderReleases();
   if(POST_OPEN===stId)renderPostModal(stId);
 }
 
@@ -1147,7 +1268,7 @@ const FIRE_DAILY=10; // the campfire is a batch of ten a day
 const MAX_MEDIA=8*1024*1024; // 8 MB cap on photos and videos
 const MAX_ATTACH=4; // up to four attachments per post/reply
 // any post lookup: community posts live in dynamicQ, the eight seeds live in APP.stmts
-function findPost(id){return APP.dynamicQ.find(q=>q.id===id)||APP.stmts.find(s=>s.id===id)||STMTS_BASE.find(s=>s.id===id)||null;}
+function findPost(id){return APP.dynamicQ.find(q=>q.id===id)||APP.stmts.find(s=>s.id===id)||STMTS_BASE.find(s=>s.id===id)||RELEASE_INDEX[id]||null;}
 const g=id=>document.getElementById(id);
 function toast(msg){const el=g('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),2800);}
 function initials(name){return (name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();}
@@ -1821,6 +1942,48 @@ function renderFeed(){
       +'</div>';
   }).join('');
 }
+// ── What's New on Mycelium: the release dropdown, its cards, and the "new" signals ──
+function releaseCardHtml(r){
+  const reps=uniqById(APP.replies[r.qid]).length;
+  const cta=r.cat==='video'?'Watch the video':(r.cat==='event'?'See the event':(r.cta||'Read it'));
+  return '<div class="pcard update" style="--fc:'+r.fc+'" onclick="openReleaseLink(\''+r.id+'\')">'
+    +'<div class="pcard-top"><span class="flair f-'+r.cat+'">'+escHtml(r.flair)+'</span><span class="pcard-time">'+timeAgo(r.at)+'</span></div>'
+    +'<div class="pcard-text">'+escHtml(r.title)+'</div>'
+    +'<a class="up-link" style="--fc:'+r.fc+'" href="'+r.link+'" onclick="event.stopPropagation()">'+escHtml(cta)+' →</a>'
+    +'<div class="pcard-foot"><span class="pcard-who"><span class="pcard-ava" style="background:'+r.byColor+'">'+escHtml(initials(r.byName))+'</span>'+escHtml(r.byName)+' <span class="up-off">Update</span></span>'
+    +'<button class="up-discuss" onclick="event.stopPropagation();openPost(\''+r.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'+reps+' '+(reps===1?'reply':'replies')+'</button></div>'
+    +'</div>';
+}
+function renderReleases(){
+  const board=g('wn-board');if(!board)return;
+  const cat=RELEASE_FILTER;
+  const list=RELEASES.filter(r=>cat==='all'||r.cat===cat);
+  if(!list.length){
+    const label={report:'reports',video:'videos',event:'events'}[cat]||'updates';
+    const msg=cat==='event'?'No upcoming events right now. They’ll show up here first.':'No new '+label+' yet. New '+label+' will show up here.';
+    board.innerHTML='<div class="wn-empty">'+msg+'</div>';return;
+  }
+  board.innerHTML=list.slice().sort((a,b)=>new Date(b.at)-new Date(a.at)).map(releaseCardHtml).join('');
+}
+function filterReleases(cat,btn){
+  RELEASE_FILTER=cat;
+  document.querySelectorAll('#wn-chips .wn-chip').forEach(c=>c.classList.toggle('act',c===btn));
+  renderReleases();
+}
+function toggleWN(){
+  const wn=g('wn');const opening=!wn.classList.contains('open');
+  wn.classList.toggle('open');
+  if(opening)markReleasesSeen();
+}
+function openReleaseLink(rid){const r=RELEASE_INDEX[rid];if(r&&r.link)window.location.href=r.link;}
+function updateReleaseSignals(){
+  const wn=g('wn');if(!wn)return;
+  wn.style.display=RELEASES.length?'':'none';
+  const n=unseenReleaseCount();
+  const cnt=g('wn-count');
+  if(cnt)cnt.innerHTML=n>0?('<span class="newdot"></span>'+n+' new'):'';
+  const dot=g('ib-rel-dot');if(dot)dot.style.display=n>0?'':'none';
+}
 // ── the focused post: full text, hidden weigh-in, and the reply thread ──
 function openPost(id){POST_OPEN=id;POST_REVEAL=null;renderPostModal(id);g('post-ov').classList.add('open');const p=findPost(id);if(p)loadReactions(p).then(()=>{if(POST_OPEN===id)renderPostModal(id);});}
 function closePost(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;POST_OPEN=null;POST_REVEAL=null;g('post-ov').classList.remove('open');}
@@ -1859,6 +2022,7 @@ async function saveReplyEdit(pid,rid){
 }
 function renderPostModal(id){
   const q=findPost(id);if(!q){closePost();return;}
+  if(q.kind==='release'){renderReleaseModal(q);return;}
   const m=g('post-modal');
   const reps=uniqById(APP.replies[q.qid]);
   const byName=q.byName||'Common Ground', byColor=q.byColor||'#6f7d52';
@@ -1901,6 +2065,36 @@ function renderPostModal(id){
     +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
     +replyPreview
     +'<div class="reply-compose">'+fmtBarSlim('rf-'+id)+'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" multiple style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><div id="rf-'+id+'" class="rich-editor re-reply is-empty" contenteditable="true" data-ph="Write a reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'rf-'+id+'\')" onmouseup="updateFmtState(\'rf-'+id+'\')" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)" ondragover="onMediaDragOver(event)" ondragleave="onMediaDragLeave(event)" ondrop="onMediaDrop(event,\'pendingReplyMedia\',function(){if(POST_OPEN)renderPostModal(POST_OPEN)})"></div><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div></div>';
+}
+
+// ── a Mycelium release: the report/video/event, its "Read it" link, and the same reply + reaction thread as any post ──
+function renderReleaseModal(q){
+  const m=g('post-modal');
+  const id=q.id;
+  const reps=uniqById(APP.replies[q.qid]);
+  const hero=q.image?'<div class="rel-hero"><img src="'+q.image+'" alt=""></div>':'';
+  const replyList=reps.map(r=>{
+    const canEditR=APP.user&&(APP.user.isAdmin||r.by===APP.user.id);
+    const editingThis=EDIT_TARGET&&EDIT_TARGET.t==='reply'&&EDIT_TARGET.rid===r.id;
+    const rActs=canEditR&&!editingThis?'<button class="reply-del" onclick="editReply(\''+id+'\',\''+r.id+'\')">edit</button><button class="reply-del" onclick="deleteReply(\''+id+'\',\''+r.id+'\')">remove</button>':'';
+    const rBody=editingThis
+      ? '<div class="pm-edit">'+fmtBarSlim('edit-reply-ta')+'<div class="rich-editor re-edit" id="edit-reply-ta" contenteditable="true" data-ph="Edit your reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'edit-reply-ta\')" onmouseup="updateFmtState(\'edit-reply-ta\')" onpaste="pasteText(event)">'+richText(r.body||'')+'</div><div class="edit-actions"><button class="edit-save" onclick="saveReplyEdit(\''+id+'\',\''+r.id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
+      : (r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'');
+    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(mediaBlock(r)?'<div class="reply-media">'+mediaBlock(r)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
+  }).join('');
+  const rmList=APP.pendingReplyMedia||[];
+  const replyPreview=rmList.length?('<div class="compose-preview" style="display:flex;margin-bottom:8px">'+previewStrip(rmList,'pendingReplyMedia','()=>{if(POST_OPEN)renderPostModal(POST_OPEN)}')+'</div>'):'';
+  m.innerHTML='<button class="pm-x" onclick="closePost()">✕</button>'
+    +'<div class="pm-head"><span class="pm-ava" style="background:'+q.byColor+'">'+escHtml(initials(q.byName))+'</span><div class="pm-who"><div class="pm-name">'+escHtml(q.byName)+'</div><div class="pm-time">'+timeAgo(q.at)+' · Update</div></div></div>'
+    +'<span class="flair f-'+q.cat+' rel-kicker">'+escHtml(q.flair)+'</span>'
+    +'<div class="pm-text" style="font-family:var(--font-display);font-size:1.55rem;line-height:1.24;font-weight:500">'+escHtml(q.title)+'</div>'
+    +(q.summary?'<div class="pm-text">'+escHtml(q.summary)+'</div>':'')
+    +hero
+    +'<a class="rel-cta" style="--fc:'+q.fc+'" href="'+q.link+'" target="_blank" rel="noopener">'+escHtml(q.cta)+' →</a>'
+    +renderReactions('post',q.qid)
+    +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
+    +replyPreview
+    +'<div class="reply-compose">'+fmtBarSlim('rf-'+id)+'<div class="reply-form"><input type="file" id="rfile-'+id+'" accept="image/*,video/*,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.csv" multiple style="display:none" onchange="onReplyFile(event)"><button type="button" class="reply-attach" onclick="document.getElementById(\'rfile-'+id+'\').click()" title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05 12.25 20.24a5 5 0 0 1-7.07-7.07l9.19-9.19a3 3 0 0 1 4.24 4.24l-9.2 9.19a1 1 0 0 1-1.41-1.41l8.48-8.49"/></svg></button><button type="button" class="reply-attach emoji-btn" onclick="toggleEmoji(\'rf-'+id+'\',this)" title="Emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 14.5a4 4 0 0 0 7 0"/></svg></button><div id="rf-'+id+'" class="rich-editor re-reply is-empty" contenteditable="true" data-ph="Share a thought on this..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'rf-'+id+'\')" onmouseup="updateFmtState(\'rf-'+id+'\')" onkeydown="replyKey(event,\''+id+'\')" onpaste="onReplyPaste(event)" ondragover="onMediaDragOver(event)" ondragleave="onMediaDragLeave(event)" ondrop="onMediaDrop(event,\'pendingReplyMedia\',function(){if(POST_OPEN)renderPostModal(POST_OPEN)})"></div><button class="reply-send" onclick="submitReply(\''+id+'\')">Send</button></div></div></div>';
 }
 
 // ══════════════════════════════════════════
@@ -1968,6 +2162,7 @@ async function onRemoteReply(row){
   if(arr.some(r=>r.id===row.id))return; // re-check after the await: a duplicate realtime event may have added it while we waited
   arr.push({id:row.id,by:row.user_id,name,color,body:row.body,at:row.created_at,media:row.media,media_url:row.media_url,media_type:row.media_type,media_name:row.media_name});
   renderFeed();
+  if(RELEASE_QIDS.has(row.question_id))renderReleases();
   if(POST_OPEN&&st.id===POST_OPEN)renderPostModal(POST_OPEN);
 }
 function onRemoteAnswer(){
@@ -1984,7 +2179,8 @@ function onRemoteAnswer(){
 // ══════════════════════════════════════════
 function openInbox(){loadNotifications().then(()=>{loadBugReports().then(()=>{renderInbox();g('inbox-ov').classList.add('open');});});}
 function closeInbox(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;g('inbox-ov').classList.remove('open');}
-function setInboxTab(t){APP.inboxTab=t;g('ib-tab-notif').classList.toggle('act',t==='notif');const bt=g('ib-tab-bugs');if(bt)bt.classList.toggle('act',t==='bugs');renderInbox();}
+function setInboxTab(t){APP.inboxTab=t;g('ib-tab-notif').classList.toggle('act',t==='notif');const rt=g('ib-tab-releases');if(rt)rt.classList.toggle('act',t==='releases');const bt=g('ib-tab-bugs');if(bt)bt.classList.toggle('act',t==='bugs');renderInbox();}
+function openReleaseFromInbox(rid){closeInbox();openPost(rid);}
 function renderInbox(){
   const tabs=g('inbox-tabs');
   if(APP.user&&APP.user.isAdmin){
@@ -1999,6 +2195,22 @@ function renderInbox(){
     tools.style.display='none';
     if(!APP.bugs.length){list.innerHTML='<div class="inbox-empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="6" width="8" height="13" rx="4"/><path d="M12 2v3M5 11h14M4 15h3m10 0h3"/></svg><p>No bug reports yet.<br>When someone reports a problem, it lands here for you.</p></div>';return;}
     list.innerHTML=APP.bugs.map(b=>'<div class="bugrow'+(b.resolved?' done':'')+'"><div class="bt">'+escHtml(b.body)+'</div><div class="bm"><span>'+timeAgo(b.created_at)+' · '+escHtml(b.page||'')+'</span>'+(b.resolved?'<span class="bdone">Resolved</span>':'<button class="bresolve" onclick="resolveBug(\''+b.id+'\')">Mark resolved</button>')+'</div></div>').join('');
+    return;
+  }
+  if(APP.inboxTab==='releases'){
+    tools.style.display='none';
+    if(!RELEASES.length){list.innerHTML='<div class="inbox-empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><p>No releases yet.<br>New reports, videos, and events from Mycelium will show up here.</p></div>';return;}
+    const seen=loadSeenReleases();
+    list.innerHTML=RELEASES.slice().sort((a,b)=>new Date(b.at)-new Date(a.at)).map(r=>{
+      const unread=!seen.has(r.id);
+      return '<div class="nrel'+(unread?' unread':'')+'" onclick="openReleaseFromInbox(\''+r.id+'\')">'
+        +'<span class="nrel-ic" style="background:'+r.fc+'">'+escHtml(r.icon||initials(r.byName))+'</span>'
+        +'<div style="flex:1;min-width:0"><div class="nrel-title"><b>'+escHtml(r.inboxTitle||r.flair)+'</b></div>'
+        +'<div class="nrel-snip">'+escHtml(r.summary||r.title)+'</div>'
+        +'<div class="nrel-date">'+timeAgo(r.at)+'</div></div>'
+        +(unread?'<span class="nrel-un"></span>':'')+'</div>';
+    }).join('');
+    markReleasesSeen(); // opening the tab counts as seeing them
     return;
   }
   tools.style.display='flex';
@@ -2049,6 +2261,7 @@ function launchApp(){
   setComposeType('statement');
   buildFireBatch();
   renderStatement();renderMap();renderStats();renderGroups();renderFeed();renderYouLine();
+  renderReleases();updateReleaseSignals();
   subscribeRealtime();
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:.08});
   document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
