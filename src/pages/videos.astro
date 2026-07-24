@@ -47,7 +47,9 @@ const reelData = reels.map(r => ({
 
       <!-- Filter tabs -->
       <div class="vp-filters" id="vp-filters">
-        <button class="vp-filter active" data-filter="all">All</button>
+        <button class="vp-filter active" data-filter="all">All Videos</button>
+        <button class="vp-filter" data-filter="philippines">Philippines</button>
+        <button class="vp-filter" data-filter="international">International</button>
         <button class="vp-filter" data-filter="podcast">Podcast</button>
         <button class="vp-filter vp-filter-reels" data-filter="reels" id="reels-tab">Reel Talks on Permaculture</button>
       </div>
@@ -55,13 +57,13 @@ const reelData = reels.map(r => ({
       <!-- ─── VIDEO GRID ──────────────────────────────────── -->
       <div class="vp-grid" id="vp-grid">
         {videos.map((v, i) => {
-          const isPodcast = v.title?.toLowerCase().includes('podcast') || v.tags?.some((t: string) => t.toLowerCase().includes('podcast'));
+          const tagSlugs = (v.tags || []).map((t: string) => t.toLowerCase().replace(/\s+/g, '-')).join(' ');
           const thumb = v.thumbnail || (v.youtubeId ? `https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg` : null);
           const ytUrl = v.youtubeId ? `https://www.youtube.com/watch?v=${v.youtubeId}` : v.embedUrl;
           return (
             <div
               class="vc"
-              data-type={isPodcast ? 'podcast' : 'all'}
+              data-tags={tagSlugs}
               data-index={i}
               data-title={v.title?.toLowerCase()}
               data-author={(v.author || '').toLowerCase()}
@@ -233,8 +235,8 @@ const reelData = reels.map(r => ({
   }
 
   function cardMatches(c) {
-    const type = c.dataset.type;
-    const filterMatch = currentFilter === 'all' || type === currentFilter;
+    const tags = (c.dataset.tags || '').split(' ');
+    const filterMatch = currentFilter === 'all' || tags.includes(currentFilter);
     if (!filterMatch) return false;
     if (!searchQuery) return true;
     return (c.dataset.title || '').includes(searchQuery) || (c.dataset.author || '').includes(searchQuery);
