@@ -2295,7 +2295,15 @@ function closeBug(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;g
 // ── map guide walkthrough (opt-in; the face only loads when someone presses play) ──
 function openMapGuide(){g('mapguide-ov').classList.add('open');}
 function closeMapGuide(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;g('mapguide-ov').classList.remove('open');const v=g('mapguide-video');if(v){try{v.pause();}catch(_){}}const p=g('mapguide-poster');if(p)p.style.display='';}
-function playMapGuide(){const p=g('mapguide-poster');if(p)p.style.display='none';const v=g('mapguide-video');if(v){try{v.play();}catch(_){}}}
+function playMapGuide(){
+  const p=g('mapguide-poster');const v=g('mapguide-video');
+  if(!v)return;
+  if(p)p.style.display='none';
+  v.onerror=function(){if(p)p.style.display='';}; // load failure falls back to the poster, never a dead black box
+  try{v.load();}catch(_){}
+  const pr=v.play();
+  if(pr&&pr.catch)pr.catch(()=>{});
+}
 
 // ══════════════════════════════════════════
 //  LAUNCH
