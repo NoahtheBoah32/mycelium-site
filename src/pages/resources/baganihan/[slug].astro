@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteNav from '../../../components/SiteNav.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import { baganihanReports } from '../../../data/baganihan-reports.js';
+
+export function getStaticPaths() {
+  return baganihanReports.map((r) => ({ params: { slug: r.slug }, props: { report: r } }));
+}
+
+const { report } = Astro.props;
+const langs = [
+  ['en', report.versions.en],
+  ['fil', report.versions.fil],
+];
+---
+
+<BaseLayout title={`${report.cardTitle} — Baganihan Reports`}>
+  <SiteNav />
+
+  <article class="rpt">
+    <div class="rpt-topbar">
+      <a href="/resources" class="rpt-back">← Back to Resources</a>
+      <div class="rpt-brand">
+        <img src="/images/baganihan-logo.jpg" alt="Baganihan Collective" />
+        <span>Baganihan Reports</span>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="fil">Filipino</button>
+      </div>
+    </div>
+
+    {langs.map(([code, v]) => (
+      <div class={`report-lang${code === 'en' ? ' active' : ''}`} data-lang={code}>
+        <header class="rpt-header">
+          <span class="rpt-eyebrow">{v.docName} ({v.docCode})</span>
+          <span class="rpt-issue">{report.issueLabel} &middot; {report.date}</span>
+          <h1 class="rpt-title">{v.theme}</h1>
+        </header>
+
+        <figure class="rpt-hero">
+          <img src={report.hero} alt={v.theme} />
+          <figcaption>{report.heroCaption}</figcaption>
+        </figure>
+
+        <div class="rpt-body">
+          {v.blocks.map((b) => (
+            <>
+              {b.t === 'lead' && (
+                <div class="blk-lead">
+                  {b.label && <span class="blk-eyebrow">{b.label}</span>}
+                  <p>{b.text}</p>
+                </div>
+              )}
+
+              {b.t === 'prose' && (
+                <section class="blk">
+                  {b.label && <h2 class="blk-h">{b.label}</h2>}
+                  {b.paras.map((p) => <p class="blk-p">{p}</p>)}
+                </section>
+              )}
+
+              {b.t === 'status' && (
+                <section class="blk">
+                  <h2 class="blk-h">{b.label}</h2>
+                  <div class="status-list">
+                    {b.items.map((it) => (
+                      <div class="status-row">
+                        <span class={`status-dot ${it.lvl}`}></span>
+                        <div>
+                          <span class="status-title">{it.title}</span>
+                          <p class="status-text">{it.text}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {b.t === 'themeCards' && (
+                <section class="blk">
+                  <h2 class="blk-h">{b.label}</h2>
+                  {b.intro && <p class="blk-intro">{b.intro}</p>}
+                  <div class="theme-grid">
+                    {b.items.map((it) => (
+                      <div class="theme-card">
+                        <h3 class="theme-title">{it.title}</h3>
+                        <ul class="theme-q">
+                          {it.questions.map((q) => <li>{q}</li>)}
+                        </ul>
+                        <p class="theme-note">{it.note}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {b.t === 'bullets' && (
+                <section class="blk">
+                  <h2 class="blk-h">{b.label}</h2>
+                  {b.intro && <p class="blk-intro">{b.intro}</p>}
+                  <ul class="blk-bullets">
+                    {b.items.map((i) => <li>{i}</li>)}
+                  </ul>
+                  {b.note && <p class="blk-note">{b.note}</p>}
+                </section>
+              )}
+
+              {b.t === 'checklist' && (
+                <section class="blk">
+                  <h2 class="blk-h">{b.label}</h2>
+                  <ul class="blk-check">
+                    {b.items.map((i) => <li>{i}</li>)}
+                  </ul>
+                </section>
+              )}
+
+              {b.t === 'questions' && (
+                <section class="blk">
+                  <h2 class="blk-h">{b.label}</h2>
+                  {b.intro && <p class="blk-intro">{b.intro}</p>}
+                  <ul class="blk-questions">
+                    {b.items.map((i) => <li>{i}</li>)}
+                  </ul>
+                  {b.note && <p class="blk-note">{b.note}</p>}
+                </section>
+              )}
+
+              {b.t === 'quote' && (
+                <blockquote class="blk-quote">
+                  {b.label && <span class="quote-label">{b.label}</span>}
+                  <p>{b.text}</p>
+                </blockquote>
+              )}
+
+              {b.t === 'image' && (
+                <figure class="blk-figure">
+                  <img src={b.src} alt={b.caption} loading="lazy" />
+                  {b.caption && <figcaption>{b.caption}</figcaption>}
+                </figure>
+              )}
+            </>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <div class="rpt-cta">
+      <span class="rpt-cta-eyebrow">Common Ground</span>
+      <h3 class="rpt-cta-h">Talk it through with the community</h3>
+      <p class="rpt-cta-p">Bring what you are seeing in your own place. Answer a few statements, find who thinks like you, and decide together.</p>
+      <a href="/common-ground" class="rpt-cta-btn">Join the conversation</a>
+    </div>
+  </article>
+
+  <SiteFooter />
+</BaseLayout>
+
+<script>
+  const btns = Array.from(document.querySelectorAll('.lang-btn'));
+  const panes = Array.from(document.querySelectorAll('.report-lang'));
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const l = btn.getAttribute('data-lang');
+      btns.forEach((x) => x.classList.toggle('active', x.getAttribute('data-lang') === l));
+      panes.forEach((x) => x.classList.toggle('active', x.getAttribute('data-lang') === l));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .rpt { background: #fdfdfb; color: #2b2b26; }
+
+  /* topbar */
+  .rpt-topbar { max-width: 1000px; margin: 0 auto; padding: 22px 24px 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .rpt-back { font-family: var(--font-inter); font-size: 0.82rem; font-weight: 600; color: #6a6a5f; text-decoration: none; }
+  .rpt-back:hover { color: #2F6B3A; }
+  .rpt-brand { display: flex; align-items: center; gap: 9px; }
+  .rpt-brand img { width: 30px; height: 30px; border-radius: 6px; object-fit: cover; }
+  .rpt-brand span { font-family: var(--font-inter); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #2F6B3A; }
+  .lang-toggle { display: inline-flex; background: #eef0ea; border-radius: 40px; padding: 3px; }
+  .lang-btn { font-family: var(--font-inter); font-size: 0.78rem; font-weight: 600; color: #6a6a5f; background: transparent; border: none; padding: 7px 16px; border-radius: 40px; cursor: pointer; transition: all 0.15s; }
+  .lang-btn.active { background: #2F4F2F; color: #fff; }
+
+  /* language panes */
+  .report-lang { display: none; }
+  .report-lang.active { display: block; }
+
+  /* header */
+  .rpt-header { max-width: 760px; margin: 0 auto; padding: 40px 24px 26px; text-align: center; }
+  .rpt-eyebrow { display: block; font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #C4872A; margin-bottom: 12px; }
+  .rpt-issue { display: block; font-family: var(--font-inter); font-size: 0.82rem; color: #8a8a7d; letter-spacing: 0.04em; margin-bottom: 16px; }
+  .rpt-title { font-family: var(--font-serif); font-size: clamp(1.9rem, 4vw, 2.9rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; color: #23281c; text-wrap: balance; }
+
+  /* hero */
+  .rpt-hero { max-width: 960px; margin: 8px auto 0; padding: 0 24px; }
+  .rpt-hero img { width: 100%; aspect-ratio: 16/8; object-fit: cover; border-radius: 14px; box-shadow: 0 20px 50px -28px rgba(0,0,0,0.4); }
+  .rpt-hero figcaption { font-family: var(--font-inter); font-size: 0.82rem; font-style: italic; color: #8a8a7d; text-align: center; margin-top: 12px; max-width: 620px; margin-left: auto; margin-right: auto; }
+
+  /* body column */
+  .rpt-body { max-width: 720px; margin: 0 auto; padding: 44px 24px 20px; }
+  .blk { margin-bottom: 40px; }
+  .blk-h { font-family: var(--font-serif); font-size: 1.55rem; font-weight: 500; color: #2F4F2F; line-height: 1.2; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #e7e5da; }
+  .blk-p { font-family: var(--font-inter); font-size: 1.02rem; line-height: 1.78; color: #40403a; margin-bottom: 16px; }
+  .blk-intro { font-family: var(--font-inter); font-size: 0.95rem; font-weight: 600; color: #6a6a5f; margin-bottom: 16px; }
+  .blk-note { font-family: var(--font-inter); font-size: 0.92rem; font-style: italic; color: #7a7a6d; margin-top: 16px; }
+
+  /* lead / executive summary */
+  .blk-lead { max-width: 720px; margin: 0 auto; padding: 8px 24px 30px; }
+  .blk-eyebrow { display: block; font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C4872A; margin-bottom: 12px; }
+  .blk-lead p { font-family: var(--font-serif); font-size: 1.32rem; line-height: 1.6; color: #33362b; font-weight: 400; }
+
+  /* strategic horizon status list */
+  .status-list { display: flex; flex-direction: column; gap: 14px; }
+  .status-row { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1px solid #ebe9de; border-radius: 12px; padding: 16px 18px; }
+  .status-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .status-dot.watch { background: #D9A24A; box-shadow: 0 0 0 4px rgba(217,162,74,0.16); }
+  .status-dot.strong { background: #4E8C4A; box-shadow: 0 0 0 4px rgba(78,140,74,0.16); }
+  .status-title { font-family: var(--font-inter); font-size: 0.98rem; font-weight: 700; color: #2b2b26; }
+  .status-text { font-family: var(--font-inter); font-size: 0.92rem; line-height: 1.6; color: #5f5f54; margin-top: 3px; }
+
+  /* theme cards (FIL observation) */
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .theme-card { background: #fff; border: 1px solid #ebe9de; border-radius: 12px; padding: 18px 18px 16px; }
+  .theme-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 500; color: #2F6B3A; margin-bottom: 10px; }
+  .theme-q { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .theme-q li { font-family: var(--font-inter); font-size: 0.9rem; line-height: 1.5; color: #5f5f54; padding-left: 14px; position: relative; }
+  .theme-q li::before { content: '?'; position: absolute; left: 0; color: #C4872A; font-weight: 700; }
+  .theme-note { font-family: var(--font-inter); font-size: 0.9rem; font-weight: 600; color: #2F4F2F; line-height: 1.5; border-top: 1px solid #eee; padding-top: 10px; }
+
+  /* bullets */
+  .blk-bullets { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+  .blk-bullets li { font-family: var(--font-inter); font-size: 0.96rem; color: #40403a; padding-left: 20px; position: relative; line-height: 1.5; }
+  .blk-bullets li::before { content: ''; position: absolute; left: 0; top: 8px; width: 8px; height: 8px; background: #2F6B3A; border-radius: 2px; transform: rotate(45deg); }
+
+  /* checklist */
+  .blk-check { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .blk-check li { font-family: var(--font-inter); font-size: 0.98rem; color: #3a3a34; padding-left: 34px; position: relative; line-height: 1.55; }
+  .blk-check li::before { content: ''; position: absolute; left: 0; top: 1px; width: 19px; height: 19px; border: 2px solid #c0bfae; border-radius: 5px; background: #fff; }
+
+  /* questions */
+  .blk-questions { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .blk-questions li { font-family: var(--font-serif); font-size: 1.18rem; font-style: italic; color: #33362b; padding-left: 18px; border-left: 3px solid #D9A24A; line-height: 1.4; }
+
+  /* pull-quote / reflection */
+  .blk-quote { margin: 46px auto; padding: 34px 30px; background: linear-gradient(160deg, #26301d, #1c2415); border-radius: 16px; text-align: center; }
+  .quote-label { display: block; font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #D9A24A; margin-bottom: 16px; }
+  .blk-quote p { font-family: var(--font-serif); font-size: 1.3rem; font-style: italic; line-height: 1.55; color: #f2efe2; text-wrap: balance; }
+
+  /* in-body figure */
+  .blk-figure { margin: 36px 0; }
+  .blk-figure img { width: 100%; aspect-ratio: 3/2; object-fit: cover; border-radius: 12px; }
+  .blk-figure figcaption { font-family: var(--font-inter); font-size: 0.82rem; font-style: italic; color: #8a8a7d; text-align: center; margin-top: 10px; }
+
+  /* Common Ground CTA */
+  .rpt-cta { max-width: 720px; margin: 20px auto 70px; padding: 44px 30px; text-align: center; background: #f4f2e9; border: 1px solid #e7e4d5; border-radius: 18px; }
+  .rpt-cta-eyebrow { display: block; font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #C4872A; margin-bottom: 12px; }
+  .rpt-cta-h { font-family: var(--font-serif); font-size: 1.7rem; font-weight: 400; color: #23281c; margin-bottom: 12px; }
+  .rpt-cta-p { font-family: var(--font-inter); font-size: 0.98rem; line-height: 1.6; color: #5f5f54; max-width: 520px; margin: 0 auto 24px; }
+  .rpt-cta-btn { display: inline-block; font-family: var(--font-inter); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.02em; color: #fff; background: #2F4F2F; padding: 14px 34px; border-radius: 50px; text-decoration: none; transition: background 0.15s; }
+  .rpt-cta-btn:hover { background: #3f6b3f; }
+
+  @media (max-width: 640px) {
+    .theme-grid { grid-template-columns: 1fr; }
+    .blk-bullets { grid-template-columns: 1fr; }
+    .rpt-topbar { justify-content: center; }
+  }
+</style>
