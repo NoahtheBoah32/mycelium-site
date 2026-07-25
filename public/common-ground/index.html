@@ -651,6 +651,9 @@ h2.big em{font-style:italic;color:var(--green)}
 .mapguide-x:hover{color:var(--ink);background:var(--cream-2)}
 .mapguide-body{position:relative;background:#000;aspect-ratio:16/9}
 .mapguide-body video{width:100%;height:100%;display:block;background:#000}
+.mapguide-foot{padding:11px 20px 14px;text-align:center}
+.mapguide-foot a{font-family:var(--font-ui);font-size:.82rem;font-weight:600;color:var(--amber);text-decoration:none}
+.mapguide-foot a:hover{text-decoration:underline}
 @media(max-width:640px){.mapguide-hd .mg-t{font-size:1.15rem}.mapguide-poster .pp-t{font-size:1.25rem}}
 </style>
 </head>
@@ -921,11 +924,12 @@ h2.big em{font-style:italic;color:var(--green)}
   <div class="mapguide-modal">
     <div class="mapguide-hd"><div class="mg-t">How to read the map<span>A quick walkthrough of how to read the map and understand this style of forum</span></div><button class="mapguide-x" onclick="closeMapGuide()">✕</button></div>
     <div class="mapguide-body">
-      <video id="mapguide-video" controls playsinline preload="none" poster="how-to-read-the-map-poster.jpg" controlslist="nodownload noremoteplayback" disablepictureinpicture>
-        <source src="how-to-read-the-map.mp4" type="video/mp4">
-        Your browser can’t play this video here. <a href="how-to-read-the-map.mp4" style="color:#fff">Open it in a new tab.</a>
+      <video id="mapguide-video" controls playsinline preload="none" poster="how-to-read-the-map-v2-poster.jpg" controlslist="nodownload noremoteplayback" disablepictureinpicture>
+        <source src="how-to-read-the-map-v2.mp4" type="video/mp4">
+        Your browser can’t play this video here. <a href="how-to-read-the-map-v2.mp4" style="color:#fff">Open it in a new tab.</a>
       </video>
     </div>
+    <div class="mapguide-foot"><a href="how-to-read-the-map-v2.mp4" target="_blank" rel="noopener">Video not playing? Open it in a new tab →</a></div>
   </div>
 </div>
 
