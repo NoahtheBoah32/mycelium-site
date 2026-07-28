@@ -951,15 +951,17 @@ const ADMIN_EMAIL='joaquinriego32@gmail.com';
 // ══════════════════════════════════════════
 //  SEED STATEMENTS (real rows in the questions table, fixed ids)
 // ══════════════════════════════════════════
+// Batch 2 wording (live 2026-07-28) on the SAME original qids, so every vote and every
+// member's map position carries over. The map evolves as people answer the new wording.
 const STMTS_BASE=[
-  {id:'s1',text:"Mycelium should feature techniques with proven, measurable results before experimental ones."},
-  {id:'s2',text:"Indigenous and traditional land practices deserve as much space as modern permaculture design."},
-  {id:'s3',text:"Content should only be called 'permaculture' if the practice truly heals the land."},
-  {id:'s4',text:"Market-gardening and small farming deserve a central place in the content."},
-  {id:'s5',text:"Every guide should stay free, even the most advanced material."},
-  {id:'s6',text:"Featured how-to content should come only from trained or certified practitioners."},
-  {id:'s7',text:"Mycelium should show every school of permaculture equally, without saying which is 'right'."},
-  {id:'s8',text:"When the community is split, the platform should show every side instead of picking one."},
+  {id:'s1',text:"A truly regenerative system needs animals, not just plants."},
+  {id:'s2',text:"No-till growing is always better for the soil than tilling."},
+  {id:'s3',text:"There is never a good reason to use synthetic herbicides or pesticides in a garden."},
+  {id:'s4',text:"A wild, messy garden is healthier than a neat and tidy one."},
+  {id:'s5',text:"Native plants should come before high-yield crops when they compete for space."},
+  {id:'s6',text:"Growing your own food is more about self-reliance than saving the planet."},
+  {id:'s7',text:"Relying on modern technology goes against the spirit of permaculture."},
+  {id:'s8',text:"Eating meat can never be truly sustainable."},
 ];
 function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0000-'+n.toString().padStart(12,'0');}
 STMTS_BASE.forEach(s=>{s.qid=stmtQID(s.id);s.kind='statement';});
