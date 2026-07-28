@@ -951,19 +951,17 @@ const ADMIN_EMAIL='joaquinriego32@gmail.com';
 // ══════════════════════════════════════════
 //  SEED STATEMENTS (real rows in the questions table, fixed ids)
 // ══════════════════════════════════════════
-// BATCH 2 (live 2026-07-28). Batch 1 (the Mycelium/indigenous set) is archived in the DB
-// under the 0000 qid block, votes preserved. These use the 0002 qid block.
 const STMTS_BASE=[
-  {id:'s1',text:"A truly regenerative system needs animals, not just plants."},
-  {id:'s2',text:"No-till growing is always better for the soil than tilling."},
-  {id:'s3',text:"There is never a good reason to use synthetic herbicides or pesticides in a garden."},
-  {id:'s4',text:"A wild, messy garden is healthier than a neat and tidy one."},
-  {id:'s5',text:"Native plants should come before high-yield crops when they compete for space."},
-  {id:'s6',text:"Growing your own food is more about self-reliance than saving the planet."},
-  {id:'s7',text:"Relying on modern technology goes against the spirit of permaculture."},
-  {id:'s8',text:"Eating meat can never be truly sustainable."},
+  {id:'s1',text:"Mycelium should feature techniques with proven, measurable results before experimental ones."},
+  {id:'s2',text:"Indigenous and traditional land practices deserve as much space as modern permaculture design."},
+  {id:'s3',text:"Content should only be called 'permaculture' if the practice truly heals the land."},
+  {id:'s4',text:"Market-gardening and small farming deserve a central place in the content."},
+  {id:'s5',text:"Every guide should stay free, even the most advanced material."},
+  {id:'s6',text:"Featured how-to content should come only from trained or certified practitioners."},
+  {id:'s7',text:"Mycelium should show every school of permaculture equally, without saying which is 'right'."},
+  {id:'s8',text:"When the community is split, the platform should show every side instead of picking one."},
 ];
-function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0002-'+n.toString().padStart(12,'0');}
+function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0000-'+n.toString().padStart(12,'0');}
 STMTS_BASE.forEach(s=>{s.qid=stmtQID(s.id);s.kind='statement';});
 
 // ══════════════════════════════════════════
@@ -1143,18 +1141,17 @@ async function resolveBug(id){
 //  CAMPS + POLIS MATH (real votes only)
 // ══════════════════════════════════════════
 const CAMPS=[
-  {name:"Wildtenders' Hollow",short:'Wildtenders',kind:'Let nature lead',color:'#4a7c4a',mapX:17,mapY:24,
-   lore:"This group lets the land lead. They keep things wild, skip the sprays, plant what belongs there, and trust nature and its animals over machines and quick fixes."},
-  {name:"Growers' Field",short:'Growers',kind:'Whatever feeds you',color:'#C4872A',mapX:66,mapY:20,
-   lore:"This group grows food first. They'll till a bed, use a tool or a spray when it helps, keep things tidy and productive, and mostly garden to feed their own table."},
-  {name:"Regenerators' Ridge",short:'Regenerators',kind:'Heal the whole system',color:'#9a6f9a',mapX:80,mapY:62,
-   lore:"This group thinks in whole systems. Animals and plants together to build living soil, guided by modern know-how, all aimed at healing land and climate more than filling a pantry."},
+  {name:"Stewards' Terrace",short:'Stewards',kind:'The proven ways',color:'#4a7c4a',mapX:17,mapY:24,
+   lore:"This group trusts what already works. They want proof, measured harvests, and training behind the advice we feature."},
+  {name:"Cultivators' Grove",short:'Cultivators',kind:'The open gates',color:'#C4872A',mapX:66,mapY:20,
+   lore:"This group keeps the gates open. Free guides, every beginner welcome, and room for every school of practice."},
+  {name:"Weavers' Crossing",short:'Weavers',kind:'The bridges',color:'#9a6f9a',mapX:80,mapY:62,
+   lore:"This group builds bridges. Old knowledge and new tools together, and every side of a split kept in view."},
 ];
-// One ideal vote pattern per camp, in statement order s1..s8 (agree=+1, disagree=-1). Only names the clusters.
 const ARCHETYPES=[
-  [ 1, 1, 1, 1, 1,-1, 1,-1],  // Wildtenders: animals yes, no-till, no chemicals, wild, native-first, planet-minded, low-tech, meat can be sustainable
-  [-1,-1,-1,-1,-1, 1,-1,-1],  // Growers: practical producer, tools and tilling fine, tidy, yield over native, self-reliance, pro-tech
-  [ 1, 1, 1,-1,-1,-1,-1, 1],  // Regenerators: animals + no-till + no chemicals, but designed not wild, food over strict native, planet-minded, modern, plant-forward
+  [ 1,-1, 1, 1,-1, 1,-1,-1],
+  [-1, 1,-1,-1, 1,-1, 1, 1],
+  [-1, 1, 1,-1, 1,-1, 1, 1].map((v,i)=>i>=6?1:v*0.3),
 ];
 function enc(v){return v==='agree'?1:v==='disagree'?-1:0;}
 function dot(a,b){let s=0;for(let i=0;i<a.length;i++)s+=a[i]*b[i];return s;}
