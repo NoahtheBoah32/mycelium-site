@@ -951,8 +951,9 @@ const ADMIN_EMAIL='joaquinriego32@gmail.com';
 // ══════════════════════════════════════════
 //  SEED STATEMENTS (real rows in the questions table, fixed ids)
 // ══════════════════════════════════════════
-// Batch 2 wording (live 2026-07-28) on the SAME original qids, so every vote and every
-// member's map position carries over. The map evolves as people answer the new wording.
+// Batch 2 (live 2026-07-28): the visible campfire statements, on a FRESH qid block so each one
+// starts at zero answers. Batch 1's votes live on as MAP_ANCHORS below — they still shape the
+// map (the groups keep their placements) but the old questions themselves are never shown again.
 const STMTS_BASE=[
   {id:'s1',text:"A truly regenerative system needs animals, not just plants."},
   {id:'s2',text:"No-till growing is always better for the soil than tilling."},
@@ -963,8 +964,13 @@ const STMTS_BASE=[
   {id:'s7',text:"Relying on modern technology goes against the spirit of permaculture."},
   {id:'s8',text:"Eating meat can never be truly sustainable."},
 ];
-function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0000-'+n.toString().padStart(12,'0');}
+function stmtQID(id){const n=parseInt(id.slice(1));return'00000000-0000-0000-0002-'+n.toString().padStart(12,'0');}
 STMTS_BASE.forEach(s=>{s.qid=stmtQID(s.id);s.kind='statement';});
+// MAP_ANCHORS: batch 1's retired statements. Never displayed. Their existing votes stay in the
+// map as hidden columns so the groups keep their shape and everyone stays placed; as people
+// answer the new statements, the map shifts off these. (qids are batch 1's original 0000 block.)
+const MAP_ANCHORS=[{id:'a1'},{id:'a2'},{id:'a3'},{id:'a4'},{id:'a5'},{id:'a6'},{id:'a7'},{id:'a8'}];
+MAP_ANCHORS.forEach(s=>{s.qid='00000000-0000-0000-0000-'+parseInt(s.id.slice(1)).toString().padStart(12,'0');s.kind='statement';s.text='';s.hidden=true;});
 
 // ══════════════════════════════════════════
 //  RELEASES  (What's New on Mycelium — Mycelium's own announcements)
@@ -1002,6 +1008,7 @@ let QINDEX={};
 async function loadQuestions(){
   APP.dynamicQ=[];QINDEX={};
   STMTS_BASE.forEach(s=>{QINDEX[s.qid]=s;});
+  MAP_ANCHORS.forEach(s=>{QINDEX[s.qid]=s;}); // retired batch-1 statements: their votes still feed the map as hidden columns, and this guard keeps their rows off the board
   RELEASES.forEach(r=>{QINDEX[r.qid]=r;}); // register releases so their replies/reactions resolve — the QINDEX guard below then keeps their anchor rows off the board
   try{
     const{data,error}=await sb.from('questions').select('id,body,proposed_by,created_at,edited_at,kind,media,media_url,media_type,media_name').eq('status','approved').order('created_at',{ascending:true});
@@ -1021,9 +1028,10 @@ async function loadQuestions(){
       }
     }
   }catch(e){console.error('[CG] loadQuestions failed',e);}
-  // statements (seed + community) feed the vote flow and the map; questions live only on the floor
+  // statements feed the vote flow and the map; questions live only on the floor.
+  // MAP_ANCHORS are map columns only (hidden) — the campfire (buildFireBatch) uses STMTS_BASE.
   const communityStmts=APP.dynamicQ.filter(q=>q.kind==='statement');
-  APP.stmts=[...STMTS_BASE,...communityStmts];
+  APP.stmts=[...STMTS_BASE,...MAP_ANCHORS,...communityStmts];
 }
 
 // ══════════════════════════════════════════
@@ -1267,7 +1275,7 @@ function computeClusters(){
       });
       clusters.push({members,centroid:cents[c],meanVote,camp:null});
     }
-    const paddedArch=ARCHETYPES.map(ar=>COLS.map(s=>{const si=STMTS_BASE.indexOf(s);return si>=0?ar[si]:0;}));
+    const paddedArch=ARCHETYPES.map(ar=>COLS.map(s=>{const si=MAP_ANCHORS.indexOf(s);return si>=0?ar[si]:0;})); // archetypes were tuned to batch 1, now the hidden anchors — keeps the groups named as they were
     const scores=[];
     clusters.forEach((cl,i)=>paddedArch.forEach((ar,j)=>scores.push([dot(cl.meanVote,ar),i,j])));
     scores.sort((a,b)=>b[0]-a[0]);
@@ -1277,6 +1285,7 @@ function computeClusters(){
     clusters.forEach(cl=>{
       let rep=null;
       COLS.forEach((s,j)=>{
+        if(s.hidden)return; // never surface a retired statement as a group's representative line
         const own=cl.meanVote[j];
         const others=clusters.filter(x=>x!==cl);
         if(!others.length)return;
