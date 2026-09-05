@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { baganihanReports } from '../data/baganihan-reports.js';
+import { upouStudies } from '../data/upou-research.js';
 
 const articles = [
   { cat: "Community Event", title: "Kabuohan Workshop", desc: "A full-day parent-child learning journey in permaculture gardening and primitive pottery, hosted by Baganihan Collective at Pacita Organic Garden.", img: "/images/events/kabuohan/group-lawn.jpg", learn: "/events/kabuohan-workshop", view: null, internal: true, cta: "View Recap" },
@@ -18,10 +19,14 @@ const bagCards = baganihanReports.map((r) => ({
   cat: "Baganihan Reports", bag: true, internal: true, cta: "Read Report",
   title: r.cardTitle, desc: r.cardSummary, img: r.cardImage, learn: `/resources/baganihan/${r.slug}`,
 }));
-const cards = [...bagCards, ...articles];
+const upCards = upouStudies.map((s) => ({
+  cat: "UP Research", up: true, internal: true, cta: "Read the Study",
+  title: s.cardTitle, desc: s.cardSummary, img: s.cardImage, learn: `/resources/research/${s.slug}`,
+}));
+const cards = [...bagCards, ...upCards, ...articles];
 
 const slug = (s) => s.toLowerCase().replace(/\s+/g, '-');
-const catOrder = ["Baganihan Reports", "Getting Started", "Beginner", "Intermediate", "Community Event"];
+const catOrder = ["Baganihan Reports", "UP Research", "Getting Started", "Beginner", "Intermediate", "Community Event"];
 const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
 ---
 
@@ -47,7 +52,7 @@ const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
 
       <div class="rp-grid" id="rp-grid">
         {cards.map(a => (
-          <div class={`rc${a.bag ? ' rc-bag' : ''}`} data-cat={slug(a.cat)}>
+          <div class={`rc${a.bag ? ' rc-bag' : ''}${a.up ? ' rc-up' : ''}`} data-cat={slug(a.cat)}>
             {a.img && (
               <div class="rc-thumb">
                 <img src={a.img} alt={a.title} loading="lazy" />
@@ -56,13 +61,13 @@ const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
             <div class="rc-body">
               {a.bag
                 ? <span class="rc-cat rc-cat-bag"><img src="/images/baganihan-logo.jpg" alt="" class="rc-bag-tag-logo" />{a.cat}</span>
-                : <span class="rc-cat">{a.cat}</span>
+                : <span class={`rc-cat${a.up ? ' rc-cat-up' : ''}`}>{a.cat}</span>
               }
               <h3 class="rc-title">{a.title}</h3>
               <p class="rc-desc">{a.desc}</p>
               <div class="rc-actions">
                 {a.internal
-                  ? <a href={a.learn} class={`btn-view${a.bag ? ' btn-view-bag' : ''}`}>{a.cta || 'Learn More'}</a>
+                  ? <a href={a.learn} class={`btn-view${a.bag ? ' btn-view-bag' : a.up ? ' btn-view-up' : ''}`}>{a.cta || 'Learn More'}</a>
                   : <>
                       <a href={a.learn} target="_blank" rel="noopener" class="btn-learn">Learn More</a>
                       {a.view && <a href={a.view} target="_blank" rel="noopener" class="btn-view">View Resource</a>}
@@ -129,6 +134,12 @@ const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
 .rc-bag-tag-logo { width: 15px; height: 15px; border-radius: 3px; object-fit: cover; }
 .btn-view-bag { background: #2F6B3A; }
 .btn-view-bag:hover { background: #3f8c4e; }
+
+/* UP Research branded card */
+.rc-up { border-color: #e6d6d6; }
+.rc-cat-up { color: #7B1113; }
+.btn-view-up { background: #7B1113; }
+.btn-view-up:hover { background: #9a2a2c; }
 
 @media (max-width: 1024px) { .rp-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .rp-hero { padding: 40px 20px 28px; } .rp-grid-section { padding: 28px 20px 60px; } .rp-grid { grid-template-columns: 1fr; } }

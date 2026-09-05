@@ -1,0 +1,475 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteNav from '../../../components/SiteNav.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import { upouStudies, getStudy } from '../../../data/upou-research.js';
+
+export function getStaticPaths() {
+  return upouStudies.map((s) => ({ params: { slug: s.slug }, props: { study: s } }));
+}
+
+const { study: s } = Astro.props;
+const p = s.paper;
+const related = s.related ? getStudy(s.related) : null;
+const firstProse = s.blocks.findIndex((b) => b.t === 'p');
+const pos = (v) => (v ? `object-position:${v}` : undefined);
+---
+
+<BaseLayout title={`${s.cardTitle} — Research on Mycelium`} description={s.cardSummary}>
+  <SiteNav />
+  <div class="ra-progress" id="ra-progress" aria-hidden="true"></div>
+
+  <article class="ra">
+    <!-- ============ HERO ============ -->
+    <header class="ra-hero">
+      <div class="ra-hero-text">
+        <a href="/resources" class="ra-back">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Resources
+        </a>
+        <span class="ra-eyebrow">{s.kicker}</span>
+        <h1 class="ra-title" set:html={s.title} />
+        <p class="ra-dek">{s.dek}</p>
+        <div class="ra-byline">
+          <span class="ra-by-label">Research by</span>
+          <span class="ra-by-names">{s.authorsLine}</span>
+          <span class="ra-by-meta">{p.journalShort} &middot; {p.year} &middot; {s.readTime} minute read</span>
+        </div>
+      </div>
+      <figure class="ra-hero-fig">
+        <img src={s.hero.src} alt={s.hero.alt} style={pos(s.hero.pos)} fetchpriority="high" />
+        <figcaption>{s.hero.caption}</figcaption>
+      </figure>
+    </header>
+
+    <!-- ============ PAPER STRIP ============ -->
+    <section class="ra-strip" aria-label="About the paper">
+      <div class="ra-strip-in">
+        <div class="ra-cell">
+          <span class="ra-cell-l">Published in</span>
+          <span class="ra-cell-v">{p.journal}</span>
+          <span class="ra-cell-s">Vol. {p.volume}, No. {p.issue} &middot; {p.year} &middot; pp. {p.pages}</span>
+        </div>
+        <div class="ra-cell">
+          <span class="ra-cell-l">Institution</span>
+          <span class="ra-cell-v">{p.institution}</span>
+          <span class="ra-cell-s">{p.institutionSub}</span>
+        </div>
+        <div class="ra-cell">
+          <span class="ra-cell-l">{p.factLabel}</span>
+          <span class="ra-cell-v">{p.factValue}</span>
+          <span class="ra-cell-s">{p.factSub}</span>
+        </div>
+        <a class="ra-cell ra-cell-link" href={p.url} target="_blank" rel="noopener">
+          <span class="ra-cell-l">Source</span>
+          <span class="ra-cell-v">Read the full paper
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M6 4h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="ra-cell-s">{p.urlShort}</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ BODY ============ -->
+    <div class="ra-body">
+      {s.blocks.map((b, i) => (
+        <>
+          {b.t === 'p' && (
+            <div class:list={['ra-p', 'rv', { 'ra-dropcap': i === firstProse }]}>
+              {b.paras.map((t) => <p set:html={t} />)}
+            </div>
+          )}
+
+          {b.t === 'h' && (
+            <div class="ra-h rv">
+              {b.kicker && <span class="ra-h-kicker">{b.kicker}</span>}
+              <h2 set:html={b.text} />
+            </div>
+          )}
+
+          {b.t === 'fig' && (
+            <figure class:list={['ra-fig', `ra-fig-${b.size || 'wide'}`, 'rv']}>
+              <img src={b.src} alt={b.alt} style={pos(b.pos)} loading="lazy" />
+              {b.caption && <figcaption><span set:html={b.caption} />{b.credit && <span class="ra-credit"> {b.credit}</span>}</figcaption>}
+            </figure>
+          )}
+
+          {b.t === 'duo' && (
+            <div class="ra-duo rv">
+              {b.items.map((it) => (
+                <figure class="ra-duo-item">
+                  <img src={it.src} alt={it.alt} style={pos(it.pos)} loading="lazy" />
+                  {it.caption && <figcaption set:html={it.caption} />}
+                </figure>
+              ))}
+            </div>
+          )}
+
+          {b.t === 'quote' && (
+            <blockquote class="ra-quote rv">
+              <p set:html={b.text} />
+              {b.cite && <cite set:html={b.cite} />}
+            </blockquote>
+          )}
+
+          {b.t === 'stats' && (
+            <div class="ra-stats rv">
+              {b.label && <span class="ra-stats-label">{b.label}</span>}
+              <div class="ra-stats-grid">
+                {b.items.map((it) => (
+                  <div class="ra-stat">
+                    <span class="ra-stat-n">{it.n}</span>
+                    <span class="ra-stat-l" set:html={it.label} />
+                  </div>
+                ))}
+              </div>
+              {b.note && <p class="ra-stats-note" set:html={b.note} />}
+            </div>
+          )}
+
+          {b.t === 'list' && (
+            <div class="ra-list rv">
+              {b.label && <span class="ra-list-label">{b.label}</span>}
+              <dl>
+                {b.items.map((it) => (
+                  <div class="ra-list-row">
+                    <dt set:html={it.term} />
+                    <dd set:html={it.text} />
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+
+          {b.t === 'plate' && (
+            <aside class="ra-plate">
+              <div class="ra-plate-in rv">
+                {b.kicker && <span class="ra-plate-kicker">{b.kicker}</span>}
+                <p class="ra-plate-text" set:html={b.text} />
+                {b.sub && <p class="ra-plate-sub" set:html={b.sub} />}
+              </div>
+            </aside>
+          )}
+
+          {b.t === 'paperfig' && (
+            <figure class="ra-paperfig rv">
+              <span class="ra-paperfig-tag">{b.tag || 'From the paper'}</span>
+              <img src={b.src} alt={b.alt} loading="lazy" />
+              <figcaption>
+                <span set:html={b.caption} />
+                {b.source && <span class="ra-credit"> {b.source}</span>}
+              </figcaption>
+            </figure>
+          )}
+        </>
+      ))}
+    </div>
+
+    <!-- ============ END MATTER ============ -->
+    <section class="ra-end">
+      <div class="ra-end-in">
+        <div class="ra-cite rv">
+          <span class="ra-end-label">Cite this paper</span>
+          <p class="ra-apa">
+            {s.apa.authors} ({s.apa.year}). {s.apa.title} <em>{s.apa.journal}, {s.apa.volume}</em>({s.apa.issue}), {s.apa.pages}. <a href={s.apa.url} target="_blank" rel="noopener">{s.apa.url}</a>
+          </p>
+          <span class="ra-apa-note">APA 7th edition</span>
+          <div class="ra-end-actions">
+            <a href={p.url} target="_blank" rel="noopener" class="ra-btn ra-btn-solid">Read the full paper</a>
+            {p.pdf && <a href={p.pdf} target="_blank" rel="noopener" class="ra-btn ra-btn-ghost">Download the PDF</a>}
+          </div>
+        </div>
+
+        <div class="ra-authors rv">
+          <span class="ra-end-label">The researchers</span>
+          <ul>
+            {s.authors.map((a) => (
+              <li>
+                <span class="ra-author-name">{a.name}</span>
+                <span class="ra-author-note">{a.note}</span>
+              </li>
+            ))}
+          </ul>
+          {p.funding && <p class="ra-funding">{p.funding}</p>}
+        </div>
+      </div>
+
+      {related && (
+        <a href={`/resources/research/${related.slug}`} class="ra-related rv">
+          <div class="ra-related-img"><img src={related.cardImage} alt="" style={pos(related.cardPos)} loading="lazy" /></div>
+          <div class="ra-related-text">
+            <span class="ra-end-label">Read next</span>
+            <span class="ra-related-kicker">{related.kicker}</span>
+            <span class="ra-related-title" set:html={related.title} />
+            <span class="ra-related-sum">{related.cardSummary}</span>
+            <span class="ra-related-cta">Read the study</span>
+          </div>
+        </a>
+      )}
+
+      <div class="ra-cg rv">
+        <span class="ra-cg-eyebrow">Common Ground</span>
+        <h3 class="ra-cg-h">What does this look like where you live?</h3>
+        <p class="ra-cg-p">Bring what you noticed in this study to the community. Answer a few statements, find who thinks like you, and decide together.</p>
+        <a href="/common-ground" class="ra-btn ra-btn-solid">Join the conversation</a>
+      </div>
+    </section>
+  </article>
+
+  <SiteFooter />
+</BaseLayout>
+
+<script>
+  // reading progress
+  const bar = document.getElementById('ra-progress');
+  const article = document.querySelector('.ra');
+  function tick() {
+    if (!bar || !article) return;
+    const rect = article.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    const done = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+    bar.style.transform = `scaleX(${total > 0 ? done / total : 1})`;
+  }
+  window.addEventListener('scroll', tick, { passive: true });
+  window.addEventListener('resize', tick);
+  tick();
+
+  // gentle reveal
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = Array.from(document.querySelectorAll('.rv'));
+  if (reduce || !('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    els.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.9) el.classList.add('in');
+      else io.observe(el);
+    });
+  }
+</script>
+
+<style>
+  /* ---------- tokens ---------- */
+  .ra {
+    --paper: #F7F6F1;
+    --paper-2: #EFEDE5;
+    --ink: #1B1F17;
+    --ink-2: #4A4F44;
+    --ink-3: #7A7F72;
+    --rule: #D9D8CE;
+    --moss: #2F4F2F;
+    --moss-2: #3D6B3F;
+    --amber: #C4872A;
+    --amber-2: #D9A24A;
+    --plate: #1E1501;
+    --cream: #EDE8D8;
+    --cream-2: rgba(237,232,216,0.62);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .ra-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: #C4872A; transform-origin: 0 50%; transform: scaleX(0); z-index: 10000; pointer-events: none; }
+
+  .rv { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+
+  /* ---------- hero ---------- */
+  .ra-hero {
+    background: var(--plate);
+    color: var(--cream);
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    min-height: min(86vh, 900px);
+  }
+  .ra-hero-text {
+    padding: clamp(36px, 5vw, 72px) clamp(24px, 5vw, 64px) clamp(40px, 5vw, 72px) clamp(24px, 7vw, 120px);
+    display: flex; flex-direction: column; justify-content: center; gap: 22px;
+    max-width: 760px; justify-self: end; width: 100%;
+  }
+  .ra-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-inter); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; color: var(--cream-2); align-self: flex-start; margin-bottom: 8px; transition: color 0.15s; }
+  .ra-back:hover { color: #fff; }
+  .ra-eyebrow { font-family: var(--font-inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-2); }
+  .ra-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+    font-weight: 600; line-height: 1.0; letter-spacing: -0.015em;
+    color: #FBF8EE; text-wrap: balance;
+  }
+  .ra-title :global(em) { font-style: italic; font-weight: 500; color: var(--amber-2); }
+  .ra-dek { font-family: var(--font-lora); font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.6; color: var(--cream-2); max-width: 56ch; }
+  .ra-byline { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: baseline; border-top: 1px solid rgba(237,232,216,0.18); padding-top: 18px; margin-top: 6px; }
+  .ra-by-label { font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-2); }
+  .ra-by-names { font-family: var(--font-inter); font-size: 0.9rem; font-weight: 600; color: #FBF8EE; line-height: 1.5; }
+  .ra-by-meta { grid-column: 2; font-family: var(--font-inter); font-size: 0.78rem; color: var(--cream-2); letter-spacing: 0.02em; }
+
+  .ra-hero-fig { position: relative; min-height: 420px; margin: 0; }
+  .ra-hero-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ra-hero-fig::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, #1E1501 0%, rgba(30,21,1,0) 18%); z-index: 1; pointer-events: none; }
+  .ra-hero-fig figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 40px 28px 18px; font-family: var(--font-inter); font-size: 0.72rem; line-height: 1.5; color: rgba(255,255,255,0.72); background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%); }
+
+  /* ---------- paper strip ---------- */
+  .ra-strip { background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+  .ra-strip-in { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .ra-cell { padding: 22px 26px; display: flex; flex-direction: column; gap: 4px; border-left: 1px solid var(--rule); min-width: 0; }
+  .ra-cell:first-child { border-left: 0; }
+  .ra-cell-l { font-family: var(--font-inter); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+  .ra-cell-v { font-family: var(--font-lora); font-size: 0.98rem; font-weight: 500; color: var(--ink); line-height: 1.35; display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .ra-cell-s { font-family: var(--font-inter); font-size: 0.76rem; color: var(--ink-3); line-height: 1.45; }
+  .ra-cell-link { transition: background 0.15s; }
+  .ra-cell-link:hover { background: #E7E4D9; }
+  .ra-cell-link .ra-cell-v { color: var(--moss); }
+
+  /* ---------- editorial grid ---------- */
+  .ra-body {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(20px, 1fr)
+      [wide-start] minmax(0, 210px)
+      [col-start] minmax(0, 680px) [col-end]
+      minmax(0, 210px) [wide-end]
+      minmax(20px, 1fr) [full-end];
+    padding: clamp(44px, 6vw, 84px) 0 24px;
+  }
+  .ra-body > * { grid-column: col; min-width: 0; }
+
+  .ra-p { margin-bottom: 1.45em; }
+  .ra-p p { font-family: var(--font-lora); font-size: 1.13rem; line-height: 1.82; color: var(--ink-2); margin-bottom: 1.45em; }
+  .ra-p p:last-child { margin-bottom: 0; }
+  .ra-p :global(em) { font-style: italic; }
+  .ra-p :global(strong) { font-weight: 600; color: var(--ink); }
+  .ra-p :global(a) { color: var(--moss); border-bottom: 1px solid rgba(47,79,47,0.35); transition: border-color 0.15s; }
+  .ra-p :global(a:hover) { border-color: var(--moss); }
+  .ra-dropcap p:first-child::first-letter {
+    font-family: var(--font-serif); font-weight: 600; font-size: 4.9em; line-height: 0.78;
+    float: left; margin: 0.08em 0.12em 0 0; color: var(--moss);
+  }
+
+  .ra-h { margin: 2.6em 0 1.2em; }
+  .ra-h::before { content: ''; display: block; width: 44px; height: 2px; background: var(--amber); margin-bottom: 18px; }
+  .ra-h-kicker { display: block; font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); margin-bottom: 10px; }
+  .ra-h h2 { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.35rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; color: var(--ink); text-wrap: balance; }
+  .ra-h h2 :global(em) { font-style: italic; font-weight: 500; color: var(--moss-2); }
+
+  /* figures */
+  .ra-fig { margin: 2.2em 0 2.6em; }
+  .ra-fig-wide { grid-column: wide; }
+  .ra-fig-full { grid-column: full; margin-top: 2.6em; }
+  .ra-fig img { width: 100%; object-fit: cover; display: block; background: var(--paper-2); }
+  .ra-fig-col img { aspect-ratio: 4 / 5; border-radius: 4px; }
+  .ra-fig-wide img { aspect-ratio: 16 / 10; border-radius: 4px; }
+  .ra-fig-full img { aspect-ratio: 21 / 9; border-radius: 0; }
+  .ra-fig figcaption, .ra-duo figcaption, .ra-paperfig figcaption { font-family: var(--font-inter); font-size: 0.78rem; line-height: 1.55; color: var(--ink-3); margin-top: 12px; max-width: 680px; }
+  .ra-fig-full figcaption { padding: 0 24px; margin-left: auto; margin-right: auto; }
+  .ra-credit { color: #9A9E92; }
+
+  .ra-duo { grid-column: wide; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 2.2em 0 2.6em; }
+  .ra-duo-item { margin: 0; }
+  .ra-duo-item img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; background: var(--paper-2); }
+
+  /* pull quote */
+  .ra-quote { grid-column: wide; margin: 2.4em auto 2.8em; max-width: 860px; padding: 26px 0 0; border-top: 2px solid var(--amber); text-align: center; }
+  .ra-quote p { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: clamp(1.7rem, 2.9vw, 2.4rem); line-height: 1.22; color: var(--ink); text-wrap: balance; }
+  .ra-quote cite { display: block; margin-top: 16px; font-family: var(--font-inter); font-style: normal; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* stats */
+  .ra-stats { grid-column: wide; margin: 2.2em 0 2.8em; padding: 30px 0 22px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .ra-stats-label { display: block; font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 22px; }
+  .ra-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 22px 28px; }
+  .ra-stat { display: flex; flex-direction: column; gap: 6px; }
+  .ra-stat-n { font-family: var(--font-serif); font-size: clamp(2.4rem, 4vw, 3.4rem); font-weight: 600; line-height: 0.95; color: var(--moss); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .ra-stat-l { font-family: var(--font-inter); font-size: 0.82rem; line-height: 1.45; color: var(--ink-2); }
+  .ra-stats-note { font-family: var(--font-inter); font-size: 0.78rem; color: var(--ink-3); margin-top: 20px; line-height: 1.5; }
+
+  /* definition list */
+  .ra-list { margin: 1.6em 0 2.4em; }
+  .ra-list-label { display: block; font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  .ra-list dl { display: flex; flex-direction: column; }
+  .ra-list-row { display: grid; grid-template-columns: minmax(150px, 0.38fr) 1fr; gap: 6px 24px; padding: 16px 0; border-top: 1px solid var(--rule); }
+  .ra-list-row:last-child { border-bottom: 1px solid var(--rule); }
+  .ra-list dt { font-family: var(--font-serif); font-size: 1.28rem; font-weight: 600; color: var(--ink); line-height: 1.2; }
+  .ra-list dd { font-family: var(--font-lora); font-size: 0.98rem; line-height: 1.7; color: var(--ink-2); margin: 0; }
+  .ra-list dd :global(strong) { font-weight: 600; color: var(--moss); }
+
+  /* dark plate */
+  .ra-plate { grid-column: full; background: var(--plate); margin: 2.6em 0 3em; padding: clamp(56px, 8vw, 96px) 24px; }
+  .ra-plate-in { max-width: 860px; margin: 0 auto; text-align: center; }
+  .ra-plate-kicker { display: block; font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-2); margin-bottom: 22px; }
+  .ra-plate-text { font-family: var(--font-serif); font-size: clamp(1.9rem, 3.6vw, 3rem); font-weight: 500; line-height: 1.15; color: #FBF8EE; text-wrap: balance; }
+  .ra-plate-text :global(em) { font-style: italic; color: var(--amber-2); }
+  .ra-plate-sub { font-family: var(--font-lora); font-size: 1.02rem; line-height: 1.7; color: var(--cream-2); max-width: 600px; margin: 22px auto 0; }
+
+  /* real figure from the paper */
+  .ra-paperfig { grid-column: wide; margin: 2.2em 0 2.8em; background: #fff; border: 1px solid var(--rule); border-radius: 6px; padding: 18px 18px 16px; position: relative; }
+  .ra-paperfig-tag { position: absolute; top: -11px; left: 18px; background: var(--moss); color: #fff; font-family: var(--font-inter); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 3px; }
+  .ra-paperfig img { width: 100%; height: auto; border-radius: 3px; display: block; }
+  .ra-paperfig figcaption { margin-top: 12px; }
+
+  /* ---------- end matter ---------- */
+  .ra-end { max-width: 1100px; margin: 0 auto; padding: 24px 24px 80px; }
+  .ra-end-in { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; border-top: 1px solid var(--rule); padding-top: 40px; }
+  .ra-end-label { display: block; font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+  .ra-apa { font-family: var(--font-lora); font-size: 0.98rem; line-height: 1.7; color: var(--ink-2); padding-left: 2.2em; text-indent: -2.2em; }
+  .ra-apa a { color: var(--moss); word-break: break-all; border-bottom: 1px solid rgba(47,79,47,0.35); }
+  .ra-apa-note { display: block; font-family: var(--font-inter); font-size: 0.72rem; color: var(--ink-3); margin-top: 10px; }
+  .ra-end-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+  .ra-btn { display: inline-block; font-family: var(--font-inter); font-size: 0.86rem; font-weight: 700; padding: 13px 28px; border-radius: 50px; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+  .ra-btn-solid { background: var(--moss); color: #fff; }
+  .ra-btn-solid:hover { background: var(--moss-2); }
+  .ra-btn-ghost { border: 1px solid #C9C8BD; color: var(--ink); }
+  .ra-btn-ghost:hover { border-color: var(--moss); color: var(--moss); }
+
+  .ra-authors ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .ra-authors li { display: flex; flex-direction: column; gap: 2px; padding: 12px 0; border-top: 1px solid var(--rule); }
+  .ra-authors li:last-child { border-bottom: 1px solid var(--rule); }
+  .ra-author-name { font-family: var(--font-lora); font-size: 1rem; font-weight: 600; color: var(--ink); }
+  .ra-author-note { font-family: var(--font-inter); font-size: 0.78rem; color: var(--ink-3); line-height: 1.45; }
+  .ra-funding { font-family: var(--font-inter); font-size: 0.78rem; line-height: 1.55; color: var(--ink-3); margin-top: 16px; }
+
+  .ra-related { display: grid; grid-template-columns: 300px 1fr; margin-top: 56px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s, transform 0.15s; }
+  .ra-related:hover { box-shadow: 0 10px 40px -18px rgba(0,0,0,0.3); transform: translateY(-2px); }
+  .ra-related-img { min-height: 240px; background: var(--paper-2); }
+  .ra-related-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ra-related-text { padding: 30px 34px; display: flex; flex-direction: column; gap: 8px; }
+  .ra-related-text .ra-end-label { margin-bottom: 4px; }
+  .ra-related-kicker { font-family: var(--font-inter); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); }
+  .ra-related-title { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.4vw, 2rem); font-weight: 600; line-height: 1.1; color: var(--ink); text-wrap: balance; }
+  .ra-related-title :global(em) { font-style: italic; font-weight: 500; color: var(--moss-2); }
+  .ra-related-sum { font-family: var(--font-lora); font-size: 0.95rem; line-height: 1.6; color: var(--ink-2); }
+  .ra-related-cta { font-family: var(--font-inter); font-size: 0.8rem; font-weight: 700; color: var(--moss); margin-top: 6px; }
+
+  .ra-cg { margin-top: 56px; padding: 44px 30px; text-align: center; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 12px; }
+  .ra-cg-eyebrow { display: block; font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; }
+  .ra-cg-h { font-family: var(--font-serif); font-size: 1.9rem; font-weight: 600; color: var(--ink); margin-bottom: 10px; text-wrap: balance; }
+  .ra-cg-p { font-family: var(--font-lora); font-size: 0.98rem; line-height: 1.65; color: var(--ink-2); max-width: 520px; margin: 0 auto 24px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1024px) {
+    .ra-strip-in { grid-template-columns: repeat(2, 1fr); }
+    .ra-cell:nth-child(3) { border-left: 0; }
+    .ra-cell:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  }
+  @media (max-width: 860px) {
+    .ra-hero { grid-template-columns: 1fr; min-height: 0; }
+    .ra-hero-fig { order: -1; min-height: 0; aspect-ratio: 4 / 3; }
+    .ra-hero-fig::before { background: linear-gradient(180deg, rgba(30,21,1,0) 70%, #1E1501 100%); }
+    .ra-hero-text { justify-self: stretch; max-width: none; padding: 28px 24px 44px; gap: 16px; }
+    .ra-end-in { grid-template-columns: 1fr; gap: 32px; }
+    .ra-related { grid-template-columns: 1fr; }
+    .ra-related-img { aspect-ratio: 16 / 9; min-height: 0; }
+  }
+  @media (max-width: 640px) {
+    .ra-duo { grid-template-columns: 1fr; }
+    .ra-list-row { grid-template-columns: 1fr; }
+    .ra-strip-in { grid-template-columns: 1fr; }
+    .ra-cell { border-left: 0; border-top: 1px solid var(--rule); padding: 16px 22px; }
+    .ra-cell:first-child { border-top: 0; }
+    .ra-p p { font-size: 1.06rem; }
+    .ra-byline { grid-template-columns: 1fr; }
+    .ra-by-meta { grid-column: 1; }
+  }
+</style>
