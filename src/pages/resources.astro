@@ -67,7 +67,7 @@ const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
               <p class="rc-desc">{a.desc}</p>
               <div class="rc-actions">
                 {a.internal
-                  ? <a href={a.learn} class={`btn-view${a.bag ? ' btn-view-bag' : a.up ? ' btn-view-up' : ''}`}>{a.cta || 'Learn More'}</a>
+                  ? <a href={a.learn} class={`btn-view${a.bag ? ' btn-view-bag' : ''}`}>{a.cta || 'Learn More'}</a>
                   : <>
                       <a href={a.learn} target="_blank" rel="noopener" class="btn-learn">Learn More</a>
                       {a.view && <a href={a.view} target="_blank" rel="noopener" class="btn-view">View Resource</a>}
@@ -138,8 +138,6 @@ const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
 /* UP Research branded card */
 .rc-up { border-color: #e6d6d6; }
 .rc-cat-up { color: #7B1113; }
-.btn-view-up { background: #7B1113; }
-.btn-view-up:hover { background: #9a2a2c; }
 
 @media (max-width: 1024px) { .rp-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .rp-hero { padding: 40px 20px 28px; } .rp-grid-section { padding: 28px 20px 60px; } .rp-grid { grid-template-columns: 1fr; } }

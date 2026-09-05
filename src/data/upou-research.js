@@ -31,7 +31,7 @@ export const upouStudies = [
 
     cardTitle: "Working with Nature: How Filipino Practitioners See Permaculture",
     cardSummary: "Two UP researchers spent three months on twelve Filipino farms asking seventeen practitioners what permaculture means to them. Three different answers came back, and each one showed up in the shape of the land.",
-    cardImage: IMG + "a10-terraces.jpg",
+    cardImage: IMG + "a04-hands.jpg",
     cardPos: "center 45%",
 
     hero: {
@@ -188,7 +188,7 @@ export const upouStudies = [
 
     cardTitle: "Creating Virtual Corridors: Permaculture Networks on Facebook",
     cardSummary: "Can a Facebook friendship carry permaculture from one garden to another? A UP Open University team scored 286 connections and found fourteen strong enough to count as living corridors across Luzon.",
-    cardImage: IMG + "b15-network-glow.jpg",
+    cardImage: IMG + "b12-archipelago.jpg",
     cardPos: "center 50%",
 
     hero: {
