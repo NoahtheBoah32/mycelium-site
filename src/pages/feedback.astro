@@ -44,6 +44,8 @@ import SiteFooter from '../components/SiteFooter.astro';
           </div>
 
           <button type="submit" class="fb-submit">Submit</button>
+
+          <p class="fb-privacy">We use your name, email and message only to read and reply to your feedback. Your message is delivered through Formspree. See our <a href="/privacy">Privacy Policy</a>.</p>
         </form>
       </div>
     </div>
@@ -74,6 +76,9 @@ import SiteFooter from '../components/SiteFooter.astro';
 .fb-textarea:focus { border-color: #5A3A1C; }
 .fb-submit { align-self: flex-start; font-family: var(--font-inter); font-size: 1.0625rem; font-weight: 500; color: #fff; background: #5A3A1C; border: none; border-radius: 4px; padding: 14px 32px; cursor: pointer; transition: background 0.2s; }
 .fb-submit:hover { background: #947153; }
+.fb-privacy { font-family: var(--font-inter); font-size: 0.82rem; color: #777; line-height: 1.6; margin-top: -8px; }
+.fb-privacy a { color: #5A3A1C; text-decoration: underline; text-underline-offset: 2px; }
+.fb-privacy a:hover { color: #947153; }
 
 @media (max-width: 600px) {
   .fb-hero { padding: 48px 20px 40px; }

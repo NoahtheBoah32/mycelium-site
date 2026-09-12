@@ -1,0 +1,331 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const updated = '12 September 2026';
+
+const toc = [
+  { id: 'summary', label: 'The short version' },
+  { id: 'who-we-are', label: 'Who we are' },
+  { id: 'what-we-collect', label: 'What we collect' },
+  { id: 'legal-basis', label: 'Why we are allowed to' },
+  { id: 'sharing', label: 'Who else handles it' },
+  { id: 'cookies', label: 'Cookies and local storage' },
+  { id: 'retention', label: 'How long we keep it' },
+  { id: 'public', label: 'What other people can see' },
+  { id: 'security', label: 'How we protect it' },
+  { id: 'rights', label: 'Your rights' },
+  { id: 'children', label: 'Children and young people' },
+  { id: 'changes', label: 'Changes to this policy' },
+  { id: 'contact', label: 'Contact and complaints' },
+];
+
+const rights = [
+  { name: 'To be informed', body: 'To know that we are processing your personal data, and what we do with it. That is what this page is for.' },
+  { name: 'To access', body: 'To ask for a copy of the personal data we hold about you, and to know where we got it.' },
+  { name: 'To object', body: 'To tell us to stop processing your data. If our only basis was your consent, we stop.' },
+  { name: 'To correct', body: 'To have anything inaccurate fixed. You can edit your own Common Ground profile and posts at any time.' },
+  { name: 'To erasure or blocking', body: 'To ask us to remove, delete or suspend your data where it is outdated, unnecessary, or processed without a lawful basis.' },
+  { name: 'To damages', body: 'To be compensated if you suffer harm because of inaccurate, unlawfully obtained, or unauthorised use of your data.' },
+  { name: 'To data portability', body: 'To receive a copy of the data you gave us in a format you can take elsewhere.' },
+  { name: 'To complain', body: 'To bring a complaint to the National Privacy Commission if you think we have handled your data wrongly.' },
+];
+---
+
+<BaseLayout
+  title="Privacy Policy - Mycelium"
+  description="How Mycelium Learning collects, uses, stores and protects your personal data, your rights under the Philippine Data Privacy Act, and how to reach us."
+>
+  <SiteNav />
+
+  <section class="pp-hero">
+    <div class="pp-hero-inner">
+      <h3 class="pp-eyebrow">Data Privacy</h3>
+      <h1 class="pp-title">Privacy Policy</h1>
+      <p class="pp-sub">What we collect, why we collect it, how long we keep it, and what you can ask us to do about it.</p>
+      <p class="pp-updated">Last updated {updated}</p>
+    </div>
+  </section>
+
+  <div class="pp-body">
+    <nav class="pp-toc" aria-label="On this page">
+      <h4 class="pp-toc-title">On this page</h4>
+      <ul>
+        {toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <main class="pp-main">
+
+      <section id="summary" class="pp-section">
+        <div class="pp-card">
+          <h2 class="pp-card-title">The short version</h2>
+          <ul class="pp-bullets">
+            <li>We do not run advertising trackers, and we do not set cookies of our own.</li>
+            <li>We only ask for your name and email when you register for an event, send us feedback, or join Common Ground.</li>
+            <li>Anything you post in Common Ground is visible to other members, and files you upload can be opened by anyone who has the link.</li>
+            <li>You can ask us to show you, correct, or delete your data at any time by emailing <a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a>.</li>
+            <li>If we get it wrong, you can complain to the National Privacy Commission.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="who-we-are" class="pp-section">
+        <h2>Who we are</h2>
+        <p>Mycelium Learning is an independent permaculture education project based in the Philippines. We publish free learning material at mycelium-learn.com and run Common Ground, a community discussion space for permaculture practitioners.</p>
+        <p>Under the Data Privacy Act of 2012 (Republic Act No. 10173) we are the personal information controller for the data described on this page. Questions about privacy go to Joaquin Riego, founder, at <a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a>.</p>
+        <p>This policy covers mycelium-learn.com, the Common Ground forum, and our event registration pages. It does not cover other websites we link to, including YouTube, Instagram, and registration forms run by partner organisations.</p>
+      </section>
+
+      <section id="what-we-collect" class="pp-section">
+        <h2>What we collect</h2>
+        <p>We collect different things depending on what you do. Most visitors never give us anything.</p>
+
+        <h3>Reading the site</h3>
+        <p>You do not need an account to read anything. We do not run Google Analytics, Meta Pixel, or any similar tracking script. Our host, Vercel, keeps standard request logs that include your IP address, browser type, the page you asked for, and the time. These are used to deliver the site and to spot abuse.</p>
+        <p>Pages load fonts from Google Fonts, and our video pages embed YouTube in its no-cookie mode. Both mean your IP address reaches those companies when a page loads. Video and image files are served from our own storage on Cloudflare R2.</p>
+
+        <h3>Registering for an event</h3>
+        <p>Our registration form asks for your full name and email address, and has a checkbox for whether you want to hear about future events. We email you a confirmation with the joining details, and we email ourselves a copy so we know who is coming. Registrations live in our Gmail mailbox. There is no registration database.</p>
+
+        <h3>Sending feedback</h3>
+        <p>The feedback form asks for your first name, last name, email address, and your message. The form is delivered through Formspree, which passes it to our inbox.</p>
+
+        <h3>Joining Common Ground</h3>
+        <p>Creating an account requires an email address, a password, and a display name. You may also add where you are from and your level of practice, both of which are optional to fill in honestly and are shown to other members. We assign your avatar a colour. Your password is stored by Supabase in hashed form and is never visible to us.</p>
+
+        <h3>Using Common Ground</h3>
+        <p>Once you are in, we store what you create: your agree, disagree and pass answers to statements, the discussions you post, your replies, your emoji reactions, notifications generated for you, and any files you upload. Uploaded files keep their original filename, and we do not strip metadata such as camera or location information that your images may carry. Please remove anything sensitive before uploading.</p>
+
+        <h3>Reporting a bug</h3>
+        <p>Bug reports are sent without your account attached. They do include your message, the page you were on, and your browser's user agent string, because without those we cannot reproduce the problem.</p>
+
+        <h3>Emailing us</h3>
+        <p>If you write to us directly we keep the message and your address so we can reply and follow up.</p>
+
+        <h3>Photographs at events</h3>
+        <p>We take photographs and video at in person events and we publish some of them on this site and on social media. Some of our events are family days, so these images include children. Where children are photographed we rely on permission from a parent or guardian. If you or your child appears in something we published and you want it taken down, email us and we will remove it.</p>
+      </section>
+
+      <section id="legal-basis" class="pp-section">
+        <h2>Why we are allowed to</h2>
+        <p>The Data Privacy Act requires us to have a lawful basis for every use of your personal data. Ours are set out below.</p>
+        <div class="pp-table-wrap">
+          <table class="pp-table">
+            <thead>
+              <tr><th>What we do</th><th>Data involved</th><th>Our lawful basis</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Deliver the website and keep it working</td><td>Request logs</td><td>Our legitimate interest in running a working, secure site</td></tr>
+              <tr><td>Register you for an event and send joining details</td><td>Name, email</td><td>Steps taken at your request so you can attend</td></tr>
+              <tr><td>Tell you about future events</td><td>Email, your opt in</td><td>Your consent, withdrawable at any time</td></tr>
+              <tr><td>Run your Common Ground account</td><td>Account details and everything you post</td><td>Your consent, and providing the service you signed up for</td></tr>
+              <tr><td>Reply to feedback and email</td><td>Name, email, your message</td><td>Your consent in writing to us</td></tr>
+              <tr><td>Fix bugs</td><td>Report, page, user agent</td><td>Our legitimate interest in a working site</td></tr>
+              <tr><td>Publish photographs of events</td><td>Images of participants</td><td>Consent, and for children the consent of a parent or guardian</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Where we rely on consent you can withdraw it at any time, and withdrawing it does not make what we did beforehand unlawful.</p>
+      </section>
+
+      <section id="sharing" class="pp-section">
+        <h2>Who else handles it</h2>
+        <p>We do not sell your personal data and we do not share it for advertising. We do use service providers to run the site, and your data passes through them.</p>
+        <div class="pp-table-wrap">
+          <table class="pp-table">
+            <thead>
+              <tr><th>Service</th><th>What it handles for us</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Supabase</td><td>Common Ground accounts, posts, replies, reactions, answers and uploaded files</td></tr>
+              <tr><td>Vercel</td><td>Website hosting and request logs</td></tr>
+              <tr><td>Google</td><td>Our Gmail inbox, which receives registrations and feedback, plus Google Fonts on every page and Google Meet links for online sessions</td></tr>
+              <tr><td>Formspree</td><td>Delivery of the feedback form</td></tr>
+              <tr><td>Cloudflare</td><td>Hosting of our video and image files</td></tr>
+              <tr><td>jsDelivr</td><td>Delivery of the code library Common Ground runs on</td></tr>
+              <tr><td>YouTube</td><td>Embedded videos, in no-cookie mode</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Most of these companies are based outside the Philippines, so your data may be stored or processed abroad. We may also disclose data where a law, a court, or a government authority properly requires it.</p>
+        <p>Some of our events are run with partner organisations who collect their own registrations, for example through their own Google Form. When that happens the partner is responsible for that data, not us.</p>
+      </section>
+
+      <section id="cookies" class="pp-section">
+        <h2>Cookies and local storage</h2>
+        <p>We do not set any cookies of our own. There is no advertising cookie, no analytics cookie, and therefore no cookie banner to click through.</p>
+        <p>Common Ground does save a few things in your browser's local storage, because the forum cannot work without them:</p>
+        <ul class="pp-bullets">
+          <li>Your sign in token, so you are not logged out on every page.</li>
+          <li>A copy of your own answers to statements.</li>
+          <li>Which release notes you have already seen.</li>
+          <li>How many statements you have answered today.</li>
+          <li>Whether you have seen the intro animation.</li>
+        </ul>
+        <p>These stay on your device and clearing your browser data removes them. Third parties set their own cookies when you interact with them, most commonly YouTube when you play an embedded video.</p>
+      </section>
+
+      <section id="retention" class="pp-section">
+        <h2>How long we keep it</h2>
+        <div class="pp-table-wrap">
+          <table class="pp-table">
+            <thead>
+              <tr><th>What</th><th>How long</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Event registration emails</td><td>12 months after the event, then deleted</td></tr>
+              <tr><td>Feedback messages and direct email</td><td>12 months, unless we still need it to help you</td></tr>
+              <tr><td>Common Ground account and profile</td><td>For as long as your account exists</td></tr>
+              <tr><td>Posts, replies, answers and uploads</td><td>Until you delete them, or until you ask us to</td></tr>
+              <tr><td>Bug reports</td><td>12 months</td></tr>
+              <tr><td>Website request logs</td><td>Held by our host for their standard log period</td></tr>
+              <tr><td>Event photographs</td><td>Kept as a record of the event, removed on request</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>When you ask us to delete your account we remove your profile and log in details within 30 days. We may keep data longer where we need it to resolve a dispute or to meet a legal obligation, and if we do we will tell you why.</p>
+      </section>
+
+      <section id="public" class="pp-section">
+        <h2>What other people can see</h2>
+        <p>Common Ground is a community space, so parts of it are deliberately visible to other members. Please read this part before you post.</p>
+        <ul class="pp-bullets">
+          <li>Your display name, your location if you added one, and your level of practice are shown to other signed in members.</li>
+          <li>Your discussions, replies and reactions are shown with your display name.</li>
+          <li>Your answers to statements are stored against your account. The opinion map presents them grouped rather than labelled, but they are not anonymous to us, and the data used to draw the map is sent to other members' browsers. Treat your answers as visible, not private.</li>
+          <li>Files you upload are given a public web address. Anyone with that link can open the file, whether or not they have an account.</li>
+        </ul>
+      </section>
+
+      <section id="security" class="pp-section">
+        <h2>How we protect it</h2>
+        <p>The site is served over an encrypted connection. Passwords are handled by Supabase, our accounts provider, which stores them hashed so that we never see them. Mycelium is run by a very small team, so the number of people who can reach member data is kept to a minimum. Registrations and feedback arrive in a mailbox protected by two step verification.</p>
+        <p>No system is completely secure, and we will not pretend otherwise. If a breach affects your personal data we will notify you and the National Privacy Commission as the law requires.</p>
+      </section>
+
+      <section id="rights" class="pp-section">
+        <h2>Your rights</h2>
+        <p>The Data Privacy Act gives you the following rights over your personal data.</p>
+        <div class="pp-rights">
+          {rights.map((r) => (
+            <div class="pp-right">
+              <h4>{r.name}</h4>
+              <p>{r.body}</p>
+            </div>
+          ))}
+        </div>
+        <p>To use any of them, email <a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a> and tell us what you want. We may ask you to confirm your identity first, so that we are not handing your data to someone else. We reply within 30 days, and if your request is complicated we will tell you before that deadline how much longer we need.</p>
+      </section>
+
+      <section id="children" class="pp-section">
+        <h2>Children and young people</h2>
+        <p>Our learning material is written for a general audience, and some of our events are designed for families. Under Philippine law a person under 18 cannot give valid consent to the processing of their own personal data, so a parent or guardian has to give it for them.</p>
+        <p>Common Ground is intended for adults. If you are under 18, please ask a parent or guardian before you create an account. If you are a parent and you would like your child's account, posts, or photographs removed, email us and we will do it.</p>
+      </section>
+
+      <section id="changes" class="pp-section">
+        <h2>Changes to this policy</h2>
+        <p>When our practices change we update this page and change the date at the top. If a change materially affects how we use your personal data we will say so on the site rather than quietly editing the text.</p>
+      </section>
+
+      <section id="contact" class="pp-section">
+        <h2>Contact and complaints</h2>
+        <p>For anything on this page, including requests to see, correct, or delete your data, write to us first. We would rather fix it directly.</p>
+        <div class="pp-contact">
+          <h4>Mycelium Learning</h4>
+          <p>Privacy contact: Joaquin Riego, Founder</p>
+          <p><a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a></p>
+        </div>
+        <p>If you are not satisfied with how we handled your concern, you can bring it to the regulator.</p>
+        <div class="pp-npc">
+          <h4>National Privacy Commission</h4>
+          <p>25th to 27th Floors, The Upper Class Tower, Quezon Avenue corner Scout Reyes Street, Barangay Paligsahan, Quezon City, Philippines</p>
+          <p>Enquiries: <a href="mailto:info@privacy.gov.ph">info@privacy.gov.ph</a><br />Complaints: <a href="mailto:complaints@privacy.gov.ph">complaints@privacy.gov.ph</a><br />Telephone: +632 5322 1322<br /><a href="https://privacy.gov.ph" target="_blank" rel="noopener">privacy.gov.ph</a></p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .pp-hero { background: #2F2A1F; padding: 96px 40px 72px; }
+  .pp-hero-inner { max-width: 1100px; margin: 0 auto; }
+  .pp-eyebrow { font-family: var(--font-inter); font-size: 0.75rem; font-weight: 700; color: #C8A01A; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; }
+  .pp-title { font-family: var(--font-lora); font-size: clamp(2.4rem, 5.5vw, 3.75rem); font-weight: 500; color: #fff; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 18px; }
+  .pp-sub { font-family: var(--font-lora); font-size: 1.25rem; color: #D2CEC8; line-height: 1.6; max-width: 620px; }
+  .pp-updated { font-family: var(--font-inter); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: #8D8A82; margin-top: 28px; }
+
+  /* Two column body */
+  .pp-body { max-width: 1100px; margin: 0 auto; padding: 64px 40px 96px; display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
+
+  .pp-toc { position: sticky; top: 96px; }
+  .pp-toc-title { font-family: var(--font-inter); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #999; margin-bottom: 14px; }
+  .pp-toc ul { list-style: none; display: flex; flex-direction: column; gap: 9px; border-left: 1px solid #e6e4de; padding-left: 16px; }
+  .pp-toc a { font-family: var(--font-inter); font-size: 0.84rem; color: #666; line-height: 1.35; transition: color 0.15s; }
+  .pp-toc a:hover { color: #5A3A1C; }
+
+  .pp-main { min-width: 0; }
+  .pp-section { margin-bottom: 56px; scroll-margin-top: 88px; }
+  .pp-section:last-child { margin-bottom: 0; }
+
+  .pp-main h2 { font-family: var(--font-lora); font-size: 1.9rem; font-weight: 600; color: #242424; line-height: 1.25; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid #C8A01A; }
+  .pp-main h3 { font-family: var(--font-outfit); font-size: 1.0625rem; font-weight: 600; color: #242424; margin: 28px 0 8px; }
+  .pp-main p { font-family: var(--font-lora); font-size: 1.02rem; color: #3d3d3d; line-height: 1.75; margin-bottom: 14px; }
+  .pp-main a { color: #5A3A1C; text-decoration: underline; text-underline-offset: 2px; }
+  .pp-main a:hover { color: #947153; }
+
+  .pp-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 4px 0 16px; }
+  .pp-bullets li { position: relative; padding-left: 20px; font-family: var(--font-lora); font-size: 1.02rem; color: #3d3d3d; line-height: 1.7; }
+  .pp-bullets li::before { content: ''; position: absolute; left: 2px; top: 0.66em; width: 6px; height: 6px; border-radius: 50%; background: #C8A01A; }
+
+  /* Summary card */
+  .pp-card { background: #F7F7F5; border-left: 4px solid #C8A01A; padding: 28px 32px; }
+  .pp-card-title { font-family: var(--font-lora); font-size: 1.35rem; font-weight: 600; color: #242424; margin-bottom: 14px; }
+  .pp-card .pp-bullets { margin-bottom: 0; }
+
+  /* Tables */
+  .pp-table-wrap { overflow-x: auto; margin: 8px 0 18px; }
+  .pp-table { width: 100%; border-collapse: collapse; font-family: var(--font-inter); font-size: 0.9rem; min-width: 520px; }
+  .pp-table th { text-align: left; font-weight: 600; color: #242424; background: #F7F7F5; padding: 12px 14px; border-bottom: 1px solid #e0ded7; }
+  .pp-table td { padding: 12px 14px; color: #4a4a4a; line-height: 1.55; border-bottom: 1px solid #ededea; vertical-align: top; }
+  .pp-table tr:last-child td { border-bottom: none; }
+
+  /* Rights grid */
+  .pp-rights { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .pp-right { border: 1px solid #e6e4de; padding: 18px 20px; }
+  .pp-right h4 { font-family: var(--font-outfit); font-size: 0.95rem; font-weight: 600; color: #5A3A1C; margin-bottom: 6px; }
+  .pp-right p { font-family: var(--font-inter); font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; }
+
+  /* Contact blocks */
+  .pp-contact, .pp-npc { padding: 22px 26px; margin: 16px 0 20px; }
+  .pp-contact { background: #F7F7F5; border-left: 4px solid #5A3A1C; }
+  .pp-npc { background: #2F2A1F; border-left: 4px solid #C8A01A; }
+  .pp-contact h4, .pp-npc h4 { font-family: var(--font-outfit); font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
+  .pp-contact h4 { color: #242424; }
+  .pp-npc h4 { color: #fff; }
+  .pp-contact p { font-family: var(--font-inter); font-size: 0.9rem; color: #4a4a4a; line-height: 1.6; margin-bottom: 4px; }
+  .pp-npc p { font-family: var(--font-inter); font-size: 0.9rem; color: #D2CEC8; line-height: 1.7; margin-bottom: 4px; }
+  .pp-npc a { color: #E3C558; }
+  .pp-npc a:hover { color: #fff; }
+
+  @media (max-width: 900px) {
+    .pp-body { grid-template-columns: 1fr; gap: 36px; padding: 48px 24px 72px; }
+    .pp-toc { position: static; border-bottom: 1px solid #e6e4de; padding-bottom: 24px; }
+    .pp-toc ul { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; border-left: none; padding-left: 0; }
+    .pp-rights { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .pp-hero { padding: 64px 20px 48px; }
+    .pp-sub { font-size: 1.05rem; }
+    .pp-body { padding: 36px 20px 64px; }
+    .pp-main h2 { font-size: 1.55rem; }
+    .pp-toc ul { grid-template-columns: 1fr; }
+    .pp-card { padding: 22px 20px; }
+  }
+</style>
