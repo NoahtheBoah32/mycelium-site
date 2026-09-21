@@ -1,0 +1,121 @@
+---
+// Keeps an address out of the served HTML. Harvesters scrape the markup, so there is
+// no "@" and no readable domain for them to find. The address is assembled in the
+// visitor's browser, and only when they ask for it.
+interface Props {
+  user: string;
+  domain: string;
+  label?: string;
+  subject?: string;
+  tone?: 'light' | 'dark';
+}
+
+const {
+  user,
+  domain,
+  label = 'Show email address',
+  subject = '',
+  tone = 'light',
+} = Astro.props;
+
+const flip = (s: string) => s.split('').reverse().join('');
+---
+
+<span class="em-reveal" data-tone={tone} data-u={flip(user)} data-d={flip(domain)} data-s={subject}>
+  <button type="button" class="em-reveal-btn">{label}</button>
+  <noscript
+    ><span class="em-reveal-off"
+      >JavaScript is off. Please use the <a href="/feedback">contact form</a>.</span
+    ></noscript
+  >
+</span>
+
+<script>
+  function reveal(box: HTMLElement) {
+    const flip = (s: string) => s.split('').reverse().join('');
+    const address = flip(box.dataset.u || '') + '@' + flip(box.dataset.d || '');
+    const subject = box.dataset.s || '';
+    const link = document.createElement('a');
+    link.href = 'mailto:' + address + (subject ? '?subject=' + encodeURIComponent(subject) : '');
+    link.textContent = address;
+    link.className = 'em-reveal-link';
+    box.replaceChildren(link);
+  }
+
+  document.querySelectorAll<HTMLElement>('.em-reveal').forEach((box) => {
+    box.querySelector('.em-reveal-btn')?.addEventListener('click', () => reveal(box));
+  });
+</script>
+
+<!-- global: the revealed link is created at runtime, so it never carries a scoped attribute -->
+<style is:global>
+  .em-reveal {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+  }
+  .em-reveal-btn {
+    font-family: var(--font-inter);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5a3a1c;
+    background: #fff;
+    border: 1px solid #ddd8cc;
+    border-radius: 50px;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      border-color 0.15s,
+      color 0.15s;
+  }
+  .em-reveal-btn:hover {
+    background: #f7f4ec;
+    border-color: #c8a01a;
+  }
+  .em-reveal-btn:focus-visible {
+    outline: 2px solid #c8a01a;
+    outline-offset: 2px;
+  }
+  .em-reveal-link {
+    font-family: var(--font-inter);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #5a3a1c;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    overflow-wrap: anywhere;
+  }
+  .em-reveal-link:hover {
+    color: #947153;
+  }
+  .em-reveal-off {
+    font-family: var(--font-inter);
+    font-size: 0.85rem;
+    color: #777;
+  }
+
+  /* on the dark footer and the dark regulator block */
+  .em-reveal[data-tone='dark'] .em-reveal-btn {
+    color: #d2cec8;
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .em-reveal[data-tone='dark'] .em-reveal-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .em-reveal[data-tone='dark'] .em-reveal-link {
+    color: #e3c558;
+  }
+  .em-reveal[data-tone='dark'] .em-reveal-link:hover {
+    color: #fff;
+  }
+  .em-reveal[data-tone='dark'] .em-reveal-off {
+    color: #8d8d8d;
+  }
+  .em-reveal[data-tone='dark'] .em-reveal-off a {
+    color: #d2cec8;
+  }
+</style>

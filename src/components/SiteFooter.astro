@@ -1,4 +1,5 @@
 ---
+import EmailReveal from './EmailReveal.astro';
 ---
 <footer class="site-footer">
   <div class="sf-inner">
@@ -38,7 +39,8 @@
     <div class="sf-col">
       <h4 class="sf-col-title">Get In Touch</h4>
       <ul class="sf-links">
-        <li><a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a></li>
+        <li><a href="/feedback">Send us a message</a></li>
+        <li class="sf-email"><EmailReveal user="myceliumlearning" domain="gmail.com" tone="dark" label="Show email address" /></li>
       </ul>
       <h4 class="sf-col-title sf-socials-title">Follow Our Socials</h4>
       <div class="sf-socials">
@@ -109,6 +111,7 @@
     transition: color 0.15s;
   }
   .sf-links a:hover { color: #ffffff; }
+  .sf-email { margin-top: 4px; }
   .sf-socials-title { margin-top: 28px; }
   .sf-socials { display: flex; flex-direction: column; gap: 10px; }
   .sf-social-link { display: flex; align-items: center; gap: 8px; font-family: var(--font-inter); font-size: 0.875rem; color: #D2CEC8; text-decoration: none; transition: color 0.15s; }

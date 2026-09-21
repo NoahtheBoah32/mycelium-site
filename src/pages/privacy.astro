@@ -2,8 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import EmailReveal from '../components/EmailReveal.astro';
 
-const updated = '12 September 2026';
+const updated = '21 September 2026';
 
 const toc = [
   { id: 'summary', label: 'The short version' },
@@ -65,7 +66,7 @@ const rights = [
             <li>We do not run advertising trackers, and we do not set cookies of our own.</li>
             <li>We only ask for your name and email when you register for an event, send us feedback, or join Common Ground.</li>
             <li>Anything you post in Common Ground is visible to other members, and files you upload can be opened by anyone who has the link.</li>
-            <li>You can ask us to show you, correct, or delete your data at any time by emailing <a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a>.</li>
+            <li>You can ask us to show you, correct, or delete your data at any time through our <a href="/feedback">contact form</a>.</li>
             <li>If we get it wrong, you can complain to the National Privacy Commission.</li>
           </ul>
         </div>
@@ -74,7 +75,7 @@ const rights = [
       <section id="who-we-are" class="pp-section">
         <h2>Who we are</h2>
         <p>Mycelium Learning is an independent permaculture education project based in the Philippines. We publish free learning material at mycelium-learn.com and run Common Ground, a community discussion space for permaculture practitioners.</p>
-        <p>Under the Data Privacy Act of 2012 (Republic Act No. 10173) we are the personal information controller for the data described on this page. Questions about privacy go to Joaquin Riego, founder, at <a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a>.</p>
+        <p>Under the Data Privacy Act of 2012 (Republic Act No. 10173) we are the personal information controller for the data described on this page. Questions about privacy go to Joaquin Riego, founder, through our <a href="/feedback">contact form</a>. The address is also published at the bottom of this page.</p>
         <p>This policy covers mycelium-learn.com, the Common Ground forum, and our event registration pages. It does not cover other websites we link to, including YouTube, Instagram, and registration forms run by partner organisations.</p>
       </section>
 
@@ -216,7 +217,7 @@ const rights = [
             </div>
           ))}
         </div>
-        <p>To use any of them, email <a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a> and tell us what you want. We may ask you to confirm your identity first, so that we are not handing your data to someone else. We reply within 30 days, and if your request is complicated we will tell you before that deadline how much longer we need.</p>
+        <p>To use any of them, send us a request through our <a href="/feedback">contact form</a> and tell us what you want. We may ask you to confirm your identity first, so that we are not handing your data to someone else. We reply within 30 days, and if your request is complicated we will tell you before that deadline how much longer we need.</p>
       </section>
 
       <section id="children" class="pp-section">
@@ -236,7 +237,9 @@ const rights = [
         <div class="pp-contact">
           <h4>Mycelium Learning</h4>
           <p>Privacy contact: Joaquin Riego, Founder</p>
-          <p><a href="mailto:myceliumlearning@gmail.com">myceliumlearning@gmail.com</a></p>
+          <p>The quickest route is our <a href="/feedback">contact form</a>, which reaches the same inbox.</p>
+          <p class="pp-contact-note">We do not print our email address on this page, because a published address is picked up by spam and phishing robots within days. If you would rather write to us directly, press the button and the address appears in your browser.</p>
+          <p class="pp-contact-reveal"><EmailReveal user="myceliumlearning" domain="gmail.com" subject="Privacy question" /></p>
         </div>
         <p>If you are not satisfied with how we handled your concern, you can bring it to the regulator.</p>
         <div class="pp-npc">
@@ -280,6 +283,27 @@ const rights = [
   .pp-main a { color: #5A3A1C; text-decoration: underline; text-underline-offset: 2px; }
   .pp-main a:hover { color: #947153; }
 
+  /* No orphans: never leave a single word stranded on the last line. Which word
+     strands changes with the viewport, so this is done in CSS rather than with
+     hand-placed breaks. `balance` evens out short blocks like headings and table
+     cells; `pretty` pulls a companion word down on longer running text. */
+  .pp-title,
+  .pp-card-title,
+  .pp-main h2,
+  .pp-main h3,
+  .pp-right h4,
+  .pp-contact h4,
+  .pp-npc h4,
+  .pp-table th,
+  .pp-table td,
+  .pp-bullets li { text-wrap: balance; }
+
+  .pp-sub,
+  .pp-main p,
+  .pp-right p,
+  .pp-contact p,
+  .pp-npc p { text-wrap: pretty; }
+
   .pp-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 4px 0 16px; }
   .pp-bullets li { position: relative; padding-left: 20px; font-family: var(--font-lora); font-size: 1.02rem; color: #3d3d3d; line-height: 1.7; }
   .pp-bullets li::before { content: ''; position: absolute; left: 2px; top: 0.66em; width: 6px; height: 6px; border-radius: 50%; background: #C8A01A; }
@@ -310,6 +334,8 @@ const rights = [
   .pp-contact h4 { color: #242424; }
   .pp-npc h4 { color: #fff; }
   .pp-contact p { font-family: var(--font-inter); font-size: 0.9rem; color: #4a4a4a; line-height: 1.6; margin-bottom: 4px; }
+  .pp-contact-note { font-size: 0.84rem !important; color: #6d6a63 !important; margin-top: 12px !important; }
+  .pp-contact-reveal { margin-top: 10px !important; margin-bottom: 0 !important; }
   .pp-npc p { font-family: var(--font-inter); font-size: 0.9rem; color: #D2CEC8; line-height: 1.7; margin-bottom: 4px; }
   .pp-npc a { color: #E3C558; }
   .pp-npc a:hover { color: #fff; }
