@@ -1,0 +1,454 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteNav from '../../../components/SiteNav.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import { baganihanPerspectives } from '../../../data/baganihan-perspectives.js';
+
+export function getStaticPaths() {
+  return baganihanPerspectives.map((p) => ({ params: { slug: p.slug }, props: { piece: p } }));
+}
+
+const { piece } = Astro.props;
+
+const lvlLabel = {
+  supported: 'Well supported',
+  partly: 'Partly supported',
+  opinion: "Author's position",
+};
+---
+
+<BaseLayout title={`${piece.title} — Baganihan Perspectives`}>
+  <SiteNav />
+
+  <article class="psp">
+    <div class="psp-topbar">
+      <a href="/resources" class="psp-back">&larr; Back to Resources</a>
+      <div class="psp-brand">
+        <img src="/images/baganihan-logo.jpg" alt="Baganihan Collective" />
+        <span>Baganihan Perspectives</span>
+      </div>
+    </div>
+
+    <header class="psp-header">
+      <span class="psp-eyebrow">Opinion essay &middot; {piece.seriesLabel}</span>
+      <h1 class="psp-title">{piece.title}</h1>
+      <p class="psp-sub">{piece.subtitle}</p>
+      <div class="psp-byline">
+        <div>
+          <span class="psp-author">{piece.author}</span>
+          <span class="psp-role">{piece.authorRole}</span>
+        </div>
+        <span class="psp-date">{piece.date}</span>
+      </div>
+    </header>
+
+    <!-- The whole reason this section exists. It sits above the essay, before the
+         reader has absorbed anything, and it is deliberately hard to scroll past. -->
+    <aside class="psp-note">
+      <h2>Editorial note from Mycelium</h2>
+      <p>{piece.editorialNote}</p>
+    </aside>
+
+    <figure class="psp-hero">
+      <img src={piece.hero} alt="" />
+      <figcaption>{piece.heroCaption}</figcaption>
+    </figure>
+
+    <div class="psp-body">
+      {piece.blocks.map((b) => (
+        <>
+          {b.t === 'lead' && (
+            <div class="blk-lead">
+              {b.label && <span class="blk-eyebrow">{b.label}</span>}
+              <p>{b.text}</p>
+            </div>
+          )}
+
+          {b.t === 'editor' && (
+            <aside class="blk-editor">
+              <span class="blk-editor-label">{b.label}</span>
+              <p>{b.text}</p>
+            </aside>
+          )}
+
+          {b.t === 'prose' && (
+            <section class="blk">
+              {b.label && <h2 class="blk-h">{b.label}</h2>}
+              {b.paras.map((p) => <p class="blk-p">{p}</p>)}
+            </section>
+          )}
+
+          {b.t === 'numbered' && (
+            <section class="blk">
+              <h2 class="blk-h">{b.label}</h2>
+              <ol class="num-list">
+                {b.items.map((it) => (
+                  <li class="num-item">
+                    <h3 class="num-title">{it.title}</h3>
+                    <p class="num-text">{it.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {b.t === 'pullquote' && (
+            <blockquote class="blk-pull">{b.text}</blockquote>
+          )}
+
+          {b.t === 'image' && (
+            <figure class="blk-fig">
+              <img src={b.src} alt="" loading="lazy" />
+              <figcaption>
+                {b.caption}
+                {b.credit && <span class="blk-credit">{b.credit}</span>}
+              </figcaption>
+            </figure>
+          )}
+
+          {b.t === 'evidence' && (
+            <section class="blk ev-block">
+              <h2 class="blk-h">{b.label}</h2>
+              {b.intro && <p class="blk-intro">{b.intro}</p>}
+              <div class="ev-list">
+                {b.items.map((it) => (
+                  <div class={`ev-row ev-${it.lvl}`}>
+                    <span class="ev-flag">{lvlLabel[it.lvl]}</span>
+                    <div class="ev-copy">
+                      <h3 class="ev-title">{it.title}</h3>
+                      <p class="ev-text">{it.text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {b.t === 'callout' && (
+            <section class="blk-callout">
+              <span class="blk-eyebrow">{b.label}</span>
+              <p>{b.text}</p>
+            </section>
+          )}
+        </>
+      ))}
+
+      <div class="psp-tags">
+        {piece.tags.map((t) => <span class="psp-tag">{t}</span>)}
+      </div>
+
+      <div class="psp-foot">
+        <p>
+          Published by Mycelium as part of Baganihan Perspectives, where partner
+          practitioners put forward arguments about resilience, ecology and
+          preparedness. Publishing a perspective is not an endorsement of it. If you
+          disagree with this one, that is rather the point, and you can take it to the
+          floor at <a href="/common-ground">Common Ground</a>.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .psp {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 36px 24px 72px;
+    font-family: var(--font-inter);
+    color: #2b2b28;
+  }
+
+  /* topbar */
+  .psp-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e6e2d8;
+    flex-wrap: wrap;
+  }
+  .psp-back {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #5a3a1c;
+    text-decoration: none;
+  }
+  .psp-back:hover { color: #c8a01a; }
+  .psp-brand { display: flex; align-items: center; gap: 10px; }
+  .psp-brand img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+  .psp-brand span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a8477;
+  }
+
+  /* header */
+  .psp-header { padding: 40px 0 28px; }
+  .psp-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a8762a;
+    margin-bottom: 18px;
+  }
+  .psp-title {
+    font-family: var(--font-playfair, Georgia, serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #1d1c17;
+    text-wrap: balance;
+    margin-bottom: 18px;
+  }
+  .psp-sub {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #5f5b51;
+    text-wrap: pretty;
+    margin-bottom: 26px;
+  }
+  .psp-byline {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid #e6e2d8;
+  }
+  .psp-author { display: block; font-size: 0.95rem; font-weight: 600; color: #2b2b28; }
+  .psp-role { display: block; font-size: 0.85rem; color: #8a8477; margin-top: 3px; text-wrap: pretty; }
+  .psp-date { font-size: 0.85rem; color: #8a8477; white-space: nowrap; }
+
+  /* the editorial note */
+  .psp-note {
+    background: #fdf8e8;
+    border: 1px solid #e8d79a;
+    border-left: 5px solid #c8a01a;
+    border-radius: 10px;
+    padding: 24px 26px;
+    margin-bottom: 36px;
+  }
+  .psp-note h2 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a6a12;
+    margin-bottom: 12px;
+  }
+  .psp-note p {
+    font-size: 0.98rem;
+    line-height: 1.68;
+    color: #4a4133;
+    text-wrap: pretty;
+  }
+
+  /* hero */
+  .psp-hero { margin-bottom: 44px; }
+  .psp-hero img { width: 100%; border-radius: 12px; display: block; }
+  .psp-hero figcaption {
+    font-size: 0.85rem;
+    color: #8a8477;
+    line-height: 1.55;
+    margin-top: 12px;
+    text-wrap: pretty;
+  }
+
+  /* body blocks */
+  .blk { margin-bottom: 42px; }
+  .blk-h {
+    font-family: var(--font-playfair, Georgia, serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #1d1c17;
+    text-wrap: balance;
+    margin-bottom: 16px;
+  }
+  .blk-p, .blk-intro {
+    font-size: 1.0625rem;
+    line-height: 1.78;
+    color: #3a3833;
+    text-wrap: pretty;
+    margin-bottom: 18px;
+  }
+  .blk-p:last-child { margin-bottom: 0; }
+  .blk-intro { color: #5f5b51; }
+
+  .blk-lead {
+    padding: 0 0 36px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid #e6e2d8;
+  }
+  .blk-eyebrow {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a8762a;
+    margin-bottom: 12px;
+  }
+  .blk-lead p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #2b2b28;
+    text-wrap: pretty;
+  }
+
+  /* inline editor interjection, visually distinct from the author's voice */
+  .blk-editor {
+    background: #f4f2ec;
+    border-left: 4px solid #9a958a;
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 42px;
+  }
+  .blk-editor-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6e6a60;
+    margin-bottom: 10px;
+  }
+  .blk-editor p {
+    font-size: 0.97rem;
+    line-height: 1.68;
+    color: #4a4840;
+    text-wrap: pretty;
+  }
+
+  /* numbered vulnerabilities */
+  .num-list { list-style: none; counter-reset: num; display: flex; flex-direction: column; gap: 26px; }
+  .num-item { counter-increment: num; padding-left: 52px; position: relative; }
+  .num-item::before {
+    content: counter(num);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #1d1c17;
+    color: #e8c766;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .num-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1d1c17;
+    text-wrap: balance;
+    margin-bottom: 8px;
+  }
+  .num-text { font-size: 1.0625rem; line-height: 1.75; color: #3a3833; text-wrap: pretty; }
+
+  .blk-pull {
+    font-family: var(--font-playfair, Georgia, serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.45;
+    color: #5a3a1c;
+    border-left: 4px solid #c8a01a;
+    padding: 6px 0 6px 26px;
+    margin: 0 0 42px;
+    text-wrap: balance;
+  }
+
+  .blk-fig { margin-bottom: 42px; }
+  .blk-fig img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    background: #fff;
+    border: 1px solid #e6e2d8;
+  }
+  .blk-fig figcaption {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #6e6a60;
+    margin-top: 12px;
+    text-wrap: pretty;
+  }
+  .blk-credit { display: block; font-style: italic; color: #9a958a; margin-top: 5px; }
+
+  /* evidence assessment */
+  .ev-block {
+    background: #faf9f5;
+    border: 1px solid #e6e2d8;
+    border-radius: 12px;
+    padding: 28px 26px;
+  }
+  .ev-list { display: flex; flex-direction: column; gap: 20px; margin-top: 8px; }
+  .ev-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 18px;
+    align-items: start;
+    padding-top: 20px;
+    border-top: 1px solid #e6e2d8;
+  }
+  .ev-row:first-child { padding-top: 0; border-top: none; }
+  .ev-flag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 50px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .ev-supported .ev-flag { background: #e3f0dd; color: #3c6b2c; }
+  .ev-partly .ev-flag { background: #fdf0d8; color: #8a6a12; }
+  .ev-opinion .ev-flag { background: #f3e2de; color: #8d4030; }
+  .ev-title { font-size: 1rem; font-weight: 700; color: #1d1c17; margin-bottom: 6px; text-wrap: balance; }
+  .ev-text { font-size: 0.97rem; line-height: 1.68; color: #4a4840; text-wrap: pretty; }
+
+  .blk-callout {
+    background: #1d1c17;
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 42px;
+  }
+  .blk-callout .blk-eyebrow { color: #e8c766; }
+  .blk-callout p { font-size: 1rem; line-height: 1.68; color: #d8d4c8; text-wrap: pretty; }
+
+  .psp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .psp-tag {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #6e6a60;
+    background: #f1efe8;
+    border-radius: 50px;
+    padding: 6px 14px;
+  }
+
+  .psp-foot { padding-top: 26px; border-top: 1px solid #e6e2d8; }
+  .psp-foot p { font-size: 0.9rem; line-height: 1.7; color: #8a8477; text-wrap: pretty; }
+  .psp-foot a { color: #a8762a; font-weight: 600; }
+  .psp-foot a:hover { color: #c8a01a; }
+
+  @media (max-width: 600px) {
+    .psp { padding: 24px 18px 56px; }
+    .ev-row { grid-template-columns: 1fr; gap: 10px; }
+    .ev-flag { justify-self: start; }
+    .num-item { padding-left: 44px; }
+  }
+</style>
