@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { baganihanReports } from '../data/baganihan-reports.js';
-import { baganihanPerspectives } from '../data/baganihan-perspectives.js';
+import { baganihanFieldNotes } from '../data/baganihan-field-notes.js';
 import { upouStudies } from '../data/upou-research.js';
 
 const articles = [
@@ -20,10 +20,10 @@ const bagCards = baganihanReports.map((r) => ({
   cat: "Baganihan Reports", bag: true, internal: true, cta: "Read Report",
   title: r.cardTitle, desc: r.cardSummary, img: r.cardImage, learn: `/resources/baganihan/${r.slug}`,
 }));
-// Perspectives are opinion, not reports, so the card says so before anyone clicks.
-const pspCards = baganihanPerspectives.map((p) => ({
-  cat: "Baganihan Perspectives", bag: true, opin: true, internal: true, cta: "Read the Essay",
-  title: p.cardTitle, desc: p.cardSummary, img: p.cardImage, learn: `/resources/perspectives/${p.slug}`,
+// Field Notes are firsthand practitioner writing, kept separate from the reports.
+const pspCards = baganihanFieldNotes.map((p) => ({
+  cat: "Baganihan Field Notes", bag: true, internal: true, cta: "Read Field Note",
+  title: p.cardTitle, desc: p.cardSummary, img: p.cardImage, learn: `/resources/field-notes/${p.slug}`,
 }));
 const upCards = upouStudies.map((s) => ({
   cat: "UP Research", up: true, internal: true, cta: "Read the Study",
@@ -32,7 +32,7 @@ const upCards = upouStudies.map((s) => ({
 const cards = [...bagCards, ...pspCards, ...upCards, ...articles];
 
 const slug = (s) => s.toLowerCase().replace(/\s+/g, '-');
-const catOrder = ["Baganihan Reports", "Baganihan Perspectives", "UP Research", "Getting Started", "Beginner", "Intermediate", "Community Event"];
+const catOrder = ["Baganihan Reports", "Baganihan Field Notes", "UP Research", "Getting Started", "Beginner", "Intermediate", "Community Event"];
 const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
 ---
 
@@ -70,7 +70,6 @@ const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
                 : <span class={`rc-cat${a.up ? ' rc-cat-up' : ''}`}>{a.cat}</span>
               }
               <h3 class="rc-title">{a.title}</h3>
-              {a.opin && <span class="rc-opin">Opinion essay &middot; published with an editorial note</span>}
               <p class="rc-desc">{a.desc}</p>
               <div class="rc-actions">
                 {a.internal
@@ -141,10 +140,6 @@ const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
 .rc-bag-tag-logo { width: 15px; height: 15px; border-radius: 3px; object-fit: cover; }
 .btn-view-bag { background: #2F6B3A; }
 .btn-view-bag:hover { background: #3f8c4e; }
-
-/* Perspectives carry an opinion flag on the card itself, so nobody arrives at an
-   opinion essay thinking they clicked a Mycelium report. */
-.rc-opin { display: block; font-family: var(--font-inter); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; color: #8a6a12; background: #fdf4dd; border-radius: 4px; padding: 4px 8px; margin: -2px 0 8px; align-self: flex-start; }
 
 /* UP Research branded card */
 .rc-up { border-color: #e6d6d6; }

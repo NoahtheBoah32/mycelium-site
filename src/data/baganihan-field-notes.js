@@ -1,13 +1,13 @@
-// Baganihan Perspectives — opinion essays from partner practitioners.
+// Baganihan Field Notes — firsthand writing from partner practitioners.
 //
-// These are NOT Mycelium reports and they are NOT peer-reviewed. Every entry
-// carries an editorial note and an evidence block, because the whole point of the
-// section is that readers can see where an author is standing on established work
-// and where the author is making a call of their own.
+// These are not Mycelium reports and they are not peer reviewed. The author's
+// piece runs uninterrupted, the way any publication would run it, and Mycelium's
+// own assessment sits at the end where a reader arrives at it having already
+// heard the argument out.
 //
-// Rendered by /resources/perspectives/[slug].astro.
+// Rendered by /resources/field-notes/[slug].astro.
 
-export const baganihanPerspectives = [
+export const baganihanFieldNotes = [
   {
     slug: "mit-horizon-resiliency-security",
     seriesLabel: "Part 1 of a series",
@@ -21,31 +21,20 @@ export const baganihanPerspectives = [
       "A case for designing land, infrastructure and community as one system, rather than defending an asset from the region around it.",
 
     // ── card (front of the resources page) ──
-    cardTitle: "Perspective · Why Master Planning Will Fail Without Resiliency Security",
+    cardTitle: "Why Master Planning Will Fail Without Resiliency Security",
     cardSummary:
-      "Hubert Joseph Posadas argues that Philippine land and infrastructure planning still assumes a stable climate and a predictable global economy, and that the fix is ecological design joined to organised community capacity. Published as an opinion essay with an editorial note on which claims the evidence supports.",
-    cardImage: "/images/baganihan/perspectives/baganihan-field.jpg",
+      "Hubert Joseph Posadas argues that Philippine land and infrastructure planning still assumes a stable climate and a predictable global economy, and that the answer is ecological design joined to organised community capacity. Part one of a series from the Baganihan Collective.",
+    cardImage: "/images/baganihan/field-notes/baganihan-field.jpg",
 
-    hero: "/images/baganihan/perspectives/baganihan-field.jpg",
+    hero: "/images/baganihan/field-notes/baganihan-field.jpg",
     heroCaption:
       "Baganihan Collective field work across Luzon. Area assessments, tabletop exercises and community builds.",
-
-    editorialNote:
-      "This essay is a perspective from the Baganihan Collective on resilience, development and preparedness in an uncertain world. Some of the language and the scenarios in it are deliberately provocative, and they reflect the author's own reading rather than established scientific consensus. We have marked the claims that current evidence supports and the claims that are the author's projection. Mycelium publishes these perspectives as part of an ongoing conversation about how ecological systems, infrastructure and communities can work together, and publishing is not endorsement.",
 
     blocks: [
       {
         t: "lead",
-        label: "The author's starting point",
         text:
           "For decades, planners treated the 1972 MIT study Limits to Growth as a distant academic exercise. Its scenarios projected that industrial expansion, resource depletion and ecological overshoot would converge on a structural tipping point somewhere in the first half of this century. My own reading is that we are standing on that horizon now. What global institutions comfortably label the polycrisis, the compounding convergence of climate disruption, supply chain fracture and economic decay, I read as the visible deceleration of industrial civilisation.",
-      },
-
-      {
-        t: "editor",
-        label: "Editor's note on that claim",
-        text:
-          "Limits to Growth is a modelling study, and its scenarios are scenarios rather than measurements. Researchers continue to disagree over how closely the world is tracking any of them. Treat the opening as the author stating his position, not as a settled finding. What follows is on firmer ground.",
       },
 
       {
@@ -81,7 +70,7 @@ export const baganihanPerspectives = [
 
       {
         t: "image",
-        src: "/images/baganihan/perspectives/polycrisis-cascade.jpg",
+        src: "/images/baganihan/field-notes/polycrisis-cascade.jpg",
         caption:
           "How a single shock travels. The Cascade Institute traced the Ukraine-Russia war through food, energy, shipping, economy and domestic politics at the same time. This is the mechanism behind the word polycrisis.",
         credit: "Diagram by Michael Lawrence, Cascade Institute.",
@@ -125,7 +114,7 @@ export const baganihanPerspectives = [
 
       {
         t: "image",
-        src: "/images/baganihan/perspectives/baganihan-system.jpg",
+        src: "/images/baganihan/field-notes/baganihan-system.jpg",
         caption:
           "The Baganihan system in full. Area assessment, tabletop exercise, Taglay mapping, a ninety day sprint, then build resilience and repeat. Mycelium is the digital platform inside it.",
         credit: "Baganihan, The Community Resilience System. Powered by Kabuohan.",
@@ -141,55 +130,10 @@ export const baganihanPerspectives = [
       },
 
       {
-        t: "evidence",
-        label: "Where this essay stands with the evidence",
-        intro:
-          "Mycelium's editorial assessment, separated from the author's argument so readers can weigh each part for themselves.",
-        items: [
-          {
-            lvl: "supported",
-            title: "Philippine exposure to compounding risk",
-            text:
-              "Climate, hydrological, supply chain and geopolitical risks here are documented across government and multilateral assessments, and they do interact rather than arriving separately.",
-          },
-          {
-            lvl: "supported",
-            title: "Nature-based and community-involved planning works",
-            text:
-              "Vegetation and earthworks slowing runoff, holding soil and cooling sites is standard landscape hydrology. Community involvement improving disaster outcomes is one of the better-evidenced findings in the field.",
-          },
-          {
-            lvl: "supported",
-            title: "Clearing slopes worsens downstream flooding",
-            text:
-              "The most directly testable claim in the essay. Removing vegetation and sealing surfaces increases the speed and volume of runoff onto land below.",
-          },
-          {
-            lvl: "partly",
-            title: "The polycrisis framing",
-            text:
-              "Cascading, cross-system shocks are a real and actively researched phenomenon. Whether they add up to the decline of industrial civilisation is a much larger claim than the cascade research itself makes.",
-          },
-          {
-            lvl: "opinion",
-            title: "That collapse has already begun",
-            text:
-              "Limits to Growth is a contested model and its scenarios are not measurements. Researchers disagree over how closely the world tracks any of them.",
-          },
-          {
-            lvl: "opinion",
-            title: "That this particular approach will prevent collapse",
-            text:
-              "The methods described are sound risk reduction at the site and community scale. No evidence establishes that they prevent civilisational decline, and the essay promotes a framework the author convenes.",
-          },
-        ],
-      },
-
-      {
         t: "callout",
         label: "Coming in part two",
         text:
-          "The author plans to break down the field protocols of Deep Spatial Diagnosis and how hydrological architecture is applied to high-stakes assets.",
+          "The field protocols of Deep Spatial Diagnosis, and how hydrological architecture is applied to high-stakes assets.",
       },
     ],
 
@@ -201,5 +145,56 @@ export const baganihanPerspectives = [
       "Polycrisis",
       "Limits to Growth",
     ],
+
+    // ── Mycelium's own assessment ──
+    // Sits at the end, after the reader has heard the argument out. It exists so
+    // that nothing on this page can be mistaken for a Mycelium finding, without
+    // interrupting the author to say so.
+    closing: {
+      label: "A note from Mycelium",
+      paras: [
+        "Field Notes are firsthand writing from the practitioners we work alongside. They are arguments made by the people making them, and we publish them because the questions in them are worth putting in front of a room. Publishing one is not agreeing with all of it.",
+        "This piece is deliberately provocative, and parts of it reach further than the current evidence does. Limits to Growth, which the opening rests on, is a modelling study whose scenarios are projections rather than measurements, and researchers still disagree over how closely the world tracks any of them. The rest of the argument stands on firmer ground. Below is where we think each part sits, so you can weigh it yourself.",
+      ],
+      evidenceIntro: "Our reading of the claims, taken one at a time.",
+      evidence: [
+        {
+          lvl: "supported",
+          title: "Philippine exposure to compounding risk",
+          text:
+            "Climate, hydrological, supply chain and geopolitical risks here are documented across government and multilateral assessments, and they do interact rather than arriving separately.",
+        },
+        {
+          lvl: "supported",
+          title: "Nature-based and community-involved planning works",
+          text:
+            "Vegetation and earthworks slowing runoff, holding soil and cooling sites is standard landscape hydrology. Community involvement improving disaster outcomes is one of the better-evidenced findings in the field.",
+        },
+        {
+          lvl: "supported",
+          title: "Clearing slopes worsens downstream flooding",
+          text:
+            "The most directly testable claim in the piece. Removing vegetation and sealing surfaces increases the speed and volume of runoff onto land below.",
+        },
+        {
+          lvl: "partly",
+          title: "The polycrisis framing",
+          text:
+            "Cascading, cross-system shocks are a real and actively researched phenomenon. Whether they add up to the decline of industrial civilisation is a much larger claim than the cascade research itself makes.",
+        },
+        {
+          lvl: "opinion",
+          title: "That collapse has already begun",
+          text:
+            "The author's reading rather than a finding. The model it rests on is contested, and its scenarios are not measurements of the world.",
+        },
+        {
+          lvl: "opinion",
+          title: "That this approach will prevent collapse",
+          text:
+            "The author's reading rather than a finding. The methods described are sound risk reduction at the site and community scale, which is a different and more modest claim than preventing civilisational decline.",
+        },
+      ],
+    },
   },
 ];
