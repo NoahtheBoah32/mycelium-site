@@ -23,7 +23,7 @@ export const baganihanEssays = [
     // ── card (front of the resources page) ──
     cardTitle: "Why Master Planning Will Fail Without Resiliency Security",
     cardSummary:
-      "Hubert Joseph Posadas argues that Philippine land and infrastructure planning still assumes a stable climate and a predictable global economy, and that the answer is ecological design joined to organised community capacity. Part one of a series from the Baganihan Collective.",
+      "Hubert Joseph Balana Posadas argues that Philippine land and infrastructure planning still assumes a stable climate and a predictable global economy, and that the answer is ecological design joined to organised community capacity. Part one of a series from the Baganihan Collective.",
     cardImage: "/images/baganihan/essays/baganihan-field.jpg",
 
     hero: "/images/baganihan/essays/baganihan-field.jpg",
@@ -53,7 +53,7 @@ export const baganihanEssays = [
           {
             title: "Centralised supply dependency",
             text:
-              "Our commercial and residential hubs remain structurally brittle. Large-scale properties lean heavily on international logistics and highly centralised networks for basic operational stability, hardware and specialised resources. The Philippines is among the largest rice importers in the world and sources the overwhelming majority of its fertiliser from abroad. In a sustained economic contraction, those long lines are the first thing to thin out.",
+              "Our commercial and residential hubs remain structurally brittle. Large-scale properties lean heavily on international logistics and highly centralised networks for basic operational stability, hardware and specialised resources. The Philippines is among the largest rice importers in the world and buys most of its fertiliser from abroad. In a sustained economic contraction, those long lines are the first thing to thin out.",
           },
           {
             title: "Catchment collapse",
@@ -72,7 +72,7 @@ export const baganihanEssays = [
         t: "image",
         src: "/images/baganihan/essays/polycrisis-cascade.jpg",
         caption:
-          "How a single shock travels. The Cascade Institute traced the Ukraine-Russia war through food, energy, shipping, economy and domestic politics at the same time. This is the mechanism behind the word polycrisis.",
+          "How a single shock travels. An expert panel at the Cascade Institute traced the Ukraine-Russia war through food, energy, shipping, economy and domestic politics at the same time. This is one way the word polycrisis plays out in practice.",
         credit: "Diagram by Michael Lawrence, Cascade Institute.",
       },
 
@@ -97,7 +97,7 @@ export const baganihanEssays = [
         paras: [
           "I would retire the passive vocabulary of sustainability. You cannot sustain a system that is already under strain, and the word has been worn smooth by overuse. What I am arguing for instead is resiliency security through decentralised preparation.",
           "Resiliency security means using ecological design and landscape biology as a form of territorial defence. Through the lens of industrial permaculture, the landscape is not real estate to be conquered. It is a living, productive system designed to catch and slow energy, water and risk.",
-          "Rather than clearing land, design multi-tiered biological shields. Targeted earthworks, micro-swales and deep-rooted native vegetation anchor vulnerable topsoil, hold back off-site flash flooding and reduce ambient temperatures around infrastructure. None of this is novel and none of it is speculative. It is ordinary landscape hydrology applied deliberately and early, instead of being fought expensively later.",
+          "Rather than clearing land, design multi-tiered biological shields. Targeted earthworks, micro-swales and deep-rooted native vegetation anchor vulnerable topsoil, hold back off-site flash flooding and reduce ambient temperatures around infrastructure. These are established landscape-hydrology techniques, most effective when they are designed to the site. Applied early, they cost far less than fighting the same water later.",
         ],
       },
 
@@ -116,7 +116,7 @@ export const baganihanEssays = [
         t: "image",
         src: "/images/baganihan/essays/baganihan-system.jpg",
         caption:
-          "The Baganihan system in full. Area assessment, tabletop exercise, Taglay mapping, a ninety day sprint, then build resilience and repeat. Mycelium is the digital platform inside it.",
+          "The Baganihan system in full. Area assessment, tabletop exercise, Taglay mapping, a ninety day sprint, then build resilience and repeat. Mycelium is the digital platform used with this programme.",
         credit: "Baganihan, The Community Resilience System. Powered by Kabuohan.",
       },
 
