@@ -1,13 +1,13 @@
-// Baganihan Field Notes — firsthand writing from partner practitioners.
+// Longform writing from the Baganihan Collective, shown on the resources page
+// under Baganihan Reports alongside the situation reports.
 //
-// These are not Mycelium reports and they are not peer reviewed. The author's
-// piece runs uninterrupted, the way any publication would run it, and Mycelium's
-// own assessment sits at the end where a reader arrives at it having already
-// heard the argument out.
+// Separate route from /resources/baganihan/[slug].astro because that page renders
+// the bilingual situation-report format and these pieces are single-language
+// longform. Both surface under the same "Baganihan Reports" tab.
 //
-// Rendered by /resources/field-notes/[slug].astro.
+// Rendered by /resources/baganihan-reports/[slug].astro.
 
-export const baganihanFieldNotes = [
+export const baganihanEssays = [
   {
     slug: "mit-horizon-resiliency-security",
     seriesLabel: "Part 1 of a series",
@@ -24,9 +24,9 @@ export const baganihanFieldNotes = [
     cardTitle: "Why Master Planning Will Fail Without Resiliency Security",
     cardSummary:
       "Hubert Joseph Posadas argues that Philippine land and infrastructure planning still assumes a stable climate and a predictable global economy, and that the answer is ecological design joined to organised community capacity. Part one of a series from the Baganihan Collective.",
-    cardImage: "/images/baganihan/field-notes/baganihan-field.jpg",
+    cardImage: "/images/baganihan/essays/baganihan-field.jpg",
 
-    hero: "/images/baganihan/field-notes/baganihan-field.jpg",
+    hero: "/images/baganihan/essays/baganihan-field.jpg",
     heroCaption:
       "Baganihan Collective field work across Luzon. Area assessments, tabletop exercises and community builds.",
 
@@ -70,7 +70,7 @@ export const baganihanFieldNotes = [
 
       {
         t: "image",
-        src: "/images/baganihan/field-notes/polycrisis-cascade.jpg",
+        src: "/images/baganihan/essays/polycrisis-cascade.jpg",
         caption:
           "How a single shock travels. The Cascade Institute traced the Ukraine-Russia war through food, energy, shipping, economy and domestic politics at the same time. This is the mechanism behind the word polycrisis.",
         credit: "Diagram by Michael Lawrence, Cascade Institute.",
@@ -114,7 +114,7 @@ export const baganihanFieldNotes = [
 
       {
         t: "image",
-        src: "/images/baganihan/field-notes/baganihan-system.jpg",
+        src: "/images/baganihan/essays/baganihan-system.jpg",
         caption:
           "The Baganihan system in full. Area assessment, tabletop exercise, Taglay mapping, a ninety day sprint, then build resilience and repeat. Mycelium is the digital platform inside it.",
         credit: "Baganihan, The Community Resilience System. Powered by Kabuohan.",
@@ -146,54 +146,14 @@ export const baganihanFieldNotes = [
       "Limits to Growth",
     ],
 
-    // ── Mycelium's own assessment ──
-    // Sits at the end, after the reader has heard the argument out. It exists so
-    // that nothing on this page can be mistaken for a Mycelium finding, without
-    // interrupting the author to say so.
+    // ── closing note ──
+    // Short, and placed after the piece. It frames whose argument this is and
+    // points the reader to Common Ground. It is not a fact-check.
     closing: {
       label: "A note from Mycelium",
       paras: [
-        "Field Notes are firsthand writing from the practitioners we work alongside. They are arguments made by the people making them, and we publish them because the questions in them are worth putting in front of a room. Publishing one is not agreeing with all of it.",
-        "This piece is deliberately provocative, and parts of it reach further than the current evidence does. Limits to Growth, which the opening rests on, is a modelling study whose scenarios are projections rather than measurements, and researchers still disagree over how closely the world tracks any of them. The rest of the argument stands on firmer ground. Below is where we think each part sits, so you can weigh it yourself.",
-      ],
-      evidenceIntro: "Our reading of the claims, taken one at a time.",
-      evidence: [
-        {
-          lvl: "supported",
-          title: "Philippine exposure to compounding risk",
-          text:
-            "Climate, hydrological, supply chain and geopolitical risks here are documented across government and multilateral assessments, and they do interact rather than arriving separately.",
-        },
-        {
-          lvl: "supported",
-          title: "Nature-based and community-involved planning works",
-          text:
-            "Vegetation and earthworks slowing runoff, holding soil and cooling sites is standard landscape hydrology. Community involvement improving disaster outcomes is one of the better-evidenced findings in the field.",
-        },
-        {
-          lvl: "supported",
-          title: "Clearing slopes worsens downstream flooding",
-          text:
-            "The most directly testable claim in the piece. Removing vegetation and sealing surfaces increases the speed and volume of runoff onto land below.",
-        },
-        {
-          lvl: "partly",
-          title: "The polycrisis framing",
-          text:
-            "Cascading, cross-system shocks are a real and actively researched phenomenon. Whether they add up to the decline of industrial civilisation is a much larger claim than the cascade research itself makes.",
-        },
-        {
-          lvl: "opinion",
-          title: "That collapse has already begun",
-          text:
-            "The author's reading rather than a finding. The model it rests on is contested, and its scenarios are not measurements of the world.",
-        },
-        {
-          lvl: "opinion",
-          title: "That this approach will prevent collapse",
-          text:
-            "The author's reading rather than a finding. The methods described are sound risk reduction at the site and community scale, which is a different and more modest claim than preventing civilisational decline.",
-        },
+        "This is one practitioner writing from inside the work. The argument is his rather than ours, and we publish it because the questions underneath it deserve a real conversation.",
+        "Read it closely and decide for yourself what holds and where you would push back. Then bring that to Common Ground, where the rest of the community is working through the same questions.",
       ],
     },
   },

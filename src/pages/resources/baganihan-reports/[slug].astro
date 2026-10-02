@@ -2,22 +2,16 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SiteNav from '../../../components/SiteNav.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
-import { baganihanFieldNotes } from '../../../data/baganihan-field-notes.js';
+import { baganihanEssays } from '../../../data/baganihan-essays.js';
 
 export function getStaticPaths() {
-  return baganihanFieldNotes.map((p) => ({ params: { slug: p.slug }, props: { piece: p } }));
+  return baganihanEssays.map((p) => ({ params: { slug: p.slug }, props: { piece: p } }));
 }
 
 const { piece } = Astro.props;
-
-const lvlLabel = {
-  supported: 'Well supported',
-  partly: 'Partly supported',
-  opinion: "Author's reading",
-};
 ---
 
-<BaseLayout title={`${piece.title} — Baganihan Field Notes`}>
+<BaseLayout title={`${piece.title} — Baganihan Reports`}>
   <SiteNav />
 
   <article class="psp">
@@ -25,12 +19,12 @@ const lvlLabel = {
       <a href="/resources" class="psp-back">&larr; Back to Resources</a>
       <div class="psp-brand">
         <img src="/images/baganihan-logo.jpg" alt="Baganihan Collective" />
-        <span>Baganihan Field Notes</span>
+        <span>Baganihan Reports</span>
       </div>
     </div>
 
     <header class="psp-header">
-      <span class="psp-eyebrow">Field Notes &middot; {piece.seriesLabel}</span>
+      <span class="psp-eyebrow">The Baganihan Collective &middot; {piece.seriesLabel}</span>
       <h1 class="psp-title">{piece.title}</h1>
       <p class="psp-sub">{piece.subtitle}</p>
       <div class="psp-byline">
@@ -106,30 +100,11 @@ const lvlLabel = {
       </div>
     </div>
 
-    <!-- Mycelium's own assessment, after the argument rather than in front of it. -->
+    <!-- Placed after the piece, not in front of it. Framing, not a verdict. -->
     <aside class="psp-closing">
       <h2 class="psp-closing-h">{piece.closing.label}</h2>
       {piece.closing.paras.map((p) => <p class="psp-closing-p">{p}</p>)}
-
-      <div class="ev-wrap">
-        <p class="ev-intro">{piece.closing.evidenceIntro}</p>
-        <div class="ev-list">
-          {piece.closing.evidence.map((it) => (
-            <div class={`ev-row ev-${it.lvl}`}>
-              <span class="ev-flag">{lvlLabel[it.lvl]}</span>
-              <div class="ev-copy">
-                <h3 class="ev-title">{it.title}</h3>
-                <p class="ev-text">{it.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <p class="psp-closing-foot">
-        Disagree with any of this? That is rather the point. Take it to the floor at
-        <a href="/common-ground">Common Ground</a>.
-      </p>
+      <a class="psp-cg" href="/common-ground">Take it to Common Ground &rarr;</a>
     </aside>
   </article>
 
@@ -364,60 +339,22 @@ const lvlLabel = {
     margin-bottom: 14px;
   }
 
-  .ev-wrap {
-    background: #faf9f5;
-    border: 1px solid #e6e2d8;
-    border-radius: 12px;
-    padding: 24px 26px;
-    margin-top: 24px;
-  }
-  .ev-intro {
-    font-size: 0.85rem;
+  .psp-cg {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 0.875rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    color: #8a8477;
-    margin-bottom: 20px;
-  }
-  .ev-list { display: flex; flex-direction: column; gap: 20px; }
-  .ev-row {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 18px;
-    align-items: start;
-    padding-top: 20px;
-    border-top: 1px solid #e6e2d8;
-  }
-  .ev-row:first-child { padding-top: 0; border-top: none; }
-  .ev-flag {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 5px 10px;
+    color: #fff;
+    background: #2f6b3a;
     border-radius: 50px;
-    text-align: center;
-    white-space: nowrap;
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.15s;
   }
-  .ev-supported .ev-flag { background: #e3f0dd; color: #3c6b2c; }
-  .ev-partly .ev-flag { background: #fdf0d8; color: #8a6a12; }
-  .ev-opinion .ev-flag { background: #f3e2de; color: #8d4030; }
-  .ev-title { font-size: 1rem; font-weight: 700; color: #1d1c17; margin-bottom: 6px; text-wrap: balance; }
-  .ev-text { font-size: 0.97rem; line-height: 1.68; color: #4a4840; text-wrap: pretty; }
-
-  .psp-closing-foot {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: #8a8477;
-    margin-top: 24px;
-    text-wrap: pretty;
-  }
-  .psp-closing-foot a { color: #a8762a; font-weight: 600; }
-  .psp-closing-foot a:hover { color: #c8a01a; }
+  .psp-cg:hover { background: #3f8c4e; }
 
   @media (max-width: 600px) {
     .psp { padding: 24px 18px 56px; }
-    .ev-row { grid-template-columns: 1fr; gap: 10px; }
-    .ev-flag { justify-self: start; }
     .num-item { padding-left: 44px; }
   }
 </style>

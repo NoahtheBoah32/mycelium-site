@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { baganihanReports } from '../data/baganihan-reports.js';
-import { baganihanFieldNotes } from '../data/baganihan-field-notes.js';
+import { baganihanEssays } from '../data/baganihan-essays.js';
 import { upouStudies } from '../data/upou-research.js';
 
 const articles = [
@@ -20,10 +20,11 @@ const bagCards = baganihanReports.map((r) => ({
   cat: "Baganihan Reports", bag: true, internal: true, cta: "Read Report",
   title: r.cardTitle, desc: r.cardSummary, img: r.cardImage, learn: `/resources/baganihan/${r.slug}`,
 }));
-// Field Notes are firsthand practitioner writing, kept separate from the reports.
-const pspCards = baganihanFieldNotes.map((p) => ({
-  cat: "Baganihan Field Notes", bag: true, internal: true, cta: "Read Field Note",
-  title: p.cardTitle, desc: p.cardSummary, img: p.cardImage, learn: `/resources/field-notes/${p.slug}`,
+// Longform Baganihan pieces. Different template from the situation reports, but
+// they surface under the same Baganihan Reports tab.
+const pspCards = baganihanEssays.map((p) => ({
+  cat: "Baganihan Reports", bag: true, internal: true, cta: "Read Report",
+  title: p.cardTitle, desc: p.cardSummary, img: p.cardImage, learn: `/resources/baganihan-reports/${p.slug}`,
 }));
 const upCards = upouStudies.map((s) => ({
   cat: "UP Research", up: true, internal: true, cta: "Read the Study",
@@ -32,7 +33,7 @@ const upCards = upouStudies.map((s) => ({
 const cards = [...bagCards, ...pspCards, ...upCards, ...articles];
 
 const slug = (s) => s.toLowerCase().replace(/\s+/g, '-');
-const catOrder = ["Baganihan Reports", "Baganihan Field Notes", "UP Research", "Getting Started", "Beginner", "Intermediate", "Community Event"];
+const catOrder = ["Baganihan Reports", "UP Research", "Getting Started", "Beginner", "Intermediate", "Community Event"];
 const tabs = ["All", ...catOrder.filter((c) => cards.some((a) => a.cat === c))];
 ---
 
