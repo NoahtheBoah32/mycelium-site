@@ -285,6 +285,10 @@ h2.big em{font-style:italic;color:var(--green)}
 .replies{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line-2);display:none;flex-direction:column;gap:14px}
 .replies.open{display:flex}
 .reply{display:flex;gap:11px}
+.reply-new{background:rgba(196,135,42,.16);box-shadow:0 0 0 10px rgba(196,135,42,.16),-13px 0 0 -10px #C4872A;border-radius:4px}
+.reply-newtag{font-family:var(--font-ui);font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#C4872A;padding:2px 8px;border-radius:20px}
+.rel-announce{display:block;margin:10px 0 2px;font-family:var(--font-ui);font-size:.82rem;font-weight:600;color:inherit;background:none;border:1px dashed currentColor;opacity:.75;padding:9px 16px;border-radius:44px;cursor:pointer}
+.rel-announce:hover{opacity:1}
 .reply-ava{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
 .reply-body{flex:1;min-width:0}
 .reply-meta{display:flex;align-items:center;gap:9px;margin-bottom:3px}
@@ -1374,6 +1378,9 @@ function myCamp(){
 // ══════════════════════════════════════════
 const APP={user:null,votes:{},stmts:[...STMTS_BASE],fire:[],fireIndex:0,dynamicQ:[],replies:{},notifs:[],bugs:[],composeType:'statement',inboxTab:'notif',pendingMedia:[],pendingReplyMedia:[],reactions:{}};
 let POST_OPEN=null, POST_REVEAL=null, RT=null, _ansT=null, EDIT_TARGET=null;
+// Email deep link: /common-ground?post=<thread id>&reply=<reply id> opens that thread with the reply marked.
+let POST_HILITE=null, DEEP=null;
+try{const _sp=new URLSearchParams(location.search),_p=_sp.get('post'),_r=_sp.get('reply'),_u=/^[0-9a-f-]{36}$/i;if(_p&&_u.test(_p))DEEP={qid:_p,rid:(_r&&_u.test(_r))?_r:null};}catch(e){}
 const FIRE_DAILY=10; // the campfire is a batch of ten a day
 const MAX_MEDIA=8*1024*1024; // 8 MB cap on photos and videos
 const MAX_ATTACH=4; // up to four attachments per post/reply
@@ -2164,8 +2171,18 @@ function updateReleaseSignals(){
   const dot=g('ib-rel-dot');if(dot)dot.style.display=n>0?'':'none';
 }
 // ── the focused post: full text, hidden weigh-in, and the reply thread ──
-function openPost(id){POST_OPEN=id;POST_REVEAL=null;renderPostModal(id);g('post-ov').classList.add('open');const p=findPost(id);if(p)loadReactions(p).then(()=>{if(POST_OPEN===id)renderPostModal(id);});}
-function closePost(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;POST_OPEN=null;POST_REVEAL=null;g('post-ov').classList.remove('open');}
+function openPost(id,rid){POST_OPEN=id;POST_REVEAL=null;POST_HILITE=rid||null;renderPostModal(id);g('post-ov').classList.add('open');if(rid)scrollToNewReply();const p=findPost(id);if(p)loadReactions(p).then(()=>{if(POST_OPEN===id){renderPostModal(id);if(rid)scrollToNewReply();}});}
+function scrollToNewReply(){setTimeout(()=>{const el=document.querySelector('#post-modal .reply-new');if(el)el.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});},140);}
+function consumeDeepLink(){
+  const d=DEEP;DEEP=null;if(!d)return;
+  try{history.replaceState(null,'',location.pathname);}catch(e){}
+  const st=QINDEX[d.qid];
+  if(!st||!findPost(st.id)){toast('That thread is no longer on Common Ground.');return;}
+  const n=d.rid&&APP.notifs.find(x=>x.reply_id===d.rid&&!x.read);
+  if(n){n.read=true;updateInboxBadge();sb.from('notifications').update({read:true}).eq('id',n.id).then(()=>{},()=>{});}
+  setTimeout(()=>openPost(st.id,d.rid),380);
+}
+function closePost(e){if(e&&e.target!==e.currentTarget&&e.type==='click')return;POST_OPEN=null;POST_REVEAL=null;POST_HILITE=null;g('post-ov').classList.remove('open');}
 function revealWeigh(id){POST_REVEAL=id;renderPostModal(id);}
 // ── edit a post or reply in place (author or admin) ──
 function focusEditBox(id){setTimeout(()=>{const el=g(id);if(!el)return;el.focus();try{const r=document.createRange();r.selectNodeContents(el);r.collapse(false);const s=getSelection();s.removeAllRanges();s.addRange(r);}catch(e){}updateFmtState(id);},0);}
@@ -2225,7 +2242,7 @@ function renderPostModal(id){
     const rBody=editingThis
       ? '<div class="pm-edit">'+fmtBarSlim('edit-reply-ta')+'<div class="rich-editor re-edit" id="edit-reply-ta" contenteditable="true" data-ph="Edit your reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'edit-reply-ta\')" onmouseup="updateFmtState(\'edit-reply-ta\')" onpaste="pasteText(event)">'+richText(r.body||'')+'</div><div class="edit-actions"><button class="edit-save" onclick="saveReplyEdit(\''+id+'\',\''+r.id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
       : (r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'');
-    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(mediaBlock(r)?'<div class="reply-media">'+mediaBlock(r)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
+    return '<div class="reply'+(r.id===POST_HILITE?' reply-new':'')+'" data-rid="'+r.id+'"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span>'+(r.id===POST_HILITE?'<span class="reply-newtag">New reply</span>':'')+'<span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(mediaBlock(r)?'<div class="reply-media">'+mediaBlock(r)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
   }).join('');
   const rmList=APP.pendingReplyMedia||[];
   const replyPreview=rmList.length?('<div class="compose-preview" style="display:flex;margin-bottom:8px">'+previewStrip(rmList,'pendingReplyMedia','()=>{if(POST_OPEN)renderPostModal(POST_OPEN)}')+'</div>'):'';
@@ -2247,6 +2264,16 @@ function renderPostModal(id){
 }
 
 // ── a Mycelium release: the report/video/event, its "Read it" link, and the same reply + reaction thread as any post ──
+// Admin only: emails this release to every member who has announcements on. The database sends each member a given release once.
+async function announceRelease(id){
+  const q=RELEASE_INDEX[id];if(!q||!APP.user||!APP.user.isAdmin)return;
+  if(!confirm('Email "'+q.title+'" to every Common Ground member?'))return;
+  try{
+    const{data,error}=await sb.rpc('cg_announce',{p_qid:q.qid,p_title:q.title,p_summary:q.summary||null,p_link:q.link||null,p_image:q.image||null,p_cta:q.cta||null,p_flair:q.flair||null});
+    if(error)throw error;
+    toast(data?('On its way to '+data+' member'+(data===1?'':'s')+'.'):'Every member already has this one.');
+  }catch(e){toast('That did not send. '+((e&&e.message)||''));}
+}
 function renderReleaseModal(q){
   const m=g('post-modal');
   const id=q.id;
@@ -2259,7 +2286,7 @@ function renderReleaseModal(q){
     const rBody=editingThis
       ? '<div class="pm-edit">'+fmtBarSlim('edit-reply-ta')+'<div class="rich-editor re-edit" id="edit-reply-ta" contenteditable="true" data-ph="Edit your reply..." oninput="onEditorInput(this)" onkeyup="updateFmtState(\'edit-reply-ta\')" onmouseup="updateFmtState(\'edit-reply-ta\')" onpaste="pasteText(event)">'+richText(r.body||'')+'</div><div class="edit-actions"><button class="edit-save" onclick="saveReplyEdit(\''+id+'\',\''+r.id+'\')">Save</button><button class="edit-cancel" onclick="cancelEdit()">Cancel</button></div></div>'
       : (r.body?'<div class="reply-text">'+richText(r.body)+'</div>':'');
-    return '<div class="reply"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span><span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(mediaBlock(r)?'<div class="reply-media">'+mediaBlock(r)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
+    return '<div class="reply'+(r.id===POST_HILITE?' reply-new':'')+'" data-rid="'+r.id+'"><span class="reply-ava" style="background:'+(r.color||'#8a7d5f')+'">'+escHtml(initials(r.name))+'</span><div class="reply-body"><div class="reply-meta"><span class="reply-name">'+escHtml(r.name)+'</span>'+(r.id===POST_HILITE?'<span class="reply-newtag">New reply</span>':'')+'<span class="reply-time">'+timeAgo(r.at)+(r.edited?' · <span class="edited-tag">edited</span>':'')+'</span>'+rActs+'</div>'+rBody+(mediaBlock(r)?'<div class="reply-media">'+mediaBlock(r)+'</div>':'')+ytEmbedHtml(r.body)+renderReactions('reply',r.id)+'</div></div>';
   }).join('');
   const rmList=APP.pendingReplyMedia||[];
   const replyPreview=rmList.length?('<div class="compose-preview" style="display:flex;margin-bottom:8px">'+previewStrip(rmList,'pendingReplyMedia','()=>{if(POST_OPEN)renderPostModal(POST_OPEN)}')+'</div>'):'';
@@ -2270,6 +2297,7 @@ function renderReleaseModal(q){
     +(q.summary?'<div class="pm-text">'+escHtml(q.summary)+'</div>':'')
     +hero
     +'<a class="rel-cta" style="--fc:'+q.fc+'" href="'+q.link+'" target="_blank" rel="noopener">'+escHtml(q.cta)+' →</a>'
+    +(APP.user&&APP.user.isAdmin?'<button type="button" class="rel-announce" onclick="announceRelease(\''+id+'\')">Email this announcement to members</button>':'')
     +renderReactions('post',q.qid)
     +'<div class="pm-replies"><div class="pm-replies-title">'+reps.length+' '+(reps.length===1?'reply':'replies')+'</div>'+replyList
     +replyPreview
@@ -2411,7 +2439,7 @@ async function openNotif(nid,qid){
   const n=APP.notifs.find(x=>x.id===nid);
   if(n&&!n.read){n.read=true;updateInboxBadge();try{await sb.from('notifications').update({read:true}).eq('id',nid);}catch(e){}}
   closeInbox();
-  if(qid){const st=APP.dynamicQ.find(q=>q.qid===qid);if(st)openPost(st.id);}
+  if(qid){const st=APP.dynamicQ.find(q=>q.qid===qid);if(st)openPost(st.id,n&&n.reply_id);}
   renderInbox();
 }
 
@@ -2462,7 +2490,8 @@ function launchApp(){
     const secObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.querySelectorAll('#mnav a').forEach(a=>a.classList.toggle('act',a.dataset.sec===e.target.id));}),{rootMargin:'-45% 0px -45% 0px'});
     ['fire','groups','forum'].forEach(id=>{const el=g(id);if(el)secObs.observe(el);});
   }catch(e){}
-  if(APP._playIntro||!cgiSeen()){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}} // plays once for everyone (admin included); replay via the "Watch the walk in again" button
+  if(DEEP){consumeDeepLink();} // arrived from an email: straight to the thread, the walk in waits for next time
+  else if(APP._playIntro||!cgiSeen()){APP._playIntro=false;try{startIntro();}catch(e){console.error('[CG] intro failed',e);}} // plays once for everyone (admin included); replay via the "Watch the walk in again" button
 }
 document.getElementById('stones').addEventListener('click',e=>{
   const st=e.target.closest('.stone');if(!st)return;

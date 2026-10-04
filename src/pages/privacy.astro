@@ -4,7 +4,7 @@ import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import EmailReveal from '../components/EmailReveal.astro';
 
-const updated = '21 September 2026';
+const updated = '4 October 2026';
 
 const toc = [
   { id: 'summary', label: 'The short version' },
@@ -94,7 +94,7 @@ const rights = [
         <p>The feedback form asks for your first name, last name, email address, and your message. The form is delivered through Formspree, which passes it to our inbox.</p>
 
         <h3>Joining Common Ground</h3>
-        <p>Creating an account requires an email address, a password, and a display name. You may also add where you are from and your level of practice, both of which are optional to fill in honestly and are shown to other members. We assign your avatar a colour. Your password is stored by Supabase in hashed form and is never visible to us.</p>
+        <p>Creating an account requires an email address, a password, and a display name. You may also add where you are from and your level of practice, both of which are optional to fill in honestly and are shown to other members. We assign your avatar a colour. Your password is stored by Supabase in hashed form and is never visible to us. We use your email address to tell you when someone replies in a thread you started or joined, and to send Common Ground announcements. Every one of those emails has a link that lets you turn them off.</p>
 
         <h3>Using Common Ground</h3>
         <p>Once you are in, we store what you create: your agree, disagree and pass answers to statements, the discussions you post, your replies, your emoji reactions, notifications generated for you, and any files you upload. Uploaded files keep their original filename, and we do not strip metadata such as camera or location information that your images may carry. Please remove anything sensitive before uploading.</p>
@@ -122,6 +122,7 @@ const rights = [
               <tr><td>Register you for an event and send joining details</td><td>Name, email</td><td>Steps taken at your request so you can attend</td></tr>
               <tr><td>Tell you about future events</td><td>Email, your opt in</td><td>Your consent, withdrawable at any time</td></tr>
               <tr><td>Run your Common Ground account</td><td>Account details and everything you post</td><td>Your consent, and providing the service you signed up for</td></tr>
+              <tr><td>Email you when someone replies in a Common Ground thread you are part of, and when there is an announcement</td><td>Email, display name, the thread</td><td>Your consent, withdrawable at any time through the link in every email</td></tr>
               <tr><td>Reply to feedback and email</td><td>Name, email, your message</td><td>Your consent in writing to us</td></tr>
               <tr><td>Fix bugs</td><td>Report, page, user agent</td><td>Our legitimate interest in a working site</td></tr>
               <tr><td>Publish photographs of events</td><td>Images of participants</td><td>Consent, and for children the consent of a parent or guardian</td></tr>
