@@ -157,4 +157,124 @@ export const baganihanEssays = [
       ],
     },
   },
+  {
+    slug: "permaculture-beyond-the-farm",
+    seriesLabel: "From the Convenor",
+    date: "October 2026",
+    author: "Hubert Joseph Balana Posadas",
+    authorRole:
+      "Convenor, The Baganihan Collective. Risk and eco-development consultant-integrator.",
+    title: "Permaculture beyond the farm: permanent culture, resilience and security",
+    subtitle:
+      "If permaculture also means permanent culture, then what keeps a community working through uncertainty belongs inside the design.",
+
+    // ── card (front of the resources page) ──
+    cardTitle: "Permaculture Beyond the Farm: Permanent Culture, Resilience and Security",
+    cardSummary:
+      "Hubert Joseph Balana Posadas asks what permanent culture has to include if communities are to stay functional under stress. Drawing on risk management and community security work in the Philippines, he reads bayanihan as distributed capacity and argues that security may already be part of the culture permaculture is trying to design.",
+    cardImage: "/images/baganihan/essays/permanent-culture-field.jpg",
+
+    hero: "/images/baganihan/essays/permanent-culture-field.jpg",
+    heroCaption:
+      "On an upland site in the Philippines. Much of what keeps a place like this functional is unwritten: relationships, local knowledge and who notices what. Photo: Hubert Joseph Balana Posadas.",
+
+    blocks: [
+      {
+        t: "lead",
+        text:
+          "If permaculture is not only about permanent agriculture but also about Permanent Culture, then perhaps we need to look more closely at what allows communities to remain functional through uncertainty.",
+      },
+
+      {
+        t: "prose",
+        label: "Human systems around the ecological ones",
+        paras: [
+          "Permaculture already deals with ecological resilience: soil, water, food, energy, biodiversity and regenerative landscapes. But these systems exist within human systems. When conditions become difficult, we also need to ask whether people can continue cooperating, making decisions, sharing resources and protecting essential functions.",
+          "My background in risk management and community security has led me to look at permaculture from this perspective.",
+        ],
+      },
+
+      {
+        t: "prose",
+        label: "What security covers",
+        paras: [
+          "Security is not only about crime or physical attack. It includes the continuity of food, water, livelihoods, ecological systems, knowledge, relationships and decision-making. But disruption is not always accidental. Communities can also face conflict, exploitation, criminal activity, sabotage and other intentional threats.",
+          "This is an area I believe deserves more attention in community resilience.",
+        ],
+      },
+
+      {
+        t: "prose",
+        label: "What I have seen on Philippine ground",
+        paras: [
+          "In the Philippines, I have encountered informal and often unwritten community security practices around pasang bilis, kasanga, tactical approaches and Barangay Intelligence Networks. I do not present these as universal models. My exposure is based on Philippine ground conditions, and those working elsewhere would need to study the equivalent systems within their own communities.",
+          "What interests me is the underlying principle: some of the most important security technologies in a community may not look like security technologies at all.",
+          "They may exist as relationships, trust, local knowledge, communication patterns, mutual observation, early warning and reciprocal responsibility.",
+        ],
+      },
+
+      {
+        t: "prose",
+        label: "Bayanihan as distributed capacity",
+        paras: [
+          "This connects strongly with my observations of Bayanihan.",
+          "Bayanihan is often described simply as Filipinos helping one another. From a resilience perspective, I see it as distributed social capacity: when individual capacity is insufficient, relationships allow people to pool labour, knowledge, resources and responsibility.",
+          "But Bayanihan cannot simply be manufactured. Programs can organise participation, but they cannot automatically create the trust, reciprocity and pakikipagkapwa that make genuine collective action possible.",
+        ],
+      },
+
+      {
+        t: "pullquote",
+        text: "One does not manufacture Bayanihan. One enters into relationship.",
+      },
+
+      {
+        t: "prose",
+        label: "The parallel with permaculture",
+        paras: [
+          "There is a strong parallel with permaculture. We do not manufacture an ecosystem. We observe its existing relationships, resources and constraints, then design interventions that strengthen rather than replace them.",
+          "Perhaps community design should work the same way.",
+          "Before asking what intervention we should bring, we can ask: what relationships, knowledge, assets, vulnerabilities and protective capacities already exist here? What happens to them under stress? And what happens when the disruption is intentional rather than accidental?",
+        ],
+      },
+
+      {
+        t: "prose",
+        label: "Resiliency security",
+        paras: [
+          "This is where I see Resiliency Security developing: connecting risk management, ecological resilience and community capability so communities can anticipate, absorb, adapt, recover and protect essential functions.",
+          "I also suspect this is not uniquely Filipino. Other communities may have their own forms of what I would call cultural security technologies: unwritten ways of maintaining awareness, cooperation, protection and continuity.",
+          "The challenge is not to copy Bayanihan, but to look at our own ground and discover what already exists.",
+        ],
+      },
+
+      {
+        t: "prose",
+        label: "The question for permaculture",
+        paras: [
+          "If Permanent Culture is about maintaining essential capacities while adapting to change, then perhaps security is part of that culture.",
+          "The question becomes: how do we design not only landscapes capable of enduring, but cultures capable of caring for those landscapes, protecting their relationships, and remaining functional when conditions become difficult?",
+          "That, to me, is an important question for permaculture to explore.",
+        ],
+      },
+    ],
+
+    tags: [
+      "Permanent Culture",
+      "Resiliency Security",
+      "Bayanihan",
+      "Community Security",
+      "Baganihan Collective",
+      "Permaculture",
+    ],
+
+    // ── closing note ──
+    closing: {
+      label: "A note from Mycelium",
+      paras: [
+        "This is one practitioner writing from inside the work. The argument is his rather than ours, and we publish it because the questions underneath it deserve a real conversation.",
+        "Read it closely and decide for yourself what holds and where you would push back. Then bring that to Common Ground, where the rest of the community is working through the same questions.",
+      ],
+    },
+  },
 ];
