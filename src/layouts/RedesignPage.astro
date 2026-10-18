@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import { renderPage } from '../redesign/render.mjs';
+const { route = '' } = Astro.props;
+const events = route.startsWith('events') ? await getCollection('events') : [];
+const reels = route === 'videos' ? await getCollection('reels', r => !r.data.hidden) : [];
+const page = renderPage(route, { events, reels });
+---
+<!doctype html>
+<html lang="en">
+  <head set:html={page.head} />
+  <body class={page.bodyClass} set:html={page.body} />
+</html>

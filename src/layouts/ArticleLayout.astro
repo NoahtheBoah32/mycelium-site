@@ -1,0 +1,13 @@
+---
+import { articleShell } from '../redesign/render.mjs';
+const page = articleShell(Astro.props.route, Astro.props.title);
+---
+<!doctype html>
+<html lang="en">
+  <head set:html={page.head} />
+  <body class={page.bodyClass}>
+    <Fragment set:html={page.before} />
+    <main id="main"><div class="reading-page"><slot /></div></main>
+    <Fragment set:html={page.after} />
+  </body>
+</html>

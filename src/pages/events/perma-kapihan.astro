@@ -1,0 +1,17 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getEntry } from 'astro:content';
+const event=await getEntry('events','perma-kapihan');
+const d=event!.data;
+---
+<ArticleLayout route="events/perma-kapihan" title={d.title}>
+  <article>
+    <a href="/events/">← Back to events</a>
+    <header><h1>{d.title}</h1><p>{d.description}</p></header>
+    <h2>A regular place to reconnect.</h2>
+    <p>{d.schedule}<br />{d.time}<br />{d.location}</p>
+    <p>{d.notes}</p>
+    <p>Check with the Philippine Permaculture Association before travelling for the latest gathering details.</p>
+    <a href="/feedback/">Ask about this gathering →</a>
+  </article>
+</ArticleLayout>
