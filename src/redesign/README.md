@@ -8,6 +8,9 @@ report pages retain their original Astro block renderers and data imports.
 CSS, scripts, responsive images, unchanged video streams and GLB sculptures live
 under `public/redesign/`. Original public media is retained. Content-hashed
 delivery assets have immutable CDN caching; HTML keeps Vercel's normal policy.
+On touch-only devices, archive sculptures retain their matching rendered poster
+until the visitor requests 3D. Desktop models retain their near-viewport preload
+and hover rotation. This avoids WebGL initialization during initial phone scroll.
 
 ## Preservation boundary
 
