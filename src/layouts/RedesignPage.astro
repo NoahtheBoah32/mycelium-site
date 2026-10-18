@@ -8,6 +8,6 @@ const page = renderPage(route, { events, reels });
 ---
 <!doctype html>
 <html lang="en">
-  <head set:html={page.head} />
-  <body class={page.bodyClass} set:html={page.body} />
+  <head><Fragment set:html={page.head} /></head>
+  <body class={page.bodyClass}><Fragment set:html={page.body} /></body>
 </html>
