@@ -135,6 +135,7 @@ export function renderPage(route, { events=[], reels=[] }={}) {
   if(v){videoDetail($,v,!template(route));head('title').text(`${v.title} — Mycelium`);}
   if(route==='videos')videoLibrary($,reels);
   if(route==='resources')readingLibrary($);
+  if(route==='newsletter')$('.preview-note').text('New subscriptions are temporarily unavailable. Please check back soon.');
   if(route==='events'||route==='events/archive')eventsContent($,events,route.endsWith('archive'));
   // Public-site entrances use the approved account screen. Existing sessions
   // continue into the unchanged forum; direct forum/post URLs remain intact.

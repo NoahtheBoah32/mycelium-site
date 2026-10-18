@@ -63,7 +63,9 @@ is free of security issues.
 
 Newsletter collection still needs the original WordPress subscriber service
 identified and reconnected. No subscriber migration or alternate list was
-created. Sending a newsletter is separate from saving new subscriptions.
+created. Sending a newsletter is separate from saving new subscriptions. The
+newsletter page now says new subscriptions are temporarily unavailable instead
+of retaining its misleading "Design preview" label.
 
 ## Sources
 
