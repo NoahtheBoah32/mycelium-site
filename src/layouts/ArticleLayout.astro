@@ -4,7 +4,7 @@ const page = articleShell(Astro.props.route, Astro.props.title);
 ---
 <!doctype html>
 <html lang="en">
-  <head set:html={page.head} />
+  <head><Fragment set:html={page.head} /></head>
   <body class={page.bodyClass}>
     <Fragment set:html={page.before} />
     <main id="main"><div class="reading-page"><slot /></div></main>
