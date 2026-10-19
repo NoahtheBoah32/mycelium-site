@@ -24,10 +24,19 @@ for (const filename of await files(templates)) {
   const original = load(template.head);
   assert.ok($('head title').text().trim(), `${route}: missing page title`);
   assert.equal($('meta[name="viewport"]').length, 1, `${route}: missing viewport`);
+  // Published article/video details intentionally keep the original Astro design.
+  // They no longer consume the redesign's detail-page presentation templates.
+  const originalDetail = /^(video\/|resources\/(research|baganihan|baganihan-reports)\/)/.test(route);
+  if (originalDetail) {
+    assert.equal($('.site-nav').length, 1, `${route}: original navigation missing`);
+    assert.ok($('.vd-page, article.ra, article.rpt, article.psp').length, `${route}: original detail layout missing`);
+    assert.equal($('.watch-heading, nav.dock, .review-header').length, 0, `${route}: redesign detail shell returned`);
+  }
   for (const selector of ['link[rel="stylesheet"]', 'script[src]']) {
-    for (const tag of original(selector).toArray()) {
+    const expected = originalDetail ? $ : original;
+    for (const tag of expected(selector).toArray()) {
       const attr = tag.name === 'link' ? 'href' : 'src';
-      const url = original(tag).attr(attr);
+      const url = expected(tag).attr(attr);
       assert.ok($(selector).toArray().some(node => $(node).attr(attr) === url),
         `${route}: missing ${url}`);
       if (url.startsWith('/')) {

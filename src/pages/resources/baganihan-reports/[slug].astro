@@ -1,5 +1,7 @@
 ---
-import ArticleLayout from '../../../layouts/ArticleLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SiteNav from '../../../components/SiteNav.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
 import { baganihanEssays } from '../../../data/baganihan-essays.js';
 
 export function getStaticPaths() {
@@ -9,8 +11,8 @@ export function getStaticPaths() {
 const { piece } = Astro.props;
 ---
 
-<ArticleLayout route={`resources/baganihan-reports/${Astro.params.slug}`}>
-
+<BaseLayout title={`${piece.title} — Baganihan Reports`}>
+  <SiteNav />
 
   <article class="psp">
     <div class="psp-topbar">
@@ -106,5 +108,253 @@ const { piece } = Astro.props;
     </aside>
   </article>
 
+  <SiteFooter />
+</BaseLayout>
 
-</ArticleLayout>
+<style>
+  .psp {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 36px 24px 72px;
+    font-family: var(--font-inter);
+    color: #2b2b28;
+  }
+
+  /* topbar */
+  .psp-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e6e2d8;
+    flex-wrap: wrap;
+  }
+  .psp-back {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #5a3a1c;
+    text-decoration: none;
+  }
+  .psp-back:hover { color: #c8a01a; }
+  .psp-brand { display: flex; align-items: center; gap: 10px; }
+  .psp-brand img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
+  .psp-brand span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a8477;
+  }
+
+  /* header */
+  .psp-header { padding: 40px 0 28px; }
+  .psp-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a8762a;
+    margin-bottom: 18px;
+  }
+  .psp-title {
+    font-family: var(--font-playfair, Georgia, serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #1d1c17;
+    text-wrap: balance;
+    margin-bottom: 18px;
+  }
+  .psp-sub {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #5f5b51;
+    text-wrap: pretty;
+    margin-bottom: 26px;
+  }
+  .psp-byline {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid #e6e2d8;
+  }
+  .psp-author { display: block; font-size: 0.95rem; font-weight: 600; color: #2b2b28; }
+  .psp-role { display: block; font-size: 0.85rem; color: #8a8477; margin-top: 3px; text-wrap: pretty; }
+  .psp-date { font-size: 0.85rem; color: #8a8477; white-space: nowrap; }
+
+  /* hero */
+  .psp-hero { margin: 8px 0 44px; }
+  .psp-hero img { width: 100%; border-radius: 12px; display: block; }
+  .psp-hero figcaption {
+    font-size: 0.85rem;
+    color: #8a8477;
+    line-height: 1.55;
+    margin-top: 12px;
+    text-wrap: pretty;
+  }
+
+  /* body blocks */
+  .blk { margin-bottom: 42px; }
+  .blk-h {
+    font-family: var(--font-playfair, Georgia, serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #1d1c17;
+    text-wrap: balance;
+    margin-bottom: 16px;
+  }
+  .blk-p {
+    font-size: 1.0625rem;
+    line-height: 1.78;
+    color: #3a3833;
+    text-wrap: pretty;
+    margin-bottom: 18px;
+  }
+  .blk-p:last-child { margin-bottom: 0; }
+
+  .blk-lead {
+    padding: 0 0 36px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid #e6e2d8;
+  }
+  .blk-eyebrow {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a8762a;
+    margin-bottom: 12px;
+  }
+  .blk-lead p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #2b2b28;
+    text-wrap: pretty;
+  }
+
+  /* numbered vulnerabilities */
+  .num-list { list-style: none; counter-reset: num; display: flex; flex-direction: column; gap: 26px; }
+  .num-item { counter-increment: num; padding-left: 52px; position: relative; }
+  .num-item::before {
+    content: counter(num);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #1d1c17;
+    color: #e8c766;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .num-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1d1c17;
+    text-wrap: balance;
+    margin-bottom: 8px;
+  }
+  .num-text { font-size: 1.0625rem; line-height: 1.75; color: #3a3833; text-wrap: pretty; }
+
+  .blk-pull {
+    font-family: var(--font-playfair, Georgia, serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.45;
+    color: #5a3a1c;
+    border-left: 4px solid #c8a01a;
+    padding: 6px 0 6px 26px;
+    margin: 0 0 42px;
+    text-wrap: balance;
+  }
+
+  .blk-fig { margin-bottom: 42px; }
+  .blk-fig img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    background: #fff;
+    border: 1px solid #e6e2d8;
+  }
+  .blk-fig figcaption {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #6e6a60;
+    margin-top: 12px;
+    text-wrap: pretty;
+  }
+  .blk-credit { display: block; font-style: italic; color: #9a958a; margin-top: 5px; }
+
+  .blk-callout {
+    background: #1d1c17;
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 36px;
+  }
+  .blk-callout .blk-eyebrow { color: #e8c766; }
+  .blk-callout p { font-size: 1rem; line-height: 1.68; color: #d8d4c8; text-wrap: pretty; }
+
+  .psp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .psp-tag {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #6e6a60;
+    background: #f1efe8;
+    border-radius: 50px;
+    padding: 6px 14px;
+  }
+
+  /* closing note — quieter than the essay, clearly a different voice */
+  .psp-closing {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 2px solid #e6e2d8;
+  }
+  .psp-closing-h {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8a8477;
+    margin-bottom: 16px;
+  }
+  .psp-closing-p {
+    font-size: 0.97rem;
+    line-height: 1.72;
+    color: #5f5b51;
+    text-wrap: pretty;
+    margin-bottom: 14px;
+  }
+
+  .psp-cg {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #fff;
+    background: #2f6b3a;
+    border-radius: 50px;
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .psp-cg:hover { background: #3f8c4e; }
+
+  @media (max-width: 600px) {
+    .psp { padding: 24px 18px 56px; }
+    .num-item { padding-left: 44px; }
+  }
+</style>

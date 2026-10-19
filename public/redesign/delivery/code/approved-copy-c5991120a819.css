@@ -1,0 +1,8 @@
+/* Local editorial review. Existing scene animation styles remain untouched. */
+#knowledge-takes-root,#turning-point,#partners,#criteria,#source-count-note{scroll-margin-top:36px}
+.home-combined .card-practice h3{font-size:min(clamp(36px,3.3vw,56px),15cqi)}
+.home-combined .growth-card h3{overflow-wrap:normal}
+@media(max-width:900px){.home-combined .card-practice h3{font-size:min(43px,15cqi)}}
+
+.home-combined .growth-card.card-learn p,
+.home-combined .growth-card.card-connect p{font-size:clamp(20px,1.55vw,24px);line-height:1.5}
