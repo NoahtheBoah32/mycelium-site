@@ -5,7 +5,7 @@
   if(!form)return;
   const kind=form.dataset.liveAuth,status=form.querySelector('[data-form-status]'),button=form.querySelector('[type=submit]');
   const get=id=>document.getElementById(id),value=id=>get(id)?.value.trim()||'';
-  let busy=false,client;
+  let busy=false,client,connecting;
   const message=text=>{status.textContent=text;};
   const friendly=error=>{
     const text=error?.message||'We could not reach Common Ground. Please try again.';
@@ -16,14 +16,17 @@
   };
   async function connect(){
     if(client)return client;
-    if(!window.supabase)await new Promise((resolve,reject)=>{
-      const script=document.createElement('script');
-      script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-      script.onload=resolve;script.onerror=()=>reject(new Error('Unable to connect. Please check your connection and try again.'));
-      document.head.append(script);
-    });
-    client=window.supabase.createClient(document.querySelector('meta[name=cg-url]').content,document.querySelector('meta[name=cg-anon-key]').content);
-    return client;
+    if(!connecting)connecting=(async()=>{
+      if(!window.supabase)await new Promise((resolve,reject)=>{
+        const script=document.createElement('script');
+        script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+        script.onload=resolve;script.onerror=()=>reject(new Error('Unable to connect. Please check your connection and try again.'));
+        document.head.append(script);
+      });
+      client=window.supabase.createClient(document.querySelector('meta[name=cg-url]').content,document.querySelector('meta[name=cg-anon-key]').content);
+      return client;
+    })().catch(error=>{connecting=null;throw error;});
+    return connecting;
   }
   async function ensureOwnProfile(sb,user,fields){
     const {data:profile,error:readError}=await sb.from('profiles').select('id').eq('id',user.id).maybeSingle();
@@ -63,8 +66,15 @@
     finally{busy=false;button.disabled=false;if(label)label.textContent=old;}
   });
   if(kind==='sign-in')connect().then(async sb=>{
-    const {data:{session}}=await sb.auth.getSession();
-    if(session)location.replace('/common-ground/');
+    // A saved session is only a hint. Never replace the approved account page
+    // on a timer: a stale session used to land visitors on the legacy form.
+    const {data:{session},error:sessionError}=await sb.auth.getSession();
+    if(sessionError||!session)return;
+    const {data:{user},error:userError}=await sb.auth.getUser();
+    if(userError||!user||busy)return;
+    const {data:profile,error:profileError}=await sb.from('profiles').select('id').eq('id',user.id).maybeSingle();
+    const resume=document.querySelector('[data-auth-resume]');
+    if(profile&&!profileError&&!busy&&resume)resume.hidden=false;
   }).catch(()=>{});
   // Supabase recovery links establish a short-lived authenticated session. The
   // new password goes directly to Supabase; it is never logged or stored here.

@@ -137,15 +137,17 @@ export function renderPage(route, { events=[], reels=[] }={}) {
   if(route==='resources')readingLibrary($);
   if(route==='newsletter')$('.preview-note').text('New subscriptions are temporarily unavailable. Please check back soon.');
   if(route==='events'||route==='events/archive')eventsContent($,events,route.endsWith('archive'));
-  // Public-site entrances use the approved account screen. Existing sessions
-  // continue into the unchanged forum; direct forum/post URLs remain intact.
-  if(!['join','sign-in','recover'].includes(route))$('a[href="/common-ground/"]').attr('href','/sign-in/');
+  // Public entrances consistently use the approved account screen. The
+  // explicit resume link below and successful sign-in still open the forum.
+  $('a[href="/common-ground/"]').attr('href','/sign-in/');
   head('link[rel=canonical]').attr('href',`https://mycelium-learn.com/${route}${route?'/':''}`);
   if(['join','sign-in','recover'].includes(route)){
+    $('.account-preview').remove();
+    if(route==='sign-in')$('.account-form').before('<div class="account-resume" data-auth-resume hidden><p>You’re already signed in.</p><a class="text-link" href="/common-ground/">Continue to Common Ground '+arrow+'</a></div>');
     const original=readFileSync('public/common-ground/index.html','utf8');
     const url=original.match(/const SUPABASE_URL='([^']+)'/)[1], key=original.match(/const SUPABASE_ANON_KEY='([^']+)'/)[1];
     // This is the same public anon key already shipped by Common Ground, never a service key.
-    head.root().append(`<meta name="cg-url" content="${url}"><meta name="cg-anon-key" content="${key}"><script defer src="/redesign/auth.js"></script>`);
+    head.root().append(`<meta name="cg-url" content="${url}"><meta name="cg-anon-key" content="${key}"><script defer src="/redesign/auth.js?v=20261020"></script><style>.account-resume:not([hidden]){margin:0 0 24px;padding:16px 0;border-block:1px solid currentColor}.account-resume p{margin:0 0 4px;font-size:15px}.account-resume .text-link{font-size:15px}</style>`);
   }
   return {head:head.html(),bodyClass:source.bodyClass,body:$.html()};
 }
