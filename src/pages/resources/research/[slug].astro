@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import SiteNav from '../../../components/SiteNav.astro';
+import GlobalArticleHeader from '../../../components/GlobalArticleHeader.astro';
 import SiteFooter from '../../../components/SiteFooter.astro';
 import { upouStudies, getStudy } from '../../../data/upou-research.js';
 
@@ -23,10 +23,10 @@ const explainCount = (text) => hasCountNote(text)
 ---
 
 <BaseLayout title={`${s.cardTitle} — Research on Mycelium`} description={s.cardSummary}>
-  <SiteNav />
+  <GlobalArticleHeader />
   <div class="ra-progress" id="ra-progress" aria-hidden="true"></div>
 
-  <article class="ra">
+  <article class="ra" id="main" tabindex="-1">
     <!-- ============ HERO ============ -->
     <header class="ra-hero">
       <div class="ra-hero-text">

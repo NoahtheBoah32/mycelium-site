@@ -1,0 +1,4 @@
+/* Emphasize the homepage's main next step without altering its scene or motion. */
+.grounded-hero .entry-links .primary-entry{background:#f6f0d9;color:#2f2a1f;border-color:#f6f0d9;box-shadow:0 2px 14px #17130c33}
+.grounded-hero .entry-links .primary-entry:hover{background:#fff9e9;color:#2f2a1f;border-color:#fff9e9}
+.grounded-hero .entry-links .primary-entry:focus-visible{outline:3px solid #c8a24a;outline-offset:5px}

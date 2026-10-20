@@ -1,0 +1,87 @@
+---
+import { load } from 'cheerio';
+import home from '../redesign/templates/home.json';
+
+// Use the approved site's actual header and destinations, without importing
+// its page-wide animation runtime or resetting the article's typography.
+const $ = load(home.body, null, false);
+$('.site-menu a[href="/common-ground/"]').attr('href', '/sign-in/');
+$('.site-menu a[href="/resources/"]').addClass('current');
+const header = $('.site-header').prop('outerHTML');
+const menu = $('.site-menu').prop('outerHTML');
+---
+
+<div class="research-navigation" data-global-article-header>
+  <a class="article-skip" href="#main">Skip to article</a>
+  <Fragment set:html={header} />
+  <Fragment set:html={menu} />
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-global-article-header]');
+  const button = root?.querySelector<HTMLButtonElement>('.menu-button');
+  const menu = root?.querySelector<HTMLElement>('.site-menu');
+  const article = document.querySelector<HTMLElement>('article.ra');
+  const footer = document.querySelector<HTMLElement>('body > .site-footer');
+  if (root && button && menu) {
+    let previousOverflow = '';
+    function setOpen(open: boolean) {
+      if (open) previousOverflow = document.body.style.overflow;
+      menu!.hidden = !open;
+      button!.setAttribute('aria-expanded', String(open));
+      button!.querySelector('span')!.textContent = open ? 'Close' : 'Menu';
+      root!.classList.toggle('is-open', open);
+      root!.querySelector<HTMLElement>('.article-skip')!.hidden = open;
+      document.body.style.overflow = open ? 'hidden' : previousOverflow;
+      if (article) article.inert = open;
+      if (footer) footer.inert = open;
+      if (open) menu!.querySelector<HTMLAnchorElement>('a')?.focus();
+      else button!.focus();
+    }
+    button.addEventListener('click', () => setOpen(menu.hidden));
+    document.addEventListener('keydown', (event) => {
+      if (menu.hidden) return;
+      if (event.key === 'Escape') { setOpen(false); return; }
+      if (event.key !== 'Tab') return;
+      const links = [...root.querySelectorAll<HTMLElement>('a, button')].filter(el => el.offsetParent !== null);
+      const first = links[0], last = links[links.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
+  }
+</script>
+
+<style is:global>
+  @font-face{font-family:MyceliumNav;src:url('/redesign/delivery/code/font-3ae11c49db04.woff2') format('woff2');font-weight:200 800;font-display:swap}
+  .research-navigation{--nav-gutter:clamp(24px,3.5vw,64px);--nav-stone:#e6e2d8;--nav-soil:#2f2a1f;position:relative;height:100px;z-index:10001;background:#1e1501;color:var(--nav-stone);font-family:MyceliumNav,sans-serif}
+  .research-navigation [hidden]{display:none!important}
+  .research-navigation .site-header{position:absolute;inset:0 0 auto;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:25px var(--nav-gutter)}
+  .research-navigation .brand{display:block;line-height:0}
+  .research-navigation .brand img{width:190px;height:auto;filter:brightness(0) invert(.88) sepia(.14);object-fit:contain}
+  .research-navigation .menu-button{display:flex;align-items:center;gap:22px;min-height:44px;padding:11px 19px;border:0;border-radius:40px;background:var(--nav-stone);color:var(--nav-soil);font:650 14px MyceliumNav,sans-serif;cursor:pointer}
+  .research-navigation .menu-button i{width:19px;height:10px;border-block:1.5px solid currentColor;transition:transform .3s ease-out}
+  .research-navigation .menu-button[aria-expanded=true] i{transform:rotate(-45deg)}
+  .research-navigation .site-menu{position:fixed;inset:0;z-index:1;overflow:auto;padding:130px var(--nav-gutter) 60px;background:#2f4f2f;display:flex;flex-direction:column;justify-content:space-between}
+  .research-navigation .menu-links{max-width:1100px}
+  .research-navigation .menu-route{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e6e2d840;padding:11px 0;font-size:clamp(34px,5.2vw,76px);font-weight:650;letter-spacing:-.045em;line-height:1.1}
+  .research-navigation .menu-route svg{width:36px;height:36px;flex:none}
+  .research-navigation .menu-route:hover,.research-navigation .menu-route.current{color:#9fae9c}
+  .research-navigation .menu-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:25px;margin-top:35px;font-size:15px}
+  .research-navigation .menu-bottom a{display:flex;align-items:center;gap:14px;min-height:44px}
+  .research-navigation .menu-bottom svg{width:24px;height:24px}
+  .research-navigation.is-open .site-header{position:fixed}
+  .research-navigation a:focus-visible,.research-navigation button:focus-visible{outline:3px solid #c8a24a;outline-offset:6px}
+  .research-navigation .article-skip{position:absolute;z-index:3;top:15px;left:20px;padding:12px 20px;background:var(--nav-stone);color:var(--nav-soil);transform:translateY(-150%)}
+  .research-navigation .article-skip:focus{transform:none}
+  @media(max-width:900px){
+    .research-navigation{height:84px}
+    .research-navigation .site-header{padding-top:20px}
+    .research-navigation .brand img{width:155px}
+    .research-navigation .menu-button{font-size:13px;padding:10px 15px;gap:14px}
+    .research-navigation .site-menu{padding-top:105px;padding-bottom:35px}
+    .research-navigation .menu-route{font-size:clamp(30px,7vw,58px);padding:15px 0}
+    .research-navigation .menu-route svg{width:25px;height:25px}
+    .research-navigation .menu-bottom{justify-content:start;gap:15px 25px}
+  }
+  @media(prefers-reduced-motion:reduce){.research-navigation .menu-button i{transition:none}}
+</style>

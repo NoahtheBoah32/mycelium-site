@@ -28,7 +28,12 @@ for (const filename of await files(templates)) {
   // They no longer consume the redesign's detail-page presentation templates.
   const originalDetail = /^(video\/|resources\/(research|baganihan|baganihan-reports)\/)/.test(route);
   if (originalDetail) {
-    assert.equal($('.site-nav').length, 1, `${route}: original navigation missing`);
+    if (route.startsWith('resources/research/')) {
+      assert.equal($('[data-global-article-header] .site-header').length, 1, `${route}: global header missing`);
+      assert.equal($('.site-nav').length, 0, `${route}: duplicate legacy navigation`);
+    } else {
+      assert.equal($('.site-nav').length, 1, `${route}: original navigation missing`);
+    }
     assert.ok($('.vd-page, article.ra, article.rpt, article.psp').length, `${route}: original detail layout missing`);
     assert.equal($('.watch-heading, nav.dock, .review-header').length, 0, `${route}: redesign detail shell returned`);
   }
