@@ -1,10 +1,11 @@
 ---
+import Analytics from '../components/Analytics.astro';
 import { articleShell } from '../redesign/render.mjs';
 const page = articleShell(Astro.props.route, Astro.props.title);
 ---
 <!doctype html>
 <html lang="en">
-  <head><Fragment set:html={page.head} /></head>
+  <head><Fragment set:html={page.head} /><Analytics /></head>
   <body class={page.bodyClass}>
     <Fragment set:html={page.before} />
     <main id="main"><div class="reading-page"><slot /></div></main>

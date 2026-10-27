@@ -1,4 +1,5 @@
 ---
+import Analytics from '../components/Analytics.astro';
 import { getCollection } from 'astro:content';
 import { renderPage } from '../redesign/render.mjs';
 const { route = '' } = Astro.props;
@@ -8,6 +9,6 @@ const page = renderPage(route, { events, reels });
 ---
 <!doctype html>
 <html lang="en">
-  <head><Fragment set:html={page.head} /></head>
+  <head><Fragment set:html={page.head} /><Analytics /></head>
   <body class={page.bodyClass}><Fragment set:html={page.body} /></body>
 </html>
